@@ -10,4 +10,5 @@ public interface RMIServer extends Remote
 {
   void startServer() throws RemoteException, AlreadyBoundException;
   void registerLoan(Material material, String loanerCPR, String deadline) throws RemoteException;
+  void registerClientCallback(ClientCallback ccb) throws RemoteException;
 }

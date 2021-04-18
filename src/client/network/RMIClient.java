@@ -1,6 +1,8 @@
 package client.network;
 
+import client.model.loan.Loan;
 import client.model.material.Material;
+import shared.ClientCallback;
 import shared.RMIServer;
 import shared.util.constants;
 
@@ -12,7 +14,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class RMIClient implements Client
+public class RMIClient implements Client, ClientCallback
 {
   private PropertyChangeSupport support;
   private RMIServer server;
@@ -39,6 +41,7 @@ public class RMIClient implements Client
     {
       registry = LocateRegistry.getRegistry(1099);
       server = (RMIServer) registry.lookup(constants.RMI_SERVER);
+      server.registerClientCallback(this);
     }
     catch (RemoteException | NotBoundException e)
     {
@@ -81,5 +84,10 @@ public class RMIClient implements Client
       PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(listener);
+  }
+
+  @Override public void loanRegistered(Loan loan) throws RemoteException
+  {
+    support.firePropertyChange("LoanRegistered", null, loan);
   }
 }

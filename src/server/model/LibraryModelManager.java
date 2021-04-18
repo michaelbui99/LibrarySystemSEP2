@@ -13,12 +13,12 @@ import java.beans.PropertyChangeSupport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LibraryModelManagerServer implements LibraryModel
+public class LibraryModelManager implements LibraryModel
 {
   private LoanList loanList;
   private PropertyChangeSupport support;
 
-  public LibraryModelManagerServer()
+  public LibraryModelManager()
   {
     loanList = new LoanList();
     support = new PropertyChangeSupport(this);
@@ -57,6 +57,7 @@ public class LibraryModelManagerServer implements LibraryModel
       Loan loan = new Loan(IDGenerator.getInstance().generateLoanId(), material.getMaterialID(),
           material.getCopyNumber(),loanerCPR, material.getMaterialType(), calcDateTime(),deadline);
       loanList.addLoan(loan);
+      support.firePropertyChange("LoanRegistered", null, loan);
     }
   }
 

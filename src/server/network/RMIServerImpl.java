@@ -1,11 +1,15 @@
 package server.network;
 
 
+import client.model.loan.Loan;
 import client.model.material.Material;
 import server.model.LibraryModel;
+import shared.ClientCallback;
 import shared.RMIServer;
 import shared.util.constants;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -32,6 +36,25 @@ public class RMIServerImpl implements RMIServer
   @Override public void registerLoan(Material material, String loanerCPR,
       String deadline) throws RemoteException
   {
+    model.registerLoan(material, loanerCPR, deadline);
+  }
 
+  @Override public void registerClientCallback(ClientCallback ccb)
+      throws RemoteException
+  {
+    model.addPropertyChangeListener("LoanRegistered", new PropertyChangeListener()
+    {
+      @Override public void propertyChange(PropertyChangeEvent evt)
+      {
+        try
+        {
+          ccb.loanRegistered((Loan) evt.getNewValue());
+        }
+        catch (RemoteException e)
+        {
+          model.removePropertyChangeListener(this);
+        }
+      }
+    });
   }
 }
