@@ -1,5 +1,6 @@
-package client.model.library;
+package server.model;
 
+import client.model.library.LibraryModel;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
 import client.model.loan.Loaner;
@@ -12,12 +13,12 @@ import java.beans.PropertyChangeSupport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LibraryModelManager implements LibraryModel
+public class LibraryModelManagerServer implements LibraryModel
 {
   private LoanList loanList;
   private PropertyChangeSupport support;
 
-  public LibraryModelManager()
+  public LibraryModelManagerServer()
   {
     loanList = new LoanList();
     support = new PropertyChangeSupport(this);
