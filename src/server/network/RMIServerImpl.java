@@ -1,7 +1,8 @@
 package server.network;
 
-import client.model.library.LibraryModel;
+
 import client.model.material.Material;
+import server.model.LibraryModel;
 import shared.RMIServer;
 import shared.util.constants;
 
@@ -31,6 +32,6 @@ public class RMIServerImpl implements RMIServer
   @Override public void registerLoan(Material material, String loanerCPR,
       String deadline) throws RemoteException
   {
-    model.registerLoan(material, loanerCPR, deadline);
+
   }
 }
