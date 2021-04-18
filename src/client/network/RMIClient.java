@@ -49,6 +49,7 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
+
   @Override public void registerLoan(Material material, String loanerCPR,
       String deadline)
   {

@@ -28,6 +28,7 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
+
   @Override public void registerLoan(Material material, String loanerCPR,
       String deadline)
   {
