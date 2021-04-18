@@ -1,7 +1,5 @@
-package client.model.loaner;
+package client.model.loan;
 
-import client.model.loaner.Address;
-import client.model.loaner.Loaner;
 import client.model.material.Material;
 
 public class LoanerImpl implements Loaner

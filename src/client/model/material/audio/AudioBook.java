@@ -1,10 +1,9 @@
-package client.model.material;
+package client.model.material.audio;
 
-public class CD extends AudioMaterial
+public class AudioBook extends AudioMaterial
 {
-
-  public CD(int materialID, int copyNumber, String title, String publisher,
-      String releaseDate, String description, String tags,
+  public AudioBook(int materialID, int copyNumber, String title,
+      String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, double playDuration)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
@@ -13,6 +12,6 @@ public class CD extends AudioMaterial
 
   @Override public String getMaterialType()
   {
-    return "CD";
+    return "Audio Book";
   }
 }

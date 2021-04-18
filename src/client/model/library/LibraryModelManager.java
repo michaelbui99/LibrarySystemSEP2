@@ -1,38 +1,54 @@
 package client.model.library;
 
-import client.model.loaner.Loan;
-import client.model.loaner.LoanList;
-import client.model.loaner.Loaner;
+import client.model.loan.Loan;
+import client.model.loan.LoanList;
+import client.model.loan.Loaner;
 import client.model.material.Material;
 import client.model.material.MaterialStatus;
 import shared.util.IDGenerator;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LibraryModelManager implements LibraryModel
 {
-  LoanList loanList;
+  private LoanList loanList;
+  private PropertyChangeSupport support;
 
   public LibraryModelManager()
   {
     loanList = new LoanList();
+    support = new PropertyChangeSupport(this);
   }
 
+
+  /**
+  * Formats the current time to dd/MM/yyyy format
+   * @return Current time in dd/MM/yyyy as String
+  * */
   private String calcDateTime()
   {
-      //Formats the current Date to dd/MM/yyyy HH:mm:ss format and returns it as a String.
       SimpleDateFormat sdf = new SimpleDateFormat(
-          "dd/MM/yyyy HH:mm:ss");
+          "dd/MM/yyyy");
       Date now = new Date();
       return sdf.format(now);
   }
 
+
+  /**
+  * Registers a new Loan for the given material and loaner.
+   * @param material material is the Material the loaner wants to loan.
+   * @param loanerCPR loanerCPR is the CPR which the material will be bound to in the system for the given copy of material.
+   * @param deadline deadline is the deadline for when the material must be returned to the library.
+   * @exception IllegalStateException if the material is is not available for loan.
+  * */
   @Override public void registerLoan(Material material, String loanerCPR, String deadline)
   {
     if (material.getMaterialStatus().equals(MaterialStatus.NotAvailable))
     {
-      throw new IllegalArgumentException("Material is not available for loan");
+      throw new IllegalStateException("Material is not available for loan");
     }
     else
     {
@@ -51,5 +67,29 @@ public class LibraryModelManager implements LibraryModel
   @Override public void searchMaterial(String arg)
   {
 
+  }
+
+  @Override public void addPropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(name, listener);
+  }
+
+  @Override public void addPropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(listener);
+  }
+
+  @Override public void removePropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(name,listener);
+  }
+
+  @Override public void removePropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(listener);
   }
 }

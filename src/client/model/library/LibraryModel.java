@@ -1,9 +1,10 @@
 package client.model.library;
 
-import client.model.loaner.Loaner;
+import client.model.loan.Loaner;
 import client.model.material.Material;
+import shared.PropertyChangeSubject;
 
-public interface LibraryModel
+public interface LibraryModel extends PropertyChangeSubject
 {
   void registerLoan(Material material, String loanerCPR, String deadline);
   void registerBook(Loaner loaner, Material material);

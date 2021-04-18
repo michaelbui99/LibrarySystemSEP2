@@ -1,6 +1,6 @@
 package client.model.material;
 
-public abstract class Material
+public abstract class Material implements MaterialInterface
 {
   private int materialID, copyNumber;
   private String title, targetAudience, description, tags, publisher, releaseDate, language;
