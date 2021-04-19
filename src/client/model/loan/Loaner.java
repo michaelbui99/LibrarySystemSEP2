@@ -1,4 +1,4 @@
-package client.model.loaner;
+package client.model.loan;
 
 import client.model.material.Material;
 

@@ -1,4 +1,4 @@
-package client.model.loaner;
+package client.model.loan;
 
 import java.util.ArrayList;
 import java.util.List;

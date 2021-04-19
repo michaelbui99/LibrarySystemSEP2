@@ -1,4 +1,6 @@
-package client.model.material;
+package client.model.material.reading;
+
+import client.model.material.Material;
 
 public abstract class ReadingMaterial extends Material
 {

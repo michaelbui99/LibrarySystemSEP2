@@ -1,4 +1,4 @@
-package client.model.material;
+package client.model.material.reading;
 
 public class Book extends ReadingMaterial
 {

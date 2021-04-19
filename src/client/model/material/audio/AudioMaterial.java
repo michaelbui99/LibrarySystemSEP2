@@ -1,4 +1,6 @@
-package client.model.material;
+package client.model.material.audio;
+
+import client.model.material.Material;
 
 public abstract class AudioMaterial extends Material
 {

@@ -1,45 +1,44 @@
 package client.model.library;
 
-import client.model.loaner.Loan;
-import client.model.loaner.LoanList;
-import client.model.loaner.Loaner;
+import client.model.loan.Loaner;
 import client.model.material.Material;
-import client.model.material.MaterialStatus;
-import shared.util.IDGenerator;
+import client.network.Client;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
 
 public class LibraryModelManager implements LibraryModel
 {
-  LoanList loanList;
+  private Client client;
+  private PropertyChangeSupport support;
 
-  public LibraryModelManager()
+  public LibraryModelManager(Client client)
   {
-    loanList = new LoanList();
-  }
+    this.client = client;
+    support = new PropertyChangeSupport(this);
 
-  private String calcDateTime()
-  {
-      //Formats the current Date to dd/MM/yyyy HH:mm:ss format and returns it as a String.
-      SimpleDateFormat sdf = new SimpleDateFormat(
-          "dd/MM/yyyy HH:mm:ss");
-      Date now = new Date();
-      return sdf.format(now);
-  }
-
-  @Override public void registerLoan(Material material, String loanerCPR, String deadline)
-  {
-    if (material.getMaterialStatus().equals(MaterialStatus.NotAvailable))
+    try
     {
-      throw new IllegalArgumentException("Material is not available for loan");
+      client.startClient();
     }
-    else
+    catch (RemoteException e)
     {
-      material.setMaterialStatus(MaterialStatus.NotAvailable);
-      Loan loan = new Loan(IDGenerator.getInstance().generateLoanId(), material.getMaterialID(),
-          material.getCopyNumber(),loanerCPR, material.getMaterialType(), calcDateTime(),deadline);
-      loanList.addLoan(loan);
+      e.printStackTrace();
+    }
+  }
+
+
+  @Override public void registerLoan(Material material, String loanerCPR,
+      String deadline)
+  {
+    try
+    {
+      client.registerLoan(material, loanerCPR, deadline);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
     }
   }
 
@@ -51,5 +50,29 @@ public class LibraryModelManager implements LibraryModel
   @Override public void searchMaterial(String arg)
   {
 
+  }
+
+  @Override public void addPropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(name, listener);
+  }
+
+  @Override public void addPropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(listener);
+  }
+
+  @Override public void removePropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(name, listener);
+  }
+
+  @Override public void removePropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(listener);
   }
 }

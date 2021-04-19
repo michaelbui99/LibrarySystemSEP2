@@ -1,15 +1,11 @@
-package client.network;
+package server.model;
 
+import client.model.loan.Loaner;
 import client.model.material.Material;
 import shared.PropertyChangeSubject;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-
-public interface Client extends Remote, PropertyChangeSubject
+public interface LibraryModel extends PropertyChangeSubject
 {
-  void startClient() throws RemoteException;
-
   /**
    * Registers a new Loan for the given material and loaner.
    * @param material material is the Material the loaner wants to loan.
@@ -17,5 +13,9 @@ public interface Client extends Remote, PropertyChangeSubject
    * @param deadline deadline is the deadline for when the material must be returned to the library.
    * @exception IllegalStateException if the material is is not available for loan.
    * */
-  void registerLoan(Material material, String loanerCPR, String deadline) throws RemoteException;
+  void registerLoan(Material material, String loanerCPR, String deadline) throws IllegalStateException;
+
+
+  void registerBook(Loaner loaner, Material material);
+  void searchMaterial(String arg);
 }
