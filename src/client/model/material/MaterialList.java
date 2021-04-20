@@ -23,6 +23,18 @@ public class MaterialList
   {
   }
 
+  public Material getMaterialById(int id)
+  {
+    for (Material material : materials)
+    {
+      if (material.getMaterialID() == id)
+      {
+        return material;
+      }
+    }
+    return null;
+  }
+
   public void getAllAvailableBooks(String title)
   {
 
