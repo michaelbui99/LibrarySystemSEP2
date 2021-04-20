@@ -6,6 +6,7 @@ import client.model.material.Material;
 import server.model.LibraryModel;
 import shared.ClientCallback;
 import shared.RMIServer;
+import shared.util.EventTypes;
 import shared.util.constants;
 
 import java.beans.PropertyChangeEvent;
@@ -42,7 +43,7 @@ public class RMIServerImpl implements RMIServer
   @Override public void registerClientCallback(ClientCallback ccb)
       throws RemoteException
   {
-    model.addPropertyChangeListener("LoanRegistered", new PropertyChangeListener()
+    model.addPropertyChangeListener(EventTypes.LOAN_REGISTERED, new PropertyChangeListener()
     {
       @Override public void propertyChange(PropertyChangeEvent evt)
       {
@@ -56,5 +57,13 @@ public class RMIServerImpl implements RMIServer
         }
       }
     });
+  }
+
+  @Override public void registerBook(int materialID, int copyNumber,
+      String title, String publisher, String releaseDate, String description,
+      String tags, String targetAudience, String language, String isbn,
+      int pageCount)
+  {
+
   }
 }

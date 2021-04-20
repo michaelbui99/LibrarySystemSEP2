@@ -23,4 +23,9 @@ public interface RMIServer extends Remote
    * @param ccb ccb is the Clientcallback which is to be registered to the server as listener.
   * */
   void registerClientCallback(ClientCallback ccb) throws RemoteException;
+
+
+  void registerBook(int materialID, int copyNumber, String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount) throws RemoteException;
 }

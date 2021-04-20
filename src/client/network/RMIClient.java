@@ -63,6 +63,21 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
+  @Override public void registerBook(int materialID, int copyNumber,
+      String title, String publisher, String releaseDate, String description,
+      String tags, String targetAudience, String language, String isbn,
+      int pageCount)
+  {
+    try
+    {
+      server.registerBook(materialID, copyNumber, title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server connection failed");
+    }
+  }
+
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)
   {

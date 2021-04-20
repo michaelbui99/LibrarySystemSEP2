@@ -15,7 +15,12 @@ public interface LibraryModel extends PropertyChangeSubject
    * */
   void registerLoan(Material material, String loanerCPR, String deadline) throws IllegalStateException;
 
-
-  void registerBook(Loaner loaner, Material material);
+  /**
+  * Registers a new BookCopy in the Database and creates a new Book object which is stored in MaterialList.
+  *
+  * */
+  void registerBook(int materialID, int copyNumber, String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount);
   void searchMaterial(String arg);
 }

@@ -1,21 +1,26 @@
 package server.model;
 
-import client.model.library.LibraryModel;
+import client.model.material.MaterialList;
+import client.model.material.reading.Book;
+import database.*;
+import shared.util.EventTypes;
+import server.model.LibraryModel;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
-import client.model.loan.Loaner;
 import client.model.material.Material;
 import client.model.material.MaterialStatus;
 import shared.util.IDGenerator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LibraryModelManager implements LibraryModel
 {
   private LoanList loanList;
+  private MaterialList materialList;
   private PropertyChangeSupport support;
 
   public LibraryModelManager()
@@ -54,14 +59,31 @@ public class LibraryModelManager implements LibraryModel
       Loan loan = new Loan(IDGenerator.getInstance().generateLoanId(), material.getMaterialID(),
           material.getCopyNumber(),loanerCPR, material.getMaterialType(), calcDateTime(),deadline);
       loanList.addLoan(loan);
-      support.firePropertyChange("LoanRegistered", null, loan);
+      support.firePropertyChange(EventTypes.LOAN_REGISTERED, null, loan);
     }
   }
 
-  @Override public void registerBook(Loaner loaner, Material material)
+
+  @Override public void registerBook(int materialID, int copyNumber,
+      String title, String publisher, String releaseDate, String description,
+      String tags, String targetAudience, String language, String isbn,
+      int pageCount)
   {
+    try
+    {
+      int generatedID = MaterialDAOImpl.getInstance().create(title,publisher, releaseDate,description, tags, targetAudience, language);
+      MaterialCopyDAOImpl.getInstance().create(generatedID, copyNumber);
+      Book book = BookCopyDAOImpl.getInstance().create(generatedID,copyNumber,isbn,pageCount);
+      materialList.addMaterial(book);
+      support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, book);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
 
   }
+
 
   @Override public void searchMaterial(String arg)
   {

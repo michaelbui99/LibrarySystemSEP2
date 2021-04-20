@@ -18,4 +18,7 @@ public interface Client extends Remote, PropertyChangeSubject
    * @exception IllegalStateException if the material is is not available for loan.
    * */
   void registerLoan(Material material, String loanerCPR, String deadline) throws RemoteException;
+  void registerBook(int materialID, int copyNumber, String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount);
 }
