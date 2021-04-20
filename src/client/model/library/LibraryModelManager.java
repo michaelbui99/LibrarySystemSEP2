@@ -1,6 +1,5 @@
 package client.model.library;
 
-import client.model.loan.Loaner;
 import client.model.material.Material;
 import client.network.Client;
 
@@ -42,7 +41,9 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public void registerBook(Loaner loaner, Material material)
+  @Override public void registerBook(int materialID, int copyNumber, String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount)
   {
 
   }

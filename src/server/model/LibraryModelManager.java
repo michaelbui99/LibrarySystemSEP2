@@ -1,27 +1,33 @@
 package server.model;
 
-import client.model.library.LibraryModel;
+import client.model.material.MaterialList;
+import client.model.material.reading.Book;
+import database.*;
+import shared.util.EventTypes;
+import server.model.LibraryModel;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
-import client.model.loan.Loaner;
 import client.model.material.Material;
 import client.model.material.MaterialStatus;
 import shared.util.IDGenerator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LibraryModelManager implements LibraryModel
 {
   private LoanList loanList;
+  private MaterialList materialList;
   private PropertyChangeSupport support;
 
   public LibraryModelManager()
   {
     loanList = new LoanList();
     support = new PropertyChangeSupport(this);
+    materialList = new MaterialList();
   }
 
 
@@ -32,16 +38,13 @@ public class LibraryModelManager implements LibraryModel
   private String calcDateTime()
   {
       SimpleDateFormat sdf = new SimpleDateFormat(
-          "dd/MM/yyyy");
+          "yyyy-MM-dd");
       Date now = new Date();
       return sdf.format(now);
   }
 
 
-  /**
-  * Registers a new Loan for the given material and loaner.
-   *{@inheritDoc}
-  * */
+
   @Override public void registerLoan(Material material, String loanerCPR, String deadline)
   {
     if (material.getMaterialStatus().equals(MaterialStatus.NotAvailable))
@@ -51,21 +54,67 @@ public class LibraryModelManager implements LibraryModel
     else
     {
       material.setMaterialStatus(MaterialStatus.NotAvailable);
-      Loan loan = new Loan(IDGenerator.getInstance().generateLoanId(), material.getMaterialID(),
-          material.getCopyNumber(),loanerCPR, material.getMaterialType(), calcDateTime(),deadline);
+      Loan loan = null;
+      try
+      {
+        loan = LoanDAOImpl
+            .getInstance().create(material.getMaterialID(),material.getCopyNumber(),loanerCPR,null,calcDateTime(),deadline);
+      }
+      catch (SQLException throwables)
+      {
+        throwables.printStackTrace();
+      }
       loanList.addLoan(loan);
-      support.firePropertyChange("LoanRegistered", null, loan);
+      support.firePropertyChange(EventTypes.LOAN_REGISTERED, null, loan);
     }
   }
 
-  @Override public void registerBook(Loaner loaner, Material material)
+
+  @Override public void registerBook(int materialID, int copyNumber,
+      String title, String publisher, String releaseDate, String description,
+      String tags, String targetAudience, String language, String isbn,
+      int pageCount)
   {
+    try
+    {
+      //Creates new material in Database and saves the generated id in variable if material does NOT already exist in DB.
+      int generatedID = 0;
+      if (!MaterialDAOImpl.getInstance().materialExistInDB(materialID))
+      {
+        generatedID = MaterialDAOImpl
+            .getInstance().create(title,publisher, releaseDate,description, tags, targetAudience, language);
+      //Creates new MaterialCopy in DB
+        createBookCopy(generatedID, copyNumber, isbn, pageCount);
+      }
+      else
+      {
+        createBookCopy(materialID, copyNumber, isbn, pageCount);
+      }
+
+
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
 
   }
 
-  @Override public void searchMaterial(String arg)
+  private void createBookCopy(int materialID, int copyNumber, String isbn,
+      int pageCount) throws SQLException
   {
+    MaterialCopyDAOImpl.getInstance().create(materialID, copyNumber);
+    Book book = BookCopyDAOImpl.getInstance()
+        .create(materialID, copyNumber, isbn, pageCount);
+    materialList.addMaterial(book);
+    support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, book);
+  }
 
+
+  @Override public Material searchMaterial(String arg)
+  {
+    //TODO: IMPLEMENT THIS CORRECTLY - THIS IS A PLACE HOLDER IMPL FOR TEST
+    return materialList.getMaterialById(Integer.parseInt(arg));
   }
 
   @Override public void addPropertyChangeListener(String name,

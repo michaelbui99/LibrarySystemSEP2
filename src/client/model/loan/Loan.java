@@ -3,7 +3,7 @@ package client.model.loan;
 public class Loan
 {
 
-  private int loanID, materialID, copyNumber, numberOfExtenseions;
+  private int loanID, materialID, copyNumber, numberOfExtensions;
   private String cpr, materialType, loanDate, deadline, returnDate;
 
   public Loan(int loanID, int materialID, int copyNumber, String cpr,
@@ -38,9 +38,9 @@ public class Loan
     return copyNumber;
   }
 
-  public int getNumberOfExtenseions()
+  public int getNumberOfExtensions()
   {
-    return numberOfExtenseions;
+    return numberOfExtensions;
   }
 
   public String getCpr()

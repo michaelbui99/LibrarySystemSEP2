@@ -1,6 +1,5 @@
 package client.model.library;
 
-import client.model.loan.Loaner;
 import client.model.material.Material;
 import shared.PropertyChangeSubject;
 
@@ -17,6 +16,8 @@ public interface LibraryModel extends PropertyChangeSubject
   void registerLoan(Material material, String loanerCPR, String deadline);
 
 
-  void registerBook(Loaner loaner, Material material);
+  void registerBook(int materialID, int copyNumber, String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount);
   void searchMaterial(String arg);
 }
