@@ -22,4 +22,11 @@ class MaterialDAOTest
   {
     materialDAO.create("Hello", "Test", "2020-09-14", "TEST DESC", "Hello", "Voksen", "Dansk");
   }
+
+  @Test
+  void testMaterialExistInDB() throws SQLException
+  {
+    assertTrue(materialDAO.materialExistInDB(1));
+    assertFalse(materialDAO.materialExistInDB(10));
+  }
 }

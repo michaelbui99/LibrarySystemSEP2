@@ -1,7 +1,5 @@
 package database;
 
-import client.model.material.Material;
-
 import java.sql.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -59,7 +57,25 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
   }
 
-//  @Override public Material findByID(int id)
+  @Override public boolean materialExistInDB(int materialID) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      //Checks Database for material with given ID.
+      PreparedStatement stm = connection.prepareStatement("SELECT * FROM Materiale where materialeid = ?");
+      stm.setInt(1, materialID);
+      ResultSet result = stm.executeQuery();
+
+      //If we find a match in Database we return true, if not we return false
+      if (result.next())
+      {
+        return true;
+      }
+      return false;
+    }
+  }
+
+  //  @Override public Material findByID(int id)
 //  {
 //    return null;
 //  }

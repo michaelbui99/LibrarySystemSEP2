@@ -1,7 +1,5 @@
 package database;
 
-import client.model.material.Material;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -16,5 +14,7 @@ public interface MaterialDAO
       String targetAudience, String language) throws SQLException;
   void create(String title, String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, Connection connection);
+
+  boolean materialExistInDB(int materialID) throws SQLException;
 //  Material findByID(int id);
 }

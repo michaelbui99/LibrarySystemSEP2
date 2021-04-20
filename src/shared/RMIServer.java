@@ -24,7 +24,13 @@ public interface RMIServer extends Remote
   * */
   void registerClientCallback(ClientCallback ccb) throws RemoteException;
 
-
+  /**
+   * Registers a new BookCopy in the Database and creates a new Book object which is stored in MaterialList.
+   *
+   * @param materialID materialID is the ID for the material the book is bound to in DB.
+   *                   If there does not exist an material with the ID yet
+   *                   the system will auto generate a new Material in the Database with given params.
+   */
   void registerBook(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount) throws RemoteException;

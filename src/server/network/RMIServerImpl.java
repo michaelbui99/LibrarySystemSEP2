@@ -3,6 +3,7 @@ package server.network;
 
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.MaterialList;
 import server.model.LibraryModel;
 import shared.ClientCallback;
 import shared.RMIServer;
@@ -64,6 +65,8 @@ public class RMIServerImpl implements RMIServer
       String tags, String targetAudience, String language, String isbn,
       int pageCount)
   {
-
+    model.registerBook(materialID, copyNumber, title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount);
   }
+
+
 }
