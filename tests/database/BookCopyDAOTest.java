@@ -12,6 +12,7 @@ class BookCopyDAOTest
 {
   private BookCopyDAO bookCopyDAO;
   private int i;
+
   @BeforeEach
   void setup() throws SQLException
   {
