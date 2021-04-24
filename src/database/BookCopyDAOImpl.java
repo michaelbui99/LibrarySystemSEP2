@@ -29,18 +29,18 @@ public class BookCopyDAOImpl extends BaseDAO implements BookCopyDAO
     return instance;
   }
 
-  @Override public Book create(int materialID, int copyNo, String isbn,
-      int pageCount) throws SQLException
+  @Override public Book create(int materialID, int copyNo/*, String isbn, the information here does not match with the info in data base
+      int pageCount*/) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       //Inserts a new bookcopy into the DB.
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO bogkopi(materialeid, kopino, isbn, sidetal) values (?,?,?,?)");
+          "INSERT INTO bogkopi(materialeid, kopino) values (?,?)");
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
-      stm.setString(3, isbn);
-      stm.setInt(4, pageCount);
+     /* stm.setString(3, isbn);
+      stm.setInt(4, pageCount);*/
       stm.executeUpdate();
       connection.commit();
 

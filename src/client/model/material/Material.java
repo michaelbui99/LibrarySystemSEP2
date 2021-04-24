@@ -2,13 +2,13 @@ package client.model.material;
 
 public abstract class Material implements MaterialInterface
 {
-  private int materialID, copyNumber;
-  private String title, targetAudience, description, tags, publisher, releaseDate, language;
+  private int materialID, copyNumber, pageCount;
+  private String title, targetAudience, description, tags, publisher, releaseDate, language, isbn;
   private MaterialStatus materialStatus;
 
   public Material(int materialID, int copyNumber, String title,
       String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language)
+      String targetAudience, String language, String isbn, int pageCount)
   {
     this.materialID = materialID;
     this.copyNumber = copyNumber;
@@ -19,6 +19,8 @@ public abstract class Material implements MaterialInterface
     this.publisher = publisher;
     this.releaseDate = releaseDate;
     this.language = language;
+    this.isbn = isbn;
+    this.pageCount = pageCount;
     materialStatus = MaterialStatus.Available;
   }
 
@@ -72,6 +74,16 @@ public abstract class Material implements MaterialInterface
   public String getLanguage()
   {
     return language;
+  }
+
+  public String getIsbn()
+  {
+    return isbn;
+  }
+
+  public int getPageCount()
+  {
+    return pageCount;
   }
 
   public MaterialStatus getMaterialStatus()

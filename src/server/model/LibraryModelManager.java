@@ -84,11 +84,11 @@ public class LibraryModelManager implements LibraryModel
         generatedID = MaterialDAOImpl
             .getInstance().create(title,publisher, releaseDate,description, tags, targetAudience, language);
       //Creates new MaterialCopy in DB
-        createBookCopy(generatedID, copyNumber, isbn, pageCount);
+        createBookCopy(generatedID, copyNumber/*, isbn, pageCount*/);
       }
       else
       {
-        createBookCopy(materialID, copyNumber, isbn, pageCount);
+        createBookCopy(materialID, copyNumber/*, isbn, pageCount*/);
       }
 
 
@@ -100,12 +100,12 @@ public class LibraryModelManager implements LibraryModel
 
   }
 
-  private void createBookCopy(int materialID, int copyNumber, String isbn,
-      int pageCount) throws SQLException
+  private void createBookCopy(int materialID, int copyNumber/*, String isbn,
+      int pageCount*/) throws SQLException
   {
     MaterialCopyDAOImpl.getInstance().create(materialID, copyNumber);
     Book book = BookCopyDAOImpl.getInstance()
-        .create(materialID, copyNumber, isbn, pageCount);
+        .create(materialID, copyNumber/*, isbn, pageCount*/);
     materialList.addMaterial(book);
     support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, book);
   }

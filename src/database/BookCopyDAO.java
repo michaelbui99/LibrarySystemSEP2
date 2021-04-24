@@ -16,7 +16,7 @@ public interface BookCopyDAO
    * @param pageCount pageCount is the total amount of pages in the book.
    * @return Book object with the details connected to the materialID.
   * */
-  Book create(int materialID, int copyNo, String isbn, int pageCount) throws
+  Book create(int materialID, int copyNo/*, String isbn, int pageCount*/ ) throws
       SQLException;
 
   /**
