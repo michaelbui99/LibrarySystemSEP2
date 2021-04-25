@@ -25,11 +25,11 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
     }
 
     @Override
-    public int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int sidetal, int licensnr) throws SQLException {
+    public int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int sidetal, int licensnr , String genre, String forfatter) throws SQLException {
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, sidetal, licensnr,) values (?,?,?,?,?,?,?,?,?,?)",
+                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, sidetal, licensnr, genre, forfatter) values (?,?,?,?,?,?,?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             stm.setInt(1, materialeid);
             stm.setString(2, titel);
@@ -41,6 +41,8 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
             stm.setDate(8, Date.valueOf(udgivelsesdato));
             stm.setInt(9, sidetal);
             stm.setInt(10, licensnr);
+            stm.setString(11, genre);
+            stm.setString(12, forfatter);
 
             stm.executeUpdate();
             ResultSet keys = stm.getGeneratedKeys();
@@ -51,7 +53,7 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
     }
 
     @Override
-    public void create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, int sidetal, int licensnr, Connection connection) {
+    public void create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, int sidetal, int licensnr, String genre, String forfatter, Connection connection) {
 
     }
 }

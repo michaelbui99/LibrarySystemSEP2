@@ -26,11 +26,11 @@ public class LydbogDAOImpl extends BaseDAO implements LydbogDAO{
     }
 
     @Override
-    public int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int spillelængde) throws SQLException {
+    public int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int spillelængde,String genre) throws SQLException {
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, spillelængde,) values (?,?,?,?,?,?,?,?,?)",
+                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, spillelængde, genre) values (?,?,?,?,?,?,?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             stm.setInt(1, materialeid);
             stm.setString(2, titel);
@@ -41,6 +41,7 @@ public class LydbogDAOImpl extends BaseDAO implements LydbogDAO{
             stm.setString(7, sprog);
             stm.setDate(8, Date.valueOf(udgivelsesdato));
             stm.setInt(9, spillelængde);
+            stm.setString(10, genre);
 
             stm.executeUpdate();
             ResultSet keys = stm.getGeneratedKeys();
@@ -51,7 +52,7 @@ public class LydbogDAOImpl extends BaseDAO implements LydbogDAO{
     }
 
     @Override
-    public void create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int spillelængde, Connection connection) {
+    public void create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int spillelængde, String genre, Connection connection) {
 
     }
 }
