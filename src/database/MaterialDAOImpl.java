@@ -33,7 +33,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO Materiale (titel, målgruppe, beskrivelseAfIndholdet, emneord, forlag,sprog, udgivelsesDato) values (?,?,?,?,?,?,?)",
+          "INSERT INTO Materiale (titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag,sprog, udgivelsesDato) values (?,?,?,?,?,?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setString(1, title);
       stm.setString(2, targetAudience);
@@ -67,11 +67,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       ResultSet result = stm.executeQuery();
 
       //If we find a match in Database we return true, if not we return false
-      if (result.next())
-      {
-        return true;
-      }
-      return false;
+      return result.next();
     }
   }
 

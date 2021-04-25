@@ -16,6 +16,6 @@ public class Test
             "Helolo", "Voksen", "Dansk", "TEST-TEST", 200);
 
 
-    rmiServer.registerLoan(model.searchMaterial("1"), "111111-1111", "1999-12-12");
+  //  rmiServer.registerLoan(model.searchMaterial("1"), "111111-1111", "1999-12-12");
   }
 }
