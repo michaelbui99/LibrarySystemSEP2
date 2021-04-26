@@ -3,7 +3,6 @@ package server.model;
 import client.model.material.MaterialList;
 import client.model.material.reading.Book;
 import database.*;
-import shared.util.Constants;
 import shared.util.EventTypes;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
@@ -87,11 +86,11 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public void createBookCopy(int materialID, int copyNo)
+  @Override public void createBookCopy(int materialID)
   {
     try
     {
-      Book book = BookDAOImpl.getInstance().createBookCopy(materialID, copyNo);
+      Book book = BookDAOImpl.getInstance().createBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID)+1);
       materialList.addMaterial(book);
       support.firePropertyChange(EventTypes.BOOK_COPY_CREATED, null, book);
     }

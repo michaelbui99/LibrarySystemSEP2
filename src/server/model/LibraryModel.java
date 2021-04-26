@@ -29,7 +29,7 @@ public interface LibraryModel extends PropertyChangeSubject
       int placeID);
 
 
-  void createBookCopy(int materialID, int copyNo);
+  void createBookCopy(int materialID);
 
 
   Material searchMaterial(String arg);

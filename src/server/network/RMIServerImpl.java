@@ -67,9 +67,9 @@ public class RMIServerImpl implements RMIServer
     model.registerBook(materialID, title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount,placeID );
   }
 
-  @Override public void createBookCopy(int materialID, int copyNo)
+  @Override public void createBookCopy(int materialID)
   {
-    model.createBookCopy(materialID, copyNo);
+    model.createBookCopy(materialID);
   }
 
 }

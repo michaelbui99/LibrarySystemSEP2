@@ -35,5 +35,5 @@ public interface RMIServer extends Remote
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount, int placeID) throws RemoteException;
 
-  void createBookCopy(int materialID, int copyNo);
+  void createBookCopy(int materialID);
 }
