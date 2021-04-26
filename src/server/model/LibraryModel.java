@@ -28,5 +28,10 @@ public interface LibraryModel extends PropertyChangeSubject
       String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount);
 
+  void registerDVD (int materialID, int copyNumber, String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage, String creator, double playDuration);
+
+
   Material searchMaterial(String arg);
 }

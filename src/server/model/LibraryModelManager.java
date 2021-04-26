@@ -30,22 +30,20 @@ public class LibraryModelManager implements LibraryModel
     materialList = new MaterialList();
   }
 
-
   /**
-  * Formats the current time to dd/MM/yyyy format
+   * Formats the current time to dd/MM/yyyy format
+   *
    * @return Current time in dd/MM/yyyy as String
-  * */
+   */
   private String calcDateTime()
   {
-      SimpleDateFormat sdf = new SimpleDateFormat(
-          "yyyy-MM-dd");
-      Date now = new Date();
-      return sdf.format(now);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date now = new Date();
+    return sdf.format(now);
   }
 
-
-
-  @Override public void registerLoan(Material material, String loanerCPR, String deadline)
+  @Override public void registerLoan(Material material, String loanerCPR,
+      String deadline)
   {
     if (material.getMaterialStatus().equals(MaterialStatus.NotAvailable))
     {
@@ -57,8 +55,9 @@ public class LibraryModelManager implements LibraryModel
       Loan loan = null;
       try
       {
-        loan = LoanDAOImpl
-            .getInstance().create(material.getMaterialID(),material.getCopyNumber(),loanerCPR,null,calcDateTime(),deadline);
+        loan = LoanDAOImpl.getInstance()
+            .create(material.getMaterialID(), material.getCopyNumber(),
+                loanerCPR, null, calcDateTime(), deadline);
       }
       catch (SQLException throwables)
       {
@@ -68,7 +67,6 @@ public class LibraryModelManager implements LibraryModel
       support.firePropertyChange(EventTypes.LOAN_REGISTERED, null, loan);
     }
   }
-
 
   @Override public void registerBook(int materialID, int copyNumber,
       String title, String publisher, String releaseDate, String description,
@@ -81,16 +79,16 @@ public class LibraryModelManager implements LibraryModel
       int generatedID = 0;
       if (!MaterialDAOImpl.getInstance().materialExistInDB(materialID))
       {
-        generatedID = MaterialDAOImpl
-            .getInstance().create(title,publisher, releaseDate,description, tags, targetAudience, language);
-      //Creates new MaterialCopy in DB
+        generatedID = MaterialDAOImpl.getInstance()
+            .create(title, publisher, releaseDate, description, tags,
+                targetAudience, language);
+        //Creates new MaterialCopy in DB
         createBookCopy(generatedID, copyNumber, isbn, pageCount);
       }
       else
       {
         createBookCopy(materialID, copyNumber, isbn, pageCount);
       }
-
 
     }
     catch (SQLException throwables)
@@ -100,16 +98,13 @@ public class LibraryModelManager implements LibraryModel
 
   }
 
-  private void createBookCopy(int materialID, int copyNumber, String isbn,
-      int pageCount) throws SQLException
+  @Override public void registerDVD(int materialID, int copyNumber,
+      String title, String publisher, String releaseDate, String description,
+      String tags, String targetAudience, String language,
+      String subtitlesLanguage, String creator, double playDuration)
   {
-    MaterialCopyDAOImpl.getInstance().create(materialID, copyNumber);
-    Book book = BookCopyDAOImpl.getInstance()
-        .create(materialID, copyNumber, isbn, pageCount);
-    materialList.addMaterial(book);
-    support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, book);
-  }
 
+  }
 
   @Override public Material searchMaterial(String arg)
   {
@@ -132,12 +127,22 @@ public class LibraryModelManager implements LibraryModel
   @Override public void removePropertyChangeListener(String name,
       PropertyChangeListener listener)
   {
-    support.removePropertyChangeListener(name,listener);
+    support.removePropertyChangeListener(name, listener);
   }
 
   @Override public void removePropertyChangeListener(
       PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(listener);
+  }
+
+  private void createBookCopy(int materialID, int copyNumber, String isbn,
+      int pageCount) throws SQLException
+  {
+    MaterialCopyDAOImpl.getInstance().create(materialID, copyNumber);
+    Book book = BookCopyDAOImpl.getInstance()
+        .create(materialID, copyNumber, isbn, pageCount);
+    materialList.addMaterial(book);
+    support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, book);
   }
 }

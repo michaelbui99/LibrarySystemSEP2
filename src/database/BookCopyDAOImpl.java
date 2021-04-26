@@ -36,7 +36,7 @@ public class BookCopyDAOImpl extends BaseDAO implements BookCopyDAO
     {
       //Inserts a new bookcopy into the DB.
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO bogkopi(materialeid, kopino, isbn, sidetal) values (?,?,?,?)");
+          "INSERT INTO book(materialeid, kopino, isbn, sidetal) values (?,?,?,?)");
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.setString(3, isbn);
