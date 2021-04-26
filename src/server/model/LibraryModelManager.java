@@ -3,13 +3,12 @@ package server.model;
 import client.model.material.MaterialList;
 import client.model.material.reading.Book;
 import database.*;
+import shared.util.Constants;
 import shared.util.EventTypes;
-import server.model.LibraryModel;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
 import client.model.material.Material;
 import client.model.material.MaterialStatus;
-import shared.util.IDGenerator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -68,42 +67,38 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public void registerBook(int materialID, int copyNumber,
-      String title, String publisher, String releaseDate, String description,
-      String tags, String targetAudience, String language, String isbn,
-      int pageCount)
+  @Override public void registerBook(int materialID, String title,
+      String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      int placeID)
   {
     try
     {
       //Creates new material in Database and saves the generated id in variable if material does NOT already exist in DB.
-      int generatedID = 0;
-      if (!MaterialDAOImpl.getInstance().materialExistInDB(materialID))
-      {
-        generatedID = MaterialDAOImpl.getInstance()
-            .create(title, publisher, releaseDate, description, tags,
-                targetAudience, language);
-        //Creates new MaterialCopy in DB
-        createBookCopy(generatedID, copyNumber, isbn, pageCount);
-      }
-      else
-      {
-        createBookCopy(materialID, copyNumber, isbn, pageCount);
-      }
-
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create("title", publisher, releaseDate, description, tags,
+              targetAudience, language);
+      BookDAOImpl.getInstance().create(generatedID, isbn, pageCount, placeID);
+      support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, null);
     }
     catch (SQLException throwables)
     {
       throwables.printStackTrace();
     }
-
   }
 
-  @Override public void registerDVD(int materialID, int copyNumber,
-      String title, String publisher, String releaseDate, String description,
-      String tags, String targetAudience, String language,
-      String subtitlesLanguage, String creator, double playDuration)
+  @Override public void createBookCopy(int materialID, int copyNo)
   {
-
+    try
+    {
+      Book book = BookDAOImpl.getInstance().createBookCopy(materialID, copyNo);
+      materialList.addMaterial(book);
+      support.firePropertyChange(EventTypes.BOOK_COPY_CREATED, null, book);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public Material searchMaterial(String arg)

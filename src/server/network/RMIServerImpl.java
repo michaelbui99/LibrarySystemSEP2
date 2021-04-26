@@ -3,12 +3,11 @@ package server.network;
 
 import client.model.loan.Loan;
 import client.model.material.Material;
-import client.model.material.MaterialList;
 import server.model.LibraryModel;
 import shared.ClientCallback;
 import shared.RMIServer;
 import shared.util.EventTypes;
-import shared.util.constants;
+import shared.util.Constants;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -32,7 +31,7 @@ public class RMIServerImpl implements RMIServer
       throws RemoteException, AlreadyBoundException
   {
     Registry registry = LocateRegistry.createRegistry(1099);
-    registry.bind(constants.RMI_SERVER, this);
+    registry.bind(Constants.RMI_SERVER, this);
   }
 
   @Override public void registerLoan(Material material, String loanerCPR,
@@ -60,13 +59,17 @@ public class RMIServerImpl implements RMIServer
     });
   }
 
-  @Override public void registerBook(int materialID, int copyNumber,
+  @Override public void registerBook(int materialID,
       String title, String publisher, String releaseDate, String description,
       String tags, String targetAudience, String language, String isbn,
-      int pageCount)
+      int pageCount,int placeID)
   {
-    model.registerBook(materialID, copyNumber, title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount);
+    model.registerBook(materialID, title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount,placeID );
   }
 
+  @Override public void createBookCopy(int materialID, int copyNo)
+  {
+    model.createBookCopy(materialID, copyNo);
+  }
 
 }

@@ -1,6 +1,6 @@
 package shared.util;
 
-public class constants
+public class Constants
 {
   public static final String RMI_SERVER = "RMI_SERVER";
 }

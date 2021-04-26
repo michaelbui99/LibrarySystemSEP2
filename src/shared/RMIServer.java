@@ -31,7 +31,9 @@ public interface RMIServer extends Remote
    *                   If there does not exist an material with the ID yet
    *                   the system will auto generate a new Material in the Database with given params.
    */
-  void registerBook(int materialID, int copyNumber, String title, String publisher,
+  void registerBook(int materialID, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount) throws RemoteException;
+      String targetAudience, String language, String isbn, int pageCount, int placeID) throws RemoteException;
+
+  void createBookCopy(int materialID, int copyNo);
 }
