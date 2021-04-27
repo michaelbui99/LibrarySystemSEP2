@@ -1,6 +1,5 @@
 package server.model;
 
-import client.model.loan.Loaner;
 import client.model.material.Material;
 import shared.PropertyChangeSubject;
 
@@ -18,15 +17,37 @@ public interface LibraryModel extends PropertyChangeSubject
       throws IllegalStateException;
 
   /**
-   * Registers a new BookCopy in the Database and creates a new Book object which is stored in MaterialList.
+   * Registers a new Material in the system and binds it to a book.
    *
-   * @param materialID materialID is the ID for the material the book is bound to in DB.
-   *                   If there does not exist an material with the ID yet
-   *                   the system will auto generate a new Material in the Database with given params.
    */
-  void registerBook(int materialID, int copyNumber, String title,
-      String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount);
+  void registerBook(String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount, int placeID);
 
+  void createBookCopy(int materialID);
+
+  void registerDVD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID);
+
+  void createDVDCopy(int materialID);
+
+  void registerCD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, int placeID);
+
+  void createCDCopy(int materialID);
+
+  void registerEBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount, String licenseNr, String author, String genre);
+
+  void createEBookCopy(int materialID);
+
+
+  void registerAudioBook(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      double playDuration);
+
+  void createAudioBookCopy(int materialID);
   Material searchMaterial(String arg);
 }

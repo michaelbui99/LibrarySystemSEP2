@@ -4,7 +4,7 @@ import client.model.loan.Loan;
 import client.model.material.Material;
 import shared.ClientCallback;
 import shared.RMIServer;
-import shared.util.constants;
+import shared.util.Constants;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -40,7 +40,7 @@ public class RMIClient implements Client, ClientCallback
     try
     {
       registry = LocateRegistry.getRegistry(1099);
-      server = (RMIServer) registry.lookup(constants.RMI_SERVER);
+      server = (RMIServer) registry.lookup(Constants.RMI_SERVER);
       server.registerClientCallback(this);
     }
     catch (RemoteException | NotBoundException e)
@@ -63,14 +63,15 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public void registerBook(int materialID, int copyNumber,
-      String title, String publisher, String releaseDate, String description,
-      String tags, String targetAudience, String language, String isbn,
-      int pageCount)
+  @Override public void registerBook(int copyNumber, String title, String publisher, String releaseDate, String description,
+      String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      int placeID)
   {
     try
     {
-      server.registerBook(materialID, copyNumber, title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount);
+      server.registerBook(title, publisher, releaseDate, description, tags,
+          targetAudience, language, isbn, pageCount,placeID);
     }
     catch (RemoteException e)
     {

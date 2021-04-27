@@ -1,15 +1,17 @@
 package server.model;
 
+import client.model.material.DVD;
 import client.model.material.MaterialList;
+import client.model.material.audio.AudioBook;
+import client.model.material.audio.CD;
 import client.model.material.reading.Book;
+import client.model.material.reading.EBook;
 import database.*;
 import shared.util.EventTypes;
-import server.model.LibraryModel;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
 import client.model.material.Material;
 import client.model.material.MaterialStatus;
-import shared.util.IDGenerator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -30,22 +32,20 @@ public class LibraryModelManager implements LibraryModel
     materialList = new MaterialList();
   }
 
-
   /**
-  * Formats the current time to dd/MM/yyyy format
+   * Formats the current time to dd/MM/yyyy format
+   *
    * @return Current time in dd/MM/yyyy as String
-  * */
+   */
   private String calcDateTime()
   {
-      SimpleDateFormat sdf = new SimpleDateFormat(
-          "yyyy-MM-dd");
-      Date now = new Date();
-      return sdf.format(now);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date now = new Date();
+    return sdf.format(now);
   }
 
-
-
-  @Override public void registerLoan(Material material, String loanerCPR, String deadline)
+  @Override public void registerLoan(Material material, String loanerCPR,
+      String deadline)
   {
     if (material.getMaterialStatus().equals(MaterialStatus.NotAvailable))
     {
@@ -57,8 +57,9 @@ public class LibraryModelManager implements LibraryModel
       Loan loan = null;
       try
       {
-        loan = LoanDAOImpl
-            .getInstance().create(material.getMaterialID(),material.getCopyNumber(),loanerCPR,null,calcDateTime(),deadline);
+        loan = LoanDAOImpl.getInstance()
+            .create(material.getMaterialID(), material.getCopyNumber(),
+                loanerCPR, null, calcDateTime(), deadline);
       }
       catch (SQLException throwables)
       {
@@ -69,29 +70,57 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-
-  @Override public void registerBook(int materialID, int copyNumber,
-      String title, String publisher, String releaseDate, String description,
-      String tags, String targetAudience, String language, String isbn,
-      int pageCount)
+  @Override public void registerBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      int placeID)
   {
     try
     {
       //Creates new material in Database and saves the generated id in variable if material does NOT already exist in DB.
-      int generatedID = 0;
-      if (!MaterialDAOImpl.getInstance().materialExistInDB(materialID))
-      {
-        generatedID = MaterialDAOImpl
-            .getInstance().create(title,publisher, releaseDate,description, tags, targetAudience, language);
-      //Creates new MaterialCopy in DB
-        createBookCopy(generatedID, copyNumber/*, isbn, pageCount*/);
-      }
-      else
-      {
-        createBookCopy(materialID, copyNumber/*, isbn, pageCount*/);
-      }
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+      BookDAOImpl.getInstance().create(generatedID, isbn, pageCount, placeID);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
+  @Override public void createBookCopy(int materialID)
+  {
+    try
+    {
+      Book book = BookDAOImpl.getInstance().createBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      materialList.addMaterial(book);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, book);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
+  @Override public void registerDVD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage,
+      double playDuration, int placeID)
+  {
+    //TODO: Mangler muligvis genre i DB, og er derfor sat til null indtil videre.
+    try
+    {
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+      DVDDAOImpl.getInstance()
+          .create(generatedID, title, targetAudience, description, tags,
+              publisher, language, releaseDate, subtitlesLanguage,
+              (int) playDuration, null);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
     }
     catch (SQLException throwables)
     {
@@ -100,16 +129,129 @@ public class LibraryModelManager implements LibraryModel
 
   }
 
-  private void createBookCopy(int materialID, int copyNumber/*, String isbn,
-      int pageCount*/) throws SQLException
+  @Override public void createDVDCopy(int materialID)
   {
-    MaterialCopyDAOImpl.getInstance().create(materialID, copyNumber);
-    Book book = BookCopyDAOImpl.getInstance()
-        .create(materialID, copyNumber/*, isbn, pageCount*/);
-    materialList.addMaterial(book);
-    support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, book);
+    try
+    {
+      DVD dvd = DVDDAOImpl.getInstance().createDVDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      materialList.addMaterial(dvd);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, dvd);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
+  @Override public void registerCD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, int placeID)
+  {
+    try
+    {
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+      CDDAOImpl.getInstance()
+          .create(generatedID, title, targetAudience, description, tags,
+              publisher, language, releaseDate, (int) playDuration, null);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+
+  }
+
+  @Override public void createCDCopy(int materialID)
+  {
+    try
+    {
+      CD cd = CDDAOImpl.getInstance().createCDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      materialList.addMaterial(cd);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, cd);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void registerEBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      String licenseNr, String author, String genre)
+  {
+    try
+    {
+      //TODO: Find ud af hvordan et licensNR til Ebook ser ud, så vi ved om det skal være String eller Int.
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+      EbogDAOImpl.getInstance()
+          .create(generatedID, title, targetAudience, description, tags,
+              publisher, language, releaseDate, pageCount,
+              Integer.parseInt(licenseNr), genre, author);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+
+  }
+
+  @Override public void createEBookCopy(int materialID)
+  {
+    try
+    {
+      EBook eBook = EbogDAOImpl.getInstance().createEBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      materialList.addMaterial(eBook);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, eBook);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+
+  }
+
+  @Override public void registerAudioBook(String title, String publisher, String releaseDate, String description,
+      String tags, String targetAudience, String language, double playDuration)
+  {
+    try
+    {
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+    LydbogDAOImpl.getInstance().create(generatedID,title,targetAudience,description,tags
+    ,publisher,language,releaseDate,(int) playDuration, null);
+    support.firePropertyChange(EventTypes.MATERIAL_REGISTERED,null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
+
+  @Override public void createAudioBookCopy(int materialID)
+  {
+    try
+    {
+      AudioBook audioBook = LydbogDAOImpl.getInstance().createAudioBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+    materialList.addMaterial(audioBook);
+    support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, audioBook);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
   @Override public Material searchMaterial(String arg)
   {
@@ -132,7 +274,7 @@ public class LibraryModelManager implements LibraryModel
   @Override public void removePropertyChangeListener(String name,
       PropertyChangeListener listener)
   {
-    support.removePropertyChangeListener(name,listener);
+    support.removePropertyChangeListener(name, listener);
   }
 
   @Override public void removePropertyChangeListener(
@@ -140,4 +282,5 @@ public class LibraryModelManager implements LibraryModel
   {
     support.removePropertyChangeListener(listener);
   }
+
 }

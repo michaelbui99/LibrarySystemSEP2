@@ -1,61 +1,104 @@
 package database;
 
+import client.model.material.reading.Book;
+
 import java.sql.*;
+import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class BookDAOImpl extends BaseDAO implements BookDAO{
+public class BookDAOImpl extends BaseDAO implements BookDAO
+{
 
-    private static BookDAO instance;
-    private static final Lock lock = new ReentrantLock();
+  private static BookDAO instance;
+  private static final Lock lock = new ReentrantLock();
 
-    public static BookDAO getInstance()
+  public static BookDAO getInstance()
+  {
+    //Double lock check for Thread safety
+    if (instance == null)
     {
-        //Double lock check for Thread safety
+      synchronized (lock)
+      {
         if (instance == null)
         {
-            synchronized (lock)
-            {
-                if (instance == null)
-                {
-                    instance = new BookDAOImpl();
-                }
-            }
+          instance = new BookDAOImpl();
         }
-        return instance;
+      }
     }
+    return instance;
+  }
 
-
-    @Override
-    public int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forfatter,String genre, String forlag, String sprog, String udgivelsesdato, int sidetal, int isbn) throws SQLException {
-        try (Connection connection = getConnection())
-        {
-            PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forfatter, genre, kopiNr,sprog, udgivelsesDato, sidetal, isbn) values (?,?,?,?,?,?,?,?,?,?,?,?)",
-                    PreparedStatement.RETURN_GENERATED_KEYS);
-            stm.setInt(1, materialeid);
-            stm.setString(2, titel);
-            stm.setString(3, maalgruppe);
-            stm.setString(4, beskrivelseafindholdet);
-            stm.setString(5, emneord);
-            stm.setString(6, forfatter);
-            stm.setString(7, genre);
-            stm.setString(8, forlag);
-            stm.setString(9, sprog);
-            stm.setDate(10, Date.valueOf(udgivelsesdato));
-            stm.setInt(11, sidetal);
-            stm.setInt(12, isbn);
-
-            stm.executeUpdate();
-            ResultSet keys = stm.getGeneratedKeys();
-            keys.next();
-            connection.commit();
-            return keys.getInt(1);
-        }
-    }
-
-    @Override
-    public void create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forfatter,String genre, String forlag, String sprog, String udgivelsesdato, int sidetal, int isbn, Connection connection) {
+  @Override public void create(int materialID, String isbn, int pageCount,
+      int placeID) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "INSERT INTO BOOK(material_id, page_no, isbn, place_id) values (?,?,?,?)",
+          PreparedStatement.RETURN_GENERATED_KEYS);
+      stm.setInt(1, materialID);
+      stm.setInt(2, pageCount);
+      stm.setString(3, isbn);
+      stm.setInt(4, placeID);
+      stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
+      keys.next();
+      connection.commit();
 
     }
+  }
+
+  @Override public Book createBookCopy(int materialID, int copyNo)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      //Creates material_copy
+      PreparedStatement stm = connection.prepareStatement(
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+      stm.setInt(1, materialID);
+      stm.setInt(2, copyNo);
+      stm.executeUpdate();
+      connection.commit();
+
+      //Finds the necessary details to create the Book object from DB.
+      ResultSet bookDetails = getBookDetailsByID(materialID);
+      if (bookDetails.next())
+      {
+        //Creates and returns a Book object if a book with given materialID exists.
+        return new Book(bookDetails.getInt("material_id"),
+            bookDetails.getInt("copy_no"), bookDetails.getString("title"),
+            bookDetails.getString("publisher"),
+            String.valueOf(bookDetails.getDate("release_date")),
+            bookDetails.getString("description_of_the_content"),
+            bookDetails.getString("keywords"),
+            bookDetails.getString("audience"),
+            bookDetails.getString("language_"), bookDetails.getString("isbn"),
+            bookDetails.getInt("page_no"));
+      }
+      return null;
+    }
+  }
+
+  @Override public ResultSet getBookDetailsByID(int materialID)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM material join material_copy USING (material_id) JOIN book using (material_id) where material_id = ?");
+      stm.setInt(1, materialID);
+      ResultSet result = stm.executeQuery();
+      if (result.next())
+      {
+        return result;
+      }
+      else
+        throw new NoSuchElementException(
+            "No book with materialID " + materialID + " exists.");
+    }
+  }
+
+
 }

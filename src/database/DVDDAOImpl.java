@@ -1,6 +1,10 @@
 package database;
 
+import client.model.material.DVD;
+import client.model.material.audio.CD;
+
 import java.sql.*;
+import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -29,7 +33,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO{
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, undertitelsprog, spillelængde, genre) values (?,?,?,?,?,?,?,?,?,?,?)",
+                    "INSERT INTO DVD (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, undertitelsprog, spillelængde, genre) values (?,?,?,?,?,?,?,?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             stm.setInt(1, materialeid);
             stm.setString(2, titel);
@@ -52,7 +56,55 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO{
     }
 
     @Override
-    public void create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int spillelængde, String genre, Connection connection) {
+    public DVD createDVDCopy(int materialID, int copyNo) throws SQLException {
+        try (Connection connection = getConnection())
+        {
+            //Creates material_copy
+            PreparedStatement stm = connection.prepareStatement(
+                    "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+            stm.setInt(1, materialID);
+            stm.setInt(2, copyNo);
+            stm.executeUpdate();
+            connection.commit();
 
+            //Finds the necessary details to create the DVD object from DB.
+            ResultSet DVDDetails = getDVDDetailsByID(materialID);
+            if (DVDDetails.next())
+            {
+                //Creates and returns a DVD object if a DVD with given materialID exists.
+                return new DVD(DVDDetails.getInt("material_id"),
+                        DVDDetails.getInt("copy_no"),
+                        DVDDetails.getString("title"),
+                        DVDDetails.getString("publisher"),
+                        String.valueOf(DVDDetails.getDate("release_date")),
+                        DVDDetails.getString("description_of_the_content"),
+                        DVDDetails.getString("keywords"),
+                        DVDDetails.getString("audience"),
+                        DVDDetails.getString("language_"),
+                        DVDDetails.getString("subtitlesLanguage"),
+                        DVDDetails.getString("creator"),
+                        DVDDetails.getDouble("playDuration"));
+            }
+            return null;
+        }
     }
+
+    @Override
+    public ResultSet getDVDDetailsByID(int materialID) throws SQLException, NoSuchElementException {
+        try (Connection connection = getConnection())
+        {
+            PreparedStatement stm = connection.prepareStatement(
+                    "SELECT * FROM material join material_copy USING (material_id) JOIN DVD using (material_id) where material_id = ?");
+            stm.setInt(1, materialID);
+            ResultSet result = stm.executeQuery();
+            if (result.next())
+            {
+                return result;
+            }
+            else
+                throw new NoSuchElementException(
+                        "No DVD with materialID " + materialID + " exists.");
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.*;
+import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -68,6 +69,23 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
       //If we find a match in Database we return true, if not we return false
       return result.next();
+    }
+  }
+
+  @Override public int getLatestCopyNo(int materialID) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT material_copy.copy_no FROM material join material_copy USING (material_id) where material_id = ? ORDER BY copy_no desc LIMIT 1;");
+      stm.setInt(1, materialID);
+      ResultSet resultSet = stm.executeQuery();
+      if (resultSet.next())
+      {
+        return resultSet.getInt(1);
+      }
+      else
+        throw new NoSuchElementException( "No material with materialID " + materialID + " exists.");
     }
   }
 

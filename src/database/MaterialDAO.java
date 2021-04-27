@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 public interface MaterialDAO
 {
@@ -16,5 +17,13 @@ public interface MaterialDAO
       String targetAudience, String language, Connection connection);
 
   boolean materialExistInDB(int materialID) throws SQLException;
+
+  /**
+   * Returns the latest copy number of the given material.
+   * @param materialID materialID is the ID of the material you want to find the latest copy number of.
+   * @exception NoSuchElementException NoSuchElementException is thrown if no Material with given materialID exists.
+   * */
+  int getLatestCopyNo(int materialID) throws SQLException,
+      NoSuchElementException;
 //  Material findByID(int id);
 }

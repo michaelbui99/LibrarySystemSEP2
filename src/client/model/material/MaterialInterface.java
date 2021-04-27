@@ -8,7 +8,7 @@ public interface MaterialInterface
   public String getTitle();
   public String getTargetAudience();
   public String getDescription();
-  public String getTags();
+  public String getKeywords();
   public String getPublisher();
   public String getReleaseDate();
   public String getLanguage();

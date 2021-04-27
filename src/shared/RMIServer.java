@@ -25,13 +25,39 @@ public interface RMIServer extends Remote
   void registerClientCallback(ClientCallback ccb) throws RemoteException;
 
   /**
-   * Registers a new BookCopy in the Database and creates a new Book object which is stored in MaterialList.
    *
-   * @param materialID materialID is the ID for the material the book is bound to in DB.
-   *                   If there does not exist an material with the ID yet
-   *                   the system will auto generate a new Material in the Database with given params.
+   *
    */
-  void registerBook(int materialID, int copyNumber, String title, String publisher,
+  void registerBook(String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount, int placeID) throws RemoteException;
+
+  void createBookCopy(int materialID);
+
+  void registerDVB(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount) throws RemoteException;
+      String targetAudience, String language, String subtitlesLanguage,
+      double playDuration, int placeID);
+
+  void createDVDCopy(int materialID);
+
+  void registerCD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, int placeID);
+
+  void createCDCopy(int materialID);
+
+  void registerEBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount, String licenseNr, String author, String genre);
+
+  void createEBookCopy(int materialID);
+
+
+  void registerAudioBook(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      double playDuration);
+
+  void createAudioBookCopy(int materialID);
+
+
 }
