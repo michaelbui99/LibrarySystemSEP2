@@ -10,7 +10,7 @@ public abstract class AudioMaterial extends Material
       String targetAudience, String language, double playDuration)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language,"",0); //jeg har tilføje isbn og pageCount fordi vi har super constructor og vi miste 2 arguments
+        tags, targetAudience, language);
     this.playDuration = playDuration;
   }
 

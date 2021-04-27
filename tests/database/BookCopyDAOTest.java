@@ -23,7 +23,7 @@ class BookCopyDAOTest
 
   @Test void testCreate() throws SQLException
   {
-    Book book = bookCopyDAO.create(i, 1, "321321-TEST", 200);
+    Book book = bookCopyDAO.create(i, 1);
     assertEquals("Hello", book.getTitle());
   }
 

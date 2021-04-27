@@ -12,7 +12,7 @@ public abstract class ReadingMaterial extends Material
       String targetAudience, String language, String isbn, int pageCount)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language, isbn, pageCount);
+        tags, targetAudience, language);
     this.isbn = isbn;
     this.pageCount = pageCount;
   }

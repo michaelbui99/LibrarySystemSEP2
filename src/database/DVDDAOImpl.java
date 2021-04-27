@@ -82,8 +82,9 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO{
                         DVDDetails.getString("audience"),
                         DVDDetails.getString("language_"),
                         DVDDetails.getString("subtitlesLanguage"),
-                        DVDDetails.getString("creator"),
-                        DVDDetails.getDouble("playDuration"));
+                        DVDDetails.getDouble("playDuration"),
+                        DVDDetails.getInt("place_id"));
+                // i removed the creator from here and i added place_id
             }
             return null;
         }

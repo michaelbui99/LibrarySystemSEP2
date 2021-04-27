@@ -13,7 +13,7 @@ public class DVD extends Material
       String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language, "", 0); //jeg har tilføje isbn og pageCount fordi vi har super constructor og vi miste 2 arguments
+        tags, targetAudience, language);
     this.subtitlesLanguage = subtitlesLanguage;
     this.playDuration = playDuration;
 

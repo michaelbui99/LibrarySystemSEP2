@@ -81,7 +81,9 @@ public class CDDAOImpl extends BaseDAO implements CDDAO{
                         cdDetails.getString("keywords"),
                         cdDetails.getString("audience"),
                         cdDetails.getString("language_"),
-                        cdDetails.getDouble("playDuration"));
+                        cdDetails.getDouble("playDuration"),
+                        cdDetails.getInt("place_id"));
+                       // i added the place_id
             }
             return null;
         }

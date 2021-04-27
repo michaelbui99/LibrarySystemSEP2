@@ -34,7 +34,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO Materiale (titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag,sprog, udgivelsesDato) values (?,?,?,?,?,?,?)",
+          "INSERT INTO Material ( title, audience, description_of_the_content, keywords, publisher,  language_, release_date) values (?,?,?,?,?,?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setString(1, title);
       stm.setString(2, targetAudience);
@@ -63,7 +63,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     try (Connection connection = getConnection())
     {
       //Checks Database for material with given ID.
-      PreparedStatement stm = connection.prepareStatement("SELECT * FROM Materiale where materialeid = ?");
+      PreparedStatement stm = connection.prepareStatement("SELECT * FROM Material where material_id = ?");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
 

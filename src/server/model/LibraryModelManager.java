@@ -15,6 +15,7 @@ import client.model.material.MaterialStatus;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,6 +71,16 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
+     public Book getBook(int materialID) throws SQLException
+     {
+
+       ResultSet rs = BookDAOImpl.getInstance().getBookDetailsByID(materialID);
+        Book temp = new Book(rs.getInt("material_id"), rs.getInt("copy_number"),rs.getString("title"),
+            rs.getString("publisher"), rs.getString("release_date"), rs.getString("description_of_the_content"),
+            rs.getString("keywords"), rs.getString("audience"), rs.getString("language_"), rs.getString("isbn"),
+            rs.getInt("page_no"));
+        return temp;
+     }
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
