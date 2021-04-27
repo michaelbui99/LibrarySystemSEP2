@@ -2,30 +2,26 @@ package client.model.material;
 
 public class DVD extends Material
 {
-  private String subtitlesLanguage, creator;
+  private int placeID;
+  private String subtitlesLanguage;
   private double playDuration;
 
 
 
   public DVD(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, String creator, double playDuration)
+      String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language);
     this.subtitlesLanguage = subtitlesLanguage;
-    this.creator = creator;
     this.playDuration = playDuration;
+    this.placeID = placeID;
   }
 
   public String getSubtitlesLanguage()
   {
     return subtitlesLanguage;
-  }
-
-  public String getCreator()
-  {
-    return creator;
   }
 
   public double getPlayDuration()
