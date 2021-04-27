@@ -1,6 +1,5 @@
 package server.model;
 
-import client.model.loan.Loaner;
 import client.model.material.Material;
 import shared.PropertyChangeSubject;
 
@@ -23,10 +22,15 @@ public interface LibraryModel extends PropertyChangeSubject
    * @param materialID materialID is the ID for the material the book is bound to in DB.
    *                   If there does not exist an material with the ID yet
    *                   the system will auto generate a new Material in the Database with given params.
+   * @param placeID
    */
-  void registerBook(int materialID, int copyNumber, String title,
-      String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount);
+  void registerBook(int materialID, String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      int placeID);
+
+
+  void createBookCopy(int materialID);
+
 
   Material searchMaterial(String arg);
 }
