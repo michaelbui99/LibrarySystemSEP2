@@ -36,14 +36,14 @@ class LibraryModelManagerTest
     @Test
   void registerBookTest() throws SQLException
     {
-     Book book1 =   new Book(5,2,"HELLO","Kocarian","2012-10-10","best book",
+     Book book1 =   new Book(11,2,"HELLO","Kocarian","2012-10-10","best book",
          "science","Voksen","Engelsk","",200);
 
      libraryModelManager.registerBook(book1.getTitle(), book1.getPublisher(), book1.getReleaseDate(), book1.getDescription(),
          "", book1.getTargetAudience(), book1.getLanguage(), book1.getIsbn(),
          book1.getPageCount(), 1);
 
-     assertEquals(5,this.libraryModelManager.getBook(5));
+     assertEquals(5,this.libraryModelManager.getBook(11));
     }
 
     @Test
