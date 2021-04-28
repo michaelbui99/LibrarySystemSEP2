@@ -20,27 +20,47 @@ public class RMIServerImpl implements RMIServer
 {
   private LibraryModel model;
 
-  public RMIServerImpl(LibraryModel model) throws RemoteException
+  public RMIServerImpl(LibraryModel model)
   {
     this.model = model;
-    UnicastRemoteObject.exportObject(this, 0);
+    try
+    {
+      UnicastRemoteObject.exportObject(this, 0);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public void startServer()
-      throws RemoteException, AlreadyBoundException
   {
-    Registry registry = LocateRegistry.createRegistry(1099);
-    registry.bind(Constants.RMI_SERVER, this);
+    Registry registry = null;
+    try
+    {
+      registry = LocateRegistry.createRegistry(1099);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    try
+    {
+      registry.bind(Constants.RMI_SERVER, this);
+    }
+    catch (RemoteException | AlreadyBoundException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public void registerLoan(Material material, String loanerCPR,
-      String deadline) throws RemoteException
+      String deadline)
   {
     model.registerLoan(material, loanerCPR, deadline);
   }
 
   @Override public void registerClientCallback(ClientCallback ccb)
-      throws RemoteException
   {
     model.addPropertyChangeListener(EventTypes.LOAN_REGISTERED,
         new PropertyChangeListener()
@@ -59,13 +79,11 @@ public class RMIServerImpl implements RMIServer
         });
   }
 
-  @Override public void registerBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      int placeID)
+  @Override public void registerBook(String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount, int placeID, int authorId, String genre,
+      String url)
   {
-    model.registerBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, isbn, pageCount, placeID);
+    model.registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, placeID, authorId, genre, url);
   }
 
   @Override public void createBookCopy(int materialID)
@@ -73,13 +91,13 @@ public class RMIServerImpl implements RMIServer
     model.createBookCopy(materialID);
   }
 
-  @Override public void registerDVB(String title, String publisher,
+  @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID)
+      double playDuration, int placeID,String genre, String url)
   {
     model.registerDVD(title, publisher, releaseDate, description, tags,
-        targetAudience, language, subtitlesLanguage, playDuration, placeID);
+        targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);
   }
 
   @Override public void createDVDCopy(int materialID)
@@ -89,9 +107,9 @@ public class RMIServerImpl implements RMIServer
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID)
+      String targetAudience, String language, double playDuration, int placeID, String genre, String url)
   {
-    model.registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID);
+    model.registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
   }
 
   @Override public void createCDCopy(int materialID)
@@ -101,10 +119,10 @@ public class RMIServerImpl implements RMIServer
 
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, String author, String genre)
+      String targetAudience, String language, String isbn, int pageCount, String licenseNr, int authorId, String genre,
+      String url)
   {
-    model.registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, author, genre);
+    model.registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, authorId, genre, url);
   }
 
   @Override public void createEBookCopy(int materialID)
@@ -114,9 +132,10 @@ public class RMIServerImpl implements RMIServer
 
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration)
+      String targetAudience, String language, double playDuration, String genre,
+      int authorId, String url)
   {
-    model.registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration);
+    model.registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId, url);
   }
 
   @Override public void createAudioBookCopy(int materialID)

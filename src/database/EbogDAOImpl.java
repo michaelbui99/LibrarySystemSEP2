@@ -29,30 +29,20 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
     }
 
     @Override
-    public int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int sidetal, int licensnr , String genre, String forfatter) throws SQLException {
+    public void create(int material_id, int page_no, int authorId, int license_no) throws SQLException {
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, sidetal, licensnr, genre, forfatter) values (?,?,?,?,?,?,?,?,?,?)",
+                    "INSERT INTO Bog (material_id, page_no, authorId, license_no) values (?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
-            stm.setInt(1, materialeid);
-            stm.setString(2, titel);
-            stm.setString(3, maalgruppe);
-            stm.setString(4, beskrivelseafindholdet);
-            stm.setString(5, emneord);
-            stm.setString(6, forlag);
-            stm.setString(7, sprog);
-            stm.setDate(8, Date.valueOf(udgivelsesdato));
-            stm.setInt(9, sidetal);
-            stm.setInt(10, licensnr);
-            stm.setString(11, genre);
-            stm.setString(12, forfatter);
-
+            stm.setInt(1, material_id);
+            stm.setInt(2, page_no);
+            stm.setInt(3, authorId);
+            stm.setInt(4, license_no);
             stm.executeUpdate();
             ResultSet keys = stm.getGeneratedKeys();
             keys.next();
             connection.commit();
-            return keys.getInt(1);
         }
     }
 

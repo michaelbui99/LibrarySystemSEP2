@@ -32,7 +32,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement( //the table structure needs to change to the values from the query so we can test it
-          "INSERT INTO laaner(laandato,deadline,afleveringsdato, cprnr, materialeid, kopinr) values (?,?,?,?,?,?)",
+          "INSERT INTO loan(loan_date,deadline,return_date, cpr_no, material_id, copy_no) values (?,?,?,?,?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setDate(1, Date.valueOf(loanDate));
       stm.setDate(2, Date.valueOf(deadline));
@@ -44,7 +44,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       ResultSet keys = stm.getGeneratedKeys();
       keys.next();
       connection.commit();
-      return new Loan(keys.getInt("laannr"),materialID,copyNumber,cpr,null,loanDate,deadline);
+      return new Loan(keys.getInt("loan_no"),materialID,copyNumber,cpr,null,loanDate,deadline);
     }
   }
 }

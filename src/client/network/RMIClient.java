@@ -63,19 +63,138 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public void registerBook(int copyNumber, String title, String publisher, String releaseDate, String description,
-      String tags,
+  @Override public void registerBook(String title, String publisher,
+      String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeID)
+      int placeID, int authorId, String genre, String url)
   {
     try
     {
-      server.registerBook(title, publisher, releaseDate, description, tags,
-          targetAudience, language, isbn, pageCount,placeID);
+      server.registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, placeID, authorId, genre, url);
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server connection failed");
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void createBookCopy(int materialID)
+  {
+    try
+    {
+      server.createBookCopy(materialID);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void registerDVD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage,
+      double playDuration, int placeID, String genre, String url)
+  {
+    try
+    {
+      server.registerDVD(title, publisher, releaseDate, description, tags, targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void createDVDCopy(int materialID)
+  {
+    try
+    {
+      server.createDVDCopy(materialID);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void registerCD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, int placeID,
+      String genre, String url)
+  {
+    try
+    {
+      server.registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void createCDCopy(int materialID)
+  {
+    try
+    {
+      server.createCDCopy(materialID);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void registerEBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      String licenseNr, int authorId, String genre, String url)
+  {
+    try
+    {
+      server.registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, authorId, genre, url);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void createEBookCopy(int materialID)
+  {
+    try
+    {
+      server.createEBookCopy(materialID);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void registerAudioBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, String genre,
+      int authorId, String url)
+  {
+    try
+    {
+      server.registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId,url );
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void createAudioBookCopy(int materialID)
+  {
+    try
+    {
+      server.createAudioBookCopy(materialID);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
     }
   }
 

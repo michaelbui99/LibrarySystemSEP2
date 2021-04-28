@@ -12,10 +12,9 @@ public class Test
     LibraryModel model = new LibraryModelManager();
     RMIServer rmiServer = new RMIServerImpl(model);
     rmiServer
-        .registerBook("Hello", "TEST Publisher!", "1999-09-14", "hello",
-            "Helolo", "Voksen", "Dansk", "TEST-TEST", 1, 200);
+        .registerBook("as", "ddee", "2020-01-01", "dreewqt", "ddbh", "Voksen", "Dansk", "12345", 500, 1, 1, "nothing", null);
 
-
+      rmiServer.createBookCopy(1);
   //  rmiServer.registerLoan(model.searchMaterial("1"), "111111-1111", "1999-12-12");
   }
 }

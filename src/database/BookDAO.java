@@ -18,7 +18,7 @@ public interface BookDAO
      * @param pageCount pageCount is the total amount pages in the book.
      * @param placeID placeID is the ID of the physical placement of the book.
     * */
-  void create(int materialID, String isbn, int pageCount, int placeID) throws SQLException;
+  void create(int materialID, String isbn, int pageCount, int authorId, int placeID) throws SQLException;
 
   Book createBookCopy(int materialID, int copyNo) throws SQLException;
 

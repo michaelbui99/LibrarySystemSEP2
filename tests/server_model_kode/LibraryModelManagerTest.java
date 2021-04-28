@@ -1,10 +1,7 @@
 package server_model_kode;
 
-import client.model.loan.Loan;
-import client.model.material.DVD;
 import client.model.material.Material;
 import client.model.material.reading.Book;
-import client.model.material.reading.ReadingMaterial;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.model.LibraryModelManager;
@@ -22,33 +19,52 @@ class LibraryModelManagerTest
    void setUp(){
 
      libraryModelManager = new LibraryModelManager();
-     material = new Book(4,2,"HELLO","Kocarian","2012-10-10","best book",
-         "science","Voksen","Engelsk","",200);
+     material = new Book(2,2,"HELLO","Kocarian","2012-10-10","best book",
+         "science","Voksen","Engelsk","123",200, 1);
    }
 
    @Test
-    void registerLoanTest(){
+    void registerLoanTest() throws SQLException
+   {
 
-     libraryModelManager.registerLoan(material,"45454545","15-08-2021");
+     libraryModelManager.registerLoan(libraryModelManager.getBook(1),"111111-1111","2021-05-06");
     //we need to write a function to get the loan by materialId and cpr
     }
 
-    @Test
+   @Test
   void registerBookTest() throws SQLException
     {
-     Book book1 =   new Book(5,2,"HELLO","Kocarian","2012-10-10","best book",
-         "science","Voksen","Engelsk","",200);
+     libraryModelManager.registerBook("aa", "bb", "2020-01-01", "cc", "dd", "Voksen", "Dansk", "123456", 500,
+         1,1,"hh", null);
 
-     libraryModelManager.registerBook(book1.getTitle(), book1.getPublisher(), book1.getReleaseDate(), book1.getDescription(),
-         "", book1.getTargetAudience(), book1.getLanguage(), book1.getIsbn(),
-         book1.getPageCount(), 1);
-
-     assertEquals(5,this.libraryModelManager.getBook(5));
+     assertEquals(1,this.libraryModelManager.getBook(1).getMaterialID());
     }
 
     @Test
   void createBookCopyTest(){
-    libraryModelManager.createBookCopy(this.material.getMaterialID());
+    libraryModelManager.createBookCopy(8);
+
+    }
+    @Test
+  void registerCdTest() throws SQLException
+    {
+     libraryModelManager.registerCD("aa","me", "2020-01-01", "lala", "bla", "Voksen", "Dansk", 22.5, 1,"sd", null);
+    }
+
+    @Test
+  void createCdCopyTest(){
+    libraryModelManager.createBookCopy(8);
+
+    }
+    @Test
+  void registerDvdTest() throws SQLException
+    {
+     libraryModelManager.registerDVD("aa","me", "2020-01-01", "lala", "bla", "Voksen", "Dansk", "Dansk", 1.1, 1, "rrr", null);
+    }
+
+    @Test
+  void createCdDvdTest(){
+    libraryModelManager.createBookCopy(8);
 
     }
 
