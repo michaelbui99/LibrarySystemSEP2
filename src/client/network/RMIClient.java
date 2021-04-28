@@ -63,14 +63,15 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public void registerBook(int materialID, int copyNumber,
-      String title, String publisher, String releaseDate, String description,
-      String tags, String targetAudience, String language, String isbn,
-      int pageCount)
+  @Override public void registerBook(int copyNumber, String title, String publisher, String releaseDate, String description,
+      String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      int placeID)
   {
     try
     {
-      server.registerBook(materialID, copyNumber, title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount);
+      server.registerBook(title, publisher, releaseDate, description, tags,
+          targetAudience, language, isbn, pageCount,placeID);
     }
     catch (RemoteException e)
     {

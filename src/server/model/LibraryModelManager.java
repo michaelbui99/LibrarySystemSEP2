@@ -1,7 +1,11 @@
 package server.model;
 
+import client.model.material.DVD;
 import client.model.material.MaterialList;
+import client.model.material.audio.AudioBook;
+import client.model.material.audio.CD;
 import client.model.material.reading.Book;
+import client.model.material.reading.EBook;
 import database.*;
 import shared.util.EventTypes;
 import client.model.loan.Loan;
@@ -66,8 +70,8 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public void registerBook(int materialID, String title,
-      String publisher, String releaseDate, String description, String tags,
+  @Override public void registerBook(String title, String publisher,
+      String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
       int placeID)
   {
@@ -75,10 +79,10 @@ public class LibraryModelManager implements LibraryModel
     {
       //Creates new material in Database and saves the generated id in variable if material does NOT already exist in DB.
       int generatedID = MaterialDAOImpl.getInstance()
-          .create("title", publisher, releaseDate, description, tags,
+          .create(title, publisher, releaseDate, description, tags,
               targetAudience, language);
       BookDAOImpl.getInstance().create(generatedID, isbn, pageCount, placeID);
-      support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, null);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
     }
     catch (SQLException throwables)
     {
@@ -90,9 +94,158 @@ public class LibraryModelManager implements LibraryModel
   {
     try
     {
-      Book book = BookDAOImpl.getInstance().createBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID)+1);
+      Book book = BookDAOImpl.getInstance().createBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
       materialList.addMaterial(book);
-      support.firePropertyChange(EventTypes.BOOK_COPY_CREATED, null, book);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, book);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
+
+  @Override public void registerDVD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage,
+      double playDuration, int placeID)
+  {
+    //TODO: Mangler muligvis genre i DB, og er derfor sat til null indtil videre.
+    try
+    {
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+      DVDDAOImpl.getInstance()
+          .create(generatedID, title, targetAudience, description, tags,
+              publisher, language, releaseDate, subtitlesLanguage,
+              (int) playDuration, null);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+
+  }
+
+  @Override public void createDVDCopy(int materialID)
+  {
+    try
+    {
+      DVD dvd = DVDDAOImpl.getInstance().createDVDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      materialList.addMaterial(dvd);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, dvd);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
+
+  @Override public void registerCD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, int placeID)
+  {
+    try
+    {
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+      CDDAOImpl.getInstance()
+          .create(generatedID, title, targetAudience, description, tags,
+              publisher, language, releaseDate, (int) playDuration, null);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+
+  }
+
+  @Override public void createCDCopy(int materialID)
+  {
+    try
+    {
+      CD cd = CDDAOImpl.getInstance().createCDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      materialList.addMaterial(cd);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, cd);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void registerEBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      String licenseNr, String author, String genre)
+  {
+    try
+    {
+      //TODO: Find ud af hvordan et licensNR til Ebook ser ud, så vi ved om det skal være String eller Int.
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+      EbogDAOImpl.getInstance()
+          .create(generatedID, title, targetAudience, description, tags,
+              publisher, language, releaseDate, pageCount,
+              Integer.parseInt(licenseNr), genre, author);
+      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+
+  }
+
+  @Override public void createEBookCopy(int materialID)
+  {
+    try
+    {
+      EBook eBook = EbogDAOImpl.getInstance().createEBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      materialList.addMaterial(eBook);
+      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, eBook);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+
+  }
+
+  @Override public void registerAudioBook(String title, String publisher, String releaseDate, String description,
+      String tags, String targetAudience, String language, double playDuration)
+  {
+    try
+    {
+      int generatedID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, tags,
+              targetAudience, language);
+    LydbogDAOImpl.getInstance().create(generatedID,title,targetAudience,description,tags
+    ,publisher,language,releaseDate,(int) playDuration, null);
+    support.firePropertyChange(EventTypes.MATERIAL_REGISTERED,null, null);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
+
+  @Override public void createAudioBookCopy(int materialID)
+  {
+    try
+    {
+      AudioBook audioBook = LydbogDAOImpl.getInstance().createAudioBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+    materialList.addMaterial(audioBook);
+    support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, audioBook);
     }
     catch (SQLException throwables)
     {
@@ -130,13 +283,4 @@ public class LibraryModelManager implements LibraryModel
     support.removePropertyChangeListener(listener);
   }
 
-  private void createBookCopy(int materialID, int copyNumber, String isbn,
-      int pageCount) throws SQLException
-  {
-    MaterialCopyDAOImpl.getInstance().create(materialID, copyNumber);
-    Book book = BookCopyDAOImpl.getInstance()
-        .create(materialID, copyNumber, isbn, pageCount);
-    materialList.addMaterial(book);
-    support.firePropertyChange(EventTypes.BOOK_REGISTERED, null, book);
-  }
 }
