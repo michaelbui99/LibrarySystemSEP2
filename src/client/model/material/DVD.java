@@ -16,6 +16,7 @@ public class DVD extends Material
         tags, targetAudience, language);
     this.subtitlesLanguage = subtitlesLanguage;
     this.playDuration = playDuration;
+
     this.placeID = placeID;
   }
 

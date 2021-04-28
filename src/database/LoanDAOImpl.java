@@ -31,8 +31,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO laan(laandato,deadline,afleveringsdato, cprnr, materialeid, kopinr) values (?,?,?,?,?,?)",
+      PreparedStatement stm = connection.prepareStatement( //the table structure needs to change to the values from the query so we can test it
+          "INSERT INTO laaner(laandato,deadline,afleveringsdato, cprnr, materialeid, kopinr) values (?,?,?,?,?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setDate(1, Date.valueOf(loanDate));
       stm.setDate(2, Date.valueOf(deadline));
