@@ -12,9 +12,7 @@ public interface MaterialDAO
   * */
   int create( String title,
       String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language) throws SQLException;
-  void create(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, Connection connection);
+      String targetAudience, String language, String genre, String url) throws SQLException;
 
   boolean materialExistInDB(int materialID) throws SQLException;
 

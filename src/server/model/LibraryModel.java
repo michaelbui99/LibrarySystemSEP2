@@ -21,32 +21,33 @@ public interface LibraryModel extends PropertyChangeSubject
    *
    */
   void registerBook(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, int placeID);
+      String targetAudience, String language, String isbn, int pageCount, int placeID, int authorId, String genre,
+      String url);
 
   void createBookCopy(int materialID);
 
-  void registerDVD(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID);
+  void registerDVD(String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID, String genre,
+      String url);
 
   void createDVDCopy(int materialID);
 
-  void registerCD(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID);
+  void registerCD(String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, int placeID, String genre,
+      String url);
 
   void createCDCopy(int materialID);
 
-  void registerEBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, String licenseNr, String author, String genre);
+  void registerEBook(String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount, String licenseNr, int authorId, String genre,
+      String url);
 
   void createEBookCopy(int materialID);
 
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      double playDuration);
+      double playDuration, String genre, int authorId, String url);
 
   void createAudioBookCopy(int materialID);
   Material searchMaterial(String arg);

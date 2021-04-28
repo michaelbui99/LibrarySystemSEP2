@@ -75,24 +75,23 @@ public class LibraryModelManager implements LibraryModel
      {
 
        ResultSet rs = BookDAOImpl.getInstance().getBookDetailsByID(materialID);
-        Book temp = new Book(rs.getInt("material_id"), rs.getInt("copy_number"),rs.getString("title"),
+        Book temp = new Book(rs.getInt("material_id"), rs.getInt("copy_no"),rs.getString("title"),
             rs.getString("publisher"), rs.getString("release_date"), rs.getString("description_of_the_content"),
             rs.getString("keywords"), rs.getString("audience"), rs.getString("language_"), rs.getString("isbn"),
-            rs.getInt("page_no"));
+            rs.getInt("page_no"), rs.getInt("place_id"));
         return temp;
      }
-  @Override public void registerBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      int placeID)
+  @Override public void registerBook(String title, String publisher, String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount, int placeID, int authorId, String genre,
+      String url)
   {
     try
     {
       //Creates new material in Database and saves the generated id in variable if material does NOT already exist in DB.
       int generatedID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, tags,
-              targetAudience, language);
-      BookDAOImpl.getInstance().create(generatedID, isbn, pageCount, placeID);
+              targetAudience, language, genre, url);
+      BookDAOImpl.getInstance().create(generatedID, isbn, pageCount,  authorId, placeID);
       support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
     }
     catch (SQLException throwables)
@@ -119,18 +118,15 @@ public class LibraryModelManager implements LibraryModel
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID)
+      double playDuration, int placeID, String genre, String url)
   {
     //TODO: Mangler muligvis genre i DB, og er derfor sat til null indtil videre.
     try
     {
       int generatedID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, tags,
-              targetAudience, language);
-      DVDDAOImpl.getInstance()
-          .create(generatedID, title, targetAudience, description, tags,
-              publisher, language, releaseDate, subtitlesLanguage,
-              (int) playDuration, null);
+              targetAudience, language, genre, url);
+      DVDDAOImpl.getInstance().create(generatedID, subtitlesLanguage, playDuration, placeID);
       support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
     }
     catch (SQLException throwables)
@@ -157,16 +153,15 @@ public class LibraryModelManager implements LibraryModel
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID)
+      String targetAudience, String language, double playDuration, int placeID,
+      String genre, String url)
   {
     try
     {
       int generatedID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, tags,
-              targetAudience, language);
-      CDDAOImpl.getInstance()
-          .create(generatedID, title, targetAudience, description, tags,
-              publisher, language, releaseDate, (int) playDuration, null);
+              targetAudience, language, genre, url);
+      CDDAOImpl.getInstance().create(generatedID, (int) playDuration, placeID);
       support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
     }
     catch (SQLException throwables)
@@ -193,19 +188,17 @@ public class LibraryModelManager implements LibraryModel
 
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, String author, String genre)
+      String targetAudience, String language, String isbn, int pageCount, String licenseNr, int authorId, String genre,
+      String url)
   {
     try
     {
       //TODO: Find ud af hvordan et licensNR til Ebook ser ud, så vi ved om det skal være String eller Int.
       int generatedID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, tags,
-              targetAudience, language);
+              targetAudience, language, genre, url);
       EbogDAOImpl.getInstance()
-          .create(generatedID, title, targetAudience, description, tags,
-              publisher, language, releaseDate, pageCount,
-              Integer.parseInt(licenseNr), genre, author);
+          .create(generatedID, pageCount, authorId, Integer.parseInt(licenseNr));
       support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
     }
     catch (SQLException throwables)
@@ -232,15 +225,16 @@ public class LibraryModelManager implements LibraryModel
   }
 
   @Override public void registerAudioBook(String title, String publisher, String releaseDate, String description,
-      String tags, String targetAudience, String language, double playDuration)
+      String tags, String targetAudience, String language, double playDuration, String genre,
+      int authorId, String url)
   {
     try
     {
       int generatedID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, tags,
-              targetAudience, language);
-    LydbogDAOImpl.getInstance().create(generatedID,title,targetAudience,description,tags
-    ,publisher,language,releaseDate,(int) playDuration, null);
+              targetAudience, language ,genre, url);
+    audiobookDAOImpl
+        .getInstance().create(generatedID, playDuration, authorId);
     support.firePropertyChange(EventTypes.MATERIAL_REGISTERED,null, null);
     }
     catch (SQLException throwables)
@@ -253,7 +247,7 @@ public class LibraryModelManager implements LibraryModel
   {
     try
     {
-      AudioBook audioBook = LydbogDAOImpl.getInstance().createAudioBookCopy(materialID,
+      AudioBook audioBook = audiobookDAOImpl.getInstance().createAudioBookCopy(materialID,
           MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
     materialList.addMaterial(audioBook);
     support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, audioBook);

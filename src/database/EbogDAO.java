@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
 public interface EbogDAO {
-    int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int sidetal, int licensnr, String genre, String forfatter ) throws SQLException;
+    void create(int material_id, int page_no, int authorId, int license_no) throws SQLException;
     EBook createEBookCopy(int materialID, int copyNo) throws SQLException;
 
     ResultSet getEBookDetailsByID(int materialID) throws SQLException,

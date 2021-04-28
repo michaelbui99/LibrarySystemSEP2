@@ -1,19 +1,19 @@
 package database;
 
 import client.model.material.audio.AudioBook;
-import client.model.material.audio.CD;
 
 import java.sql.*;
 import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class LydbogDAOImpl extends BaseDAO implements LydbogDAO{
+public class audiobookDAOImpl extends BaseDAO implements audiobookDAO
+{
 
-    private static LydbogDAO instance;
+    private static audiobookDAO instance;
     private static final Lock lock = new ReentrantLock();
 
-    public static LydbogDAO getInstance()
+    public static audiobookDAO getInstance()
     {
         //Double lock check for Thread safety
         if (instance == null)
@@ -22,7 +22,7 @@ public class LydbogDAOImpl extends BaseDAO implements LydbogDAO{
             {
                 if (instance == null)
                 {
-                    instance = new LydbogDAOImpl();
+                    instance = new audiobookDAOImpl();
                 }
             }
         }
@@ -30,28 +30,19 @@ public class LydbogDAOImpl extends BaseDAO implements LydbogDAO{
     }
 
     @Override
-    public int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato, int spillelængde,String genre) throws SQLException {
+    public void create(int material_id, double length_,int authorId) throws SQLException {
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (materialeid, titel, maalgruppe, beskrivelseAfIndholdet, emneord, forlag, sprog, udgivelsesDato, spillelængde, genre) values (?,?,?,?,?,?,?,?,?,?)",
+                    "INSERT INTO Bog (material_id, length_, authorId) values (?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
-            stm.setInt(1, materialeid);
-            stm.setString(2, titel);
-            stm.setString(3, maalgruppe);
-            stm.setString(4, beskrivelseafindholdet);
-            stm.setString(5, emneord);
-            stm.setString(6, forlag);
-            stm.setString(7, sprog);
-            stm.setDate(8, Date.valueOf(udgivelsesdato));
-            stm.setInt(9, spillelængde);
-            stm.setString(10, genre);
-
-            stm.executeUpdate();
+            stm.setInt(1, material_id);
+            stm.setDouble(2, length_);
+            stm.setInt(3, authorId);
+                      stm.executeUpdate();
             ResultSet keys = stm.getGeneratedKeys();
             keys.next();
             connection.commit();
-            return keys.getInt(1);
         }
     }
 

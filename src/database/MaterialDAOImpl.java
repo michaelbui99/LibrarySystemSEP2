@@ -29,12 +29,12 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
   @Override public int create( String title,
       String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language) throws SQLException
+      String targetAudience, String language, String genre, String url) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO Material ( title, audience, description_of_the_content, keywords, publisher,  language_, release_date) values (?,?,?,?,?,?,?)",
+          "INSERT INTO Material ( title, audience, description_of_the_content, keywords, publisher,  language_, release_date, genre, url) values (?,?,?,?,?,?,?,?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setString(1, title);
       stm.setString(2, targetAudience);
@@ -43,6 +43,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       stm.setString(5, publisher);
       stm.setString(6, language);
       stm.setDate(7, Date.valueOf(releaseDate));
+      stm.setString(8, genre);
+      stm.setString(9, url);
 
       stm.executeUpdate();
       ResultSet keys = stm.getGeneratedKeys();
@@ -51,13 +53,6 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       return keys.getInt(1);
     }
   }
-
-  @Override public void create(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, Connection connection)
-  {
-
-  }
-
   @Override public boolean materialExistInDB(int materialID) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -84,8 +79,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       {
         return resultSet.getInt(1);
       }
-      else
-        throw new NoSuchElementException( "No material with materialID " + materialID + " exists.");
+      else return 0;
+       // throw new NoSuchElementException( "No material with materialID " + materialID + " exists.");
     }
   }
 

@@ -29,18 +29,19 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return instance;
   }
 
-  @Override public void create(int materialID, String isbn, int pageCount,
+  @Override public void create(int materialID, String isbn, int pageCount, int authorId,
       int placeID) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO BOOK(material_id, page_no, isbn, place_id) values (?,?,?,?)",
+          "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, materialID);
       stm.setInt(2, pageCount);
-      stm.setString(3, isbn);
-      stm.setInt(4, placeID);
+      stm.setInt( 3,authorId);
+      stm.setString(4, isbn);
+      stm.setInt(5, placeID);
       stm.executeUpdate();
       ResultSet keys = stm.getGeneratedKeys();
       keys.next();
@@ -75,7 +76,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
             bookDetails.getString("keywords"),
             bookDetails.getString("audience"),
             bookDetails.getString("language_"), bookDetails.getString("isbn"),
-            bookDetails.getInt("page_no"));
+            bookDetails.getInt("page_no"), bookDetails.getInt("place_id"));
       }
       return null;
     }

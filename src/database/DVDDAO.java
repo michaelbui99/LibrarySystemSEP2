@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 public interface DVDDAO {
 
-    int create(int materialeid, String titel, String maalgruppe, String beskrivelseafindholdet, String emneord, String forlag, String sprog, String udgivelsesdato,String undertitelsprog, int spillelængde,String genre) throws SQLException;
+    void create(int material_id,String subtitle_lang, double length_,int place_id) throws SQLException;
     DVD createDVDCopy(int materialID, int copyNo) throws SQLException;
 
     ResultSet getDVDDetailsByID(int materialID) throws SQLException,
