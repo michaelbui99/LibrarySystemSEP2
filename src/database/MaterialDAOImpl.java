@@ -1,6 +1,11 @@
 package database;
 
+import client.model.material.Material;
+import client.model.material.reading.Book;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -27,9 +32,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return instance;
   }
 
-  @Override public int create( String title,
-      String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String genre, String url) throws SQLException
+  @Override public int create(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String genre, String url)
+      throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -53,12 +59,14 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       return keys.getInt(1);
     }
   }
+
   @Override public boolean materialExistInDB(int materialID) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       //Checks Database for material with given ID.
-      PreparedStatement stm = connection.prepareStatement("SELECT * FROM Material where material_id = ?");
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM Material where material_id = ?");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
 
@@ -79,13 +87,70 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       {
         return resultSet.getInt(1);
       }
-      else return 0;
-       // throw new NoSuchElementException( "No material with materialID " + materialID + " exists.");
+      else
+        return 0;
+      // throw new NoSuchElementException( "No material with materialID " + materialID + " exists.");
+    }
+  }
+
+  @Override public List<Material> getAllMaterialByTitle(String title)
+      throws SQLException
+  {
+    ArrayList<Material> returnList = new ArrayList<>();
+    try (Connection connection = getConnection())
+    {
+      //Find all books with matching title
+      ResultSet bookResult = getQueryResultByTypeTitle("book", title);
+      ResultSet dvdResult = getQueryResultByTypeTitle("dvd", title);
+      ResultSet cdResult = getQueryResultByTypeTitle("cd", title);
+      ResultSet audioBookResult = getQueryResultByTypeTitle("audiobook", title);
+      ResultSet eBookResult = getQueryResultByTypeTitle("e_book", title);
+
+      if (!bookResult.next() && !dvdResult.next() && !cdResult.next()
+          && !audioBookResult.next() && !eBookResult.next())
+      {
+        //Throw exception if no material was found
+        throw new NoSuchElementException("No material was found");
+      }
+      else
+      {
+        while (bookResult.next())
+        {
+          //Add all found books to arraylist
+          Book book = new Book(bookResult.getInt("material_id"),
+              bookResult.getInt("copy_no"), bookResult.getString("title"),
+              bookResult.getString("publisher"),
+              String.valueOf(bookResult.getDate("release_date")),
+              bookResult.getString("description_of_the_content"),
+              bookResult.getString("keywords"),
+              bookResult.getString("audience"),
+              bookResult.getString("language_"), bookResult.getString("isbn"),
+              bookResult.getInt("page_no"), bookResult.getInt("place_id"));
+          returnList.add(book);
+        }
+      }
+
+    }
+
+    return null;
+  }
+
+  private ResultSet getQueryResultByTypeTitle(String type, String title)
+      throws SQLException
+  {
+    //Utility method created for getAllMaterialByTitle
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM material JOIN ? USING (material_id) JOIN material_copy USING (material_id) where title = ?");
+      stm.setString(1, type);
+      stm.setString(2, title);
+      return stm.executeQuery();
     }
   }
 
   //  @Override public Material findByID(int id)
-//  {
-//    return null;
-//  }
+  //  {
+  //    return null;
+  //  }
 }

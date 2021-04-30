@@ -1,7 +1,10 @@
 package database;
 
+import client.model.material.Material;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public interface MaterialDAO
@@ -24,4 +27,7 @@ public interface MaterialDAO
   int getLatestCopyNo(int materialID) throws SQLException,
       NoSuchElementException;
 //  Material findByID(int id);
+
+  List<Material> getAllMaterialByTitle(String title) throws SQLException;
+
 }
