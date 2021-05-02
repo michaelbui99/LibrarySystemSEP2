@@ -1,7 +1,6 @@
 package database;
 
 import client.model.material.DVD;
-import client.model.material.Material;
 import client.model.material.MaterialList;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
@@ -15,16 +14,16 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class SearchMaterial extends BaseDAO // to reach the connection to db
+public class Utilities extends BaseDAO // to reach the connection to db
 {
-  private static SearchMaterial instance;
+  private static Utilities instance;
   private static final Lock lock = new ReentrantLock();
   //Array with the all typies in db
   private static String[] materialCategoryList = new String [] {"audiobook", "book", "cd", "dvd", "e_book"};
 
 
 
-  public static SearchMaterial getInstance()
+  public static Utilities getInstance()
   {
     //Double lock check for Thread safety
     if (instance == null)
@@ -33,7 +32,7 @@ public class SearchMaterial extends BaseDAO // to reach the connection to db
       {
         if (instance == null)
         {
-          instance = new SearchMaterial();
+          instance = new Utilities();
         }
       }
     }
@@ -140,11 +139,12 @@ public class SearchMaterial extends BaseDAO // to reach the connection to db
      return ml;
   }
 
+  //calculate how many copies for each material
   public int getCopyNumberForMaterial(int materialid){
     int copyno = 0;
     try(Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("SELECT copy_no FROM material_copy where material_id = " + materialid);
+      PreparedStatement stm = connection.prepareStatement("SELECT count (*) as copy_no  FROM material_copy where material_id = " + materialid);
       ResultSet resultSet = stm.executeQuery();
       if(resultSet.next()){
         return resultSet.getInt("copy_no");
@@ -155,5 +155,26 @@ public class SearchMaterial extends BaseDAO // to reach the connection to db
       throwables.printStackTrace();
     }
     return copyno;
+  }
+
+  public boolean deliverMaterial(int materialID, String cpr, int copy_no){
+
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("update loan set return_date = now() where "
+          + " material_id = " + materialID +
+          " and copy_no = " + copy_no + " and cpr_no = '" + cpr + "';");
+      int res = stm.executeUpdate();
+      connection.commit();
+      if (res > 0){
+        return true;
+      }
+      return false;
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return false;
   }
 }

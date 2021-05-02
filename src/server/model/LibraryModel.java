@@ -1,5 +1,6 @@
 package server.model;
 
+import client.model.loan.Loan;
 import client.model.material.Material;
 import client.model.material.MaterialList;
 import shared.PropertyChangeSubject;
@@ -14,7 +15,7 @@ public interface LibraryModel extends PropertyChangeSubject
    * @param deadline  deadline is the deadline for when the material must be returned to the library.
    * @throws IllegalStateException if the material is is not available for loan.
    */
-  void registerLoan(Material material, String loanerCPR, String deadline)
+  Loan registerLoan(Material material, String loanerCPR, String deadline)
       throws IllegalStateException;
 
   /**
@@ -52,4 +53,7 @@ public interface LibraryModel extends PropertyChangeSubject
 
   void createAudioBookCopy(int materialID);
   MaterialList searchMaterial(String arg);
+
+  boolean deliverMaterial(int materialID, String cpr, int copy_no);
+
 }

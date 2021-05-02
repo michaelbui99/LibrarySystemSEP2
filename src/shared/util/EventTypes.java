@@ -5,4 +5,5 @@ public class EventTypes
   public static final String MATERIAL_REGISTERED = "MaterialRegistered";
   public static final String LOAN_REGISTERED = "LoanRegistered";
   public static final String MATERIAL_COPY_CREATED = "MaterialCopyRegistered";
+  public static final String RMI_SERVER = "RMI_SERVER";
 }

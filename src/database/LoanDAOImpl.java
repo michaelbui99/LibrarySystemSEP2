@@ -27,7 +27,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   }
 
   @Override public Loan create(int materialID, int copyNumber, String cpr,
-      String materialType, String loanDate, String deadline) throws SQLException
+      String loanDate, String deadline) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -44,7 +44,9 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       ResultSet keys = stm.getGeneratedKeys();
       keys.next();
       connection.commit();
-      return new Loan(keys.getInt("loan_no"),materialID,copyNumber,cpr,null,loanDate,deadline);
+      return new Loan(keys.getInt("loan_no"),materialID,copyNumber,cpr,loanDate,deadline);
     }
   }
+
+
 }

@@ -1,5 +1,6 @@
 package server_model_kode;
 
+import client.model.loan.Loan;
 import client.model.material.Material;
 import client.model.material.MaterialList;
 import client.model.material.reading.Book;
@@ -27,11 +28,12 @@ class LibraryModelManagerTest
    }
 
    @Test
-    void registerLoanTest() throws SQLException
+    void registerLoanTest()
    {
-
-     libraryModelManager.registerLoan(libraryModelManager.getBook(1),"111111-1111","2021-05-06");
-    //we need to write a function to get the loan by materialId and cpr
+    Loan loan =  libraryModelManager.registerLoan(new Book(1,2,"Beer","John","2020-02-03",
+        "drinks", "corona", "Voksen", "Dansk", "sjlfhg", 100, 5),"111111-10","2021-05-10");
+    assertTrue(loan.getLoanID() > 0);
+    System.out.println("Registered loan with ID " + loan.getLoanID());
     }
 
    @Test
@@ -75,7 +77,7 @@ class LibraryModelManagerTest
     @Test
   void searchMaterialTest(){
       MaterialList ml = libraryModelManager.searchMaterial("space");
-      System.out.println("result count: " + ml.size());
+      System.out.println("material count: " + ml.size());
       List<Material> temp = ml.getAllMaterial();
       for (int i = 0; i < ml.size(); i++)
       {
@@ -86,6 +88,11 @@ class LibraryModelManagerTest
      assertEquals("space",ml.getMaterialById(1).getTitle());
     }
 
+    @Test
+  void deliverMaterialTest(){
+     assertEquals(true,libraryModelManager.deliverMaterial(9,"111111-10",23));
+     assertEquals(false,libraryModelManager.deliverMaterial(9,"111111-10",22));
+    }
 
 
 }

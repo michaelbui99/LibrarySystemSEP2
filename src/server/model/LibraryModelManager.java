@@ -45,7 +45,7 @@ public class LibraryModelManager implements LibraryModel
     return sdf.format(now);
   }
 
-  @Override public void registerLoan(Material material, String loanerCPR,
+  @Override public Loan registerLoan(Material material, String loanerCPR,
       String deadline)
   {
     if (material.getMaterialStatus().equals(MaterialStatus.NotAvailable))
@@ -60,7 +60,7 @@ public class LibraryModelManager implements LibraryModel
       {
         loan = LoanDAOImpl.getInstance()
             .create(material.getMaterialID(), material.getCopyNumber(),
-                loanerCPR, null, calcDateTime(), deadline);
+                loanerCPR,  calcDateTime(), deadline);
       }
       catch (SQLException throwables)
       {
@@ -68,6 +68,7 @@ public class LibraryModelManager implements LibraryModel
       }
       loanList.addLoan(loan);
       support.firePropertyChange(EventTypes.LOAN_REGISTERED, null, loan);
+      return loan;
     }
   }
 
@@ -81,6 +82,7 @@ public class LibraryModelManager implements LibraryModel
             rs.getInt("page_no"), rs.getInt("place_id"));
         return temp;
      }
+
   @Override public void registerBook(String title, String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount, int placeID, int authorId, String genre,
       String url)
@@ -263,13 +265,19 @@ public class LibraryModelManager implements LibraryModel
     MaterialList searchMaterial = new MaterialList();
     try
     {
-       searchMaterial = SearchMaterial.getInstance().findMaterial(arg);
+       searchMaterial = Utilities.getInstance().findMaterial(arg);
     }
     catch (SQLException throwables)
     {
       throwables.printStackTrace();
     }
     return searchMaterial;
+  }
+
+
+  @Override public boolean deliverMaterial(int materialID, String cpr, int copy_no)
+  {
+       return  Utilities.getInstance().deliverMaterial(materialID,cpr,copy_no);
   }
 
   @Override public void addPropertyChangeListener(String name,

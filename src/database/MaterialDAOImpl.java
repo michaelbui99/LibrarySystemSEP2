@@ -143,6 +143,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     }
   }
 
+
+
   public List<Book> getAllBooksByTitle(String title) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -160,8 +162,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
               bookResult.getString("publisher"),
               String.valueOf(bookResult.getDate("release_date")),
               bookResult.getString("description_of_the_content"),
-              bookResult.getString("keywords"),
-              bookResult.getString("audience"),
+              bookResult.getString("keywords"), bookResult.getString("audience"),
               bookResult.getString("language_"), bookResult.getString("isbn"),
               bookResult.getInt("page_no"), bookResult.getInt("place_id"));
           returnList.add(book);
@@ -194,8 +195,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             dvdResult.getString("keywords"), dvdResult.getString("audience"),
             dvdResult.getString("language_"),
             dvdResult.getString("subtitle_lang"),
-            String.valueOf(dvdResult.getDouble("length_")),
-            dvdResult.getInt("place_id"));
+            dvdResult.getString("length_"), dvdResult.getInt("place_id"));
         returnList.add(dvd);
       }
     }
@@ -205,6 +205,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     }
     return returnList;
   }
+
 
   public List<CD> getAllCDsByTitle(String title) throws SQLException
   {
@@ -223,8 +224,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             String.valueOf(cdResult.getDate("release_date")),
             cdResult.getString("description_of_the_content"),
             cdResult.getString("keywords"), cdResult.getString("audience"),
-            cdResult.getString("language_"),
-            String.valueOf(cdResult.getDouble("length_")),
+            cdResult.getString("language_"), cdResult.getString("length_"),
             cdResult.getInt("place_id"));
         returnList.add(cd);
       }
@@ -255,10 +255,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             audioBookResult.getString("publisher"),
             String.valueOf(audioBookResult.getDate("release_date")),
             audioBookResult.getString("description_of_the_content"),
-            audioBookResult.getString("keywords"),
-            audioBookResult.getString("audience"),
-            audioBookResult.getString("language_"),
-            String.valueOf(audioBookResult.getDouble("length_")));
+            audioBookResult.getString("keywords"), audioBookResult.getString("audience"),
+            audioBookResult.getString("language_"), audioBookResult.getString("length_"));
         returnList.add(audioBook);
       }
     }
@@ -287,7 +285,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             eBookResult.getString("description_of_the_content"),
             eBookResult.getString("keywords"),
             eBookResult.getString("audience"),
-            eBookResult.getString("language_"), eBookResult.getInt("page_no"),
+            eBookResult.getString("language_"),
+            eBookResult.getInt("page_no"),
             String.valueOf(eBookResult.getInt("license_no")),
             String.valueOf(eBookResult.getInt("author")),
             eBookResult.getString("genre"));
@@ -476,6 +475,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   private ResultSet getQueryResultByTypeTitle(String type, String title)
       throws SQLException
   {
+    //All valid type input to prevent SQL-injection with string interpolation in query.
     String[] safeTables = {"book", "audiobook", "cd", "dvd", "e_book"};
     if (!Arrays.asList(safeTables).contains(type))
     {
@@ -497,4 +497,3 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   //    return null;
   //  }
 }
-

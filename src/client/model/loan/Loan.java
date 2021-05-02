@@ -4,16 +4,15 @@ public class Loan
 {
 
   private int loanID, materialID, copyNumber, numberOfExtensions;
-  private String cpr, materialType, loanDate, deadline, returnDate;
+  private String cpr,  loanDate, deadline, returnDate;
 
-  public Loan(int loanID, int materialID, int copyNumber, String cpr,
-      String materialType, String loanDate, String deadline)
+  public Loan(int loanID, int materialID, int copyNumber, String cpr, String loanDate, String deadline)
   {
     this.loanID = loanID;
     this.materialID = materialID;
     this.copyNumber = copyNumber;
     this.cpr = cpr;
-    this.materialType = materialType;
+
     this.loanDate = loanDate;
     this.deadline = deadline;
   }
@@ -46,11 +45,6 @@ public class Loan
   public String getCpr()
   {
     return cpr;
-  }
-
-  public String getMaterialType()
-  {
-    return materialType;
   }
 
   public String getLoanDate()
