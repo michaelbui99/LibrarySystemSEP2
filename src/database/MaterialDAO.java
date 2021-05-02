@@ -41,7 +41,11 @@ public interface MaterialDAO
   List<CD> getAllCDsByTitle(String title) throws SQLException;
   List<AudioBook> getAllAudioBooksByTitle(String title) throws SQLException;
   List<EBook> getAllEBooksByTitle(String title) throws SQLException;
-
+  List<Book> getAllBooks() throws SQLException;
+  List<EBook> getAllEbooks() throws SQLException;
+  List<AudioBook> getAllAudioBooks() throws SQLException;
+  List<DVD> getAllDVDs() throws SQLException;
+  List<CD> getAllCDs() throws SQLException;
 
 
 

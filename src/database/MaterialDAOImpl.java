@@ -143,8 +143,6 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     }
   }
 
-
-
   public List<Book> getAllBooksByTitle(String title) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -162,7 +160,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
               bookResult.getString("publisher"),
               String.valueOf(bookResult.getDate("release_date")),
               bookResult.getString("description_of_the_content"),
-              bookResult.getString("keywords"), bookResult.getString("audience"),
+              bookResult.getString("keywords"),
+              bookResult.getString("audience"),
               bookResult.getString("language_"), bookResult.getString("isbn"),
               bookResult.getInt("page_no"), bookResult.getInt("place_id"));
           returnList.add(book);
@@ -186,7 +185,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     {
       while (dvdResult.next())
       {
-    System.out.println("dvd found"); //Debugging
+        System.out.println("dvd found"); //Debugging
         DVD dvd = new DVD(dvdResult.getInt("material_id"),
             dvdResult.getInt("copy_no"), dvdResult.getString("title"),
             dvdResult.getString("publisher"),
@@ -195,7 +194,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             dvdResult.getString("keywords"), dvdResult.getString("audience"),
             dvdResult.getString("language_"),
             dvdResult.getString("subtitle_lang"),
-            dvdResult.getDouble("length_"), dvdResult.getInt("place_id"));
+            String.valueOf(dvdResult.getDouble("length_")),
+            dvdResult.getInt("place_id"));
         returnList.add(dvd);
       }
     }
@@ -205,7 +205,6 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     }
     return returnList;
   }
-
 
   public List<CD> getAllCDsByTitle(String title) throws SQLException
   {
@@ -224,7 +223,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             String.valueOf(cdResult.getDate("release_date")),
             cdResult.getString("description_of_the_content"),
             cdResult.getString("keywords"), cdResult.getString("audience"),
-            cdResult.getString("language_"), cdResult.getDouble("length_"),
+            cdResult.getString("language_"),
+            String.valueOf(cdResult.getDouble("length_")),
             cdResult.getInt("place_id"));
         returnList.add(cd);
       }
@@ -236,7 +236,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return returnList;
   }
 
-  public List<AudioBook> getAllAudioBooksByTitle(String title) throws SQLException
+  public List<AudioBook> getAllAudioBooksByTitle(String title)
+      throws SQLException
   {
     List<AudioBook> returnList = new ArrayList<>();
     ResultSet audioBookResult = getQueryResultByTypeTitle("audiobook", title);
@@ -247,13 +248,17 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
         System.out.println("audiobook found"); //Debugging
 
         //Add all found audiobooks to arraylist.
-        AudioBook audioBook = new AudioBook(audioBookResult.getInt("material_id"),
-            audioBookResult.getInt("copy_no"), audioBookResult.getString("title"),
+        AudioBook audioBook = new AudioBook(
+            audioBookResult.getInt("material_id"),
+            audioBookResult.getInt("copy_no"),
+            audioBookResult.getString("title"),
             audioBookResult.getString("publisher"),
             String.valueOf(audioBookResult.getDate("release_date")),
             audioBookResult.getString("description_of_the_content"),
-            audioBookResult.getString("keywords"), audioBookResult.getString("audience"),
-            audioBookResult.getString("language_"), audioBookResult.getDouble("length_"));
+            audioBookResult.getString("keywords"),
+            audioBookResult.getString("audience"),
+            audioBookResult.getString("language_"),
+            String.valueOf(audioBookResult.getDouble("length_")));
         returnList.add(audioBook);
       }
     }
@@ -282,8 +287,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             eBookResult.getString("description_of_the_content"),
             eBookResult.getString("keywords"),
             eBookResult.getString("audience"),
-            eBookResult.getString("language_"), eBookResult.getString("isbn"),
-            eBookResult.getInt("page_no"), String.valueOf(eBookResult.getInt("license_no")), null, null);
+            eBookResult.getString("language_"), eBookResult.getInt("page_no"),
+            String.valueOf(eBookResult.getInt("license_no")),
+            String.valueOf(eBookResult.getInt("author")),
+            eBookResult.getString("genre"));
         returnList.add(eBook);
       }
     }
@@ -294,10 +301,181 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return returnList;
   }
 
+  public List<Book> getAllBooks() throws SQLException
+  {
+    List<Book> returnList = new ArrayList<>();
+    try (Connection connection = getConnection())
+    {
+      ResultSet bookResult = getQueryResultByType("book");
+      if (bookResult.next())
+      {
+        while (bookResult.next())
+        {
+          Book book = new Book(bookResult.getInt("material_id"),
+              bookResult.getInt("copy_no"), bookResult.getString("title"),
+              bookResult.getString("publisher"),
+              String.valueOf(bookResult.getDate("release_date")),
+              bookResult.getString("description_of_the_content"),
+              bookResult.getString("keywords"),
+              bookResult.getString("audience"),
+              bookResult.getString("language_"), bookResult.getString("isbn"),
+              bookResult.getInt("page_no"), bookResult.getInt("place_id"));
+          returnList.add(book);
+        }
+      }
+      else
+      {
+        throw new NoSuchElementException("No material was found");
+      }
+      return returnList;
+    }
+  }
+
+  public List<EBook> getAllEbooks() throws SQLException
+  {
+    List<EBook> returnList = new ArrayList<>();
+    try (Connection connection = getConnection())
+    {
+      ResultSet ebookResult = getQueryResultByType("ebook");
+      if (ebookResult.next())
+      {
+        while (ebookResult.next())
+        {
+          EBook ebook = new EBook(ebookResult.getInt("material_id"),
+              ebookResult.getInt("copy_no"), ebookResult.getString("title"),
+              ebookResult.getString("publisher"),
+              String.valueOf(ebookResult.getDate("release_date")),
+              ebookResult.getString("description_of_the_content"),
+              ebookResult.getString("keywords"),
+              ebookResult.getString("audience"),
+              ebookResult.getString("language_"), ebookResult.getInt("page_no"),
+              String.valueOf(ebookResult.getInt("license_no")),
+              String.valueOf(ebookResult.getInt("author")),
+              ebookResult.getString("genre"));
+          returnList.add(ebook);
+        }
+      }
+      else
+      {
+        throw new NoSuchElementException("No material was found");
+      }
+      return returnList;
+    }
+  }
+
+  public List<AudioBook> getAllAudioBooks() throws SQLException
+  {
+    List<AudioBook> returnList = new ArrayList<>();
+    try (Connection connection = getConnection())
+    {
+      ResultSet audiobookResult = getQueryResultByType("audiobook");
+      if (audiobookResult.next())
+      {
+        while (audiobookResult.next())
+        {
+          AudioBook audioBook = new AudioBook(
+              audiobookResult.getInt("material_id"),
+              audiobookResult.getInt("copy_no"),
+              audiobookResult.getString("title"),
+              audiobookResult.getString("publisher"),
+              String.valueOf(audiobookResult.getDate("release_date")),
+              audiobookResult.getString("description_of_the_content"),
+              audiobookResult.getString("keywords"),
+              audiobookResult.getString("audience"),
+              audiobookResult.getString("language_"),
+              String.valueOf(audiobookResult.getDouble("length_")));
+          returnList.add(audioBook);
+        }
+      }
+      else
+      {
+        throw new NoSuchElementException("No material was found");
+      }
+      return returnList;
+    }
+
+  }
+
+  public List<DVD> getAllDVDs() throws SQLException
+  {
+    List<DVD> returnList = new ArrayList<>();
+    try (Connection connection = getConnection())
+    {
+      ResultSet dvdResult = getQueryResultByType("dvd");
+      if (dvdResult.next())
+      {
+        while (dvdResult.next())
+        {
+          DVD dvd = new DVD(dvdResult.getInt("material_id"),
+              dvdResult.getInt("copy_no"), dvdResult.getString("title"),
+              dvdResult.getString("publisher"),
+              String.valueOf(dvdResult.getDate("release_date")),
+              dvdResult.getString("description_of_the_content"),
+              dvdResult.getString("keywords"), dvdResult.getString("audience"),
+              dvdResult.getString("language_"),
+              dvdResult.getString("subtitle_lang"),
+              String.valueOf(dvdResult.getDouble("length_")),
+              dvdResult.getInt("place_id"));
+          returnList.add(dvd);
+        }
+      }
+      else
+      {
+        throw new NoSuchElementException("No material was found");
+      }
+      return returnList;
+    }
+  }
+
+  public List<CD> getAllCDs() throws SQLException
+  {
+    List<CD> returnList = new ArrayList<>();
+    try (Connection connection = getConnection())
+    {
+      ResultSet cdResult = getQueryResultByType("cd");
+      if (cdResult.next())
+      {
+        while (cdResult.next())
+        {
+          CD cd = new CD(cdResult.getInt("material_id"),
+              cdResult.getInt("copy_no"), cdResult.getString("title"),
+              cdResult.getString("publisher"),
+              String.valueOf(cdResult.getDate("release_date")),
+              cdResult.getString("description_of_the_content"),
+              cdResult.getString("keywords"), cdResult.getString("audience"),
+              cdResult.getString("language_"),
+              String.valueOf(cdResult.getDouble("length_")), cdResult.getInt("place_id"));
+          returnList.add(cd);
+        }
+      }
+      else
+      {
+        throw new NoSuchElementException("No material was found");
+      }
+    }
+    return returnList;
+  }
+
+  private ResultSet getQueryResultByType(String type) throws SQLException
+  {
+    String[] safeTables = {"book", "audiobook", "cd", "dvd", "e_book"};
+    if (!Arrays.asList(safeTables).contains(type))
+    {
+      throw new IllegalArgumentException("Illegal material type");
+    }
+
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM material JOIN " + type
+              + " USING (material_id) JOIN material_copy USING (material_id)");
+      return stm.executeQuery();
+    }
+  }
+
   private ResultSet getQueryResultByTypeTitle(String type, String title)
       throws SQLException
   {
-    //All valid type input to prevent SQL-injection with string interpolation in query.
     String[] safeTables = {"book", "audiobook", "cd", "dvd", "e_book"};
     if (!Arrays.asList(safeTables).contains(type))
     {
@@ -307,7 +485,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM material JOIN " + type + " USING (material_id) JOIN material_copy USING (material_id) where title = ? ");
+          "SELECT * FROM material JOIN " + type
+              + " USING (material_id) JOIN material_copy USING (material_id) where title = ? ");
       stm.setString(1, title);
       return stm.executeQuery();
     }
@@ -318,3 +497,4 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   //    return null;
   //  }
 }
+
