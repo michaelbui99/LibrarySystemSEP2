@@ -1,6 +1,7 @@
 package server.model;
 
 import client.model.material.Material;
+import client.model.material.MaterialList;
 import shared.PropertyChangeSubject;
 
 public interface LibraryModel extends PropertyChangeSubject
@@ -27,7 +28,7 @@ public interface LibraryModel extends PropertyChangeSubject
   void createBookCopy(int materialID);
 
   void registerDVD(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID, String genre,
+      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID, String genre,
       String url);
 
   void createDVDCopy(int materialID);
@@ -50,5 +51,5 @@ public interface LibraryModel extends PropertyChangeSubject
       double playDuration, String genre, int authorId, String url);
 
   void createAudioBookCopy(int materialID);
-  Material searchMaterial(String arg);
+  MaterialList searchMaterial(String arg);
 }

@@ -94,7 +94,7 @@ public class RMIServerImpl implements RMIServer
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID,String genre, String url)
+      String playDuration, int placeID,String genre, String url)
   {
     model.registerDVD(title, publisher, releaseDate, description, tags,
         targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);

@@ -1,10 +1,15 @@
 package database;
 
+import client.model.material.DVD;
 import client.model.material.Material;
+import client.model.material.audio.AudioBook;
+import client.model.material.audio.CD;
 import client.model.material.reading.Book;
+import client.model.material.reading.EBook;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
@@ -96,55 +101,214 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   @Override public List<Material> getAllMaterialByTitle(String title)
       throws SQLException
   {
-    ArrayList<Material> returnList = new ArrayList<>();
+    List<Material> returnList = new ArrayList<>();
     try (Connection connection = getConnection())
     {
-      //Find all books with matching title
-      ResultSet bookResult = getQueryResultByTypeTitle("book", title);
-      ResultSet dvdResult = getQueryResultByTypeTitle("dvd", title);
-      ResultSet cdResult = getQueryResultByTypeTitle("cd", title);
-      ResultSet audioBookResult = getQueryResultByTypeTitle("audiobook", title);
-      ResultSet eBookResult = getQueryResultByTypeTitle("e_book", title);
-
-      if (!bookResult.next() && !dvdResult.next() && !cdResult.next()
-          && !audioBookResult.next() && !eBookResult.next())
+      try
       {
-        //Throw exception if no material was found
-        throw new NoSuchElementException("No material was found");
+        returnList.addAll(getAllBooksByTitle(title));
       }
-      else
+      catch (NoSuchElementException e)
+      {
+      }
+      try
+      {
+        returnList.addAll(getAllCDsByTitle(title));
+      }
+      catch (NoSuchElementException e)
+      {
+      }
+      try
+      {
+        returnList.addAll(getAllDVDsByTitle(title));
+      }
+      catch (NoSuchElementException e)
+      {
+      }
+      try
+      {
+        returnList.addAll(getAllAudioBooksByTitle(title));
+      }
+      catch (NoSuchElementException e)
+      {
+      }
+      try
+      {
+        returnList.addAll(getAllEBooksByTitle(title));
+      }
+      catch (NoSuchElementException e)
+      {
+      }
+      return returnList;
+    }
+  }
+
+
+
+  public List<Book> getAllBooksByTitle(String title) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      List<Book> returnList = new ArrayList<>();
+      ResultSet bookResult = getQueryResultByTypeTitle("book", title);
+      if (bookResult.next())
       {
         while (bookResult.next())
         {
+          System.out.println("Book found"); //Debugging
           //Add all found books to arraylist
           Book book = new Book(bookResult.getInt("material_id"),
               bookResult.getInt("copy_no"), bookResult.getString("title"),
               bookResult.getString("publisher"),
               String.valueOf(bookResult.getDate("release_date")),
               bookResult.getString("description_of_the_content"),
-              bookResult.getString("keywords"),
-              bookResult.getString("audience"),
+              bookResult.getString("keywords"), bookResult.getString("audience"),
               bookResult.getString("language_"), bookResult.getString("isbn"),
               bookResult.getInt("page_no"), bookResult.getInt("place_id"));
           returnList.add(book);
         }
       }
-
+      else
+      {
+        throw new NoSuchElementException("No material was found");
+      }
+      return returnList;
     }
+  }
 
-    return null;
+  public List<DVD> getAllDVDsByTitle(String title) throws SQLException
+  {
+    List<DVD> returnList = new ArrayList<>();
+    ResultSet dvdResult = getQueryResultByTypeTitle("dvd", title);
+
+    //Add all found dvds to arraylist
+    if (dvdResult.next())
+    {
+      while (dvdResult.next())
+      {
+    System.out.println("dvd found"); //Debugging
+        DVD dvd = new DVD(dvdResult.getInt("material_id"),
+            dvdResult.getInt("copy_no"), dvdResult.getString("title"),
+            dvdResult.getString("publisher"),
+            String.valueOf(dvdResult.getDate("release_date")),
+            dvdResult.getString("description_of_the_content"),
+            dvdResult.getString("keywords"), dvdResult.getString("audience"),
+            dvdResult.getString("language_"),
+            dvdResult.getString("subtitle_lang"),
+            dvdResult.getDouble("length_"), dvdResult.getInt("place_id"));
+        returnList.add(dvd);
+      }
+    }
+    else
+    {
+      throw new NoSuchElementException("No material was found");
+    }
+    return returnList;
+  }
+
+
+  public List<CD> getAllCDsByTitle(String title) throws SQLException
+  {
+    List<CD> returnList = new ArrayList<>();
+    ResultSet cdResult = getQueryResultByTypeTitle("cd", title);
+    if (cdResult.next())
+    {
+      while (cdResult.next())
+      {
+        System.out.println("cd found"); //Debugging
+
+        //Add all found cds to arraylist
+        CD cd = new CD(cdResult.getInt("material_id"),
+            cdResult.getInt("copy_no"), cdResult.getString("title"),
+            cdResult.getString("publisher"),
+            String.valueOf(cdResult.getDate("release_date")),
+            cdResult.getString("description_of_the_content"),
+            cdResult.getString("keywords"), cdResult.getString("audience"),
+            cdResult.getString("language_"), cdResult.getDouble("length_"),
+            cdResult.getInt("place_id"));
+        returnList.add(cd);
+      }
+    }
+    else
+    {
+      throw new NoSuchElementException("No material was found");
+    }
+    return returnList;
+  }
+
+  public List<AudioBook> getAllAudioBooksByTitle(String title) throws SQLException
+  {
+    List<AudioBook> returnList = new ArrayList<>();
+    ResultSet audioBookResult = getQueryResultByTypeTitle("audiobook", title);
+    if (audioBookResult.next())
+    {
+      while (audioBookResult.next())
+      {
+        System.out.println("audiobook found"); //Debugging
+
+        //Add all found audiobooks to arraylist.
+        AudioBook audioBook = new AudioBook(audioBookResult.getInt("material_id"),
+            audioBookResult.getInt("copy_no"), audioBookResult.getString("title"),
+            audioBookResult.getString("publisher"),
+            String.valueOf(audioBookResult.getDate("release_date")),
+            audioBookResult.getString("description_of_the_content"),
+            audioBookResult.getString("keywords"), audioBookResult.getString("audience"),
+            audioBookResult.getString("language_"), audioBookResult.getDouble("length_"));
+        returnList.add(audioBook);
+      }
+    }
+    else
+    {
+      throw new NoSuchElementException("No material was found");
+    }
+    return returnList;
+  }
+
+  public List<EBook> getAllEBooksByTitle(String title) throws SQLException
+  {
+    List<EBook> returnList = new ArrayList<>();
+    ResultSet eBookResult = getQueryResultByTypeTitle("e_book", title);
+    if (eBookResult.next())
+    {
+      while (eBookResult.next())
+      {
+        System.out.println("ebook found"); //Debugging
+
+        //TODO: Tilføj attributes i databasen, så databasen matcher Java objektet.
+        EBook eBook = new EBook(eBookResult.getInt("material_id"),
+            eBookResult.getInt("copy_no"), eBookResult.getString("title"),
+            eBookResult.getString("publisher"),
+            String.valueOf(eBookResult.getDate("release_date")),
+            eBookResult.getString("description_of_the_content"),
+            eBookResult.getString("keywords"),
+            eBookResult.getString("audience"),
+            eBookResult.getString("language_"), eBookResult.getString("isbn"),
+            eBookResult.getInt("page_no"), String.valueOf(eBookResult.getInt("license_no")), null, null);
+        returnList.add(eBook);
+      }
+    }
+    else
+    {
+      throw new NoSuchElementException("No material was found");
+    }
+    return returnList;
   }
 
   private ResultSet getQueryResultByTypeTitle(String type, String title)
       throws SQLException
   {
+    //All valid type input to prevent SQL-injection with string interpolation in query.
+    String[] safeTables = {"book", "audiobook", "cd", "dvd", "e_book"};
+    if (!Arrays.asList(safeTables).contains(type))
+    {
+      throw new IllegalArgumentException("Illegal material type");
+    }
     //Utility method created for getAllMaterialByTitle
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM material JOIN ? USING (material_id) JOIN material_copy USING (material_id) where title = ?");
-      stm.setString(1, type);
-      stm.setString(2, title);
+          "SELECT * FROM material JOIN " + type + " USING (material_id) JOIN material_copy USING (material_id) where title = ? ");
+      stm.setString(1, title);
       return stm.executeQuery();
     }
   }

@@ -118,7 +118,7 @@ public class LibraryModelManager implements LibraryModel
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID, String genre, String url)
+      String playDuration, int placeID, String genre, String url)
   {
     //TODO: Mangler muligvis genre i DB, og er derfor sat til null indtil videre.
     try
@@ -258,10 +258,18 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public Material searchMaterial(String arg)
+  @Override public MaterialList searchMaterial(String arg)
   {
-    //TODO: IMPLEMENT THIS CORRECTLY - THIS IS A PLACE HOLDER IMPL FOR TEST
-    return materialList.getMaterialById(Integer.parseInt(arg));
+    MaterialList searchMaterial = new MaterialList();
+    try
+    {
+       searchMaterial = SearchMaterial.getInstance().findMaterial(arg);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return searchMaterial;
   }
 
   @Override public void addPropertyChangeListener(String name,

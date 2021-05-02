@@ -25,7 +25,7 @@ public interface Client extends Remote, PropertyChangeSubject
   void createBookCopy(int materialID) throws RemoteException;
 
   void registerDVD(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID, String genre,
+      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID, String genre,
       String url) throws RemoteException;
 
   void createDVDCopy(int materialID) throws RemoteException;

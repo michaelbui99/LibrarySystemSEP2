@@ -72,7 +72,6 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
                         eBookDetails.getString("keywords"),
                         eBookDetails.getString("audience"),
                         eBookDetails.getString("language_"),
-                        eBookDetails.getString("ISBN"),
                         eBookDetails.getInt("pageCount"),
                         eBookDetails.getString("licensNo"),
                         eBookDetails.getString("author"),

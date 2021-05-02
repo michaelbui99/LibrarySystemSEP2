@@ -90,10 +90,10 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public void registerDVD(String title, String publisher,
+ public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID, String genre, String url)
+      String playDuration, int placeID, String genre, String url)
   {
     try
     {

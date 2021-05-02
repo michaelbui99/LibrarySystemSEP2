@@ -29,7 +29,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO{
     }
 
     @Override
-    public void create(int material_id,String subtitle_lang, double length_,int place_id) throws SQLException {
+    public void create(int material_id,String subtitle_lang, String length_,int place_id) throws SQLException {
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement(
@@ -37,7 +37,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO{
                     PreparedStatement.RETURN_GENERATED_KEYS);
             stm.setInt(1, material_id);
             stm.setString(2, subtitle_lang);
-            stm.setDouble(3, length_);
+            stm.setString(3, length_);
             stm.setInt(4, place_id);
 
             stm.executeUpdate();
@@ -73,8 +73,8 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO{
                         DVDDetails.getString("keywords"),
                         DVDDetails.getString("audience"),
                         DVDDetails.getString("language_"),
-                        DVDDetails.getString("subtitlesLanguage"),
-                        DVDDetails.getDouble("playDuration"),
+                        DVDDetails.getString("subtitle_lang"),
+                        DVDDetails.getString("length_"),
                         DVDDetails.getInt("place_id"));
                 // i removed the creator from here and i added place_id
             }

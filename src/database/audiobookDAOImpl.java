@@ -72,7 +72,7 @@ public class audiobookDAOImpl extends BaseDAO implements audiobookDAO
                         AudioBookDetails.getString("keywords"),
                         AudioBookDetails.getString("audience"),
                         AudioBookDetails.getString("language_"),
-                        AudioBookDetails.getDouble("playDuration"));
+                        AudioBookDetails.getString("length_"));
             }
             return null;
         }
