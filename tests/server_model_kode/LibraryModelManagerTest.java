@@ -75,8 +75,9 @@ class LibraryModelManagerTest
 
 
     @Test
-  void searchMaterialTest(){
-      MaterialList ml = libraryModelManager.searchMaterial("space");
+  void searchMaterialTest() throws SQLException
+    {
+      MaterialList ml = libraryModelManager.searchMaterial("space", "", "", "", "", "audiobook");
       System.out.println("material count: " + ml.size());
       List<Material> temp = ml.getAllMaterial();
       for (int i = 0; i < ml.size(); i++)
@@ -93,6 +94,9 @@ class LibraryModelManagerTest
      assertEquals(true,libraryModelManager.deliverMaterial(9,"111111-10",23));
      assertEquals(false,libraryModelManager.deliverMaterial(9,"111111-10",22));
     }
+
+
+
 
 
 }

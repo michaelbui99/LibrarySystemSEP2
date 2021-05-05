@@ -1,6 +1,7 @@
 package client.model.library;
 
 import client.model.material.Material;
+import client.model.material.MaterialList;
 import shared.PropertyChangeSubject;
 
 public interface LibraryModel extends PropertyChangeSubject
@@ -19,5 +20,6 @@ public interface LibraryModel extends PropertyChangeSubject
   void registerBook(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount);
-  void searchMaterial(String arg);
+  MaterialList searchMaterial(String title, String language, String keywords, String genre, String audience, String type);
+
 }

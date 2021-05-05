@@ -6,7 +6,7 @@ import java.util.List;
 public class MaterialList
 {
   private List<Material> materials;
-  private MaterialFilterStrategy materialFilterStrategy;
+  private MaterialFilterStrategyInterface materialFilterStrategyInterface;
 
   public MaterialList()
   {

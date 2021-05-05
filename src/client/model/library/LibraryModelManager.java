@@ -1,7 +1,11 @@
 package client.model.library;
 
 import client.model.material.Material;
+import client.model.material.MaterialList;
+import client.model.material.MaterialSearchStrategyNavigator;
+import client.model.material.audio.AudioBookStrategy;
 import client.network.Client;
+import database.MaterialDAOImpl;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -11,12 +15,12 @@ public class LibraryModelManager implements LibraryModel
 {
   private Client client;
   private PropertyChangeSupport support;
-
+  private MaterialSearchStrategyNavigator searchStrategyNavigator;
   public LibraryModelManager(Client client)
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
-
+    searchStrategyNavigator = new MaterialSearchStrategyNavigator("all");
     try
     {
       client.startClient();
@@ -48,9 +52,22 @@ public class LibraryModelManager implements LibraryModel
 
   }
 
-  @Override public void searchMaterial(String arg)
-  {
 
+
+  @Override public MaterialList searchMaterial(String title, String language, String keywords,
+      String genre, String audience, String type)
+  {
+    MaterialList ml = new MaterialList();
+//    if (type.equals("all") ){
+//      MaterialDAOImpl mid =
+//    }
+//    else {
+//      switch (type){
+//        case "audiobook" :
+//          AudioBookStrategy abs =
+//      }
+//    }
+    return ml;
   }
 
   @Override public void addPropertyChangeListener(String name,

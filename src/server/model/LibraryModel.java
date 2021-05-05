@@ -5,6 +5,8 @@ import client.model.material.Material;
 import client.model.material.MaterialList;
 import shared.PropertyChangeSubject;
 
+import java.sql.SQLException;
+
 public interface LibraryModel extends PropertyChangeSubject
 {
   /**
@@ -52,7 +54,9 @@ public interface LibraryModel extends PropertyChangeSubject
       double playDuration, String genre, int authorId, String url);
 
   void createAudioBookCopy(int materialID);
-  MaterialList searchMaterial(String arg);
+  MaterialList searchMaterial(String title, String language,
+      String keywords, String genre, String targetAudience, String type)
+      throws SQLException;
 
   boolean deliverMaterial(int materialID, String cpr, int copy_no);
 

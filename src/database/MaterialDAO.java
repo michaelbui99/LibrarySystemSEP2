@@ -2,6 +2,7 @@ package database;
 
 import client.model.material.DVD;
 import client.model.material.Material;
+import client.model.material.MaterialList;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
@@ -35,12 +36,13 @@ public interface MaterialDAO
       throws SQLException, NoSuchElementException;
   //  Material findByID(int id);
 
-  List<Material> getAllMaterialByTitle(String title) throws SQLException;
   List<Book> getAllBooksByTitle(String title) throws SQLException;
   List<DVD> getAllDVDsByTitle(String title) throws SQLException;
   List<CD> getAllCDsByTitle(String title) throws SQLException;
   List<AudioBook> getAllAudioBooksByTitle(String title) throws SQLException;
   List<EBook> getAllEBooksByTitle(String title) throws SQLException;
+  boolean deliverMaterial(int materialID, String cpr, int copy_no);
+  public int getCopyNumberForMaterial(int materialid);
   List<Book> getAllBooks() throws SQLException;
   List<EBook> getAllEbooks() throws SQLException;
   List<AudioBook> getAllAudioBooks() throws SQLException;

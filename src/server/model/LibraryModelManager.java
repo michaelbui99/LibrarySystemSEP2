@@ -1,7 +1,6 @@
 package server.model;
 
-import client.model.material.DVD;
-import client.model.material.MaterialList;
+import client.model.material.*;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
@@ -10,8 +9,6 @@ import database.*;
 import shared.util.EventTypes;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
-import client.model.material.Material;
-import client.model.material.MaterialStatus;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -25,12 +22,14 @@ public class LibraryModelManager implements LibraryModel
   private LoanList loanList;
   private MaterialList materialList;
   private PropertyChangeSupport support;
+  private MaterialSearchStrategyNavigator materialSearchStrategyNavigator;
 
   public LibraryModelManager()
   {
     loanList = new LoanList();
     support = new PropertyChangeSupport(this);
     materialList = new MaterialList();
+    materialSearchStrategyNavigator = new MaterialSearchStrategyNavigator("all");
   }
 
   /**
@@ -260,24 +259,19 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public MaterialList searchMaterial(String arg)
+  @Override public MaterialList searchMaterial(String title, String language,
+      String keywords, String genre, String targetAudience, String type)
+      throws SQLException
   {
-    MaterialList searchMaterial = new MaterialList();
-    try
-    {
-       searchMaterial = Utilities.getInstance().findMaterial(arg);
-    }
-    catch (SQLException throwables)
-    {
-      throwables.printStackTrace();
-    }
-    return searchMaterial;
+    this.materialSearchStrategyNavigator.setType(type);
+    MaterialList ml = materialSearchStrategyNavigator.findMaterial(title, language, keywords, genre, targetAudience);
+    return ml;
   }
 
 
   @Override public boolean deliverMaterial(int materialID, String cpr, int copy_no)
   {
-       return  Utilities.getInstance().deliverMaterial(materialID,cpr,copy_no);
+       return  MaterialDAOImpl.getInstance().deliverMaterial(materialID,cpr,copy_no);
   }
 
   @Override public void addPropertyChangeListener(String name,

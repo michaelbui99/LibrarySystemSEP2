@@ -2,6 +2,7 @@ package database;
 
 import client.model.material.DVD;
 import client.model.material.Material;
+import client.model.material.MaterialList;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
@@ -20,7 +21,6 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
   private static MaterialDAO instance;
   private static final Lock lock = new ReentrantLock();
-
   public static MaterialDAO getInstance()
   {
     //Double lock check for Thread safety
@@ -98,50 +98,25 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     }
   }
 
-  @Override public List<Material> getAllMaterialByTitle(String title)
-      throws SQLException
-  {
-    List<Material> returnList = new ArrayList<>();
-    try (Connection connection = getConnection())
+  //calculate how many copies for each material
+  public int getCopyNumberForMaterial(int materialid){
+    int copyno = 0;
+    try(Connection connection = getConnection())
     {
-      try
-      {
-        returnList.addAll(getAllBooksByTitle(title));
+      PreparedStatement stm = connection.prepareStatement("SELECT count (*) as copy_no  FROM material_copy where material_id = " + materialid);
+      ResultSet resultSet = stm.executeQuery();
+      if(resultSet.next()){
+        return resultSet.getInt("copy_no");
       }
-      catch (NoSuchElementException e)
-      {
-      }
-      try
-      {
-        returnList.addAll(getAllCDsByTitle(title));
-      }
-      catch (NoSuchElementException e)
-      {
-      }
-      try
-      {
-        returnList.addAll(getAllDVDsByTitle(title));
-      }
-      catch (NoSuchElementException e)
-      {
-      }
-      try
-      {
-        returnList.addAll(getAllAudioBooksByTitle(title));
-      }
-      catch (NoSuchElementException e)
-      {
-      }
-      try
-      {
-        returnList.addAll(getAllEBooksByTitle(title));
-      }
-      catch (NoSuchElementException e)
-      {
-      }
-      return returnList;
     }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return copyno;
   }
+
+
 
 
 
@@ -491,7 +466,26 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       return stm.executeQuery();
     }
   }
+  public boolean deliverMaterial(int materialID, String cpr, int copy_no){
 
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("update loan set return_date = now() where "
+          + " material_id = " + materialID +
+          " and copy_no = " + copy_no + " and cpr_no = '" + cpr + "';");
+      int res = stm.executeUpdate();
+      connection.commit();
+      if (res > 0){
+        return true;
+      }
+      return false;
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return false;
+  }
   //  @Override public Material findByID(int id)
   //  {
   //    return null;

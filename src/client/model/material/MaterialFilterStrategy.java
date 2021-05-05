@@ -1,6 +1,5 @@
 package client.model.material;
 
-public interface MaterialFilterStrategy
+public abstract class MaterialFilterStrategy
 {
-
 }

@@ -77,6 +77,23 @@ public class audiobookDAOImpl extends BaseDAO implements audiobookDAO
             return null;
         }
     }
+    //calculate how many copies for each material
+    public  int getCopyNumberForMaterial(int materialid){
+        int copyno = 0;
+        try(Connection connection = getConnection())
+        {
+            PreparedStatement stm = connection.prepareStatement("SELECT count (*) as copy_no  FROM material_copy where material_id = " + materialid);
+            ResultSet resultSet = stm.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("copy_no");
+            }
+        }
+        catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+        }
+        return copyno;
+    }
 
     @Override
     public ResultSet getAudioBookDetailsByID(int materialID) throws SQLException, NoSuchElementException {
@@ -92,4 +109,6 @@ public class audiobookDAOImpl extends BaseDAO implements audiobookDAO
                         "No AudioBook with materialID " + materialID + " exists.");
         }
     }
+
+
 }
