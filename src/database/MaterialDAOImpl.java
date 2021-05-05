@@ -440,9 +440,15 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM material JOIN " + type
-              + " USING (material_id) JOIN material_copy USING (material_id)");
+      if (type.equals("books") || type.equals("audiobook" || type.equals("e_book")))
+      {
+        reparedStatement stm = connection.prepareStatement(
+            "SELECT * FROM material JOIN " + type + " USING (material_id) JOIN material_copy USING (material_id) join material_creator mc on mc.person_id = " + type+".author");
+      }else
+      {
+        PreparedStatement stm = connection.prepareStatement(
+            "SELECT * FROM material JOIN " + type + " USING (material_id) JOIN material_copy USING (material_id)");
+      }
       return stm.executeQuery();
     }
   }
