@@ -1,5 +1,7 @@
 package database;
 
+import database.material.MaterialDAO;
+import database.material.MaterialDAOImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -4,8 +4,6 @@ import client.model.material.audio.AudioBookStrategy;
 import client.model.material.audio.CDStrategy;
 import client.model.material.reading.BookStrategy;
 import client.model.material.reading.EBookStrategy;
-import database.BaseDAO;
-import database.MaterialDAOImpl;
 
 import java.sql.SQLException;
 

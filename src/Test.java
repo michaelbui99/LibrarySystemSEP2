@@ -1,16 +1,9 @@
-import client.model.material.Material;
-import client.model.material.reading.Book;
-import database.MaterialDAO;
-import database.MaterialDAOImpl;
 import server.model.LibraryModel;
 import server.model.LibraryModelManager;
 import server.network.RMIServerImpl;
 import shared.RMIServer;
 
 import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Test
 {

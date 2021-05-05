@@ -3,7 +3,7 @@ package client.model.material.reading;
 import client.model.material.MaterialFilterStrategyInterface;
 import client.model.material.MaterialList;
 import database.BaseDAO;
-import database.MaterialDAOImpl;
+import database.material.MaterialDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

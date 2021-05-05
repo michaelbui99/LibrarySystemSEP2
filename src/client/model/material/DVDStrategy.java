@@ -1,9 +1,7 @@
 package client.model.material;
 
-import client.model.material.reading.BookStrategy;
-import client.model.material.reading.EBook;
 import database.BaseDAO;
-import database.MaterialDAOImpl;
+import database.material.MaterialDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

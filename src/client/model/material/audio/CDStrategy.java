@@ -2,9 +2,8 @@ package client.model.material.audio;
 
 import client.model.material.MaterialFilterStrategyInterface;
 import client.model.material.MaterialList;
-import client.model.material.reading.BookStrategy;
 import database.BaseDAO;
-import database.MaterialDAOImpl;
+import database.material.MaterialDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

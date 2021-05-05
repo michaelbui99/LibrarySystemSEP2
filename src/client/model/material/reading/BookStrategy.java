@@ -2,17 +2,13 @@ package client.model.material.reading;
 
 import client.model.material.MaterialFilterStrategyInterface;
 import client.model.material.MaterialList;
-import client.model.material.audio.AudioBookStrategy;
-import client.model.material.audio.CD;
 import database.BaseDAO;
-import database.BookDAO;
-import database.MaterialDAOImpl;
+import database.material.MaterialDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 

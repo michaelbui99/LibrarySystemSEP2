@@ -3,10 +3,9 @@ package client.model.material;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
-import client.model.material.reading.BookStrategy;
 import client.model.material.reading.EBook;
 import database.BaseDAO;
-import database.MaterialDAOImpl;
+import database.material.MaterialDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

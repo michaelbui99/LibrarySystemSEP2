@@ -1,230 +1,56 @@
 package client.network;
 
-import client.model.loan.Loan;
 import client.model.material.Material;
-import shared.ClientCallback;
-import shared.RMIServer;
+import shared.PropertyChangeSubject;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.rmi.NotBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
-public class RMIClient implements Client, ClientCallback
+public interface RMIClient extends Remote, PropertyChangeSubject
 {
+  /**
+   * Registers a new Loan for the given material and loaner.
+   *
+   * @param material  material is the Material the loaner wants to loan.
+   * @param loanerCPR loanerCPR is the CPR which the material will be bound to in the system for the given copy of material.
+   * @param deadline  deadline is the deadline for when the material must be returned to the library.
+   * @throws IllegalStateException if the material is is not available for loan.
+   */
+  void registerLoan(Material material, String loanerCPR, String deadline)
+      throws RemoteException;
 
-  public static final String RMI_SERVER = "RMI_SERVER";
-  private PropertyChangeSupport support;
-  private RMIServer server;
+  void registerBook(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      String isbn, int pageCount, int placeID, int authorId, String genre,
+      String url) throws RemoteException;
 
-  public RMIClient()
-  {
-    try
-    {
-      UnicastRemoteObject.exportObject(this, 0);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
+  void createBookCopy(int materialID) throws RemoteException;
 
-    support = new PropertyChangeSupport(this);
-  }
+  void registerDVD(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      String subtitlesLanguage, String playDuration, int placeID, String genre,
+      String url) throws RemoteException;
 
-  @Override public void startClient()
-  {
-    Registry registry = null;
+  void createDVDCopy(int materialID) throws RemoteException;
 
-    try
-    {
-      registry = LocateRegistry.getRegistry(1099);
-      server = (RMIServer) registry.lookup(RMI_SERVER);
-      server.registerClientCallback(this);
-    }
-    catch (RemoteException | NotBoundException e)
-    {
-      throw new RuntimeException("Server Connection failed.");
-    }
-  }
+  void registerCD(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      double playDuration, int placeID, String genre, String url) throws RemoteException;
 
+  void createCDCopy(int materialID) throws RemoteException;
 
-  @Override public void registerLoan(Material material, String loanerCPR,
-      String deadline)
-  {
-    try
-    {
-      server.registerLoan(material,loanerCPR,deadline);
-    }
-    catch (RemoteException e)
-    {
-     throw new RuntimeException("Server connection failed");
-    }
-  }
+  void registerEBook(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      String isbn, int pageCount, String licenseNr, int authorId, String genre,
+      String url) throws RemoteException;
 
-  @Override public void registerBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      int placeID, int authorId, String genre, String url)
-  {
-    try
-    {
-      server.registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, placeID, authorId, genre, url);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
+  void createEBookCopy(int materialID) throws RemoteException;
 
-  @Override public void createBookCopy(int materialID)
-  {
-    try
-    {
-      server.createBookCopy(materialID);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
+  void registerAudioBook(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      double playDuration, String genre, int authorId, String url);
 
- public void registerDVD(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage,
-      String playDuration, int placeID, String genre, String url)
-  {
-    try
-    {
-      server.registerDVD(title, publisher, releaseDate, description, tags, targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
+  void createAudioBookCopy(int materialID) throws RemoteException;
+  void startClient() throws RemoteException;
 
-  @Override public void createDVDCopy(int materialID)
-  {
-    try
-    {
-      server.createDVDCopy(materialID);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public void registerCD(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID,
-      String genre, String url)
-  {
-    try
-    {
-      server.registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public void createCDCopy(int materialID)
-  {
-    try
-    {
-      server.createCDCopy(materialID);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public void registerEBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, int authorId, String genre, String url)
-  {
-    try
-    {
-      server.registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, authorId, genre, url);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public void createEBookCopy(int materialID)
-  {
-    try
-    {
-      server.createEBookCopy(materialID);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public void registerAudioBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, String genre,
-      int authorId, String url)
-  {
-    try
-    {
-      server.registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId,url );
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public void createAudioBookCopy(int materialID)
-  {
-    try
-    {
-      server.createAudioBookCopy(materialID);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public void addPropertyChangeListener(String name,
-      PropertyChangeListener listener)
-  {
-    support.addPropertyChangeListener(name, listener);
-  }
-
-  @Override public void addPropertyChangeListener(
-      PropertyChangeListener listener)
-  {
-    support.addPropertyChangeListener(listener);
-  }
-
-  @Override public void removePropertyChangeListener(String name,
-      PropertyChangeListener listener)
-  {
-    support.removePropertyChangeListener(name, listener);
-  }
-
-  @Override public void removePropertyChangeListener(
-      PropertyChangeListener listener)
-  {
-    support.removePropertyChangeListener(listener);
-  }
-
-  @Override public void loanRegistered(Loan loan) throws RemoteException
-  {
-    support.firePropertyChange("LoanRegistered", null, loan);
-  }
 }

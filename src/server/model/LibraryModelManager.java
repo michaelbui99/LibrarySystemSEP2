@@ -5,7 +5,8 @@ import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
 import client.model.material.reading.EBook;
-import database.*;
+import database.loan.LoanDAOImpl;
+import database.material.*;
 import shared.util.EventTypes;
 import client.model.loan.Loan;
 import client.model.loan.LoanList;
@@ -127,7 +128,8 @@ public class LibraryModelManager implements LibraryModel
       int generatedID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, tags,
               targetAudience, language, genre, url);
-      DVDDAOImpl.getInstance().create(generatedID, subtitlesLanguage, playDuration, placeID);
+      DVDDAOImpl
+          .getInstance().create(generatedID, subtitlesLanguage, playDuration, placeID);
       support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
     }
     catch (SQLException throwables)

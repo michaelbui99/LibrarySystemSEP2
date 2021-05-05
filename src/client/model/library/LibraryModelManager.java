@@ -1,29 +1,28 @@
 package client.model.library;
 
 import client.model.material.Material;
-import client.model.material.MaterialList;
-import client.model.material.MaterialSearchStrategyNavigator;
-import client.model.material.audio.AudioBookStrategy;
-import client.network.Client;
-import database.MaterialDAOImpl;
+import client.network.RMIClient;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 
-public class LibraryModelManager implements LibraryModel
+public class LibraryModelManager implements LibraryModelClient
 {
-  private Client client;
+  LoanList loanList;
+
+  public LibraryModelManager()
+  private RMIClient RMIClient;
   private PropertyChangeSupport support;
   private MaterialSearchStrategyNavigator searchStrategyNavigator;
-  public LibraryModelManager(Client client)
+  public LibraryModelManager(RMIClient RMIClient)
   {
-    this.client = client;
+    this.RMIClient = RMIClient;
     support = new PropertyChangeSupport(this);
     searchStrategyNavigator = new MaterialSearchStrategyNavigator("all");
     try
     {
-      client.startClient();
+      RMIClient.startClient();
     }
     catch (RemoteException e)
     {
@@ -37,7 +36,7 @@ public class LibraryModelManager implements LibraryModel
   {
     try
     {
-      client.registerLoan(material, loanerCPR, deadline);
+      RMIClient.registerLoan(material, loanerCPR, deadline);
     }
     catch (RemoteException e)
     {
@@ -52,10 +51,7 @@ public class LibraryModelManager implements LibraryModel
 
   }
 
-
-
-  @Override public MaterialList searchMaterial(String title, String language, String keywords,
-      String genre, String audience, String type)
+  @Override public void searchMaterial(String arg)
   {
     MaterialList ml = new MaterialList();
 //    if (type.equals("all") ){
