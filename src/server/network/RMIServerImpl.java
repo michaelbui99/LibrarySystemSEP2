@@ -6,7 +6,6 @@ import server.model.LibraryModel;
 import shared.ClientCallback;
 import shared.RMIServer;
 import shared.util.EventTypes;
-import shared.util.Constants;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +17,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class RMIServerImpl implements RMIServer
 {
+
   private LibraryModel model;
 
   public RMIServerImpl(LibraryModel model)
@@ -46,7 +46,7 @@ public class RMIServerImpl implements RMIServer
     }
     try
     {
-      registry.bind(Constants.RMI_SERVER, this);
+      registry.bind(EventTypes.RMI_SERVER, this);
     }
     catch (RemoteException | AlreadyBoundException e)
     {
@@ -94,7 +94,7 @@ public class RMIServerImpl implements RMIServer
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID,String genre, String url)
+      String playDuration, int placeID,String genre, String url)
   {
     model.registerDVD(title, publisher, releaseDate, description, tags,
         targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);

@@ -19,8 +19,9 @@ public class MaterialList
   }
 
 
-  public void getAllMaterial()
+  public List getAllMaterial()
   {
+    return this.materials;
   }
 
   public Material getMaterialById(int id)
@@ -35,14 +36,18 @@ public class MaterialList
     return null;
   }
 
-  public void getAllAvailableBooks(String title)
-  {
+//  public void getAllAvailableBooks(String title)
+//  {
+//
+//  }
 
+  public int size(){
+    return this.materials.size();
   }
 
-  public void setMaterialFilterStrategy(
-      MaterialFilterStrategy materialFilterStrategy)
-  {
-    this.materialFilterStrategy = materialFilterStrategy;
-  }
+  //public void setMaterialFilterStrategy(
+    //  MaterialFilterStrategy materialFilterStrategy)
+  //{
+    //this.materialFilterStrategy = materialFilterStrategy;
+  //}
 }

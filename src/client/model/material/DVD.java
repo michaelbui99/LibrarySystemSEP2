@@ -4,13 +4,13 @@ public class DVD extends Material
 {
   private int placeID;
   private String subtitlesLanguage;
-  private double playDuration;
+  private String playDuration;
 
 
 
   public DVD(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, double playDuration, int placeID)
+      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language);
@@ -25,7 +25,7 @@ public class DVD extends Material
     return subtitlesLanguage;
   }
 
-  public double getPlayDuration()
+  public String  getPlayDuration()
   {
     return playDuration;
   }

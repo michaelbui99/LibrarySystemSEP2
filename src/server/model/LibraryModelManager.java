@@ -45,7 +45,7 @@ public class LibraryModelManager implements LibraryModel
     return sdf.format(now);
   }
 
-  @Override public void registerLoan(Material material, String loanerCPR,
+  @Override public Loan registerLoan(Material material, String loanerCPR,
       String deadline)
   {
     if (material.getMaterialStatus().equals(MaterialStatus.NotAvailable))
@@ -60,7 +60,7 @@ public class LibraryModelManager implements LibraryModel
       {
         loan = LoanDAOImpl.getInstance()
             .create(material.getMaterialID(), material.getCopyNumber(),
-                loanerCPR, null, calcDateTime(), deadline);
+                loanerCPR,  calcDateTime(), deadline);
       }
       catch (SQLException throwables)
       {
@@ -68,6 +68,7 @@ public class LibraryModelManager implements LibraryModel
       }
       loanList.addLoan(loan);
       support.firePropertyChange(EventTypes.LOAN_REGISTERED, null, loan);
+      return loan;
     }
   }
 
@@ -81,6 +82,7 @@ public class LibraryModelManager implements LibraryModel
             rs.getInt("page_no"), rs.getInt("place_id"));
         return temp;
      }
+
   @Override public void registerBook(String title, String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount, int placeID, int authorId, String genre,
       String url)
@@ -118,7 +120,7 @@ public class LibraryModelManager implements LibraryModel
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID, String genre, String url)
+      String playDuration, int placeID, String genre, String url)
   {
     //TODO: Mangler muligvis genre i DB, og er derfor sat til null indtil videre.
     try
@@ -258,10 +260,24 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public Material searchMaterial(String arg)
+  @Override public MaterialList searchMaterial(String arg)
   {
-    //TODO: IMPLEMENT THIS CORRECTLY - THIS IS A PLACE HOLDER IMPL FOR TEST
-    return materialList.getMaterialById(Integer.parseInt(arg));
+    MaterialList searchMaterial = new MaterialList();
+    try
+    {
+       searchMaterial = Utilities.getInstance().findMaterial(arg);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return searchMaterial;
+  }
+
+
+  @Override public boolean deliverMaterial(int materialID, String cpr, int copy_no)
+  {
+       return  Utilities.getInstance().deliverMaterial(materialID,cpr,copy_no);
   }
 
   @Override public void addPropertyChangeListener(String name,

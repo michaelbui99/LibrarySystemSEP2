@@ -4,7 +4,6 @@ import client.model.loan.Loan;
 import client.model.material.Material;
 import shared.ClientCallback;
 import shared.RMIServer;
-import shared.util.Constants;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -16,6 +15,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class RMIClient implements Client, ClientCallback
 {
+
+  public static final String RMI_SERVER = "RMI_SERVER";
   private PropertyChangeSupport support;
   private RMIServer server;
 
@@ -40,7 +41,7 @@ public class RMIClient implements Client, ClientCallback
     try
     {
       registry = LocateRegistry.getRegistry(1099);
-      server = (RMIServer) registry.lookup(Constants.RMI_SERVER);
+      server = (RMIServer) registry.lookup(RMI_SERVER);
       server.registerClientCallback(this);
     }
     catch (RemoteException | NotBoundException e)
@@ -90,10 +91,10 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public void registerDVD(String title, String publisher,
+ public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID, String genre, String url)
+      String playDuration, int placeID, String genre, String url)
   {
     try
     {

@@ -5,12 +5,13 @@ public class EBook extends ReadingMaterial
   private String licenseNr;
   private String author, genre;
 
+
   public EBook(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, String licenseNr, String author, String genre)
+      String targetAudience, String language,  int pageCount, String licenseNr, String author, String genre)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language, isbn, pageCount);
+        tags, targetAudience, language, pageCount);
     this.licenseNr = licenseNr;
     this.author = author;
     this.genre = genre;
