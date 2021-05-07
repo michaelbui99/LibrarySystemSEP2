@@ -2,6 +2,8 @@ package client.model.loan;
 
 import client.model.material.Material;
 
+import java.util.List;
+
 public interface LoanModelClient
 {
   /**
@@ -15,6 +17,7 @@ public interface LoanModelClient
   Loan registerLoan(Material material, String loanerCPR, String deadline)
       throws IllegalStateException;
 
+  List<Loan> getAllLoansByCPR(String cpr);
   void deliverMaterial(int loanNo);
   void extendLoan();
 }

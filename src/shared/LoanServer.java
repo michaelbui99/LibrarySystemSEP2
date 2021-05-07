@@ -1,8 +1,10 @@
 package shared;
 
+import client.model.loan.Loan;
 import client.model.material.Material;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface LoanServer
 {
@@ -14,5 +16,5 @@ public interface LoanServer
    * */
   void registerLoan(Material material, String loanerCPR, String deadline) throws
       RemoteException;
-
+  List<Loan> getAllLoansByCPR(String cpr);
 }
