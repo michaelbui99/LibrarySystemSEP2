@@ -1,6 +1,9 @@
 package client.model.library;
 
+import client.model.loan.LoanList;
 import client.model.material.Material;
+import client.model.material.MaterialList;
+import client.model.material.strategy.SearchStrategyManager;
 import client.network.RMIClient;
 
 import java.beans.PropertyChangeListener;
@@ -11,15 +14,17 @@ public class LibraryModelManager implements LibraryModelClient
 {
   LoanList loanList;
 
-  public LibraryModelManager()
+  public LibraryModelManager(){
+
+  }
   private RMIClient RMIClient;
   private PropertyChangeSupport support;
-  private MaterialSearchStrategyNavigator searchStrategyNavigator;
+  private SearchStrategyManager searchStrategyNavigator;
   public LibraryModelManager(RMIClient RMIClient)
   {
     this.RMIClient = RMIClient;
     support = new PropertyChangeSupport(this);
-    searchStrategyNavigator = new MaterialSearchStrategyNavigator("all");
+
     try
     {
       RMIClient.startClient();
@@ -51,19 +56,10 @@ public class LibraryModelManager implements LibraryModelClient
 
   }
 
-  @Override public void searchMaterial(String arg)
+  @Override public MaterialList searchMaterial(String title, String language,
+      String keywords, String genre, String audience, String type)
   {
-    MaterialList ml = new MaterialList();
-//    if (type.equals("all") ){
-//      MaterialDAOImpl mid =
-//    }
-//    else {
-//      switch (type){
-//        case "audiobook" :
-//          AudioBookStrategy abs =
-//      }
-//    }
-    return ml;
+    return null;
   }
 
   @Override public void addPropertyChangeListener(String name,

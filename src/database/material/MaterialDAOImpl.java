@@ -1,6 +1,8 @@
 package database.material;
 
 import client.model.material.DVD;
+import client.model.material.Material;
+import client.model.material.MaterialList;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
@@ -117,6 +119,100 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
 
 
+ /* @Override public List<Material> getAllMaterialsByTitle(String title, String materialType)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      List<Material> returnList = new ArrayList<>();
+      ResultSet resultSet = getQueryResultByTypeTitle(materialType, title);
+      if (resultSet.next())
+      {
+        while (resultSet.next())
+        {
+          if(materialType.equals("book")){
+            //Add all found books to arraylist
+            Book book = new Book(resultSet.getInt("material_id"),
+                resultSet.getInt("copy_no"), resultSet.getString("title"),
+                resultSet.getString("publisher"),
+                String.valueOf(resultSet.getDate("release_date")),
+                resultSet.getString("description_of_the_content"),
+                resultSet.getString("keywords"), resultSet.getString("audience"),
+                resultSet.getString("language_"), resultSet.getString("isbn"),
+                resultSet.getInt("page_no"), resultSet.getInt("place_id"),
+                resultSet.getString("author"));
+            returnList.add(book);
+          }
+          else if(materialType.equals("audiobook")){
+            AudioBook audioBook = new AudioBook(resultSet.getInt("material_id"),
+                MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                resultSet.getString("title"),
+                resultSet.getString("publisher"),
+                String.valueOf(resultSet.getDate("release_date")),
+                resultSet.getString("description_of_the_content"),
+                resultSet.getString("keywords"),
+                resultSet.getString("audience"),
+                resultSet.getString("language_"),
+                resultSet.getString("length_"));
+            returnList.add(audioBook);
+          }
+          else if(materialType.equals("e_book")){
+            EBook eBook = new EBook(resultSet.getInt("material_id"),
+                MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                resultSet.getString("title"),
+                resultSet.getString("publisher"),
+                String.valueOf(resultSet.getDate("release_date")),
+                resultSet.getString("description_of_the_content"),
+                resultSet.getString("keywords"),
+                resultSet.getString("audience"),
+                resultSet.getString("language_"),
+                resultSet.getInt("page_no"),
+                resultSet.getString("license_no"),
+                resultSet.getString("genre"),
+                resultSet.getString("author"));
+             returnList.add(eBook);
+          }
+          else if(materialType.equals("dvd")){
+            DVD dvd = new DVD(resultSet.getInt("material_id"),
+                MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                resultSet.getString("title"),
+                resultSet.getString("publisher"),
+                String.valueOf(resultSet.getDate("release_date")),
+                resultSet.getString("description_of_the_content"),
+                resultSet.getString("keywords"),
+                resultSet.getString("audience"),
+                resultSet.getString("language_"),
+                resultSet.getString("subtitle_lang"),
+                resultSet.getString("length_"),
+                resultSet.getInt("place_id"));
+            returnList.add(dvd);
+          }
+          else if(materialType.equals("cd")){
+            CD cd = (new CD(resultSet.getInt("material_id"),
+                MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                resultSet.getString("title"),
+                resultSet.getString("publisher"),
+                String.valueOf(resultSet.getDate("release_date")),
+                resultSet.getString("description_of_the_content"),
+                resultSet.getString("keywords"),
+                resultSet.getString("audience"),
+                resultSet.getString("language_"),
+                resultSet.getString("length_"),
+                resultSet.getInt("place_id")));
+            returnList.add(cd);
+        }
+        }
+      }
+      else
+      {
+        throw new NoSuchElementException("No material was found");
+      }
+      return returnList;
+    }
+  }
+
+
+
 
 
   public List<Book> getAllBooksByTitle(String title) throws SQLException
@@ -138,7 +234,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
               bookResult.getString("description_of_the_content"),
               bookResult.getString("keywords"), bookResult.getString("audience"),
               bookResult.getString("language_"), bookResult.getString("isbn"),
-              bookResult.getInt("page_no"), bookResult.getInt("place_id"));
+              bookResult.getInt("page_no"), bookResult.getInt("place_id"),
+              bookResult.getString("author"));
           returnList.add(book);
         }
       }
@@ -262,8 +359,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             eBookResult.getString("language_"),
             eBookResult.getInt("page_no"),
             String.valueOf(eBookResult.getInt("license_no")),
-            String.valueOf(eBookResult.getInt("author")),
-            eBookResult.getString("genre"));
+            eBookResult.getString("genre"),
+            eBookResult.getString("author"));
         returnList.add(eBook);
       }
     }
@@ -273,6 +370,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     }
     return returnList;
   }
+
+
 
   public List<Book> getAllBooks() throws SQLException
   {
@@ -292,7 +391,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
               bookResult.getString("keywords"),
               bookResult.getString("audience"),
               bookResult.getString("language_"), bookResult.getString("isbn"),
-              bookResult.getInt("page_no"), bookResult.getInt("place_id"));
+              bookResult.getInt("page_no"), bookResult.getInt("place_id"),
+              bookResult.getString("author"));
           returnList.add(book);
         }
       }
@@ -439,16 +539,19 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
     try (Connection connection = getConnection())
     {
-      if (type.equals("books") || type.equals("audiobook" || type.equals("e_book")))
+      ResultSet resultSet = null;
+      if (type.equals("books") || type.equals("audiobook") || type.equals("e_book"))
       {
-        reparedStatement stm = connection.prepareStatement(
+        PreparedStatement stm = connection.prepareStatement(
             "SELECT * FROM material JOIN " + type + " USING (material_id) JOIN material_copy USING (material_id) join material_creator mc on mc.person_id = " + type+".author");
+        return stm.executeQuery();
       }else
       {
         PreparedStatement stm = connection.prepareStatement(
             "SELECT * FROM material JOIN " + type + " USING (material_id) JOIN material_copy USING (material_id)");
+        return stm.executeQuery();
       }
-      return stm.executeQuery();
+
     }
   }
 
@@ -471,6 +574,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       return stm.executeQuery();
     }
   }
+  */
+
   public boolean deliverMaterial(int materialID, String cpr, int copy_no){
 
     try(Connection connection = getConnection())
@@ -495,4 +600,129 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   //  {
   //    return null;
   //  }
+
+
+ @Override public List<Material> findMaterial(String title, String language, String keywords, String genre, String targetAudience, String type) throws SQLException
+  {
+
+    //list where we store the results
+    List<Material> ml = new ArrayList<>();
+    try(Connection connection = getConnection())
+    {
+      //get resultSet for each category
+
+        List<String> queryFragments = new ArrayList<>();
+        String sql = "SELECT * FROM material join " + type + " on material.material_id = " +  type + ".material_id  ";
+
+        if(!title.isEmpty() ||
+            !language.isEmpty() ||
+            !keywords.isEmpty() ||
+            !genre.isEmpty() ||
+            !targetAudience.isEmpty()) {
+          sql += "where ";
+        }
+
+        if(!title.isEmpty()){
+          queryFragments.add(" material.title LIKE  ('%" + title + "%') ");
+        }
+        if(!language.isEmpty()){
+          queryFragments.add(" material.language_ LIKE  ('%" + language + "%' ) ");
+        }
+        if(!keywords.isEmpty()){
+          queryFragments.add(" material.keywords LIKE  ('%" + keywords + "%' ) ");
+        }
+        if(!genre.isEmpty()){
+          queryFragments.add(" material.genre LIKE  ('%" + genre + "%' ) ");
+        }
+        if(!targetAudience.isEmpty()){
+          queryFragments.add(" material.audience LIKE  ('%" + targetAudience + "%' ) ");
+        }
+
+        sql += String.join(" and ", queryFragments);
+
+        PreparedStatement stm = connection.prepareStatement(sql);
+        ResultSet resultSet = stm.executeQuery();
+        while (resultSet.next()){
+          switch (type){
+
+            case "audiobook" :
+              AudioBook mat = new AudioBook(resultSet.getInt("material_id"),
+                  MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                  resultSet.getString("title"),
+                  resultSet.getString("publisher"),
+                  String.valueOf(resultSet.getDate("release_date")),
+                  resultSet.getString("description_of_the_content"),
+                  resultSet.getString("keywords"),
+                  resultSet.getString("audience"),
+                  resultSet.getString("language_"),
+                  resultSet.getInt("length_"),
+                  resultSet.getString("author"));
+              ml.add(mat);
+              break;
+
+            case "book" :
+              ml.add(new Book(resultSet.getInt("material_id"),
+                  MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                  resultSet.getString("title"),
+                  resultSet.getString("publisher"),
+                  String.valueOf(resultSet.getDate("release_date")),
+                  resultSet.getString("description_of_the_content"),
+                  resultSet.getString("keywords"),
+                  resultSet.getString("audience"),
+                  resultSet.getString("language_"),
+                  resultSet.getString("isbn"),
+                  resultSet.getInt("page_no"), resultSet.getInt("place_id"),
+                  resultSet.getString("author")));
+              break;
+
+            case "cd":
+              ml.add(new CD(resultSet.getInt("material_id"),
+                  MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                  resultSet.getString("title"),
+                  resultSet.getString("publisher"),
+                  String.valueOf(resultSet.getDate("release_date")),
+                  resultSet.getString("description_of_the_content"),
+                  resultSet.getString("keywords"),
+                  resultSet.getString("audience"),
+                  resultSet.getString("language_"),
+                  resultSet.getInt("length_"),
+                  resultSet.getInt("place_id")));
+              break;
+
+            case "dvd":
+              ml.add(new DVD(resultSet.getInt("material_id"),
+                  MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                  resultSet.getString("title"),
+                  resultSet.getString("publisher"),
+                  String.valueOf(resultSet.getDate("release_date")),
+                  resultSet.getString("description_of_the_content"),
+                  resultSet.getString("keywords"),
+                  resultSet.getString("audience"),
+                  resultSet.getString("language_"),
+                  resultSet.getString("subtitle_lang"),
+                  resultSet.getString("length_"),
+                  resultSet.getInt("place_id")));
+              break;
+
+            case "e_book":
+              ml.add(new EBook(resultSet.getInt("material_id"),
+                  MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id")),
+                  resultSet.getString("title"),
+                  resultSet.getString("publisher"),
+                  String.valueOf(resultSet.getDate("release_date")),
+                  resultSet.getString("description_of_the_content"),
+                  resultSet.getString("keywords"),
+                  resultSet.getString("audience"),
+                  resultSet.getString("language_"),
+                  resultSet.getInt("page_no"),
+                  resultSet.getString("license_no"),
+                  resultSet.getString("genre"),
+                  resultSet.getString("author")));
+              break;
+          }
+        }
+      }
+
+    return ml;
+  }
 }

@@ -1,12 +1,14 @@
 package client.model.material;
 
+import client.model.material.strategy.SearchStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialList
 {
   private List<Material> materials;
-  private MaterialFilterStrategyInterface materialFilterStrategyInterface;
+  private SearchStrategy searchStrategy;
 
   public MaterialList()
   {

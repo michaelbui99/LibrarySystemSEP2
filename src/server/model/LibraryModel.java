@@ -54,9 +54,10 @@ public interface LibraryModel extends PropertyChangeSubject
       double playDuration, String genre, int authorId, String url);
 
   void createAudioBookCopy(int materialID);
-  MaterialList searchMaterial(String title, String language,
+
+  /*MaterialList searchMaterial(String title, String language,
       String keywords, String genre, String targetAudience, String type)
-      throws SQLException;
+      throws SQLException;*/
 
   boolean deliverMaterial(int materialID, String cpr, int copy_no);
 

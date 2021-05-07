@@ -36,18 +36,22 @@ public interface MaterialDAO
       throws SQLException, NoSuchElementException;
   //  Material findByID(int id);
 
-  List<Book> getAllBooksByTitle(String title) throws SQLException;
-  List<DVD> getAllDVDsByTitle(String title) throws SQLException;
-  List<CD> getAllCDsByTitle(String title) throws SQLException;
-  List<AudioBook> getAllAudioBooksByTitle(String title) throws SQLException;
-  List<EBook> getAllEBooksByTitle(String title) throws SQLException;
+  // List<Material> getAllMaterialsByTitle(String title, String type)
+  //   throws SQLException;
+  List<Material> findMaterial(String title, String language, String keywords, String genre, String targetAudience,String type)
+      throws SQLException;
+  //  List<Book> getAllBooksByTitle(String title) throws SQLException;
+  // List<DVD> getAllDVDsByTitle(String title) throws SQLException;
+  // List<CD> getAllCDsByTitle(String title) throws SQLException;
+  // List<AudioBook> getAllAudioBooksByTitle(String title) throws SQLException;
+  // List<EBook> getAllEBooksByTitle(String title) throws SQLException;
   boolean deliverMaterial(int materialID, String cpr, int copy_no);
   public int getCopyNumberForMaterial(int materialid);
-  List<Book> getAllBooks() throws SQLException;
-  List<EBook> getAllEbooks() throws SQLException;
-  List<AudioBook> getAllAudioBooks() throws SQLException;
-  List<DVD> getAllDVDs() throws SQLException;
-  List<CD> getAllCDs() throws SQLException;
+  //  List<Book> getAllBooks() throws SQLException;
+  // List<EBook> getAllEbooks() throws SQLException;
+  // List<AudioBook> getAllAudioBooks() throws SQLException;
+  // List<DVD> getAllDVDs() throws SQLException;
+  // List<CD> getAllCDs() throws SQLException;
 
 
 

@@ -3,19 +3,22 @@ package client.model.material.reading;
 public class EBook extends ReadingMaterial
 {
   private String licenseNr;
-  private String author, genre;
+  private String genre, author;
+
 
 
   public EBook(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language,  int pageCount, String licenseNr, String author, String genre)
+      String targetAudience, String language,  int pageCount, String licenseNr, String genre, String author)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language, pageCount);
     this.licenseNr = licenseNr;
     this.author = author;
     this.genre = genre;
+
   }
+
 
   public String getLicenseNr()
   {

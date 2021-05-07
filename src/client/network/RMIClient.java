@@ -28,14 +28,14 @@ public interface RMIClient extends Remote, PropertyChangeSubject
 
   void registerDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String subtitlesLanguage, String playDuration, int placeID, String genre,
+      String subtitlesLanguage, int playDuration, int placeID, String genre,
       String url) throws RemoteException;
 
   void createDVDCopy(int materialID) throws RemoteException;
 
   void registerCD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      double playDuration, int placeID, String genre, String url) throws RemoteException;
+     int playDuration, int placeID, String genre, String url) throws RemoteException;
 
   void createCDCopy(int materialID) throws RemoteException;
 
@@ -48,7 +48,7 @@ public interface RMIClient extends Remote, PropertyChangeSubject
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      double playDuration, String genre, int authorId, String url);
+      int playDuration, String genre, int authorId, String url);
 
   void createAudioBookCopy(int materialID) throws RemoteException;
   void startClient() throws RemoteException;

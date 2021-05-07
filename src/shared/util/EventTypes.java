@@ -2,8 +2,7 @@ package shared.util;
 
 public class EventTypes
 {
-  public static final String MATERIAL_REGISTERED = "MaterialRegistered";
-  public static final String LOAN_REGISTERED = "LoanRegistered";
-  public static final String MATERIAL_COPY_CREATED = "MaterialCopyRegistered";
-  public static final String RMI_SERVER = "RMI_SERVER";
+  public static final String MATERIALREGISTERED = "MaterialRegistered";
+  public static final String LOANREGISTERED = "LoanRegistered";
+  public static final String MATERIALCOPYCREATED = "MaterialCopyRegistered";
 }

@@ -1,5 +1,7 @@
 package client.model.material;
 
+import client.model.material.strategy.SearchStrategy;
+
 import java.sql.SQLException;
 
 public interface MaterialModelClient
@@ -43,5 +45,5 @@ public interface MaterialModelClient
       String keywords, String genre, String targetAudience, String type)
       throws SQLException;
 
-  void findMaterial(String arg, MaterialFilterStrategyInterface searchStrategy);
+  void findMaterial(String arg, SearchStrategy searchStrategy);
 }

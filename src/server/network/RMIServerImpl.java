@@ -5,6 +5,7 @@ import client.model.material.Material;
 import server.model.LibraryModel;
 import shared.ClientCallback;
 import shared.RMIServer;
+import shared.util.Constants;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeEvent;
@@ -46,7 +47,7 @@ public class RMIServerImpl implements RMIServer
     }
     try
     {
-      registry.bind(EventTypes.RMI_SERVER, this);
+      registry.bind(Constants.RMISERVER, this);
     }
     catch (RemoteException | AlreadyBoundException e)
     {
@@ -62,7 +63,7 @@ public class RMIServerImpl implements RMIServer
 
   @Override public void registerClientCallback(ClientCallback ccb)
   {
-    model.addPropertyChangeListener(EventTypes.LOAN_REGISTERED,
+    model.addPropertyChangeListener(EventTypes.LOANREGISTERED,
         new PropertyChangeListener()
         {
           @Override public void propertyChange(PropertyChangeEvent evt)
@@ -94,10 +95,10 @@ public class RMIServerImpl implements RMIServer
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      String playDuration, int placeID,String genre, String url)
+      int playDuration, int placeID,String genre, String url)
   {
-    model.registerDVD(title, publisher, releaseDate, description, tags,
-        targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);
+  //  model.registerDVD(title, publisher, releaseDate, description, tags,
+    //    targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);
   }
 
   @Override public void createDVDCopy(int materialID)
@@ -107,7 +108,7 @@ public class RMIServerImpl implements RMIServer
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID, String genre, String url)
+      String targetAudience, String language, int playDuration, int placeID, String genre, String url)
   {
     model.registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
   }
@@ -132,7 +133,7 @@ public class RMIServerImpl implements RMIServer
 
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, String genre,
+      String targetAudience, String language, int playDuration, String genre,
       int authorId, String url)
   {
     model.registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId, url);

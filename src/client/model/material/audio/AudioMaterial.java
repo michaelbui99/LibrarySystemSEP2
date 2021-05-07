@@ -4,17 +4,17 @@ import client.model.material.Material;
 
 public abstract class AudioMaterial extends Material
 {
-  private String playDuration;
+  private int playDuration;
   public AudioMaterial(int materialID, int copyNumber, String title,
       String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String playDuration)
+      String targetAudience, String language, int playDuration)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language);
     this.playDuration = playDuration;
   }
 
-  public String getPlayDuration()
+  public int getPlayDuration()
   {
     return playDuration;
   }

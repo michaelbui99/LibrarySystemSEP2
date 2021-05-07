@@ -65,15 +65,16 @@ public class audiobookDAOImpl extends BaseDAO implements audiobookDAO
             {
                 //Creates and returns a AudioBook object if a AudioBook with given materialID exists.
                 return new AudioBook(AudioBookDetails.getInt("material_id"),
-                        AudioBookDetails.getInt("copy_no"),
-                        AudioBookDetails.getString("title"),
-                        AudioBookDetails.getString("publisher"),
-                        String.valueOf(AudioBookDetails.getDate("release_date")),
-                        AudioBookDetails.getString("description_of_the_content"),
-                        AudioBookDetails.getString("keywords"),
-                        AudioBookDetails.getString("audience"),
-                        AudioBookDetails.getString("language_"),
-                        AudioBookDetails.getString("length_"));
+                    AudioBookDetails.getInt("copy_no"),
+                AudioBookDetails.getString("title"),
+                    AudioBookDetails.getString("publisher"),
+                    String.valueOf(AudioBookDetails.getDate("release_date")),
+                    AudioBookDetails.getString("description_of_the_content"),
+                    AudioBookDetails.getString("keywords"),
+                    AudioBookDetails.getString("audience"),
+                    AudioBookDetails.getString("language_"),
+                    AudioBookDetails.getInt("length_"),
+                    AudioBookDetails.getString("author"));
             }
             return null;
         }

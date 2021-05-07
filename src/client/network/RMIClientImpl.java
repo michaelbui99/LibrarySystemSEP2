@@ -4,7 +4,6 @@ import client.model.loan.Loan;
 import client.model.material.Material;
 import shared.ClientCallback;
 import shared.RMIServer;
-import shared.util.Constants;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -16,7 +15,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class RMIClientImpl implements RMIClient, ClientCallback, Client
 {
-
+  public static final String RMI_SERVER = "RMI_SERVER";
 
   private PropertyChangeSupport support;
   private RMIServer server;
@@ -42,7 +41,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     try
     {
       registry = LocateRegistry.getRegistry(1099);
-      server = (RMIServer) registry.lookup(Constants.RMI_SERVER);
+      server = (RMIServer) registry.lookup(RMI_SERVER);
       server.registerClientCallback(this);
     }
     catch (RemoteException | NotBoundException e)
@@ -92,14 +91,23 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
- public void registerDVD(String title, String publisher,
+  @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
       String playDuration, int placeID, String genre, String url)
   {
+
+  }
+
+  public void registerDVD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage,
+      int playDuration, int placeID, String genre, String url)
+  {
     try
     {
-      server.registerDVD(title, publisher, releaseDate, description, tags, targetAudience, language, subtitlesLanguage, playDuration, placeID, genre, url);
+      server.registerDVD(title, publisher, releaseDate, description, tags, targetAudience,
+          language, subtitlesLanguage, playDuration, placeID, genre, url);
     }
     catch (RemoteException e)
     {
@@ -122,6 +130,14 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, double playDuration, int placeID,
+      String genre, String url)
+  {
+
+  }
+
+  @Override public void registerCD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, int playDuration, int placeID,
       String genre, String url)
   {
     try
@@ -176,6 +192,14 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, double playDuration, String genre,
+      int authorId, String url)
+  {
+
+  }
+
+  @Override public void registerAudioBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, int playDuration, String genre,
       int authorId, String url)
   {
     try

@@ -8,7 +8,7 @@ public class Book extends ReadingMaterial
   public Book(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeId)
+      int placeId, String author)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language, pageCount);

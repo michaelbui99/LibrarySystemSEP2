@@ -35,13 +35,13 @@ public interface RMIServer extends Remote
   void createBookCopy(int materialID) throws RemoteException;
 
   void registerDVD(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID, String genre,
+      String targetAudience, String language, String subtitlesLanguage, int playDuration, int placeID, String genre,
       String url) throws RemoteException;
 
   void createDVDCopy(int materialID) throws RemoteException;
 
   void registerCD(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID, String genre,
+      String targetAudience, String language, int playDuration, int placeID, String genre,
       String url) throws RemoteException;
 
   void createCDCopy(int materialID) throws RemoteException;
@@ -55,7 +55,7 @@ public interface RMIServer extends Remote
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      double playDuration, String genre, int authorId, String url) throws RemoteException;
+      int playDuration, String genre, int authorId, String url) throws RemoteException;
 
   void createAudioBookCopy(int materialID) throws RemoteException;
 

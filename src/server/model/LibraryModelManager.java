@@ -5,6 +5,7 @@ import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
 import client.model.material.reading.EBook;
+import client.model.material.strategy.SearchStrategyManager;
 import database.loan.LoanDAOImpl;
 import database.material.*;
 import shared.util.EventTypes;
@@ -23,14 +24,14 @@ public class LibraryModelManager implements LibraryModel
   private LoanList loanList;
   private MaterialList materialList;
   private PropertyChangeSupport support;
-  private MaterialSearchStrategyNavigator materialSearchStrategyNavigator;
+  private SearchStrategyManager searchStrategyManager;
 
   public LibraryModelManager()
   {
     loanList = new LoanList();
     support = new PropertyChangeSupport(this);
     materialList = new MaterialList();
-    materialSearchStrategyNavigator = new MaterialSearchStrategyNavigator("all");
+
   }
 
   /**
@@ -67,7 +68,7 @@ public class LibraryModelManager implements LibraryModel
         throwables.printStackTrace();
       }
       loanList.addLoan(loan);
-      support.firePropertyChange(EventTypes.LOAN_REGISTERED, null, loan);
+      support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
       return loan;
     }
   }
@@ -79,7 +80,7 @@ public class LibraryModelManager implements LibraryModel
         Book temp = new Book(rs.getInt("material_id"), rs.getInt("copy_no"),rs.getString("title"),
             rs.getString("publisher"), rs.getString("release_date"), rs.getString("description_of_the_content"),
             rs.getString("keywords"), rs.getString("audience"), rs.getString("language_"), rs.getString("isbn"),
-            rs.getInt("page_no"), rs.getInt("place_id"));
+            rs.getInt("page_no"), rs.getInt("place_id"), rs.getString("author") );
         return temp;
      }
 
@@ -94,7 +95,7 @@ public class LibraryModelManager implements LibraryModel
           .create(title, publisher, releaseDate, description, tags,
               targetAudience, language, genre, url);
       BookDAOImpl.getInstance().create(generatedID, isbn, pageCount,  authorId, placeID);
-      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+      support.firePropertyChange(EventTypes.MATERIALREGISTERED, null, null);
     }
     catch (SQLException throwables)
     {
@@ -109,7 +110,7 @@ public class LibraryModelManager implements LibraryModel
       Book book = BookDAOImpl.getInstance().createBookCopy(materialID,
           MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
       materialList.addMaterial(book);
-      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, book);
+      support.firePropertyChange(EventTypes.MATERIALCOPYCREATED, null, book);
     }
     catch (SQLException throwables)
     {
@@ -130,7 +131,7 @@ public class LibraryModelManager implements LibraryModel
               targetAudience, language, genre, url);
       DVDDAOImpl
           .getInstance().create(generatedID, subtitlesLanguage, playDuration, placeID);
-      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+      support.firePropertyChange(EventTypes.MATERIALREGISTERED, null, null);
     }
     catch (SQLException throwables)
     {
@@ -146,7 +147,7 @@ public class LibraryModelManager implements LibraryModel
       DVD dvd = DVDDAOImpl.getInstance().createDVDCopy(materialID,
           MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
       materialList.addMaterial(dvd);
-      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, dvd);
+      support.firePropertyChange(EventTypes.MATERIALCOPYCREATED, null, dvd);
     }
     catch (SQLException throwables)
     {
@@ -165,7 +166,7 @@ public class LibraryModelManager implements LibraryModel
           .create(title, publisher, releaseDate, description, tags,
               targetAudience, language, genre, url);
       CDDAOImpl.getInstance().create(generatedID, (int) playDuration, placeID);
-      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+      support.firePropertyChange(EventTypes.MATERIALREGISTERED, null, null);
     }
     catch (SQLException throwables)
     {
@@ -181,7 +182,7 @@ public class LibraryModelManager implements LibraryModel
       CD cd = CDDAOImpl.getInstance().createCDCopy(materialID,
           MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
       materialList.addMaterial(cd);
-      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, cd);
+      support.firePropertyChange(EventTypes.MATERIALCOPYCREATED, null, cd);
     }
     catch (SQLException e)
     {
@@ -202,7 +203,7 @@ public class LibraryModelManager implements LibraryModel
               targetAudience, language, genre, url);
       EbogDAOImpl.getInstance()
           .create(generatedID, pageCount, authorId, Integer.parseInt(licenseNr));
-      support.firePropertyChange(EventTypes.MATERIAL_REGISTERED, null, null);
+      support.firePropertyChange(EventTypes.MATERIALREGISTERED, null, null);
     }
     catch (SQLException throwables)
     {
@@ -218,7 +219,7 @@ public class LibraryModelManager implements LibraryModel
       EBook eBook = EbogDAOImpl.getInstance().createEBookCopy(materialID,
           MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
       materialList.addMaterial(eBook);
-      support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, eBook);
+      support.firePropertyChange(EventTypes.MATERIALCOPYCREATED, null, eBook);
     }
     catch (SQLException throwables)
     {
@@ -238,7 +239,7 @@ public class LibraryModelManager implements LibraryModel
               targetAudience, language ,genre, url);
     audiobookDAOImpl
         .getInstance().create(generatedID, playDuration, authorId);
-    support.firePropertyChange(EventTypes.MATERIAL_REGISTERED,null, null);
+    support.firePropertyChange(EventTypes.MATERIALREGISTERED,null, null);
     }
     catch (SQLException throwables)
     {
@@ -253,7 +254,7 @@ public class LibraryModelManager implements LibraryModel
       AudioBook audioBook = audiobookDAOImpl.getInstance().createAudioBookCopy(materialID,
           MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
     materialList.addMaterial(audioBook);
-    support.firePropertyChange(EventTypes.MATERIAL_COPY_CREATED, null, audioBook);
+    support.firePropertyChange(EventTypes.MATERIALCOPYCREATED, null, audioBook);
     }
     catch (SQLException throwables)
     {
@@ -261,15 +262,16 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  @Override public MaterialList searchMaterial(String title, String language,
+  /*@Override public MaterialList searchMaterial(String title, String language,
       String keywords, String genre, String targetAudience, String type)
       throws SQLException
   {
-    this.materialSearchStrategyNavigator.setType(type);
-    MaterialList ml = materialSearchStrategyNavigator.findMaterial(title, language, keywords, genre, targetAudience);
+    this.searchStrategyManager.selectStrategy(type);
+    MaterialList ml = searchStrategyManager
+        .findMaterial(title, language, keywords, genre, targetAudience);
     return ml;
   }
-
+*/
 
   @Override public boolean deliverMaterial(int materialID, String cpr, int copy_no)
   {
