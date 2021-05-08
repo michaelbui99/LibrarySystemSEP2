@@ -1,5 +1,6 @@
 package client.model.user;
 
+import client.model.loan.Address;
 import client.network.Client;
 import shared.util.EventTypes;
 
@@ -17,13 +18,17 @@ public class UserModelManagerClient implements UserModelClient
     support = new PropertyChangeSupport(this);
   }
 
-  @Override public Borrower registerBorrower()
+  @Override public Borrower registerBorrower(String cpr_no, String f_name,
+      String l_name, String email, String tel_no, Address address_id,
+      String password)
   {
+    //TODO call the method registerBorrower(args) from the Client and then fire an event//
     return null;
   }
 
-  @Override public boolean Login()
+  @Override public boolean Login(String email, String password)
   {
+    //TODO call the method Login from the Client and then fire an event//
     return false;
   }
 
