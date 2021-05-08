@@ -372,7 +372,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   }
 
 
-
+*/
   public List<Book> getAllBooks() throws SQLException
   {
     List<Book> returnList = new ArrayList<>();
@@ -529,6 +529,8 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return returnList;
   }
 
+
+
   private ResultSet getQueryResultByType(String type) throws SQLException
   {
     String[] safeTables = {"book", "audiobook", "cd", "dvd", "e_book"};
@@ -574,9 +576,9 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       return stm.executeQuery();
     }
   }
-  */
 
-  public boolean deliverMaterial(int materialID, String cpr, int copy_no){
+
+  public boolean returnMaterial(int materialID, String cpr, int copy_no){
 
     try(Connection connection = getConnection())
     {

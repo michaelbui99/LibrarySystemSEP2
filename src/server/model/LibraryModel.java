@@ -59,6 +59,6 @@ public interface LibraryModel extends PropertyChangeSubject
       String keywords, String genre, String targetAudience, String type)
       throws SQLException;*/
 
-  boolean deliverMaterial(int materialID, String cpr, int copy_no);
+  boolean returnMaterial(int materialID, String cpr, int copy_no);
 
 }
