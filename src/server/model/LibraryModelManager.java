@@ -273,9 +273,9 @@ public class LibraryModelManager implements LibraryModel
   }
 
 
-  @Override public boolean deliverMaterial(int materialID, String cpr, int copy_no)
+  @Override public boolean returnMaterial(int materialID, String cpr, int copy_no)
   {
-       return  MaterialDAOImpl.getInstance().deliverMaterial(materialID,cpr,copy_no);
+       return  MaterialDAOImpl.getInstance().returnMaterial(materialID,cpr,copy_no);
   }
 
   @Override public void addPropertyChangeListener(String name,

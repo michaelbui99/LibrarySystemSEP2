@@ -8,46 +8,78 @@ import java.sql.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class BorrowerImpl extends BaseDAO implements BorrowerDAO {
+public class BorrowerImpl extends BaseDAO implements BorrowerDAO
+{
 
-    private static BorrowerDAO instance;
-    private static final Lock lock = new ReentrantLock();
+  private static BorrowerDAO instance;
+  private static final Lock lock = new ReentrantLock();
 
-    public static BorrowerDAO getInstance()
+  public static BorrowerDAO getInstance()
+  {
+    if (instance == null)
     {
+      synchronized (lock)
+      {
         if (instance == null)
         {
-            synchronized (lock)
-            {
-                if (instance == null)
-                {
-                    instance = new BorrowerImpl();
-                }
-            }
+          instance = new BorrowerImpl();
         }
-        return instance;
+      }
     }
+    return instance;
+  }
 
-
-    @Override
-    public Borrower create(String cpr, String firstName, String lastName, String tlfNumber, Address address, String email, String password) throws SQLException {
-        try (Connection connection = getConnection())
-        {
-            PreparedStatement stm = connection.prepareStatement( //the table structure needs to change to the values from the query so we can test it
-                    "INSERT INTO Borrower(cpr,fName,lName, telNo, address, email, password) values (?,?,?,?,?,?,?)",
-                    PreparedStatement.RETURN_GENERATED_KEYS);
-            stm.setString(1, cpr);
-            stm.setString(2, firstName);
-            stm.setString(3, lastName);
-            stm.setString(4, tlfNumber);
-            stm.setObject(5, address);
-            stm.setString(6, email);
-            stm.setString(7, password);
-            stm.executeUpdate();
-            ResultSet keys = stm.getGeneratedKeys();
-            keys.next();
-            connection.commit();
-            return new Borrower(cpr, firstName, lastName, tlfNumber, address, email, password);
-        }
+  /**
+   * Method adds a Borrower (user) to the database
+   */
+  @Override public Borrower create(String cpr, String firstName,
+      String lastName, String email, String tlfNumber, Address address,
+      String password) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          //the table structure needs to change to the values from the query so we can test it
+          "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
+          PreparedStatement.RETURN_GENERATED_KEYS);
+      stm.setString(1, cpr);
+      stm.setString(2, firstName);
+      stm.setString(3, lastName);
+      stm.setString(6, email);
+      stm.setString(4, tlfNumber);
+      stm.setObject(5, address);
+      stm.setString(7, password);
+      stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
+      keys.next();
+      connection.commit();
+      return new Borrower(cpr, firstName, lastName, email, tlfNumber, address,
+          password);
     }
+  }
+
+  /**
+   * Method to check if the user can have a login privilege by
+   * checking if the provided email and password matches the one in the database
+   *
+   * @return true
+   */
+  @Override public boolean logInBorrower(String email, String password) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      // writing the sql query
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT email, password " + "FROM borrower"
+              + "WHERE email = ? AND password = ?");
+      stm.setString(1, "email");
+      stm.setString(2, "password");
+      ResultSet result = stm.executeQuery();
+      if (result.next())
+      {
+        return true;
+      }
+    }
+    return false;
+  }
 }

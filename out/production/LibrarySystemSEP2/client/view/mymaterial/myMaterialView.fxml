@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="597.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.mymaterial.MyMaterialController">
+<AnchorPane prefHeight="450.0" prefWidth="597.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.mymaterial.MyMaterialController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="599.0" style="-fx-background-color: white;">
          <children>
@@ -31,12 +31,12 @@
                <content>
                   <HBox prefHeight="311.0" prefWidth="597.0">
                      <children>
-                        <TableView prefHeight="336.0" prefWidth="595.0">
+                        <TableView fx:id="loanTableView" prefHeight="336.0" prefWidth="595.0">
                           <columns>
-                            <TableColumn prefWidth="193.0" text="Materiale" />
-                            <TableColumn prefWidth="161.0" text="Type" />
-                              <TableColumn prefWidth="108.0" text="Frist" />
-                              <TableColumn prefWidth="127.0" />
+                            <TableColumn fx:id="materialColumn" prefWidth="193.0" text="Materiale" />
+                            <TableColumn fx:id="typeColumn" prefWidth="161.0" text="Type" />
+                              <TableColumn fx:id="loanDateColumn" prefWidth="108.0" text="Laan Dato" />
+                              <TableColumn fx:id="deadlineColumn" prefWidth="127.0" text="Afleveringsfrist" />
                           </columns>
                         </TableView>
                      </children>

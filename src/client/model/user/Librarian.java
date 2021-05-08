@@ -7,9 +7,11 @@ public class Librarian
 
   private String firstName, lastName, cpr, tlfNumber, email, password;
   private Address address;
+  private int employee_no;
 
 
-  public Librarian(String cpr, String firstName, String lastName, String tlfNumber, Address address, String email, String password)
+  public Librarian(int employee_no, String firstName, String lastName, String cpr,
+      String tlfNumber, String email, Address address, String password)
   {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -18,6 +20,7 @@ public class Librarian
     this.address = address;
     this.email = email;
     this.password = password;
+    this.employee_no = employee_no;
   }
 
   public void registerBook()

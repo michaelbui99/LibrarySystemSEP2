@@ -1,6 +1,10 @@
 package database.loan;
 
+import client.model.loan.Address;
 import client.model.loan.Loan;
+import client.model.material.Material;
+import client.model.material.reading.Book;
+import client.model.user.Borrower;
 import database.BaseDAO;
 
 import java.sql.*;
@@ -30,56 +34,84 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     return instance;
   }
 
-  @Override public Loan create(int materialID, int copyNumber, String cpr,
-      String loanDate, String deadline) throws SQLException
+  @Override public Loan create(Material material, Borrower borrower,
+      String deadline, String loanDate, String returnDate)
   {
-    try (Connection connection = getConnection())
+    //todo: Change stm.setString(3, 111111-1111) to borrower.getcpr()
+    try
     {
-      PreparedStatement stm = connection.prepareStatement(
-          //the table structure needs to change to the values from the query so we can test it
-          "INSERT INTO loan(loan_date,deadline,return_date, cpr_no, material_id, copy_no) values (?,?,?,?,?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      stm.setDate(1, Date.valueOf(loanDate));
-      stm.setDate(2, Date.valueOf(deadline));
-      stm.setDate(3, null);
-      stm.setString(4, cpr);
-      stm.setInt(5, materialID);
-      stm.setInt(6, copyNumber);
-      stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
-      keys.next();
-      connection.commit();
-      return new Loan(keys.getInt("loan_no"), materialID, copyNumber, cpr,
-          loanDate, deadline);
-    }
-  }
-
-  @Override public List<Loan> getAllLoansByCPR(String cpr) throws SQLException
-  {
-    //TODO: Tilføj Number of extensions til Loan i DB og ændre værdien i metoden fra 0 til den faktiske værdi.
-    try (Connection connection = getConnection())
-    {
-      List<Loan> loans = new ArrayList<>();
-      PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM loan JOIN borrower USING(cpr_no) JOIN material_copy USING(material_id, copy_no) JOIN Material using (material_id) WHERE cpr_no = ?");
-      stm.setString(1, cpr);
-      ResultSet result = stm.executeQuery();
-      if (result.next())
+      try (Connection connection = getConnection())
       {
-        while (result.next())
-        {
-          Loan loan = new Loan(result.getInt("loan_no"),
-              result.getInt("material_id"), result.getInt("copy_no"),
-              result.getString("cpr_no"),
-              String.valueOf(result.getDate("loan_date")),
-              String.valueOf(result.getDate("deadline")));
-          loans.add(loan);
-        }
-        return loans;
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no) values (CURRENT_DATE,?,?,?,?,?)",
+            Statement.RETURN_GENERATED_KEYS);
+        stm.setDate(1, Date.valueOf(deadline));
+        stm.setDate(2, null);
+        stm.setString(3, /*borrower.getCPR()*/"111111-1111");
+        stm.setInt(4, material.getMaterialID());
+        stm.setInt(5, material.getCopyNumber());
+
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        int generatedKey = keys.getInt(1);
+        return new Loan(material, borrower, deadline, loanDate, null, generatedKey);
       }
-      else
-        throw new NoSuchElementException("No loans for CPR was found.");
     }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return null;
   }
 
+  @Override public List<Loan> getAllLoansByCPR(String cpr)
+  {
+    //TODO: Tilføj en metode der giver alle keywords til et materiale i materialdao og ret herefter tags.
+
+    try
+    {
+      try (Connection connection = getConnection())
+      {
+        List<Loan> loans = new ArrayList<>();
+        //Get all loans where we know the material is book.
+        PreparedStatement stm = connection.prepareStatement(
+            "SELECT * from loan join borrower using (cpr_no) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id join address using (address_id)  where cpr_no = ?;");
+        stm.setString(1, cpr);
+        ResultSet bookLoans = stm.executeQuery();
+        while (bookLoans.next())
+        {
+          Book book = new Book(bookLoans.getInt("material_id"),
+              bookLoans.getInt("copy_no"), bookLoans.getString("title"),
+              bookLoans.getString("publisher"),
+              String.valueOf(bookLoans.getDate("release_date")),
+              bookLoans.getString("description_of_the_content"), null,
+              bookLoans.getString("audience"), bookLoans.getString("language_"),
+              bookLoans.getString("isbn"), bookLoans.getInt("page_no"),
+              bookLoans.getInt("place_id"),
+              bookLoans.getString("mc.f_name") + bookLoans
+                  .getString("mc.l_name"));
+          Address address = new Address(bookLoans.getInt("address_id"),
+              bookLoans.getString("street_name"), bookLoans.getInt("street_no"),
+              bookLoans.getInt("zip_code"), bookLoans.getString("city"));
+          Borrower borrower = new Borrower(cpr,
+              bookLoans.getString("borrower.f_name"),
+              bookLoans.getString("borrower.f_name"),
+              bookLoans.getString("tel_no"), address,
+              bookLoans.getString("email"), bookLoans.getString("password"));
+          Loan loan = new Loan(book, borrower,
+              String.valueOf(bookLoans.getDate("deadline")),
+              String.valueOf(bookLoans.getDate("loan_date")),
+              String.valueOf(bookLoans.getDate("return_date")), bookLoans.getInt("loan_no"));
+          loans.add(loan);
+        } return loans;
+      }
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return null;
+  }
 }
+
+
