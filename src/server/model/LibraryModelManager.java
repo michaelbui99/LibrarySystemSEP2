@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class LibraryModelManager implements LibraryModel
 {
@@ -31,7 +32,7 @@ public class LibraryModelManager implements LibraryModel
     loanList = new LoanList();
     support = new PropertyChangeSupport(this);
     materialList = new MaterialList();
-
+    searchStrategyManager = new SearchStrategyManager();
   }
 
   /**
@@ -262,16 +263,15 @@ public class LibraryModelManager implements LibraryModel
     }
   }
 
-  /*@Override public MaterialList searchMaterial(String title, String language,
+  @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience, String type)
       throws SQLException
   {
-    this.searchStrategyManager.selectStrategy(type);
-    MaterialList ml = searchStrategyManager
-        .findMaterial(title, language, keywords, genre, targetAudience);
+    searchStrategyManager.selectStrategy(type);
+    List<Material> ml = searchStrategyManager.findMaterial(title,language,keywords,genre,targetAudience);
     return ml;
   }
-*/
+
 
   @Override public boolean deliverMaterial(int materialID, String cpr, int copy_no)
   {

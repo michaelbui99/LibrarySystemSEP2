@@ -72,7 +72,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               result.getInt("material_id"), result.getInt("copy_no"),
               result.getString("cpr_no"),
               String.valueOf(result.getDate("loan_date")),
-              String.valueOf(result.getDate("deadline")), result.getString("title"), 0);
+              String.valueOf(result.getDate("deadline")));
           loans.add(loan);
         }
         return loans;

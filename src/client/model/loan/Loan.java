@@ -3,19 +3,18 @@ package client.model.loan;
 public class Loan
 {
 
-  private int loanID, materialID, copyNumber, numberOfExtensions;
-  private String cpr,  loanDate, deadline, returnDate, title;
+  private int loanID, materialID, copyNumber;
+  private String cpr,  loanDate, deadline, returnDate;
 
-  public Loan(int loanID, int materialID, int copyNumber, String cpr, String loanDate, String deadline, String title, int numberOfExtensions)
+  public Loan(int loanID, int materialID, int copyNumber, String cpr, String loanDate, String deadline)
   {
     this.loanID = loanID;
     this.materialID = materialID;
     this.copyNumber = copyNumber;
     this.cpr = cpr;
-    this.title = title;
     this.loanDate = loanDate;
     this.deadline = deadline;
-    this.numberOfExtensions = numberOfExtensions;
+
   }
 
   public void setReturnDate(String returnDate)
@@ -38,11 +37,6 @@ public class Loan
     return copyNumber;
   }
 
-  public int getNumberOfExtensions()
-  {
-    return numberOfExtensions;
-  }
-
   public String getCpr()
   {
     return cpr;
@@ -61,11 +55,6 @@ public class Loan
   public String getReturnDate()
   {
     return returnDate;
-  }
-
-  public String getTitle()
-  {
-    return title;
   }
 
 }

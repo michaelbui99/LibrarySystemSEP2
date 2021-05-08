@@ -1,7 +1,7 @@
 package client.model.material.strategy;
 
 import client.model.material.Material;
-import client.model.material.MaterialList;
+import database.material.MaterialDAOImpl;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +15,7 @@ public class SearchStrategyManager  implements SearchStrategy
 
   public SearchStrategyManager(){
 
-  }// searchStrategyManager.selectStrategy(bookStrategy)
+  }
 
   public void setMaterialFilterStrategyInterface(
       SearchStrategy searchStrategy)
@@ -25,12 +25,27 @@ public class SearchStrategyManager  implements SearchStrategy
   }
 
 
-  public void selectStrategy(SearchStrategy searchStrategy)
+  public void selectStrategy(String type)
   {
-    this.searchStrategy = searchStrategy;
-
+    this.type = type;
 
   }
+
+  public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience){
+
+    try
+    {
+      return MaterialDAOImpl.getInstance().findMaterial(title,language,keywords,genre,targetAudience,type);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return null;
+  }
+
+
 
   @Override public List<Material> searchAll() throws SQLException
   {

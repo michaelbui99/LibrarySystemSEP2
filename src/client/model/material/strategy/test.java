@@ -11,15 +11,8 @@ public class test
   {
 
    SearchStrategyManager searchStrategyManager = new SearchStrategyManager();
-   searchStrategyManager.selectStrategy(new BookStrategy());
-    try
-    {
-      List<Material> ml =  searchStrategyManager.searchAll();
-      System.out.println(ml.size());
-    }
-    catch (SQLException throwables)
-    {
-      throwables.printStackTrace();
-    }
+   searchStrategyManager.selectStrategy("audiobook");
+    List<Material> ml =  searchStrategyManager.findMaterial("","","","","");
+    System.out.println(ml.size());
   }
 }

@@ -73,20 +73,20 @@ class LibraryModelManagerTest
     }
 
 
-//    @Test
-//  void searchMaterialTest() throws SQLException
-//    {
-//      MaterialList ml = libraryModelManager.searchMaterial("space", "", "", "", "", "audiobook");
-//      System.out.println("material count: " + ml.size());
-//      List<Material> temp = ml.getAllMaterial();
-//      for (int i = 0; i < ml.size(); i++)
-//      {
-//        System.out.println(" material type: " + temp.get(i).getMaterialType());
-//        System.out.println("title: " + temp.get(i).getTitle());
-//        System.out.println("copies: " + temp.get(i).getCopyNumber());
-//      }
-//     assertEquals("space",ml.getMaterialById(1).getTitle());
-//    }
+    @Test
+  void searchMaterialTest() throws SQLException
+    {
+
+      List<Material> ml = libraryModelManager.findMaterial("space", "", "", "", "", "audiobook");
+      System.out.println("material count: " + ml.size());
+      for (int i = 0; i < ml.size(); i++)
+      {
+        System.out.println(" material type: " + ml.get(i).getMaterialType());
+        System.out.println("title: " + ml.get(i).getTitle());
+        System.out.println("copies: " + ml.get(i).getCopyNumber());
+      }
+     assertEquals("space",ml.get(0).getTitle());
+    }
 
     @Test
   void deliverMaterialTest(){
