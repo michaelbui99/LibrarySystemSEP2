@@ -1,7 +1,9 @@
 package client.model.user;
 
-public interface UserModelClient
+import shared.PropertyChangeSubject;
+
+public interface UserModelClient extends PropertyChangeSubject
 {
-  void registerBorrower();
-  void Login();
+  Borrower registerBorrower();
+  boolean Login();
 }
