@@ -1,7 +1,7 @@
 package client.view.adduser;
 
 import client.model.loan.Address;
-import client.view.ViewHandler;
+import client.core.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

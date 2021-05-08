@@ -1,4 +1,4 @@
-package client.view;
+package client.core;
 
 import client.core.ViewModelFactory;
 import javafx.application.Application;
