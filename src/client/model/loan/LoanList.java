@@ -5,7 +5,7 @@ import java.util.List;
 
 public class LoanList
 {
-  List<Loan> loans;
+  private List<Loan> loans;
 
   public LoanList()
   {
@@ -17,5 +17,21 @@ public class LoanList
     loans.add(loan);
   }
 
+  public List<Loan> getAllLoans()
+  {
+    return loans;
+  }
+
+  public Loan getLoanByID(int loanID)
+  {
+    for (Loan loan : loans)
+    {
+      if (loan.getLoanID() == loanID)
+      {
+        return loan;
+      }
+    }
+    return null;
+  }
 
 }
