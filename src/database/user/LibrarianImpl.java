@@ -32,24 +32,26 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO {
         return instance;
     }
     @Override
-    public Librarian create(String cpr, String firstName, String lastName, String tlfNumber, Address address, String email, String password) throws SQLException {
+    public Librarian create(int employee_no, String firstName, String lastName,
+        String cpr, String tlfNumber, String email, Address address, String password) throws SQLException {
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement( //the table structure needs to change to the values from the query so we can test it
-                    "INSERT INTO Librarian(cpr,fName,lName, telNo, address, email, password) values (?,?,?,?,?,?,?)",
+                    "INSERT INTO Librarian(employee_no,f_name,l_name,cpr_no,tel_no, email, address_id, password) values (?,?,?,?,?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
-            stm.setString(1, cpr);
-            stm.setString(2, firstName);
-            stm.setString(3, lastName);
-            stm.setString(4, tlfNumber);
-            stm.setObject(5, address);
-            stm.setString(6, email);
-            stm.setString(7, password);
+            stm.setInt(1,employee_no);
+            stm.setString(3, firstName);
+            stm.setString(4, lastName);
+            stm.setString(2, cpr);
+            stm.setString(5, tlfNumber);
+            stm.setString(7, email);
+            stm.setObject(6, address);
+            stm.setString(8, password);
             stm.executeUpdate();
             ResultSet keys = stm.getGeneratedKeys();
             keys.next();
             connection.commit();
-            return new Librarian(cpr, firstName, lastName, tlfNumber, address, email, password);
+            return new Librarian(employee_no , firstName, lastName, cpr, tlfNumber, email, address, password);
         }
     }
 }
