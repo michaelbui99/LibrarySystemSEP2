@@ -88,16 +88,16 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               bookLoans.getString("audience"), bookLoans.getString("language_"),
               bookLoans.getString("isbn"), bookLoans.getInt("page_no"),
               bookLoans.getInt("place_id"),
-              bookLoans.getString("mc.f_name") + bookLoans
+              bookLoans.getString("mc.f_name") + " "+bookLoans
                   .getString("mc.l_name"));
           Address address = new Address(bookLoans.getInt("address_id"),
               bookLoans.getString("street_name"), bookLoans.getInt("street_no"),
               bookLoans.getInt("zip_code"), bookLoans.getString("city"));
           Borrower borrower = new Borrower(cpr,
               bookLoans.getString("borrower.f_name"),
-              bookLoans.getString("borrower.f_name"),
-              bookLoans.getString("tel_no"), address,
-              bookLoans.getString("email"), bookLoans.getString("password"));
+              bookLoans.getString("borrower.l_name"),bookLoans.getString("email"),
+              bookLoans.getString("tel_no"), address, bookLoans.getString("password"));
+
           Loan loan = new Loan(book, borrower,
               String.valueOf(bookLoans.getDate("deadline")),
               String.valueOf(bookLoans.getDate("loan_date")),
