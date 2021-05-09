@@ -1,5 +1,5 @@
 package client.view.registermaterial;
 
-public class registerMaterialController
+public class RegisterMaterialVM
 {
 }

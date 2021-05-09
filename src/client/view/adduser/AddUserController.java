@@ -1,7 +1,8 @@
 package client.view.adduser;
 
+import client.core.ViewModelFactory;
 import client.model.loan.Address;
-import client.core.ViewHandler;
+import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -10,6 +11,7 @@ import javafx.scene.control.TextField;
 public class AddUserController
 {
   private ViewHandler viewHandler;
+  private ViewModelFactory viewModelFactory;
   /**
    * the AddUserVM should be called using the singleton class viewModelFactory.
    * the field variable addUserVM is set here temporarily until the
@@ -32,6 +34,14 @@ public class AddUserController
   {
     //TODO use the ViewModelFactory.getInstance.getAddUserVM to instantiate the addUSerVM//
     this.viewHandler = viewHandler;
+  }
+
+  public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory)
+  {
+    this.viewHandler = viewHandler;
+    this.viewModelFactory = viewModelFactory;
+     addUserVM = viewModelFactory.getAddUserVM();
+
   }
 
   @FXML public void onButtonLogin(ActionEvent actionEvent)

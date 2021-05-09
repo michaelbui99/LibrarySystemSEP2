@@ -4,7 +4,7 @@ import client.model.loan.LoanModelClient;
 import client.model.material.Material;
 
 
-public class BorrowReseveVM
+public class BorrowReserveVM
 {
     private LoanModelClient model;
 

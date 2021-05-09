@@ -1,5 +1,5 @@
 package client.view.administration;
 
-public class administrationController
+public class AdministrationController
 {
 }

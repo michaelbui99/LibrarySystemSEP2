@@ -1,6 +1,6 @@
 package client.view.main;
 
-import client.core.ViewHandler;
+import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

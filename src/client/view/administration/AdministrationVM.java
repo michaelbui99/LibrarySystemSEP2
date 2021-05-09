@@ -1,5 +1,5 @@
 package client.view.administration;
 
-public class administrationVM
+public class AdministrationVM
 {
 }

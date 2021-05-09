@@ -10,7 +10,7 @@ public class BorrowReserveController
     @FXML
     ImageView materialImage;
 
-    private BorrowReseveVM vm;
+    private BorrowReserveVM vm;
 
     @FXML void goBack(ActionEvent actionEvent)
     {

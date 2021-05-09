@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="506.0" prefWidth="603.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.registermaterial.registerMaterialController">
+<AnchorPane prefHeight="506.0" prefWidth="603.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.registermaterial.RegisterMaterialController">
    <children>
       <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: white;">
          <children>

@@ -1,13 +1,18 @@
 package shared;
 
+import client.model.material.strategy.SearchStrategy;
+
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface MaterialServer
+public interface MaterialServer extends Remote
 {
   /**
    *
    *
    */
+
+
   void registerBook(String title, String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount, int placeID, int authorId, String genre,
       String url) throws RemoteException;
@@ -38,4 +43,6 @@ public interface MaterialServer
       double playDuration, String genre, int authorId, String url) throws RemoteException;
 
   void createAudioBookCopy(int materialID) throws RemoteException;
+
+  void findMaterial(String arg, SearchStrategy searchStrategy) throws RemoteException;
 }

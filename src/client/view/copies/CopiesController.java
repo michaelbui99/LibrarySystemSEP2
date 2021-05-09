@@ -1,5 +1,5 @@
 package client.view.copies;
 
-public class copiesVM
+public class CopiesController
 {
 }
