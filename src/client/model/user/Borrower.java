@@ -54,10 +54,4 @@ public class Borrower
   {
     return address;
   }
-
-  public void loanMaterial(Material material, String cpr)
-  {
-
-  }
-
 }

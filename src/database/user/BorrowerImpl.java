@@ -64,16 +64,16 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
    *
    * @return true
    */
-  @Override public boolean logInBorrower(String email, String password) throws SQLException
+  @Override public boolean logInBorrower(String cprNo, String password) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       // writing the sql query
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT email, password " + "FROM borrower"
-              + "WHERE email = ? AND password = ?");
-      stm.setString(1, "email");
-      stm.setString(2, "password");
+          "SELECT cpr_no, password " + "FROM borrower"
+              + "WHERE cpr_no = ? AND password = ?");
+      stm.setString(1, cprNo);
+      stm.setString(2, password);
       ResultSet result = stm.executeQuery();
       if (result.next())
       {

@@ -2,7 +2,6 @@ package client.model.user;
 
 import client.model.loan.Address;
 import client.network.Client;
-import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -26,10 +25,16 @@ public class UserModelManagerClient implements UserModelClient
     return null;
   }
 
-  @Override public boolean Login(String email, String password)
+  @Override public boolean Login(String cprNo, String password)
   {
     //TODO call the method Login from the Client and then fire an event//
     return false;
+  }
+
+  @Override public Borrower getLogInUser()
+  {
+    //TODO call the method getLogInUser from the Client and then fire an event//
+    return null;
   }
 
   @Override public void addPropertyChangeListener(String name,

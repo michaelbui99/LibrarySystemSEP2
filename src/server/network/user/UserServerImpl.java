@@ -2,7 +2,6 @@ package server.network.user;
 
 import client.model.loan.Address;
 import client.model.user.Borrower;
-import client.model.user.UserModelClient;
 import server.model.user.UserModelServer;
 import shared.UserServer;
 
@@ -42,11 +41,11 @@ public class UserServerImpl implements UserServer
     return null;
   }
 
-  @Override public boolean Login(String email, String password)
+  @Override public boolean Login(String cprNo, String password)
   {
     try
     {
-      return model.logInBorrower(email, password);
+      return model.logInBorrower(cprNo, password);
     }
     catch (SQLException throwables)
     {

@@ -39,12 +39,12 @@ public class UserModelManagerServer implements UserModelServer
     return borrower;
   }
 
-  @Override public boolean logInBorrower(String email, String password)
+  @Override public boolean logInBorrower(String cprNo, String password)
   {
     boolean login = false;
     try
     {
-     login = BorrowerImpl.getInstance().logInBorrower(email, password);
+     login = BorrowerImpl.getInstance().logInBorrower(cprNo, password);
     }
     catch (SQLException throwables)
     {

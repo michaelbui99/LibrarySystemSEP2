@@ -11,5 +11,5 @@ public interface UserServer extends Remote
   Borrower registerBorrower(String cpr, String firstName, String lastName, String email,
       String tlfNumber, Address address, String password) throws
       RemoteException;
-  boolean Login(String email, String password) throws RemoteException;
+  boolean Login(String cprNo, String password) throws RemoteException;
 }
