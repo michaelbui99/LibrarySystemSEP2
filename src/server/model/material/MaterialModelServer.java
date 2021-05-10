@@ -1,9 +1,11 @@
 package server.model.material;
 
+import client.model.material.Material;
 import client.model.material.MaterialList;
 import client.model.material.strategy.SearchStrategy;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface MaterialModelServer
 {
@@ -42,4 +44,10 @@ public interface MaterialModelServer
       throws SQLException;
 
   void findMaterial(String arg, SearchStrategy searchStrategy);
+
+  List<Material> searchAll() throws SQLException;
+  List<Material> searchTitle(String title) throws SQLException;
+  List<Material> searchGenre(String genre) throws SQLException;
+  List<Material> searchTargetAudience(String targetAudience) throws SQLException;
+  List<Material> searchLanguage(String language) throws SQLException;
 }

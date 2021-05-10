@@ -7,7 +7,7 @@ import client.network.RMIClientImpl;
 public class ClientFactory
 {
   private static ClientFactory clientFactory;
-  public static ClientFactory getClientFactory()
+  public static ClientFactory getInstance()
   {
     if (clientFactory == null){
       clientFactory = new ClientFactory();

@@ -14,7 +14,7 @@ public class ViewModelFactory
 {
   private static ViewModelFactory viewModelFactory;
 
-  public static ViewModelFactory viewModelFactory(){
+  public static ViewModelFactory getInstance(){
     if (viewModelFactory == null){
       viewModelFactory = new ViewModelFactory();
     }

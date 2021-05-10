@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.search.searchController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.search.searchController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="801.0" style="-fx-background-color: white;">
          <children>
@@ -29,7 +29,6 @@
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Titel" GridPane.rowIndex="1">
@@ -37,17 +36,12 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label layoutX="10.0" layoutY="41.0" text="Genre" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label layoutX="10.0" layoutY="41.0" text="Genre" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label layoutX="10.0" layoutY="41.0" text="Forfætter" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="41.0" text="Emneord" GridPane.rowIndex="2">
+                        <Label layoutX="10.0" layoutY="41.0" text="Emneord" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
@@ -57,39 +51,34 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField promptText="Titel:" GridPane.rowIndex="1">
+                        <TextField fx:id="title" promptText="Titel:" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="80.0" right="50.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField layoutX="10.0" layoutY="83.0" promptText="Genre:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="genre" layoutX="10.0" layoutY="83.0" promptText="Genre:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="80.0" right="50.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField layoutX="10.0" layoutY="26.0" promptText="Text , Tesxt" GridPane.rowIndex="2">
+                        <TextField fx:id="keywords" layoutX="10.0" layoutY="26.0" promptText="Text , Tesxt" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="80.0" right="50.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField disable="true" layoutX="10.0" layoutY="26.0" promptText="Forfætter:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="80.0" right="50.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <ComboBox prefWidth="150.0" promptText="Vælg typen" style="-fx-background-color: whit; -fx-cursor: hand;">
+                        <ComboBox fx:id="chooseType" prefWidth="150.0" promptText="Vælg typen" style="-fx-background-color: whit; -fx-cursor: hand;">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <Label layoutX="277.0" layoutY="86.0" text="Målgruppe" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label layoutX="544.0" layoutY="86.0" text="Sprog" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <ComboBox layoutX="110.0" layoutY="26.0" prefWidth="150.0" promptText="Vælg sprog" style="-fx-background-color: whit; -fx-cursor: hand;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Label layoutX="277.0" layoutY="86.0" text="Målgruppe" GridPane.columnIndex="1" />
+                        <Label layoutX="544.0" layoutY="86.0" text="Sprog" GridPane.columnIndex="2" />
+                        <ComboBox fx:id="chooseLanguage" layoutX="110.0" layoutY="26.0" prefWidth="150.0" promptText="Vælg sprog" style="-fx-background-color: whit; -fx-cursor: hand;" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="75.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <ComboBox layoutX="619.0" layoutY="138.0" prefWidth="150.0" promptText="Vælg målgruppe" style="-fx-background-color: whit; -fx-cursor: hand;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <ComboBox fx:id="targetAudience" layoutX="619.0" layoutY="138.0" prefWidth="150.0" promptText="Vælg målgruppe" style="-fx-background-color: whit; -fx-cursor: hand;" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="75.0" />
                            </GridPane.margin>
@@ -100,11 +89,11 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="619.0">
                <children>
-                  <Button mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Søg" textFill="GREEN" underline="true">
+                  <Button mnemonicParsing="false" onAction="#onBottonSearch" style="-fx-background-color: white; -fx-cursor: hand;" text="Søg" textFill="GREEN" underline="true">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>
-                  <Label text="Der er ingen materialer, der matcher din søgning!!!" textFill="RED">
+                  <Label fx:id="errorLabel" text="Der er ingen materialer, der matcher din søgning!!!" textFill="RED">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -118,7 +107,7 @@
                <content>
                   <HBox prefHeight="278.0" prefWidth="801.0">
                      <children>
-                        <TableView prefHeight="280.0" prefWidth="831.0">
+                        <TableView fx:id="searchTableView" prefHeight="280.0" prefWidth="831.0">
                           <columns>
                             <TableColumn prefWidth="263.0" text="Titel" />
                             <TableColumn minWidth="0.0" prefWidth="174.0" text="Forlægger" />
@@ -142,12 +131,12 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-cursor: hand;" text="Annuller">
+                        <Button mnemonicParsing="false" onAction="#onBottonCancle" style="-fx-cursor: hand;" text="Annuller">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" style="-fx-cursor: hand;" text="Fortsætte" GridPane.columnIndex="1">
+                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onBottonContinue" style="-fx-cursor: hand;" text="Fortsætte" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>

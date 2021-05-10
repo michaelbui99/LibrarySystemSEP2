@@ -1,9 +1,12 @@
 package server.model.material;
 
+import client.model.material.Material;
 import client.model.material.MaterialList;
 import client.model.material.strategy.SearchStrategy;
+import database.material.MaterialDAOImpl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class MaterialModelManagerServer implements MaterialModelServer
 {
@@ -81,6 +84,33 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
   {
+     MaterialDAOImpl.getInstance().
+  }
 
+  @Override public List<Material> searchAll() throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<Material> searchTitle(String title) throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<Material> searchGenre(String genre) throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<Material> searchTargetAudience(String targetAudience)
+      throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<Material> searchLanguage(String language)
+      throws SQLException
+  {
+    return null;
   }
 }

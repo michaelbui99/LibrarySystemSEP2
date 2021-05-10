@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MaterialModelManagerClient implements SearchStrategy
+public class MaterialModelManagerClient implements MaterialModelClient
 {
 
 
@@ -45,5 +45,75 @@ public class MaterialModelManagerClient implements SearchStrategy
       throws SQLException
   {
     return null;
+  }
+
+  @Override public void registerBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      int placeID, int authorId, String genre, String url)
+  {
+
+  }
+
+  @Override public void createBookCopy(int materialID)
+  {
+
+  }
+
+  @Override public void registerDVD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String subtitlesLanguage,
+      String playDuration, int placeID, String genre, String url)
+  {
+
+  }
+
+  @Override public void createDVDCopy(int materialID)
+  {
+
+  }
+
+  @Override public void registerCD(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, int placeID,
+      String genre, String url)
+  {
+
+  }
+
+  @Override public void createCDCopy(int materialID)
+  {
+
+  }
+
+  @Override public void registerEBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      String licenseNr, int authorId, String genre, String url)
+  {
+
+  }
+
+  @Override public void createEBookCopy(int materialID)
+  {
+
+  }
+
+  @Override public void registerAudioBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, double playDuration, String genre,
+      int authorId, String url)
+  {
+
+  }
+
+  @Override public void createAudioBookCopy(int materialID)
+  {
+
+  }
+
+  @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
+  {
+
   }
 }

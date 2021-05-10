@@ -31,7 +31,7 @@ private UserModelClient userModelClient;
 
 public ChatModelClient getChatModelClient(){
   if (chatModelClient == null){
-    chatModelClient = new ChatModelManagerClient((Client)ClientFactory.getClientFactory()
+    chatModelClient = new ChatModelManagerClient((Client)ClientFactory.getInstance()
         .getClient());
   }
   return chatModelClient;
@@ -39,28 +39,28 @@ public ChatModelClient getChatModelClient(){
 
 public LibraryModelClient getLibraryModelClient(){
   if (libraryModelClient == null){
-    libraryModelClient = new LibraryModelManager(ClientFactory.getClientFactory().getClient());
+    libraryModelClient = new LibraryModelManager(ClientFactory.getInstance().getClient());
   }
   return libraryModelClient;
 }
 
 public LoanModelClient getLoanModelClient(){
   if (loanModelClient == null){
-    loanModelClient = new LoanModelManagerClient((Client)ClientFactory.getClientFactory().getClient());
+    loanModelClient = new LoanModelManagerClient((Client)ClientFactory.getInstance().getClient());
   }
   return loanModelClient;
 }
 
 public MaterialModelClient getMaterialModelClient(){
   if (materialModelClient == null){
-    materialModelClient = (MaterialModelClient) new MaterialModelManagerClient((Client)ClientFactory.getClientFactory().getClient());
+    materialModelClient = (MaterialModelClient) new MaterialModelManagerClient((Client)ClientFactory.getInstance().getClient());
   }
   return materialModelClient;
 }
 
 public UserModelClient getUserModelClient(){
   if (userModelClient==null){
-    userModelClient = new UserModelManagerClient((Client)ClientFactory.getClientFactory().getClient());
+    userModelClient = new UserModelManagerClient((Client)ClientFactory.getInstance().getClient());
   }
   return userModelClient;
 }

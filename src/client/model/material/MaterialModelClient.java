@@ -4,7 +4,7 @@ import client.model.material.strategy.SearchStrategy;
 
 import java.sql.SQLException;
 
-public interface MaterialModelClient
+public interface MaterialModelClient extends SearchStrategy
 {
 
   /**
