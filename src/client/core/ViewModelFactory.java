@@ -34,7 +34,7 @@ public class ViewModelFactory
 
   public AddUserVM getAddUserVM(){
     if (addUserVM == null){
-      addUserVM = new AddUserVM(ModelFactory.getInstance().getUserModelClient());
+      addUserVM = new AddUserVM();
     }
     return addUserVM;
   }
@@ -62,7 +62,7 @@ public class ViewModelFactory
 
   public MainVM getMainVM(){
     if (mainVM == null){
-      mainVM = new MainVM(ModelFactory.getInstance().getUserModelClient());
+      mainVM = new MainVM();
     }
     return mainVM;
   }

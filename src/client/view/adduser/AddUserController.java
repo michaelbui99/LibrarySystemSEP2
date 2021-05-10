@@ -8,17 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class AddUserController
 {
-  private ViewHandler viewHandler;
-  private ViewModelFactory viewModelFactory;
-  /**
-   * the AddUserVM should be called using the singleton class viewModelFactory.
-   * the field variable addUserVM is set here temporarily until the
-   * viewModelFactory is complete
-   */
-  private AddUserVM addUserVM;
-
   @FXML private TextField email;
   @FXML private PasswordField password;
   @FXML private TextField firstName;
@@ -30,27 +23,21 @@ public class AddUserController
   @FXML private TextField city;
   @FXML private TextField phoneNumber;
 
-  public AddUserController(ViewHandler viewHandler)
+  public void init(ViewHandler viewHandler, AddUserVM addUserVM)
   {
-    //TODO use the ViewModelFactory.getInstance.getAddUserVM to instantiate the addUSerVM//
-    this.viewHandler = viewHandler;
-  }
-
-  public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory)
-  {
-    this.viewHandler = viewHandler;
-    this.viewModelFactory = viewModelFactory;
-     addUserVM = viewModelFactory.getAddUserVM();
-
+    viewHandler = ViewHandler.getInstance();
+    addUserVM = ViewModelFactory.getInstance().getAddUserVM();
   }
 
   @FXML public void onButtonLogin(ActionEvent actionEvent)
   {
     String zip = zipCode.getText();
     int zipInt = Integer.parseInt(zip);
+
     String cityString = city.getText();
     int cityInt = Integer.parseInt(cityString);
-    addUserVM
+
+    ViewModelFactory.getInstance().getAddUserVM()
         .addUser(cprNumber.getText(), firstName.getText(), lastName.getText(),
             email.getText(), phoneNumber.getText(),
             new Address(streetName.getText(), streetNumber.getText(), zipInt,
@@ -58,9 +45,9 @@ public class AddUserController
 
   }
 
-  @FXML public void onButtonBack(ActionEvent actionEvent)
+  @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
   {
-    //TODO call the openView(arg) method from the viewHandler to open the mainView window//
+    ViewHandler.getInstance().openView("Main");
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)

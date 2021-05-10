@@ -1,30 +1,31 @@
 package client.view.user;
 
-import client.core.ViewHandler;
+import client.view.ViewHandler;
 import javafx.event.ActionEvent;
+
+import java.io.IOException;
 
 public class UserController
 {
-private ViewHandler viewHandler;
 
-  public UserController(ViewHandler viewHandler)
+  public void init(ViewHandler viewHandler)
   {
-    this.viewHandler = viewHandler;
+    viewHandler = ViewHandler.getInstance();
   }
 
-  public void onButtonLoanReserve(ActionEvent actionEvent)
+  public void onButtonLoanReserve(ActionEvent actionEvent) throws IOException
   {
-    //TODO open loan/reserve window//
+    ViewHandler.getInstance().openView("Search");
   }
 
-  public void OnButtonMyMaterial(ActionEvent actionEvent)
+  public void OnButtonMyMaterial(ActionEvent actionEvent) throws IOException
   {
-    //TODO open my material window//
+    ViewHandler.getInstance().openView("MyMaterial");
   }
 
-  public void onButtonChatRoom(ActionEvent actionEvent)
+  public void onButtonChatRoom(ActionEvent actionEvent) throws IOException
   {
-    //TODO open the chat room view window//
+    ViewHandler.getInstance().openView("Chat");
   }
 
   public void onButtonCancel(ActionEvent actionEvent)
@@ -32,8 +33,8 @@ private ViewHandler viewHandler;
     System.exit(0);
   }
 
-  public void onButtonLogOut(ActionEvent actionEvent)
+  public void onButtonLogOut(ActionEvent actionEvent) throws IOException
   {
-    //TODO open the main window//
+    ViewHandler.getInstance().openView("Main");
   }
 }

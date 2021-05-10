@@ -25,7 +25,7 @@ public class UserModelManagerClient implements UserModelClient
     return null;
   }
 
-  @Override public boolean Login(String cprNo, String password)
+  @Override public boolean login(String cprNo, String password)
   {
     //TODO call the method Login from the Client and then fire an event//
     return false;

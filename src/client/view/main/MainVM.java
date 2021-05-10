@@ -1,23 +1,22 @@
 package client.view.main;
 
-import client.model.user.UserModelClient;
+import client.core.ModelFactory;
 
 import java.sql.SQLException;
 
 public class MainVM
 {
-  private UserModelClient model;
 
-  public MainVM(UserModelClient model)
+
+  public MainVM()
   {
-    this.model = model;
   }
 
-  public void login(String email, String password)
+  public void login(String cprNo, String password)
   {
     try
     {
-      model.Login(email, password);
+      ModelFactory.getInstance().getUserModelClient().login(cprNo, password);
     }
     catch (SQLException throwables)
     {
