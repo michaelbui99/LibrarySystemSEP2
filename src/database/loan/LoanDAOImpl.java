@@ -4,7 +4,7 @@ import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
 import client.model.material.reading.Book;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 import database.BaseDAO;
 
 import java.sql.*;

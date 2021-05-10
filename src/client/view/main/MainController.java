@@ -31,9 +31,10 @@ public class MainController
     ViewHandler.getInstance().openView("AddUser");
   }
 
-  @FXML public void OnButtonLogin(ActionEvent actionEvent)
+  @FXML public void OnButtonLogin(ActionEvent actionEvent) throws IOException
   {
     ViewModelFactory.getInstance().getMainVM().login(cprNo.getText(), password.getText());
+    ViewHandler.getInstance().openView("User");
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)

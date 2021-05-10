@@ -1,5 +1,6 @@
 package client.core;
 
+import client.view.addlibrarian.AddLibrarianVM;
 import client.view.adduser.AddUserVM;
 import client.view.administration.AdministrationVM;
 import client.view.borrowreserve.BorrowReserveVM;
@@ -22,6 +23,7 @@ public class ViewModelFactory
   }
 
   private AddUserVM addUserVM;
+  private AddLibrarianVM addLibrarianVM;
   private AdministrationVM administrationVM;
   private BorrowReserveVM borrowReserveVM;
   private CopiesVM copiesVM;
@@ -37,6 +39,15 @@ public class ViewModelFactory
       addUserVM = new AddUserVM();
     }
     return addUserVM;
+  }
+
+  public AddLibrarianVM getAddLibrarianVM()
+  {
+    if (addLibrarianVM == null)
+    {
+      addLibrarianVM = new AddLibrarianVM();
+    }
+    return addLibrarianVM;
   }
 
   public AdministrationVM getAdministrationVM(){

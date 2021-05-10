@@ -1,11 +1,11 @@
-package client.model.user;
+package client.model.user.borrower;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BorrowerList
 {
-  List<Borrower> borrowers;
+  private List<Borrower> borrowers;
 
   public BorrowerList()
   {

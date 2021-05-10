@@ -1,7 +1,7 @@
-package database.user;
+package database.user.borrower;
 
 import client.model.loan.Address;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 import database.BaseDAO;
 
 import java.sql.*;
@@ -59,9 +59,8 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   }
 
   /**
-   * Method to check if the user can have a login privilege by
+   * Method to check if the user-borrower can have a login privilege by
    * checking if the provided email and password matches the one in the database
-   *
    * @return true
    */
   @Override public boolean logInBorrower(String cprNo, String password) throws SQLException

@@ -1,23 +1,26 @@
-package client.model.user;
+package client.model.user.librarian;
 
 import client.model.loan.Address;
-import client.model.material.Material;
 
-public class Borrower
+public class Librarian
 {
+
   private String firstName, lastName, cpr, tlfNumber, email, password;
   private Address address;
+  private int employee_no;
 
-  public Borrower(String cpr_no, String f_name, String l_name, String email,
-      String tel_no, Address address_id, String password)
+
+  public Librarian(int employee_no, String firstName, String lastName, String cpr,
+      String tlfNumber, String email, Address address, String password)
   {
-    this.firstName = f_name;
-    this.lastName = l_name;
-    this.cpr = cpr_no;
-    this.tlfNumber = tel_no;
-    this.address = address_id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.cpr = cpr;
+    this.tlfNumber = tlfNumber;
+    this.address = address;
     this.email = email;
     this.password = password;
+    this.employee_no = employee_no;
   }
 
   public String getFirstName()
@@ -53,5 +56,15 @@ public class Borrower
   public Address getAddress()
   {
     return address;
+  }
+
+  public int getEmployee_no()
+  {
+    return employee_no;
+  }
+
+  public void registerBook()
+  {
+
   }
 }

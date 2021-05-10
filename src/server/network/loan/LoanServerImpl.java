@@ -2,7 +2,7 @@ package server.network.loan;
 
 import client.model.loan.Loan;
 import client.model.material.Material;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 import server.model.loan.LoanModelServer;
 import shared.ClientCallback;
 import shared.LoanServer;

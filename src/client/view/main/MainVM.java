@@ -14,13 +14,6 @@ public class MainVM
 
   public void login(String cprNo, String password)
   {
-    try
-    {
-      ModelFactory.getInstance().getUserModelClient().login(cprNo, password);
-    }
-    catch (SQLException throwables)
-    {
-      throwables.printStackTrace();
-    }
+    ModelFactory.getInstance().getUserModelClient().borrowerLogin(cprNo, password);
   }
 }

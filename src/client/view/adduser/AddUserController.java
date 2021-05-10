@@ -29,20 +29,17 @@ public class AddUserController
     addUserVM = ViewModelFactory.getInstance().getAddUserVM();
   }
 
-  @FXML public void onButtonLogin(ActionEvent actionEvent)
+  @FXML public void onButtonSignup(ActionEvent actionEvent) throws IOException
   {
-    String zip = zipCode.getText();
-    int zipInt = Integer.parseInt(zip);
+    int zip_code = Integer.parseInt(zipCode.getText());
 
-    String cityString = city.getText();
-    int cityInt = Integer.parseInt(cityString);
+    int street_no = Integer.parseInt(streetNumber.getText());
 
     ViewModelFactory.getInstance().getAddUserVM()
         .addUser(cprNumber.getText(), firstName.getText(), lastName.getText(),
             email.getText(), phoneNumber.getText(),
-            new Address(streetName.getText(), streetNumber.getText(), zipInt,
-                cityInt), password.getText());
-
+            new Address(city.getText(), streetName.getText(), zip_code, street_no), password.getText());
+ViewHandler.getInstance().openView("User");
   }
 
   @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException

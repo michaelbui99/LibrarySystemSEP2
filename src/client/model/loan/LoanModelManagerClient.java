@@ -1,9 +1,8 @@
 package client.model.loan;
 
 import client.model.material.Material;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 import client.network.Client;
-import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

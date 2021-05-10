@@ -1,7 +1,7 @@
-package database.user;
+package database.user.borrower;
 
 import client.model.loan.Address;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 
 import java.sql.SQLException;
 

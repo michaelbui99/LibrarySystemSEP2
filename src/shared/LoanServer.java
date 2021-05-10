@@ -2,7 +2,7 @@ package shared;
 
 import client.model.loan.Loan;
 import client.model.material.Material;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

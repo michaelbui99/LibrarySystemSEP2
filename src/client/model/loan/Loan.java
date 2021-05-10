@@ -3,7 +3,7 @@ package client.model.loan;
 import client.model.loan.loanstates.LoanState;
 import client.model.loan.loanstates.NewLoanState;
 import client.model.material.Material;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 
 public class Loan
 {

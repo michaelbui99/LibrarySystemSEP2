@@ -1,6 +1,6 @@
-package database.user;
+package database.user.librarian;
 
-import client.model.user.Librarian;
+import client.model.user.librarian.Librarian;
 import client.model.loan.Address;
 import database.BaseDAO;
 
@@ -53,5 +53,31 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO {
             connection.commit();
             return new Librarian(employee_no , firstName, lastName, cpr, tlfNumber, email, address, password);
         }
+    }
+
+    /**
+     * Method to check if the user-librarian can have a login privilege by
+     * checking if the provided employee_no and password matches the one in the database
+     * @return true
+     */
+    @Override public boolean librarianLogin(int employee_no, String password)
+        throws SQLException
+    {
+        try(Connection connection = getConnection())
+        {
+            PreparedStatement stm = connection.prepareStatement(
+                "SELECT employee_no, password " + "From librarian " +
+                    "Where employee_no = ? AND password = ?"
+            );
+            stm.setInt(1, employee_no);
+            stm.setString(2, password);
+            ResultSet result = stm.executeQuery();
+
+            if (result.next())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

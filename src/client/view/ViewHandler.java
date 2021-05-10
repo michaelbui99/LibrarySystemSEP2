@@ -1,6 +1,7 @@
 package client.view;
 
 import client.core.ViewModelFactory;
+import client.view.addlibrarian.AddLibrarianController;
 import client.view.adduser.AddUserController;
 import client.view.administration.AdministrationController;
 import client.view.borrowreserve.BorrowReserveController;
@@ -48,6 +49,14 @@ public class ViewHandler extends Application
       AddUserController addUserController = loader.getController();
       addUserController.init(this, ViewModelFactory.getInstance().getAddUserVM());
       stage.setTitle("AddUser");
+    }
+    else if (id.equals("AddLibrarian"))
+    {
+      loader.setLocation(getClass().getResource("../view/addlibrarian/" + id +"View.fxml"));
+      root = loader.load();
+      AddLibrarianController addLibrarianController = loader.getController();
+      addLibrarianController.init(this, ViewModelFactory.getInstance().getAddLibrarianVM());
+      stage.setTitle("AddLibrarian");
     }
     else if (id.equals("Administration"))
     {

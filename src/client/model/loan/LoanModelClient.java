@@ -1,7 +1,7 @@
 package client.model.loan;
 
 import client.model.material.Material;
-import client.model.user.Borrower;
+import client.model.user.borrower.Borrower;
 import shared.PropertyChangeSubject;
 
 import java.util.List;
