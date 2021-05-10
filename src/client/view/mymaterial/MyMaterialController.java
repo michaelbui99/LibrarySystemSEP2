@@ -28,7 +28,6 @@ public class MyMaterialController
 
   public void init(ViewHandler viewHandler, MyMaterialVM viewModel)
   {
-    //TODO: change it so it uses VM.getMyMaterialVM when it has been implemented.
     //TODO: implement toString for Material such that material can be displayed correctly in tableview.
     this.viewModel = viewModel;
     this.viewHandler = viewHandler;
@@ -46,5 +45,6 @@ public class MyMaterialController
     //Sets the binded textproperty to the loanId of the selected loan.
     selectedLoanLabel.textProperty().setValue(String.valueOf(
         loanTableView.getSelectionModel().getSelectedItem().getLoanID()));
+
   }
 }

@@ -74,7 +74,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         List<Loan> loans = new ArrayList<>();
         //Get all loans where we know the material is book.
         PreparedStatement stm = connection.prepareStatement(
-            "SELECT * from loan join borrower using (cpr_no) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id join address using (address_id)  where cpr_no = ?;");
+            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id where cpr_no = ?;");
         stm.setString(1, cpr);
         ResultSet bookLoans = stm.executeQuery();
         while (bookLoans.next())
@@ -110,6 +110,23 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       throwables.printStackTrace();
     }
     return null;
+  }
+
+  @Override public void endLoan(int loanID)
+  {
+    try
+    {
+      try (Connection connection = getConnection())
+      {
+        //TODO: ADD SQL Statement to find the material copy which is in loan and update the status of the copy.
+        PreparedStatement stm = connection.prepareStatement("UPDATE loan set return_date = CURRENT_DATE where loan_no = ?");
+        stm.setInt(1, loanID);
+      }
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 }
 

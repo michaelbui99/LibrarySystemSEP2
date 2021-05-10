@@ -28,6 +28,7 @@ public class MyMaterialVM
     loanIDProperty = new SimpleStringProperty();
   }
 
+
   public ObservableList<Loan> getLoanList()
   {
     return activeLoans;
