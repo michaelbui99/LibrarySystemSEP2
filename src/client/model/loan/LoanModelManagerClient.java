@@ -3,6 +3,7 @@ package client.model.loan;
 import client.model.material.Material;
 import client.model.user.Borrower;
 import client.network.Client;
+import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,13 +19,13 @@ public class LoanModelManagerClient implements LoanModelClient
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
+//    client.addPropertyChangeListener(EventTypes.LOANREGISTERED, evt -> {support.firePropertyChange(evt)})
   }
 
-  @Override public Loan registerLoan(Material material, Borrower borrower,
+  @Override public void registerLoan(Material material, Borrower borrower,
       String deadline) throws IllegalStateException
   {
 //    client.registerLoan();
-    return null;
   }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
@@ -33,7 +34,7 @@ public class LoanModelManagerClient implements LoanModelClient
     return null;
   }
 
-  @Override public void deliverMaterial(Loan loan)
+  @Override public void deliverMaterial(int loanID)
   {
 
   }

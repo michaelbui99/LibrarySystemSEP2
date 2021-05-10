@@ -4,8 +4,7 @@ import client.model.loan.Loan;
 import client.model.loan.LoanModelClient;
 import client.model.loan.LoanModelManagerClient;
 import database.loan.LoanDAOImpl;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import shared.util.EventTypes;
@@ -14,7 +13,7 @@ public class MyMaterialVM
 {
   private LoanModelClient loanModel;
   private ObservableList<Loan> activeLoans;
-  private ObjectProperty<Loan> loanProperty;
+  private StringProperty loanIDProperty;
 
   public MyMaterialVM(LoanModelClient loanModel)
   {
@@ -26,7 +25,7 @@ public class MyMaterialVM
     activeLoans.addAll(loanModel.getAllLoansByCPR("111111-1111"));
     loanModel.addPropertyChangeListener(EventTypes.LOANREGISTERED,
         evt -> activeLoans.add((Loan) evt.getNewValue()));
-    loanProperty = new SimpleObjectProperty<>();
+    loanIDProperty = new SimpleStringProperty();
   }
 
   public ObservableList<Loan> getLoanList()
@@ -34,12 +33,9 @@ public class MyMaterialVM
     return activeLoans;
   }
 
-  public void returnMaterial()
+
+  public StringProperty loanIDProperty()
   {
-    loanModel.deliverMaterial(loanProperty.get());
-  }
-  public ObjectProperty<Loan> loanObjectProperty()
-  {
-    return loanProperty;
-  }
+    return loanIDProperty;
+  };
 }

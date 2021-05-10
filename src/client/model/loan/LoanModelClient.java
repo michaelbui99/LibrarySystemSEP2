@@ -18,10 +18,10 @@ public interface LoanModelClient extends PropertyChangeSubject
    * @throws IllegalStateException if the material is is not available for loan.
    * @throws NoSuchElementException if the material is not registered in the system.
    */
-  Loan registerLoan(Material material, Borrower borrower, String deadline)
+  void registerLoan(Material material, Borrower borrower, String deadline)
       throws IllegalStateException, NoSuchElementException;
 
   List<Loan> getAllLoansByCPR(String cpr);
-  void deliverMaterial(Loan loan);
+  void deliverMaterial(int loanID);
   void extendLoan();
 }

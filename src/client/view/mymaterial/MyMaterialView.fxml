@@ -25,6 +25,7 @@
                         <Font size="29.0" />
                      </font>
                   </Label>
+                  <Label fx:id="selectedLoanLabel" text="Label" visible="false" />
                </children>
             </HBox>
             <ScrollPane prefHeight="277.0" prefWidth="612.0">
@@ -54,7 +55,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Aflevere" textFill="#0822eb" underline="true" />
+                        <Button mnemonicParsing="false" onAction="#onReturnButton" style="-fx-background-color: white; -fx-cursor: hand;" text="Aflevere" textFill="#0822eb" underline="true" />
                         <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Forlæng fristen" textFill="#0822eb" underline="true" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>

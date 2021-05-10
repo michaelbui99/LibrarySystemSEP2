@@ -20,7 +20,7 @@ public interface LoanServer extends Remote
    * @throws IllegalStateException if the material is is not available for loan.
    * @throws NoSuchElementException if the material is not registered in the system.
    */
-  public Loan registerLoan(Material material, Borrower borrower,
+  public void registerLoan(Material material, Borrower borrower,
       String deadline) throws IllegalStateException;
   List<Loan> getAllLoansByCPR(String cpr) throws RemoteException;
 }

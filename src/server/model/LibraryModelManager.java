@@ -62,7 +62,7 @@ public class LibraryModelManager implements LibraryModel
       {
         loan = LoanDAOImpl.getInstance()
             .create(material.getMaterialID(), material.getCopyNumber(),
-                loanerCPR,  calcDateTime(), deadline);
+                loanerCPR,  calcDateTime());
       }
       catch (SQLException throwables)
       {

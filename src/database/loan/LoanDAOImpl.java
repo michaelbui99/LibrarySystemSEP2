@@ -10,7 +10,6 @@ import database.BaseDAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -35,7 +34,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   }
 
   @Override public Loan create(Material material, Borrower borrower,
-      String deadline, String loanDate, String returnDate)
+      String deadline, String loanDate)
   {
     //todo: Change stm.setString(3, 111111-1111) to borrower.getcpr()
     try
@@ -47,7 +46,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
             Statement.RETURN_GENERATED_KEYS);
         stm.setDate(1, Date.valueOf(deadline));
         stm.setDate(2, null);
-        stm.setString(3, /*borrower.getCPR()*/"111111-1111");
+        stm.setString(3, borrower.getCpr());
         stm.setInt(4, material.getMaterialID());
         stm.setInt(5, material.getCopyNumber());
 
