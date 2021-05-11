@@ -77,12 +77,12 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <TextField fx:id="lastName" layoutX="10.0" layoutY="20.0" promptText="Efternavn:" GridPane.rowIndex="1">
+                                          <TextField fx:id="lastName" layoutX="10.0" layoutY="20.0" onMouseExited="#onMouseExitCheckLastName" promptText="Efternavn:" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="firstName" promptText="Fornavn:">
+                                          <TextField fx:id="firstName" onMouseExited="#onMouseExitCheckFirstName" promptText="Fornavn:">
                                              <GridPane.margin>
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
@@ -96,7 +96,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="cprNumber" promptText="CPR:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <TextField fx:id="cprNumber" onMouseExited="#onMouseExitCheckCPR" promptText="CPR:" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets right="100.0" />
                                  </GridPane.margin>
@@ -140,22 +140,22 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <TextField fx:id="streetName" layoutX="10.0" layoutY="10.0" promptText="Vejnavn:">
+                                          <TextField fx:id="streetName" layoutX="10.0" layoutY="10.0" onMouseExited="#onMouseExitCheckStreetName" promptText="Vejnavn:">
                                              <GridPane.margin>
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="city" layoutX="10.0" layoutY="10.0" promptText="By:" GridPane.rowIndex="3">
+                                          <TextField fx:id="city" layoutX="10.0" layoutY="10.0" onMouseExited="#onMouseExitCheckCity" promptText="By:" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="zipCode" layoutX="10.0" layoutY="10.0" promptText="Postnummer:" GridPane.rowIndex="2">
+                                          <TextField fx:id="zipCode" layoutX="10.0" layoutY="10.0" onMouseExited="#onMouseExitCheckZipCode" promptText="Postnummer:" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="streetNumber" layoutX="10.0" layoutY="10.0" promptText="Vejnummer:" GridPane.rowIndex="1">
+                                          <TextField fx:id="streetNumber" layoutX="10.0" layoutY="10.0" onMouseExited="#onMouseExitCheckStreetNumber" promptText="Vejnummer:" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
@@ -169,7 +169,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="phoneNumber" promptText="+45: " GridPane.columnIndex="1" GridPane.rowIndex="8">
+                              <TextField fx:id="phoneNumber" onMouseExited="#onMouseExitCheckPhoneNumber" promptText="+45: " GridPane.columnIndex="1" GridPane.rowIndex="8">
                                  <GridPane.margin>
                                     <Insets right="100.0" />
                                  </GridPane.margin>
@@ -189,7 +189,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <PasswordField fx:id="password" promptText="Adgangskode:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <PasswordField fx:id="password" onMouseExited="#onMouseExitCheckPassword" promptText="Adgangskode:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets right="50.0" />
                                  </GridPane.margin>
@@ -219,7 +219,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#onButtonSignup" style="-fx-cursor: hand;" text="Tilmelde" GridPane.columnIndex="2">
+                  <Button fx:id="signupButton" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#onButtonSignup" style="-fx-cursor: hand;" text="Tilmelde" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>

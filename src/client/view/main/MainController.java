@@ -4,6 +4,7 @@ import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 
 public class MainController
 {
+  @FXML private Label errorMessage;
   @FXML private TextField cprNo;
   @FXML private PasswordField password;
 
@@ -33,9 +35,15 @@ public class MainController
 
   @FXML public void OnButtonLogin(ActionEvent actionEvent) throws IOException
   {
-    ViewModelFactory.getInstance().getMainVM()
-        .login(cprNo.getText(), password.getText());
-    ViewHandler.getInstance().openView("User");
+    if (ViewModelFactory.getInstance().getMainVM()
+        .login(cprNo.getText(), password.getText()))
+    {
+      ViewHandler.getInstance().openView("User");
+    }
+    else
+    {
+      errorMessage.setVisible(true);
+    }
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)

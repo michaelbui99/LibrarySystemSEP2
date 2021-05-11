@@ -11,9 +11,9 @@ public class MainVM
   {
   }
 
-  public void login(String cprNo, String password)
+  public boolean login(String cprNo, String password)
   {
-    ModelFactory.getInstance().getUserModelClient()
+   return ModelFactory.getInstance().getUserModelClient()
         .borrowerLogin(cprNo, password);
   }
 }
