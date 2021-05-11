@@ -14,6 +14,7 @@ public class Loan
   private Borrower borrower;
   private String deadline, loanDate, returnDate;
   private int loanID;
+  private String materialType;
 //  public Loan(int loanID, int materialID, int copyNumber, String cpr, String loanDate, String deadline, String title, int numberOfExtensions)
 //  {
 //    this.loanID = loanID;
@@ -35,6 +36,7 @@ public class Loan
     this.returnDate = returnDate;
     this.loanID = loanID;
     setLoanState(new NewLoanState());
+    materialType = material.getMaterialType();
   }
 
   public void setLoanState(LoanState loanState)

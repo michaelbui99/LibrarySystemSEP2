@@ -12,4 +12,5 @@ public interface LoanDAO
       String loanDate);
   List<Loan> getAllLoansByCPR(String cpr);
   void endLoan(int loanID);
+
 }
