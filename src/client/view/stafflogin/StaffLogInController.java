@@ -39,7 +39,7 @@ public class StaffLogInController
 
     if (ViewModelFactory.getInstance().getStaffLogInVM().login(employee_no, password.getText()))
     {
-      ViewHandler.getInstance().openView("AddLibrarian");
+      ViewHandler.getInstance().openView("Administration");
     }
     else
     {
