@@ -2,15 +2,23 @@ package client.view.borrowreserve;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class BorrowReserveController
 {
 
     @FXML
-    ImageView materialImage;
-
+    private Image imageTest = new Image(new FileInputStream("https://i.redd.it/gytjbeh6ftg11.jpg"));
+    ImageView materialImage = new ImageView(imageTest);
     private BorrowReserveVM vm;
+
+    public BorrowReserveController() throws FileNotFoundException {
+    }
+
 
     @FXML void goBack(ActionEvent actionEvent)
     {
@@ -22,7 +30,7 @@ public class BorrowReserveController
         // Material
         // CPR
         // deadline
-     //   vm.loanMaterial();
+     //vm.loanMaterial();
     }
 
 
