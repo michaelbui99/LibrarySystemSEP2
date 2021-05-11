@@ -29,9 +29,6 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
     return instance;
   }
 
-  /**
-   * Method adds a Borrower (user) to the database
-   */
   @Override public Borrower create(String cpr, String firstName,
       String lastName, String email, String tlfNumber, Address address,
       String password) throws SQLException
@@ -58,12 +55,8 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
     }
   }
 
-  /**
-   * Method to check if the user-borrower can have a login privilege by
-   * checking if the provided email and password matches the one in the database
-   * @return true
-   */
-  @Override public boolean logInBorrower(String cprNo, String password) throws SQLException
+  @Override public boolean loginBorrower(String cprNo, String password)
+      throws SQLException
   {
     try (Connection connection = getConnection())
     {

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -23,7 +24,7 @@ public class AddUserController
   @FXML private TextField city;
   @FXML private TextField phoneNumber;
 
-  public void init(ViewHandler viewHandler, AddUserVM addUserVM)
+ public void init(ViewHandler viewHandler, AddUserVM addUserVM)
   {
     viewHandler = ViewHandler.getInstance();
     addUserVM = ViewModelFactory.getInstance().getAddUserVM();
@@ -38,8 +39,9 @@ public class AddUserController
     ViewModelFactory.getInstance().getAddUserVM()
         .addUser(cprNumber.getText(), firstName.getText(), lastName.getText(),
             email.getText(), phoneNumber.getText(),
-            new Address(city.getText(), streetName.getText(), zip_code, street_no), password.getText());
-ViewHandler.getInstance().openView("User");
+            new Address(city.getText(), streetName.getText(), zip_code,
+                street_no), password.getText());
+    ViewHandler.getInstance().openView("User");
   }
 
   @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
@@ -51,4 +53,16 @@ ViewHandler.getInstance().openView("User");
   {
     System.exit(0);
   }
+
+  /*public void onMouseExitCheckEmail(MouseEvent mouseEvent)
+  {
+    *//**
+     *This pattern return true if String contains any thing other than 0-9 digit,
+     * which can be used to know if an String is number or not using regular expression.
+     * *//*
+    if (email.getText().isEmpty() || email.getText().matches(".*\\d.*"))
+    {
+
+    }
+  }*/
 }

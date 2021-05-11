@@ -26,11 +26,6 @@ public class UserModelManagerServer implements UserModelServer
     librarianList = new LibrarianList();
   }
 
-  /**
-   * Method add a Borrower to the system that
-   * @return a Borrower object
-   * */
-
   @Override public Borrower create(String cpr, String firstName,
       String lastName, String email, String tlfNumber, Address address,
       String password)
@@ -38,31 +33,25 @@ public class UserModelManagerServer implements UserModelServer
     Borrower borrower = null;
     try
     {
-      borrower = BorrowerImpl.getInstance().create(cpr, firstName, lastName, email, tlfNumber, address, password);
+      borrower = BorrowerImpl.getInstance()
+          .create(cpr, firstName, lastName, email, tlfNumber, address,
+              password);
     }
     catch (SQLException throwables)
     {
       throwables.printStackTrace();
     }
     borrowerList.addBorrower(borrower);
-    support.firePropertyChange(EventTypes.BORROWERREGISTERED,null,borrower);
+    support.firePropertyChange(EventTypes.BORROWERREGISTERED, null, borrower);
     return borrower;
   }
-
-  /**
-   * Boolean method to administrate borrower login that
-   * @return true if the
-   * @param cprNo and
-   * @param password
-   * matches an existed Borrower's cprNo and password
-   * */
 
   @Override public boolean logInBorrower(String cprNo, String password)
   {
     boolean login = false;
     try
     {
-     login = BorrowerImpl.getInstance().logInBorrower(cprNo, password);
+      login = BorrowerImpl.getInstance().loginBorrower(cprNo, password);
     }
     catch (SQLException throwables)
     {
@@ -72,20 +61,10 @@ public class UserModelManagerServer implements UserModelServer
     return login;
   }
 
-  /**
-   * Method
-   * @return a Borrower object of a logged borrower
-   * */
-
   @Override public Borrower getLoginBorrower()
   {
     return null;
   }
-
-  /**
-   * Method add a Librarian to the system that
-   * @return a Librarian object
-   * */
 
   @Override public Librarian registerLibrarian(int employee_no,
       String firstName, String lastName, String cpr, String tlfNumber,
@@ -94,7 +73,9 @@ public class UserModelManagerServer implements UserModelServer
     Librarian librarian = null;
     try
     {
-      librarian = LibrarianImpl.getInstance().create(employee_no, firstName, lastName, cpr, tlfNumber, email, address, password);
+      librarian = LibrarianImpl.getInstance()
+          .create(employee_no, firstName, lastName, cpr, tlfNumber, email,
+              address, password);
     }
     catch (SQLException throwables)
     {
@@ -104,14 +85,6 @@ public class UserModelManagerServer implements UserModelServer
     support.firePropertyChange(EventTypes.LIBRARIANREGISTERD, null, librarian);
     return librarian;
   }
-
-  /**
-   * Boolean method to administrate librarian login that
-   * @return true if the
-   * @param employee_no and
-   * @param password
-   * matches an existed Librarian's employee_no and password
-   * */
 
   @Override public boolean librarianLogin(int employee_no, String password)
   {
@@ -128,19 +101,10 @@ public class UserModelManagerServer implements UserModelServer
     return login;
   }
 
-  /**
-   * Method
-   * @return a Borrower object of a logged borrower
-   * */
-
   @Override public Librarian getLoginLibrarian()
   {
     return null;
   }
-
-  /**
-   * PropertyChangeSubject implementation
-   * */
 
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)

@@ -58,14 +58,7 @@ public class ViewHandler extends Application
       addLibrarianController.init(this, ViewModelFactory.getInstance().getAddLibrarianVM());
       stage.setTitle("AddLibrarian");
     }
-    else if (id.equals("Administration"))
-    {
-      loader.setLocation(getClass().getResource("../view/administration/" + id +"View.fxml"));
-      root = loader.load();
-      AdministrationController administrationController = loader.getController();
-      administrationController.init(this, ViewModelFactory.getInstance().getAdministrationVM());
-      stage.setTitle("Administration");
-    }
+
     else if (id.equals("BorrowReserve"))
     {
       loader.setLocation(getClass().getResource("../view/borrowreserve/" + id +"View.fxml"));

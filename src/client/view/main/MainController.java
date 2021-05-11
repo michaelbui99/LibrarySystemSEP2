@@ -33,7 +33,8 @@ public class MainController
 
   @FXML public void OnButtonLogin(ActionEvent actionEvent) throws IOException
   {
-    ViewModelFactory.getInstance().getMainVM().login(cprNo.getText(), password.getText());
+    ViewModelFactory.getInstance().getMainVM()
+        .login(cprNo.getText(), password.getText());
     ViewHandler.getInstance().openView("User");
   }
 

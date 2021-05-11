@@ -18,6 +18,6 @@ public class AddUserVM
   {
     ModelFactory.getInstance().getUserModelClient()
         .registerBorrower(cpr_no, f_name, l_name, email, tel_no, address_id,
-        password);
+            password);
   }
 }
