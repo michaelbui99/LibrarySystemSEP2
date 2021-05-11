@@ -8,8 +8,8 @@ public class StaffLogInVM
   {
   }
 
-  public void login(int employee_no, String password)
+  public boolean login(int employee_no, String password)
   {
-    ModelFactory.getInstance().getUserModelClient().librarianLogin(employee_no, password);
+    return ModelFactory.getInstance().getUserModelClient().librarianLogin(employee_no, password);
   }
 }
