@@ -47,7 +47,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/adduser/" + id +"View.fxml"));
       root = loader.load();
       AddUserController addUserController = loader.getController();
-      addUserController.init(this, ViewModelFactory.getInstance().getAddUserVM());
+      //addUserController.init(this, ViewModelFactory.getInstance().getAddUserVM());
       stage.setTitle("AddUser");
     }
     else if (id.equals("AddLibrarian"))
@@ -55,7 +55,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/addlibrarian/" + id +"View.fxml"));
       root = loader.load();
       AddLibrarianController addLibrarianController = loader.getController();
-      addLibrarianController.init(this, ViewModelFactory.getInstance().getAddLibrarianVM());
+      addLibrarianController.init();
       stage.setTitle("AddLibrarian");
     }
 
@@ -64,7 +64,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/borrowreserve/" + id +"View.fxml"));
       root = loader.load();
       BorrowReserveController borrowReserveController = loader.getController();
-      borrowReserveController.init(this, ViewModelFactory.getInstance().getBorrowReseveVM());
+      borrowReserveController.init();
       stage.setTitle("BorrowReserve");
     }
     else if (id.equals("Copies"))
@@ -72,7 +72,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/copies/" + id +"View.fxml"));
       root = loader.load();
       CopiesController copiesController = loader.getController();
-      copiesController.init(this, ViewModelFactory.getInstance().getCopiesVM());
+      copiesController.init();
       stage.setTitle("Copies");
     }
     else if (id.equals("Main"))
@@ -80,7 +80,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/main/" + id +"View.fxml"));
       root = loader.load();
       MainController mainController = loader.getController();
-      mainController.init(this, ViewModelFactory.getInstance().getMainVM());
+      mainController.init();
       stage.setTitle("Main");
     }
     else if (id.equals("MyMaterial"))
@@ -104,7 +104,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/search/" + id +"View.fxml"));
       root = loader.load();
       SearchControls searchControls = loader.getController();
-      searchControls.init(this, ViewModelFactory.getInstance().getSearchVM());
+      searchControls.init();
       stage.setTitle("Search");
     }
     else if (id.equals("StaffLogin"))
@@ -112,7 +112,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/stafflogin/" + id +"View.fxml"));
       root = loader.load();
       StaffLogInController staffLogInController = loader.getController();
-      staffLogInController.init(this, ViewModelFactory.getInstance().getStaffLogInVM());
+      staffLogInController.init();
       stage.setTitle("StaffLogin");
     }
     else if (id.equals("User"))

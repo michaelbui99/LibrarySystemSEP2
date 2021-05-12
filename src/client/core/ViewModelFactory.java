@@ -1,6 +1,7 @@
 package client.core;
 
 import client.view.addlibrarian.AddLibrarianVM;
+import client.view.*;
 import client.view.adduser.AddUserVM;
 import client.view.borrowreserve.BorrowReserveVM;
 import client.view.copies.CopiesVM;
@@ -92,7 +93,9 @@ public class ViewModelFactory
   {
     if (registerMaterialVM == null)
     {
-      registerMaterialVM = new RegisterMaterialVM();
+      registerMaterialVM = new RegisterMaterialVM(
+          ModelFactory.getInstance().getMaterialModelClient()
+      );
     }
     return registerMaterialVM;
   }
@@ -101,7 +104,9 @@ public class ViewModelFactory
   {
     if (searchVM == null)
     {
-      searchVM = new SearchVM();
+      searchVM = new SearchVM(
+          ModelFactory.getInstance().getMaterialModelClient()
+      );
     }
     return searchVM;
   }

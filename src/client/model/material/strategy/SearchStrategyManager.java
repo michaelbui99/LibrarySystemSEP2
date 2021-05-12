@@ -8,7 +8,7 @@ import java.util.List;
 
 //navigator
 
-public class SearchStrategyManager  implements SearchStrategy
+public class SearchStrategyManager implements SearchStrategy
 {
   private String type;
   private SearchStrategy searchStrategy;

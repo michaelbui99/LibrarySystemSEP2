@@ -75,16 +75,10 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   }
 
-  @Override public MaterialList searchMaterial(String title, String language,
-      String keywords, String genre, String targetAudience, String type)
-      throws SQLException
-  {
-    return null;
-  }
 
   @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
   {
-     MaterialDAOImpl.getInstance().
+
   }
 
   @Override public List<Material> searchAll() throws SQLException

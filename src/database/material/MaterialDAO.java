@@ -47,11 +47,6 @@ public interface MaterialDAO
   // List<EBook> getAllEBooksByTitle(String title) throws SQLException;
   boolean returnMaterial(int materialID, String cpr, int copy_no);
   public int getCopyNumberForMaterial(int materialid);
-  List<Book> getAllBooks() throws SQLException;
-  List<EBook> getAllEbooks() throws SQLException;
-  List<AudioBook> getAllAudioBooks() throws SQLException;
-  List<DVD> getAllDVDs() throws SQLException;
-  List<CD> getAllCDs() throws SQLException;
 
 
 

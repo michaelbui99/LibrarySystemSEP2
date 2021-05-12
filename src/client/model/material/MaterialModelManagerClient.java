@@ -1,10 +1,11 @@
 package client.model.material;
 
 import client.model.material.strategy.SearchStrategy;
+import client.model.material.strategy.SearchStrategyManager;
 import client.network.Client;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.sql.SQLException;
 import java.util.List;
 
 public class MaterialModelManagerClient implements MaterialModelClient
@@ -13,38 +14,26 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   private Client client;
   private PropertyChangeSupport support;
+  private SearchStrategyManager searchStrategyManager;
+  private Material selectMaterial;
 
   public MaterialModelManagerClient(Client client)
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
+    searchStrategyManager = new SearchStrategyManager();
+
   }
 
-  @Override public List<Material> searchAll() throws SQLException
+  public Material getSelectMaterial()
   {
-    return null;
+    return selectMaterial;
   }
 
-  @Override public List<Material> searchTitle(String title) throws SQLException
+  public void setSelectMaterial(Material selectMaterial)
   {
-    return null;
-  }
+    this.selectMaterial = selectMaterial;
 
-  @Override public List<Material> searchGenre(String genre) throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<Material> searchTargetAudience(String targetAudience)
-      throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<Material> searchLanguage(String language)
-      throws SQLException
-  {
-    return null;
   }
 
   @Override public void registerBook(String title, String publisher,
@@ -54,6 +43,16 @@ public class MaterialModelManagerClient implements MaterialModelClient
   {
 
   }
+  // TODO: 5/12/2021 REGISTER MATERIAL GUI NEED TO BE MATCHED WITH THE METHOD!! AUTHORID, ISBN, PLACEID
+//  public void registerMaterial(String type, String title, String publisher,
+//      String length, int page, String description, String tags,
+//      String releasedDate, String audience, String language, String isbn){
+//    switch (type){
+//      case "book":
+//        this.registerBook(title,publisher,releasedDate,description,tags,audience,language,isbn,page,placeID, author,genre,url);
+//    }
+  //}
+
 
   @Override public void createBookCopy(int materialID)
   {
@@ -94,6 +93,7 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   }
 
+
   @Override public void createEBookCopy(int materialID)
   {
 
@@ -112,8 +112,34 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   }
 
-  @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
+  @Override public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience, String type)
   {
+     searchStrategyManager.selectStrategy(type);
+    return searchStrategyManager.findMaterial(title,language,keywords,genre,targetAudience);
+  }
 
+  @Override public void addPropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(name, listener);
+  }
+
+  @Override public void addPropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(listener);
+  }
+
+  @Override public void removePropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(name, listener);
+  }
+
+  @Override public void removePropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(listener);
   }
 }
