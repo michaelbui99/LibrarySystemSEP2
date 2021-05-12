@@ -6,11 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 
 public class StaffLogInController
 {
+  @FXML private GridPane errorMessage;
   @FXML private TextField employeeNo;
   @FXML private PasswordField password;
 
@@ -35,7 +37,13 @@ public class StaffLogInController
   {
     int employee_no = Integer.parseInt(employeeNo.getText());
 
-    ViewModelFactory.getInstance().getStaffLogInVM().login(employee_no, password.getText());
-    ViewHandler.getInstance().openView("AddLibrarian");
+    if (ViewModelFactory.getInstance().getStaffLogInVM().login(employee_no, password.getText()))
+    {
+      ViewHandler.getInstance().openView("Administration");
+    }
+    else
+    {
+      errorMessage.setVisible(true);
+    }
   }
 }

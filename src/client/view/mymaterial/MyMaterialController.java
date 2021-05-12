@@ -1,5 +1,6 @@
 package client.view.mymaterial;
 
+import client.core.ViewModelFactory;
 import client.model.loan.Loan;
 import client.model.material.Material;
 import client.view.ViewHandler;
@@ -26,17 +27,16 @@ public class MyMaterialController
   private ViewHandler viewHandler;
   private MyMaterialVM viewModel;
 
-  public void init(ViewHandler viewHandler, MyMaterialVM viewModel)
+  public void init()
   {
     //TODO: implement toString for Material such that material can be displayed correctly in tableview.
-    this.viewModel = viewModel;
-    this.viewHandler = viewHandler;
+
     selectedLoanLabel.textProperty()
-        .bindBidirectional(viewModel.loanIDProperty());
+        .bindBidirectional(ViewModelFactory.getInstance().getMyMaterialVM().loanIDProperty());
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
     loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
     deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-    loanTableView.setItems(this.viewModel.getLoanList());
+    loanTableView.setItems(ViewModelFactory.getInstance().getMyMaterialVM().getLoanList());
   }
 
   @FXML void onReturnButton(ActionEvent event)

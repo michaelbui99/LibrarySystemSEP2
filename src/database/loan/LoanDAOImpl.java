@@ -3,6 +3,7 @@ package database.loan;
 import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.audio.AudioBook;
 import client.model.material.reading.Book;
 import client.model.user.borrower.Borrower;
 import database.BaseDAO;
@@ -49,10 +50,13 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         stm.setString(3, borrower.getCpr());
         stm.setInt(4, material.getMaterialID());
         stm.setInt(5, material.getCopyNumber());
-
         ResultSet keys = stm.getGeneratedKeys();
         keys.next();
         int generatedKey = keys.getInt(1);
+
+        PreparedStatement stm2 = connection.prepareStatement("update " + material.getMaterialType().toLowerCase() + "set available = false where material_id = ? and copy_no = ?");
+        stm.setInt(1, material.getMaterialID());
+        stm.setInt(2, material.getCopyNumber());
         return new Loan(material, borrower, deadline, loanDate, null, generatedKey);
       }
     }
@@ -66,13 +70,13 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
     //TODO: Tilføj en metode der giver alle keywords til et materiale i materialdao og ret herefter tags.
-
+    //TODO: Hvis DAO Metoder for getBorrowerByCPR, getAddressByCPR og getBookByMaterialID,get... getDVDByMaterialID findes, så brug de metoder i denne metode.
     try
     {
       try (Connection connection = getConnection())
       {
         List<Loan> loans = new ArrayList<>();
-        //Get all loans where we know the material is book.
+        //Get all loans where material is known to be book
         PreparedStatement stm = connection.prepareStatement(
             "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id where cpr_no = ?;");
         stm.setString(1, cpr);
@@ -102,7 +106,38 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(bookLoans.getDate("loan_date")),
               String.valueOf(bookLoans.getDate("return_date")), bookLoans.getInt("loan_no"));
           loans.add(loan);
-        } return loans;
+        }
+        //Get all loans where material is known to be audiobook
+        PreparedStatement stm2 = connection.prepareStatement(
+            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join audiobook using (material_id) join material_creator mc ON audiobook.author = mc.person_id where cpr_no = ?;");
+        stm.setString(1, cpr);
+        ResultSet audiobookLoans = stm2.executeQuery();
+        while (audiobookLoans.next())
+        {
+          AudioBook audioBook = new AudioBook(audiobookLoans.getInt("material_id"),
+              audiobookLoans.getInt("copy_no"), audiobookLoans.getString("title"),
+              audiobookLoans.getString("publisher"),
+              String.valueOf(audiobookLoans.getDate("release_date")),
+              audiobookLoans.getString("description_of_the_content"), null,
+              audiobookLoans.getString("audience"), audiobookLoans.getString("language_"),
+              audiobookLoans.getInt("length_"),
+              audiobookLoans.getString("mc.f_name") + " "+audiobookLoans
+                  .getString("mc.l_name"));
+          Address address = new Address(audiobookLoans.getInt("address_id"),
+              audiobookLoans.getString("street_name"), audiobookLoans.getInt("street_no"),
+              audiobookLoans.getInt("zip_code"), audiobookLoans.getString("city"));
+          Borrower borrower = new Borrower(cpr,
+              audiobookLoans.getString("borrower.f_name"),
+              audiobookLoans.getString("borrower.l_name"),audiobookLoans.getString("email"),
+              audiobookLoans.getString("tel_no"), address, audiobookLoans.getString("password"));
+          Loan loan = new Loan(audioBook, borrower,
+              String.valueOf(audiobookLoans.getDate("deadline")),
+              String.valueOf(audiobookLoans.getDate("loan_date")),
+              String.valueOf(audiobookLoans.getDate("return_date")), audiobookLoans.getInt("loan_no"));
+          loans.add(loan);
+        }
+
+        return loans;
       }
     }
     catch (SQLException throwables)
@@ -128,6 +163,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       throwables.printStackTrace();
     }
   }
+
+
 }
 
 
