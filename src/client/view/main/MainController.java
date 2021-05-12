@@ -16,10 +16,8 @@ public class MainController
   @FXML private TextField cprNo;
   @FXML private PasswordField password;
 
-  public void init(ViewHandler viewHandler, MainVM mainVM)
+  public void init()
   {
-    viewHandler = ViewHandler.getInstance();
-    ViewModelFactory.getInstance().getMainVM();
   }
 
   @FXML public void onButtonStaffLogin(ActionEvent actionEvent)

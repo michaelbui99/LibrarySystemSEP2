@@ -9,6 +9,7 @@ import client.view.copies.CopiesController;
 import client.view.main.MainController;
 import client.view.mymaterial.MyMaterialController;
 import client.view.registermaterial.RegisterMaterialController;
+import client.view.search.SearchController;
 import client.view.stafflogin.StaffLogInController;
 import client.view.user.UserController;
 import javafx.application.Application;
@@ -47,7 +48,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/adduser/" + id +"View.fxml"));
       root = loader.load();
       AddUserController addUserController = loader.getController();
-      //addUserController.init(this, ViewModelFactory.getInstance().getAddUserVM());
+      addUserController.init();
       stage.setTitle("AddUser");
     }
     else if (id.equals("AddLibrarian"))
@@ -88,7 +89,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/mymaterial/" + id +"View.fxml"));
       root = loader.load();
       MyMaterialController myMaterialController = loader.getController();
-      myMaterialController.init(this, ViewModelFactory.getInstance().getMyMaterialVM());
+      myMaterialController.init();
       stage.setTitle("MyMaterial");
     }
     else if (id.equals("RegisterMaterial"))
@@ -103,8 +104,8 @@ public class ViewHandler extends Application
     {
       loader.setLocation(getClass().getResource("../view/search/" + id +"View.fxml"));
       root = loader.load();
-      SearchControls searchControls = loader.getController();
-      searchControls.init();
+      SearchController searchController = loader.getController();
+      searchController.init();
       stage.setTitle("Search");
     }
     else if (id.equals("StaffLogin"))
@@ -120,7 +121,7 @@ public class ViewHandler extends Application
       loader.setLocation(getClass().getResource("../view/user/" + id +"View.fxml"));
       root = loader.load();
       UserController userController = loader.getController();
-      userController.init(this);
+      userController.init();
       stage.setTitle("User");
     }
     scene = new Scene(root);

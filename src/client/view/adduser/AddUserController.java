@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 
@@ -30,17 +29,14 @@ public class AddUserController
   @FXML private TextField city;
   @FXML private TextField phoneNumber;
 
-  public void init(ViewHandler viewHandler, AddUserVM addUserVM)
-  {
-    viewHandler = ViewHandler.getInstance();
-    addUserVM = ViewModelFactory.getInstance().getAddUserVM();
-  }
-
   /**
    * This pattern return true if String contains any thing other than 0-9 digit,
    * which can be used to know if an String is number or not using regular expression.
    * email.getText().matches(".*\\d.*)"
    */
+  public void init()
+  {
+  }
 
   @FXML public boolean onMouseExitCheckEmail()
   {
@@ -213,14 +209,14 @@ public class AddUserController
     int zip_code = Integer.parseInt(zipCode.getText());
 
     int street_no = Integer.parseInt(streetNumber.getText());
-    if ((onMouseExitCheckEmail()) || (onMouseExitCheckFirstName())
-        || (onMouseExitCheckLastName()) || (onMouseExitCheckCPR())
-        || (onMouseExitCheckPassword()) || (onMouseExitCheckPhoneNumber())
-        || (onMouseExitCheckStreetName()) || (onMouseExitCheckStreetNumber())
-        || (onMouseExitCheckZipCode()) || (onMouseExitCheckCity()))
+    if ((onMouseExitCheckEmail()) && (onMouseExitCheckFirstName())
+        && (onMouseExitCheckLastName()) && (onMouseExitCheckCPR())
+        && (onMouseExitCheckPassword()) && (onMouseExitCheckPhoneNumber())
+        && (onMouseExitCheckStreetName()) && (onMouseExitCheckStreetNumber())
+        && (onMouseExitCheckZipCode()) && (onMouseExitCheckCity()))
     {
       signupButton.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+          (BorderStroke) BorderFactory.createLineBorder(Color.red)));
       signupButton.setDisable(true);
     }
     else

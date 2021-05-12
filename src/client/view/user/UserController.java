@@ -8,9 +8,8 @@ import java.io.IOException;
 public class UserController
 {
 
-  public void init(ViewHandler viewHandler)
+  public void init()
   {
-    viewHandler = ViewHandler.getInstance();
   }
 
   public void onButtonLoanReserve(ActionEvent actionEvent) throws IOException

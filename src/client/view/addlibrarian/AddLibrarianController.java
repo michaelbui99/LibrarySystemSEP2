@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 
@@ -31,10 +30,14 @@ public class AddLibrarianController
   @FXML private PasswordField password;
   @FXML private PasswordField email;
 
-  public void init(ViewHandler viewHandler, AddLibrarianVM addLibrarianVM)
+  /**
+   * This pattern return true if String contains any thing other than 0-9 digit,
+   * which can be used to know if an String is number or not using regular expression.
+   * email.getText().matches(".*\\d.*)"
+   */
+  public void init()
   {
-    viewHandler = ViewHandler.getInstance();
-    addLibrarianVM = ViewModelFactory.getInstance().getAddLibrarianVM();
+
   }
 
   @FXML public boolean onMouseExitedCheckLastName()
@@ -72,7 +75,7 @@ public class AddLibrarianController
   @FXML public boolean onMouseExitedCheckCPR()
   {
     if ((cprNumber.getText().isEmpty()) || !(cprNumber.getText().contains("-"))
-        || (cprNumber.getText().length() != 11))
+        || (cprNumber.getText().length() != 11) || !(cprNumber.getText().matches(".*\\d.*")))
     {
       cprNumber.setBorder(
           new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
@@ -226,15 +229,15 @@ public class AddLibrarianController
     int zip_code = Integer.parseInt(zipCode.getText());
     int street_no = Integer.parseInt(streetNumber.getText());
 
-    if ((onMouseExitedCheckEmployeeNumber()) || (onMouseExitedCheckEmail())
-        || (onMouseExitedCheckFirstName()) || (onMouseExitedCheckLastName())
-        || (onMouseExitedCheckPassword()) || (onMouseExitedCheckCity())
-        || (onMouseExitedCheckStreetName()) || (onMouseExitedCheckZipCode())
-        || (onMouseExitedCheckStreetNumber())
-        || (onMouseExitedCheckPhoneNumber()) || (onMouseExitedCheckCPR()))
+    if ((onMouseExitedCheckEmployeeNumber()) && (onMouseExitedCheckEmail())
+        && (onMouseExitedCheckFirstName()) && (onMouseExitedCheckLastName())
+        && (onMouseExitedCheckPassword()) && (onMouseExitedCheckCity())
+        && (onMouseExitedCheckStreetName()) && (onMouseExitedCheckZipCode())
+        && (onMouseExitedCheckStreetNumber())
+        && (onMouseExitedCheckPhoneNumber()) && (onMouseExitedCheckCPR()))
     {
       signUpButton.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+          (BorderStroke) BorderFactory.createLineBorder(Color.red)));
       signUpButton.setDisable(true);
     }
     else

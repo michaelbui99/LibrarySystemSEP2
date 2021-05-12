@@ -17,10 +17,8 @@ public class StaffLogInController
   @FXML private PasswordField password;
 
 
-  public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory)
+  public void init()
   {
-    viewHandler = ViewHandler.getInstance();
-    viewModelFactory = ViewModelFactory.getInstance();
   }
 
   public void onButtonAddLibrarian(ActionEvent actionEvent) throws IOException
