@@ -1,8 +1,6 @@
 package client.view.main;
 
-import client.core.ModelFactory;
-
-import java.sql.SQLException;
+import client.core.ModelFactoryClient;
 
 public class MainVM
 {
@@ -13,7 +11,7 @@ public class MainVM
 
   public boolean login(String cprNo, String password)
   {
-   return ModelFactory.getInstance().getUserModelClient()
+   return ModelFactoryClient.getInstance().getUserModelClient()
         .borrowerLogin(cprNo, password);
   }
 }

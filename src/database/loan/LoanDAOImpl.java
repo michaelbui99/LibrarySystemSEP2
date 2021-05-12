@@ -122,7 +122,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               audiobookLoans.getString("audience"), audiobookLoans.getString("language_"),
               audiobookLoans.getInt("length_"),
               audiobookLoans.getString("mc.f_name") + " "+audiobookLoans
-                  .getString("mc.l_name"));
+                  .getString("mc.l_name"), audiobookLoans.getString("url"));
           Address address = new Address(audiobookLoans.getInt("address_id"),
               audiobookLoans.getString("street_name"), audiobookLoans.getInt("street_no"),
               audiobookLoans.getInt("zip_code"), audiobookLoans.getString("city"));

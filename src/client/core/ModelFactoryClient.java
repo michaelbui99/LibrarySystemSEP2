@@ -2,8 +2,6 @@ package client.core;
 
 import client.model.chat.ChatModelClient;
 import client.model.chat.ChatModelManagerClient;
-import client.model.library.LibraryModelClient;
-import client.model.library.LibraryModelManager;
 import client.model.loan.LoanModelClient;
 import client.model.loan.LoanModelManagerClient;
 import client.model.material.MaterialModelClient;
@@ -12,22 +10,23 @@ import client.model.user.UserModelClient;
 import client.model.user.UserModelManagerClient;
 import client.network.Client;
 
-public class ModelFactory
+public class ModelFactoryClient
 {
-private static ModelFactory modelFactory;
-public static ModelFactory getInstance(){
+private static ModelFactoryClient modelFactory;
+public static ModelFactoryClient getInstance(){
   if (modelFactory == null){
 
-    modelFactory = new ModelFactory();
+    modelFactory = new ModelFactoryClient();
   }
   return modelFactory;
 }
 
 private ChatModelClient chatModelClient;
-private LibraryModelClient libraryModelClient;
+
 private LoanModelClient loanModelClient;
 private MaterialModelClient materialModelClient;
 private UserModelClient userModelClient;
+
 
 public ChatModelClient getChatModelClient(){
   if (chatModelClient == null){
@@ -37,12 +36,7 @@ public ChatModelClient getChatModelClient(){
   return chatModelClient;
 }
 
-public LibraryModelClient getLibraryModelClient(){
-  if (libraryModelClient == null){
-    libraryModelClient = new LibraryModelManager(ClientFactory.getInstance().getClient());
-  }
-  return libraryModelClient;
-}
+
 
 public LoanModelClient getLoanModelClient(){
   if (loanModelClient == null){
@@ -64,4 +58,6 @@ public UserModelClient getUserModelClient(){
   }
   return userModelClient;
 }
+
+
 }

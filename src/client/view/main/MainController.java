@@ -36,7 +36,7 @@ public class MainController
     if (ViewModelFactory.getInstance().getMainVM()
         .login(cprNo.getText(), password.getText()))
     {
-      ViewHandler.getInstance().openView("User");
+      ViewHandler.getInstance().openView("UserWindow");
     }
     else
     {

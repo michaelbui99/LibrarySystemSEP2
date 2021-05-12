@@ -1,6 +1,6 @@
 package client.view.stafflogin;
 
-import client.core.ModelFactory;
+import client.core.ModelFactoryClient;
 
 public class StaffLogInVM
 {
@@ -10,6 +10,7 @@ public class StaffLogInVM
 
   public boolean login(int employee_no, String password)
   {
-    return ModelFactory.getInstance().getUserModelClient().librarianLogin(employee_no, password);
+    return ModelFactoryClient
+        .getInstance().getUserModelClient().librarianLogin(employee_no, password);
   }
 }

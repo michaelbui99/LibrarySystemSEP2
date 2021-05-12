@@ -215,8 +215,8 @@ public class AddUserController
         && (onMouseExitCheckStreetName()) && (onMouseExitCheckStreetNumber())
         && (onMouseExitCheckZipCode()) && (onMouseExitCheckCity()))
     {
-      signupButton.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.red)));
+//      signupButton.setBorder(new Border(
+//          (BorderStroke) BorderFactory.createLineBorder(Color.red)));
       signupButton.setDisable(true);
     }
     else

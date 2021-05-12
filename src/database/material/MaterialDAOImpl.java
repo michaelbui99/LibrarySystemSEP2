@@ -2,7 +2,6 @@ package database.material;
 
 import client.model.material.DVD;
 import client.model.material.Material;
-import client.model.material.MaterialList;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
@@ -11,9 +10,7 @@ import database.BaseDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -117,31 +114,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return copyno;
   }
 
-  @Override public List<Book> getAllBooks() throws SQLException
-  {
-    return null;
 
-  }
-
-  @Override public List<EBook> getAllEbooks() throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<AudioBook> getAllAudioBooks() throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<DVD> getAllDVDs() throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<CD> getAllCDs() throws SQLException
-  {
-    return null;
-  }
 
   public boolean deliverMaterial(int materialID, String cpr, int copy_no){
 
@@ -223,7 +196,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                   resultSet.getString("audience"),
                   resultSet.getString("language_"),
                   resultSet.getInt("length_"),
-                  resultSet.getString("author"));
+                  resultSet.getString("author"), resultSet.getString("url") );
               ml.add(mat);
               break;
 
@@ -253,7 +226,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                   resultSet.getString("audience"),
                   resultSet.getString("language_"),
                   resultSet.getInt("length_"),
-                  resultSet.getInt("place_id")));
+                  resultSet.getInt("place_id"), resultSet.getString("url")));
               break;
 
             case "dvd":
@@ -268,7 +241,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                   resultSet.getString("language_"),
                   resultSet.getString("subtitle_lang"),
                   resultSet.getString("length_"),
-                  resultSet.getInt("place_id")));
+                  resultSet.getInt("place_id"), resultSet.getString("url")));
               break;
 
             case "e_book":

@@ -1,7 +1,6 @@
 package client.core;
 
 import client.view.addlibrarian.AddLibrarianVM;
-import client.view.*;
 import client.view.adduser.AddUserVM;
 import client.view.borrowreserve.BorrowReserveVM;
 import client.view.copies.CopiesVM;
@@ -84,7 +83,7 @@ public class ViewModelFactory
     if (myMaterialVM == null)
     {
       myMaterialVM = new MyMaterialVM(
-          ModelFactory.getInstance().getLoanModelClient());
+          ModelFactoryClient.getInstance().getLoanModelClient());
     }
     return myMaterialVM;
   }
@@ -94,7 +93,7 @@ public class ViewModelFactory
     if (registerMaterialVM == null)
     {
       registerMaterialVM = new RegisterMaterialVM(
-          ModelFactory.getInstance().getMaterialModelClient()
+          ModelFactoryClient.getInstance().getMaterialModelClient()
       );
     }
     return registerMaterialVM;
@@ -105,7 +104,7 @@ public class ViewModelFactory
     if (searchVM == null)
     {
       searchVM = new SearchVM(
-          ModelFactory.getInstance().getMaterialModelClient()
+          ModelFactoryClient.getInstance().getMaterialModelClient()
       );
     }
     return searchVM;

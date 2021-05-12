@@ -10,8 +10,9 @@ public abstract class ReadingMaterial extends Material
       String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, int pageCount)
   {
+    //TODO: INSERT URL IN CONSTRUCTOR
     super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language, );
+        tags, targetAudience, language, null);
 
     this.pageCount = pageCount;
   }

@@ -1,6 +1,6 @@
 package client.view.addlibrarian;
 
-import client.core.ModelFactory;
+import client.core.ModelFactoryClient;
 import client.model.loan.Address;
 
 public class AddLibrarianVM
@@ -13,7 +13,7 @@ public class AddLibrarianVM
       String cpr, String tlfNumber, String email, Address address,
       String password)
   {
-    ModelFactory.getInstance().getUserModelClient()
+    ModelFactoryClient.getInstance().getUserModelClient()
         .registerLibrarian(employee_no, firstName, lastName, cpr, tlfNumber,
             email, address, password);
   }

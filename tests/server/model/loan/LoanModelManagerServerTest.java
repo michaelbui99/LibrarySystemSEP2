@@ -1,9 +1,8 @@
 package server.model.loan;
 
 import client.model.loan.Loan;
-import client.model.user.Borrower;
+
 import database.BaseDAO;
-import database.loan.LoanDAOImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +20,7 @@ class LoanModelManagerServerTest extends BaseDAO
   @BeforeEach void setup()
   {
     loanModel = new LoanModelManagerServer();
+    createDummyData();
   }
 
   @Test

@@ -23,8 +23,9 @@ public class LoanModelManagerServer implements LoanModelServer
 
   @Override public void registerLoan(Material material, Borrower borrower)
   {
+    //TODO: CHANGE LOAN DAO CREATE METHOD SIGNATURE
     Loan loan = LoanDAOImpl.getInstance()
-        .create(material, borrower, deadline, calcDateTime());
+        .create(material, borrower,null, calcDateTime());
     support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
   }
 

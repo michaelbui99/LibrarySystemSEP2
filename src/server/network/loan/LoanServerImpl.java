@@ -3,6 +3,7 @@ package server.network.loan;
 import client.model.loan.Loan;
 import client.model.material.Material;
 import client.model.user.borrower.Borrower;
+import server.core.ModelFactoryServer;
 import server.model.loan.LoanModelServer;
 import shared.ClientCallback;
 import shared.LoanServer;
@@ -16,9 +17,9 @@ import java.util.List;
 
 public class LoanServerImpl implements LoanServer
 {
-  private LoanModelServer model;
 
-  public LoanServerImpl(LoanModelServer model)
+
+  public LoanServerImpl()
   {
     try
     {
@@ -28,17 +29,17 @@ public class LoanServerImpl implements LoanServer
     {
       e.printStackTrace();
     }
-    this.model = model;
+
   }
 
   @Override public void registerLoan(Material material, Borrower borrower) throws IllegalStateException
   {
-    model.registerLoan(material, borrower);
+    ModelFactoryServer.getInstance().getLoanModel().registerLoan(material, borrower);
   }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
-    return model.getAllLoansByCPR(cpr);
+    return ModelFactoryServer.getInstance().getLoanModel().getAllLoansByCPR(cpr);
   }
 
   public void registerClientCallBack(ClientCallback client)
@@ -56,10 +57,10 @@ public class LoanServerImpl implements LoanServer
         {
           //Removes listener if connection failed
           e.printStackTrace();
-          model.removePropertyChangeListener(EventTypes.LOANREGISTERED, this);
+          ModelFactoryServer.getInstance().getLoanModel().removePropertyChangeListener(EventTypes.LOANREGISTERED, this);
         }
       }
     };
-    model.addPropertyChangeListener(EventTypes.LOANREGISTERED, listener);
+    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANREGISTERED, listener);
   }
 }

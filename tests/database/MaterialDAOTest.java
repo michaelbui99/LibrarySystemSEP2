@@ -36,14 +36,14 @@ class MaterialDAOTest
     assertFalse(materialDAO.materialExistInDB(10));
   }
 
-  @Test
-  void testGetAllBooks() throws SQLException
-  {
-    bookDAO = new BookDAOImpl();
-      bookDAO.create(2,"wtf",9001,69,420);
-      bookDAO.create(3,"WTF",9001,69,42069);
-    assertEquals(2, materialDAO.getAllBooks().size());
-  }
+//  @Test
+//  void testGetAllBooks() throws SQLException
+//  {
+//    bookDAO = new BookDAOImpl();
+//      bookDAO.create(2,"wtf",9001,69,420);
+//      bookDAO.create(3,"WTF",9001,69,42069);
+//    assertEquals(2, materialDAO.getAllBooks().size());
+//  }
 
   @Test
   void testGetAllEBooks() throws SQLException

@@ -49,8 +49,8 @@ public class SearchController
    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
    publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
    releaseDateColumn.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
-   typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-   statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+//   typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+//   statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
   }
 
   @FXML public void onButtonSearch(ActionEvent actionEvent)

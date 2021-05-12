@@ -53,10 +53,9 @@ public class RegisterMaterialController
   RegisterMaterialVM registerMaterialVM;
   ViewHandler viewHandler;
 
-  public void init(ViewHandler viewHandler, RegisterMaterialVM registerMaterialVM)
+  public void init()
   {
-    viewHandler = ViewHandler.getInstance();
-    registerMaterialVM = ViewModelFactory.getInstance().getRegisterMaterialVM();
+
   }
 
 
@@ -66,7 +65,7 @@ public class RegisterMaterialController
   }
   @FXML public void onButtonConfirm(ActionEvent actionEvent)
   {
-      registerMaterialVM.
+      ViewModelFactory.getInstance().getRegisterMaterialVM().registerMaterial();
   }
   @FXML public void onButtonBack(ActionEvent actionEvent)
   {

@@ -62,8 +62,7 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
     {
       // writing the sql query
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT cpr_no, password " + "FROM borrower"
-              + "WHERE cpr_no = ? AND password = ?");
+          "SELECT cpr_no, password FROM borrower WHERE cpr_no = ? AND password = ?;");
       stm.setString(1, cprNo);
       stm.setString(2, password);
       ResultSet result = stm.executeQuery();

@@ -1,13 +1,11 @@
 package client.view.search;
 
-import client.core.ModelFactory;
+import client.core.ModelFactoryClient;
 import client.model.material.Material;
 import client.model.material.MaterialModelClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import shared.util.EventTypes;
-
-import java.util.List;
 
 public class SearchVM
 {
@@ -33,13 +31,13 @@ public class SearchVM
 
   public Material getSelectMaterial()
   {
-    return ModelFactory.getInstance().getMaterialModelClient()
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
         .getSelectMaterial();
   }
 
   public void setSelectMaterial(Material selectMaterial)
   {
-    ModelFactory.getInstance().getMaterialModelClient().setSelectMaterial(selectMaterial);
+    ModelFactoryClient.getInstance().getMaterialModelClient().setSelectMaterial(selectMaterial);
 
   }
 

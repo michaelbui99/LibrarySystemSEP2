@@ -16,6 +16,7 @@ public class UserModelManagerClient implements UserModelClient
   public UserModelManagerClient(Client client)
   {
     this.client = client;
+    client.startClient();
     support = new PropertyChangeSupport(this);
   }
 
@@ -30,7 +31,7 @@ public class UserModelManagerClient implements UserModelClient
   @Override public boolean borrowerLogin(String cprNo, String password)
   {
     //TODO call the method Login from the Client and then fire an event//
-    return false;
+    return client.borrowerLogin(cprNo, password);
   }
 
   @Override public Borrower getLoginUser()

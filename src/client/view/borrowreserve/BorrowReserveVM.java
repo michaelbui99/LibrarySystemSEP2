@@ -1,9 +1,7 @@
 package client.view.borrowreserve;
 
-import client.core.ModelFactory;
-import client.model.loan.LoanModelClient;
+import client.core.ModelFactoryClient;
 import client.model.material.Material;
-import client.model.material.MaterialModelClient;
 import client.model.user.borrower.Borrower;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -26,7 +24,9 @@ public class BorrowReserveVM
     public void loanMaterial()
     {
 
-        ModelFactory.getInstance().getLoanModelClient().registerLoan(ModelFactory.getInstance().getMaterialModelClient().getSelectMaterial(),ModelFactory.getInstance().getUserModelClient().getLoginUser());
+        ModelFactoryClient.getInstance().getLoanModelClient().registerLoan(
+            ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
+            ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
 
     }
 
@@ -39,7 +39,7 @@ public class BorrowReserveVM
 
     public String getMaterialImageURL()
     {
-        return ModelFactory.getInstance().getMaterialModelClient().getSelectMaterial().getImageURL();
+        return ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial().getImageURL();
     }
 
 

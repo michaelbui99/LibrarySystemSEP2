@@ -1,9 +1,13 @@
 package client.network;
 
+import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.user.borrower.Borrower;
+import client.model.user.librarian.Librarian;
 import shared.ClientCallback;
-import shared.RMIServer;
+import shared.Server;
+import shared.util.Constants;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -12,13 +16,14 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class RMIClientImpl implements RMIClient, ClientCallback, Client
 {
-  public static final String RMI_SERVER = "RMI_SERVER";
+
 
   private PropertyChangeSupport support;
-  private RMIServer server;
+  private Server server;
 
   public RMIClientImpl()
   {
@@ -41,8 +46,8 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     try
     {
       registry = LocateRegistry.getRegistry(1099);
-      server = (RMIServer) registry.lookup(RMI_SERVER);
-      server.registerClientCallback(this);
+      server = (Server) registry.lookup(Constants.RMISERVER);
+//      server.registerClientCallback(this);
     }
     catch (RemoteException | NotBoundException e)
     {
@@ -50,18 +55,39 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
-
-  @Override public void registerLoan(Material material, String loanerCPR,
-      String deadline)
+  @Override public void registerLoan(Material material, Borrower borrower)
+      throws IllegalStateException
   {
     try
     {
-      server.registerLoan(material,loanerCPR,deadline);
+      server.getLoanServer().registerLoan(material, borrower);
     }
     catch (RemoteException e)
     {
-     throw new RuntimeException("Server connection failed");
+      throw new RuntimeException("Server Connection failed.");
     }
+  }
+
+  @Override public List<Loan> getAllLoansByCPR(String cpr)
+  {
+    try
+    {
+      return server.getLoanServer().getAllLoansByCPR(cpr);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public void deliverMaterial(int loanID)
+  {
+//    server.getLoanServer().
+  }
+
+  @Override public void extendLoan()
+  {
+
   }
 
   @Override public void registerBook(String title, String publisher,
@@ -71,11 +97,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, placeID, authorId, genre, url);
+      server.getMaterialServer().registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, placeID, authorId, genre, url);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
@@ -83,21 +109,15 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.createBookCopy(materialID);
+      server.getMaterialServer().createBookCopy(materialID);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
-  @Override public void registerDVD(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage,
-      String playDuration, int placeID, String genre, String url)
-  {
 
-  }
 
   public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
@@ -106,12 +126,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.registerDVD(title, publisher, releaseDate, description, tags, targetAudience,
+      server.getMaterialServer().registerDVD(title, publisher, releaseDate, description, tags, targetAudience,
           language, subtitlesLanguage, playDuration, placeID, genre, url);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
@@ -119,21 +139,14 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.createDVDCopy(materialID);
+      server.getMaterialServer().createDVDCopy(materialID);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
-  @Override public void registerCD(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID,
-      String genre, String url)
-  {
-
-  }
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
@@ -142,11 +155,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
+      server.getMaterialServer().registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
@@ -154,11 +167,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.createCDCopy(materialID);
+      server.getMaterialServer().createCDCopy(materialID);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
@@ -169,11 +182,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, authorId, genre, url);
+      server.getMaterialServer().registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, authorId, genre, url);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
@@ -181,21 +194,14 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.createEBookCopy(materialID);
+      server.getMaterialServer().createEBookCopy(materialID);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
-  @Override public void registerAudioBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, String genre,
-      int authorId, String url)
-  {
-
-  }
 
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
@@ -204,11 +210,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId,url );
+      server.getMaterialServer().registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId,url );
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 
@@ -216,11 +222,103 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.createAudioBookCopy(materialID);
+      server.getMaterialServer().createAudioBookCopy(materialID);
     }
     catch (RemoteException e)
     {
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience, String type)
+  {
+    return null;
+  }
+
+  @Override public Material getSelectMaterial()
+  {
+    return null;
+  }
+
+  @Override public void setSelectMaterial(Material selectMaterial)
+  {
+
+  }
+
+  @Override public Borrower registerBorrower(String cpr_no, String f_name,
+      String l_name, String email, String tel_no, Address address,
+      String password)
+  {
+    try
+    {
+      return server.getUserServer().registerBorrower(cpr_no, f_name, l_name, email, tel_no, address, password);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public boolean borrowerLogin(String cprNo, String password)
+  {
+    try
+    {
+      return server.getUserServer().Login(cprNo, password);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public Borrower getLoginUser()
+  {
+    try
+    {
+      return server.getUserServer().getLoginBorrower();
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public Librarian registerLibrarian(int employee_no,
+      String firstName, String lastName, String cpr, String tlfNumber,
+      String email, Address address, String password)
+  {
+    try
+    {
+      return server.getUserServer().registerLibrarian(employee_no, firstName, lastName, cpr, tlfNumber, email, address, password);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public boolean librarianLogin(int employee_no, String password)
+  {
+    try
+    {
+      return server.getUserServer().librarianLogin(employee_no, password);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public Librarian getLoginLibrarian()
+  {
+    try
+    {
+      return server.getUserServer().getLoginLibrarian();
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
     }
   }
 

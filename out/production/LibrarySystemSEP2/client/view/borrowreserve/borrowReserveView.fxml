@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,13 +14,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.borrowreserve.borrowReserveController">
+<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.borrowreserve.borrowReserveController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="602.0">
          <children>
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="601.0">
                <children>
-                  <Label text="Tekst">
+                  <Label text="MaterialInformation">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -41,12 +40,12 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="240.0" fitWidth="304.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="materialImage" fitHeight="240.0" fitWidth="304.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <TextArea disable="true" editable="false" prefHeight="240.0" prefWidth="333.0">
+                              <TextArea fx:id="materialInfo" disable="true" editable="false" prefHeight="240.0" prefWidth="333.0">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -59,19 +58,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="181.0" prefWidth="596.0">
                <children>
-                  <ScrollPane prefHeight="173.0" prefWidth="325.0">
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                     <content>
-                        <TextArea disable="true" editable="false" prefHeight="153.0" prefWidth="302.0">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </TextArea>
-                     </content>
-                  </ScrollPane>
-                  <ComboBox prefWidth="150.0" promptText="Lånemuligheder:" style="-fx-background-color: white; -fx-cursor: hand;">
+                  <ComboBox fx:id="borrowChoice" prefWidth="150.0" promptText="Lånemuligheder:" style="-fx-background-color: white; -fx-cursor: hand;">
                      <HBox.margin>
                         <Insets left="100.0" />
                      </HBox.margin>
@@ -90,17 +77,16 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-cursor: hand;" text="Lån / Reserve" GridPane.columnIndex="2">
+                        <Button mnemonicParsing="false" onAction="#loanReserve" style="-fx-cursor: hand;" text="Lån / Reserve" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="211.0" layoutY="41.0" mnemonicParsing="false" style="-fx-cursor: hand;" text="Annuller">
+                        <Button layoutX="211.0" layoutY="41.0" mnemonicParsing="false" onAction="#goBack" style="-fx-cursor: hand;" text="Tilbage">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="412.0" layoutY="41.0" mnemonicParsing="false" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>
