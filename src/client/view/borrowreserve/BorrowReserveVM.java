@@ -10,7 +10,7 @@ public class BorrowReserveVM
 
     public void loanMaterial(Material material,String loanerCpr, String deadline)
     {
-            model.registerLoan(null,"","");
+            model.registerLoan(null," ","");
 
     }
 

@@ -39,9 +39,7 @@ public interface MaterialModelServer
       double playDuration, String genre, int authorId, String url);
 
   void createAudioBookCopy(int materialID);
-  MaterialList searchMaterial(String title, String language,
-      String keywords, String genre, String targetAudience, String type)
-      throws SQLException;
+
 
   void findMaterial(String arg, SearchStrategy searchStrategy);
 

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.search.searchController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.search.SearchController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="801.0" style="-fx-background-color: white;">
          <children>
@@ -89,7 +89,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="619.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onBottonSearch" style="-fx-background-color: white; -fx-cursor: hand;" text="Søg" textFill="GREEN" underline="true">
+                  <Button mnemonicParsing="false" onAction="#onButtonSearch" style="-fx-background-color: white; -fx-cursor: hand;" text="Søg" textFill="GREEN" underline="true">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>
@@ -131,12 +131,12 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onBottonCancle" style="-fx-cursor: hand;" text="Annuller">
+                        <Button mnemonicParsing="false" onAction="#onButtonCancel" style="-fx-cursor: hand;" text="Annuller">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onBottonContinue" style="-fx-cursor: hand;" text="Fortsætte" GridPane.columnIndex="1">
+                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onButtonContinue" style="-fx-cursor: hand;" text="Fortsætte" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
