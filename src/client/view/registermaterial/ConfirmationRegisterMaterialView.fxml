@@ -37,8 +37,8 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onBottomCancel" text="Annuller" />
-                        <Button layoutX="10.0" layoutY="43.0" mnemonicParsing="false" onAction="#onBottonConfirm" text="Bekræft" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#onButtonCancel" text="Annuller" />
+                        <Button layoutX="10.0" layoutY="43.0" mnemonicParsing="false" onAction="#onButtonConfirm" text="Bekræft" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>
