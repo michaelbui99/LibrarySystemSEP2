@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface LoanModelServer extends PropertyChangeSubject
 {
-   public void registerLoan(Material material, Borrower borrower,
-      String deadline);
+   public void registerLoan(Material material, Borrower borrower);
    List<Loan> getAllLoansByCPR(String cpr);
 }

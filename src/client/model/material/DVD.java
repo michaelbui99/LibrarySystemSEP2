@@ -10,10 +10,10 @@ public class DVD extends Material
 
   public DVD(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID)
+      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID, String imageURL)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language);
+        tags, targetAudience, language, imageURL );
     this.subtitlesLanguage = subtitlesLanguage;
     this.playDuration = playDuration;
 

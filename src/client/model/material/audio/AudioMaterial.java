@@ -10,7 +10,7 @@ public abstract class AudioMaterial extends Material
       String targetAudience, String language, int playDuration)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language);
+        tags, targetAudience, language, );
     this.playDuration = playDuration;
   }
 

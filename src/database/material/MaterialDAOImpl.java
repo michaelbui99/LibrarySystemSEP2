@@ -117,6 +117,31 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return copyno;
   }
 
+  @Override public List<Book> getAllBooks() throws SQLException
+  {
+    return null;
+
+  }
+
+  @Override public List<EBook> getAllEbooks() throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<AudioBook> getAllAudioBooks() throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<DVD> getAllDVDs() throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<CD> getAllCDs() throws SQLException
+  {
+    return null;
+  }
 
   public boolean deliverMaterial(int materialID, String cpr, int copy_no){
 

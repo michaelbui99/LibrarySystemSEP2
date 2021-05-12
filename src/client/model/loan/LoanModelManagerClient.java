@@ -21,8 +21,7 @@ public class LoanModelManagerClient implements LoanModelClient
 //    client.addPropertyChangeListener(EventTypes.LOANREGISTERED, evt -> {support.firePropertyChange(evt)})
   }
 
-  @Override public void registerLoan(Material material, Borrower borrower,
-      String deadline) throws IllegalStateException
+  @Override public void registerLoan(Material material, Borrower borrower) throws IllegalStateException
   {
 //    client.registerLoan();
   }

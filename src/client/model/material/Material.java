@@ -3,12 +3,12 @@ package client.model.material;
 public abstract class Material implements MaterialInterface
 {
   private int materialID, copyNumber;
-  private String title, targetAudience, description, keywords, publisher, releaseDate, language;
+  private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL;
   private MaterialStatus materialStatus;
 
   public Material(int materialID, int copyNumber, String title,
-      String publisher, String releaseDate, String description, String keywords,
-      String targetAudience, String language)
+                  String publisher, String releaseDate, String description, String keywords,
+                  String targetAudience, String language, String imageURL)
   {
     this.materialID = materialID;
     this.copyNumber = copyNumber;
@@ -19,6 +19,7 @@ public abstract class Material implements MaterialInterface
     this.publisher = publisher;
     this.releaseDate = releaseDate;
     this.language = language;
+    this.imageURL = imageURL;
     materialStatus = MaterialStatus.Available;
   }
 
@@ -80,4 +81,8 @@ public abstract class Material implements MaterialInterface
   }
 
   public abstract String getMaterialType();
+
+  public String getImageURL() {
+    return imageURL;
+  }
 }

@@ -52,7 +52,7 @@ public class ViewModelFactory
     return addLibrarianVM;
   }
 
-  public BorrowReserveVM getBorrowReseveVM()
+  public BorrowReserveVM getBorrowReserveVM()
   {
     if (borrowReserveVM == null)
     {

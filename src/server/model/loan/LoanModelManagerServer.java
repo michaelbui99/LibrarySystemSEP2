@@ -21,8 +21,7 @@ public class LoanModelManagerServer implements LoanModelServer
     support = new PropertyChangeSupport(this);
   }
 
-  @Override public void registerLoan(Material material, Borrower borrower,
-      String deadline)
+  @Override public void registerLoan(Material material, Borrower borrower)
   {
     Loan loan = LoanDAOImpl.getInstance()
         .create(material, borrower, deadline, calcDateTime());

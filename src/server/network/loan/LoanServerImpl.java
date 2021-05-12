@@ -31,10 +31,9 @@ public class LoanServerImpl implements LoanServer
     this.model = model;
   }
 
-  @Override public void registerLoan(Material material, Borrower borrower,
-      String deadline) throws IllegalStateException
+  @Override public void registerLoan(Material material, Borrower borrower) throws IllegalStateException
   {
-    model.registerLoan(material, borrower, deadline);
+    model.registerLoan(material, borrower);
   }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)

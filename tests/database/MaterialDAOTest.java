@@ -40,8 +40,8 @@ class MaterialDAOTest
   void testGetAllBooks() throws SQLException
   {
     bookDAO = new BookDAOImpl();
-      bookDAO.create(2,"wtf",9000,69,420);
-      bookDAO.create(3,"WTF",9000,69,42069);
+      bookDAO.create(2,"wtf",9001,69,420);
+      bookDAO.create(3,"WTF",9001,69,42069);
     assertEquals(2, materialDAO.getAllBooks().size());
   }
 
