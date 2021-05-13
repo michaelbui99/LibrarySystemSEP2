@@ -11,7 +11,6 @@ import java.util.List;
 public class MaterialModelManagerClient implements MaterialModelClient
 {
 
-
   private Client client;
   private PropertyChangeSupport support;
   private SearchStrategyManager searchStrategyManager;
@@ -41,48 +40,43 @@ public class MaterialModelManagerClient implements MaterialModelClient
       String targetAudience, String language, String isbn, int pageCount,
       int placeID, int authorId, String genre, String url)
   {
-
+    client.registerBook(title, publisher, releaseDate, description, tags,
+        targetAudience, language, isbn, pageCount, placeID, authorId, genre,
+        url);
   }
-  // TODO: 5/12/2021 REGISTER MATERIAL GUI NEED TO BE MATCHED WITH THE METHOD!! AUTHORID, ISBN, PLACEID
-//  public void registerMaterial(String type, String title, String publisher,
-//      String length, int page, String description, String tags,
-//      String releasedDate, String audience, String language, String isbn){
-//    switch (type){
-//      case "book":
-//        this.registerBook(title,publisher,releasedDate,description,tags,audience,language,isbn,page,placeID, author,genre,url);
-//    }
-  //}
-
 
   @Override public void createBookCopy(int materialID)
   {
-
+    client.createBookCopy(materialID);
   }
 
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      String playDuration, int placeID, String genre, String url)
+      int playDuration, int placeID, String genre, String url)
   {
-
+    client.registerDVD(title, publisher, releaseDate, description, tags,
+        targetAudience, language, subtitlesLanguage, playDuration, placeID,
+        genre, url);
   }
 
   @Override public void createDVDCopy(int materialID)
   {
-
+    client.createDVDCopy(materialID);
   }
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID,
+      String targetAudience, String language, int playDuration, int placeID,
       String genre, String url)
   {
-
+    client.registerCD(title, publisher, releaseDate, description, tags,
+        targetAudience, language, playDuration, placeID, genre, url);
   }
 
   @Override public void createCDCopy(int materialID)
   {
-
+    client.createCDCopy(materialID);
   }
 
   @Override public void registerEBook(String title, String publisher,
@@ -90,33 +84,36 @@ public class MaterialModelManagerClient implements MaterialModelClient
       String targetAudience, String language, String isbn, int pageCount,
       String licenseNr, int authorId, String genre, String url)
   {
-
+    client.registerEBook(title, publisher, releaseDate, description, tags,
+        targetAudience, language, isbn, pageCount, licenseNr, authorId, genre,
+        url);
   }
-
 
   @Override public void createEBookCopy(int materialID)
   {
-
+    client.createEBookCopy(materialID);
   }
 
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, String genre,
+      String targetAudience, String language, int playDuration, String genre,
       int authorId, String url)
   {
-
+    client.registerAudioBook(title, publisher, releaseDate, description, tags,
+        targetAudience, language, playDuration, genre, authorId, url);
   }
 
   @Override public void createAudioBookCopy(int materialID)
   {
-
+    client.createAudioBookCopy(materialID);
   }
 
   @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience, String type)
   {
-     searchStrategyManager.selectStrategy(type);
-    return searchStrategyManager.findMaterial(title,language,keywords,genre,targetAudience);
+    searchStrategyManager.selectStrategy(type);
+    return searchStrategyManager
+        .findMaterial(title, language, keywords, genre, targetAudience);
   }
 
   @Override public void addPropertyChangeListener(String name,

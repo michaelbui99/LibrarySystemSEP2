@@ -25,14 +25,17 @@ public class ViewHandler extends Application
 {
   private Stage stage = new Stage();
   private static ViewHandler viewHandler;
-//singelton
- private ViewHandler()
+
+  //singelton
+  private ViewHandler()
   {
 
   }
 
-  public static ViewHandler getInstance(){
-    if (viewHandler == null){
+  public static ViewHandler getInstance()
+  {
+    if (viewHandler == null)
+    {
       viewHandler = new ViewHandler();
     }
     return viewHandler;
@@ -42,12 +45,12 @@ public class ViewHandler extends Application
   {
     Scene scene;
     FXMLLoader loader = new FXMLLoader();
-    Parent root= null;
+    Parent root = null;
     switch (id)
     {
       case "AddUser":
-        loader.setLocation(
-            getClass().getResource("adduser/" + id + "View.fxml"));
+        loader
+            .setLocation(getClass().getResource("adduser/" + id + "View.fxml"));
         root = loader.load();
         AddUserController addUserController = loader.getController();
         addUserController.init();
@@ -62,8 +65,8 @@ public class ViewHandler extends Application
         stage.setTitle("AddLibrarian");
         break;
       case "BorrowReserve":
-        loader.setLocation(getClass()
-            .getResource("borrowreserve/" + id + "View.fxml"));
+        loader.setLocation(
+            getClass().getResource("borrowreserve/" + id + "View.fxml"));
         root = loader.load();
         BorrowReserveController borrowReserveController = loader
             .getController();
@@ -71,16 +74,15 @@ public class ViewHandler extends Application
         stage.setTitle("BorrowReserve");
         break;
       case "Copies":
-        loader.setLocation(
-            getClass().getResource("copies/" + id + "View.fxml"));
+        loader
+            .setLocation(getClass().getResource("copies/" + id + "View.fxml"));
         root = loader.load();
         CopiesController copiesController = loader.getController();
         copiesController.init();
         stage.setTitle("Copies");
         break;
       case "Main":
-        loader.setLocation(
-            getClass().getResource("main/" + id + "View.fxml"));
+        loader.setLocation(getClass().getResource("main/" + id + "View.fxml"));
         root = loader.load();
         MainController mainController = loader.getController();
         mainController.init();
@@ -95,8 +97,8 @@ public class ViewHandler extends Application
         stage.setTitle("MyMaterial");
         break;
       case "RegisterMaterial":
-        loader.setLocation(getClass()
-            .getResource("registermaterial/" + id + "View.fxml"));
+        loader.setLocation(
+            getClass().getResource("registermaterial/" + id + "View.fxml"));
         root = loader.load();
         RegisterMaterialController registerMaterialController = loader
             .getController();
@@ -104,8 +106,8 @@ public class ViewHandler extends Application
         stage.setTitle("RegisterMaterial");
         break;
       case "Search":
-        loader.setLocation(
-            getClass().getResource("search/" + id + "View.fxml"));
+        loader
+            .setLocation(getClass().getResource("search/" + id + "View.fxml"));
         root = loader.load();
         SearchController searchController = loader.getController();
         searchController.init();
@@ -120,13 +122,20 @@ public class ViewHandler extends Application
         stage.setTitle("StaffLogin");
         break;
       case "UserWindow":
-        loader.setLocation(
-            getClass().getResource("user/" + id + "View.fxml"));
+        loader.setLocation(getClass().getResource("user/" + id + "View.fxml"));
         root = loader.load();
         UserController userController = loader.getController();
         userController.init();
         stage.setTitle("User");
         break;
+      case "Administration":
+        loader.setLocation(
+            getClass().getResource("administration/" + id + "View.fxml"));
+        root = loader.load();
+        AdministrationController administrationController = loader
+            .getController();
+        administrationController.init();
+        stage.setTitle("Administration");
     }
     scene = new Scene(root);
     stage.setScene(scene);

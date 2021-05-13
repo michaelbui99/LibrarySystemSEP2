@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.adduser.AddUserController">
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.adduser.AddUserController">
    <children>
       <HBox alignment="CENTER" prefHeight="58.0" prefWidth="600.0">
          <children>
@@ -16,16 +25,16 @@
             </Label>
          </children>
       </HBox>
-      <ScrollPane layoutY="58.0" prefHeight="403.0" prefWidth="600.0">
-         <content>
-            <VBox prefHeight="596.0" prefWidth="598.0" style="-fx-background-color: white;">
-               <children>
+      <VBox layoutY="58.0" prefHeight="417.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <ScrollPane prefHeight="419.0" prefWidth="614.0">
+               <content>
                   <HBox prefHeight="607.0" prefWidth="598.0">
                      <children>
                         <GridPane prefHeight="632.0" prefWidth="597.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="215.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="382.0" minWidth="10.0" prefWidth="382.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
@@ -87,6 +96,16 @@
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
                                           </TextField>
+                                          <Label fx:id="firstNameError" text="!" textFill="RED">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="lastNameError" layoutX="310.0" layoutY="22.0" text="!" textFill="RED" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
                                        </children>
                                     </GridPane>
                                  </children>
@@ -160,6 +179,26 @@
                                                 <Insets right="100.0" />
                                              </GridPane.margin>
                                           </TextField>
+                                          <Label fx:id="streetNameError" text="!" textFill="RED">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="streetNoError" layoutX="310.0" layoutY="22.0" text="!" textFill="RED" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="cityError" layoutX="310.0" layoutY="63.0" text="!" textFill="RED" GridPane.rowIndex="3">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="zipCodeError" layoutX="310.0" layoutY="22.0" text="!" textFill="RED" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
                                        </children>
                                     </GridPane>
                                  </children>
@@ -181,7 +220,7 @@
                               </Label>
                               <TextField fx:id="email" onMouseExited="#onMouseExitCheckEmail" promptText="E-mail" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="100.0" />
                                  </GridPane.margin>
                               </TextField>
                               <Label layoutX="20.0" layoutY="85.0" text="Adgangskode" GridPane.rowIndex="2">
@@ -191,20 +230,40 @@
                               </Label>
                               <PasswordField fx:id="password" onMouseExited="#onMouseExitCheckPassword" promptText="Adgangskode:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="100.0" />
                                  </GridPane.margin>
                               </PasswordField>
+                              <Label fx:id="emailError" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="passwordError" layoutX="525.0" layoutY="85.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="cprError" layoutX="525.0" layoutY="136.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="phoneError" layoutX="525.0" layoutY="303.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
                            </children>
                         </GridPane>
                      </children>
                   </HBox>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-      <HBox layoutY="467.0" prefHeight="71.0" prefWidth="600.0">
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <HBox layoutY="482.0" prefHeight="58.0" prefWidth="600.0">
          <children>
-            <GridPane prefHeight="67.0" prefWidth="587.0">
+            <GridPane prefHeight="23.0" prefWidth="587.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

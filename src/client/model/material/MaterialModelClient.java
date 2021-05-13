@@ -21,13 +21,13 @@ public interface MaterialModelClient extends
   void createBookCopy(int materialID);
 
   void registerDVD(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID, String genre,
+      String targetAudience, String language, String subtitlesLanguage, int playDuration, int placeID, String genre,
       String url);
 
   void createDVDCopy(int materialID);
 
   void registerCD(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID, String genre,
+      String targetAudience, String language, int playDuration, int placeID, String genre,
       String url);
 
   void createCDCopy(int materialID);
@@ -42,7 +42,7 @@ public interface MaterialModelClient extends
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      double playDuration, String genre, int authorId, String url);
+      int playDuration, String genre, int authorId, String url);
 
   void createAudioBookCopy(int materialID);
 

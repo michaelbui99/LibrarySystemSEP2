@@ -6,6 +6,7 @@ import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
@@ -28,7 +29,18 @@ public class AddLibrarianController
   @FXML private TextField phoneNumber;
   @FXML private TextField employeeNo;
   @FXML private PasswordField password;
-  @FXML private PasswordField email;
+  @FXML private TextField email;
+  @FXML private Label employeeNoError;
+  @FXML private Label cprError;
+  @FXML private Label fNameError;
+  @FXML private Label lNameError;
+  @FXML private Label streetNameError;
+  @FXML private Label streetNoError;
+  @FXML private Label zipCodeError;
+  @FXML private Label cityError;
+  @FXML private Label phoneError;
+  @FXML private Label emailError;
+  @FXML private Label passwordError;
 
   /**
    * This pattern return true if String contains any thing other than 0-9 digit,
@@ -44,14 +56,12 @@ public class AddLibrarianController
   {
     if (lastName.getText().isEmpty() || lastName.getText().matches(".*\\d.*"))
     {
-      lastName.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      lNameError.setVisible(true);
       return true;
     }
     else
     {
-      lastName.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      lNameError.setVisible(false);
       return false;
     }
   }
@@ -60,14 +70,12 @@ public class AddLibrarianController
   {
     if (firstName.getText().isEmpty() || firstName.getText().matches(".*\\d.*"))
     {
-      firstName.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      fNameError.setVisible(true);
       return true;
     }
     else
     {
-      firstName.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      fNameError.setVisible(false);
       return false;
     }
   }
@@ -75,16 +83,15 @@ public class AddLibrarianController
   @FXML public boolean onMouseExitedCheckCPR()
   {
     if ((cprNumber.getText().isEmpty()) || !(cprNumber.getText().contains("-"))
-        || (cprNumber.getText().length() != 11) || !(cprNumber.getText().matches(".*\\d.*")))
+        || (cprNumber.getText().length() != 11) || !(cprNumber.getText()
+        .matches(".*\\d.*")))
     {
-      cprNumber.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      cprError.setVisible(true);
       return true;
     }
     else
     {
-      cprNumber.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      cprError.setVisible(false);
       return false;
     }
   }
@@ -94,14 +101,12 @@ public class AddLibrarianController
     if (streetName.getText().isEmpty() || streetName.getText()
         .matches(".*\\d.*"))
     {
-      streetName.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      streetNameError.setVisible(true);
       return true;
     }
     else
     {
-      streetName.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      streetNameError.setVisible(false);
       return false;
     }
   }
@@ -110,14 +115,12 @@ public class AddLibrarianController
   {
     if (city.getText().isEmpty() || city.getText().matches(".*\\d.*"))
     {
-      city.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      cityError.setVisible(true);
       return true;
     }
     else
     {
-      city.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      cityError.setVisible(false);
       return false;
     }
   }
@@ -127,14 +130,12 @@ public class AddLibrarianController
     if (zipCode.getText().isEmpty() || !zipCode.getText().matches(".*\\d.*")
         || (zipCode.getText().length() != 4))
     {
-      zipCode.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      zipCodeError.setVisible(true);
       return true;
     }
     else
     {
-      zipCode.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      zipCodeError.setVisible(false);
       return false;
     }
   }
@@ -144,14 +145,12 @@ public class AddLibrarianController
     if (streetNumber.getText().isEmpty() || !streetNumber.getText()
         .matches(".*\\d.*"))
     {
-      streetNumber.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      streetNoError.setVisible(true);
       return true;
     }
     else
     {
-      streetNumber.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      streetNoError.setVisible(false);
       return false;
     }
   }
@@ -162,14 +161,12 @@ public class AddLibrarianController
         .matches(".*\\d.*")) || !(phoneNumber.getText().contains("+45")) || (
         phoneNumber.getText().length() != 11))
     {
-      phoneNumber.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      phoneError.setVisible(true);
       return true;
     }
     else
     {
-      phoneNumber.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      phoneError.setVisible(false);
       return false;
     }
   }
@@ -179,14 +176,12 @@ public class AddLibrarianController
     if ((employeeNo.getText().isEmpty()) || (!(phoneNumber.getText()
         .matches(".*\\d.*"))))
     {
-      employeeNo.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      employeeNoError.setVisible(true);
       return true;
     }
     else
     {
-      employeeNo.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      employeeNoError.setVisible(false);
       return false;
     }
   }
@@ -195,14 +190,12 @@ public class AddLibrarianController
   {
     if (password.getText().isEmpty())
     {
-      password.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      passwordError.setVisible(true);
       return true;
     }
     else
     {
-      password.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      passwordError.setVisible(false);
       return false;
     }
   }
@@ -211,14 +204,12 @@ public class AddLibrarianController
   {
     if (email.getText().isEmpty() || !email.getText().contains("@"))
     {
-      email.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      emailError.setVisible(true);
       return true;
     }
     else
     {
-      email.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      emailError.setVisible(false);
       return false;
     }
   }
@@ -236,12 +227,11 @@ public class AddLibrarianController
         && (onMouseExitedCheckStreetNumber())
         && (onMouseExitedCheckPhoneNumber()) && (onMouseExitedCheckCPR()))
     {
-      signUpButton.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.red)));
       signUpButton.setDisable(true);
     }
     else
     {
+      signUpButton.setDisable(false);
       ViewModelFactory.getInstance().getAddLibrarianVM()
           .addLibrarian(employee_no, firstName.getText(), lastName.getText(),
               cprNumber.getText(), phoneNumber.getText(), email.getText(),

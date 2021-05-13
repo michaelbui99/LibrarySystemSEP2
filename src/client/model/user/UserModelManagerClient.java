@@ -4,6 +4,7 @@ import client.model.loan.Address;
 import client.model.user.borrower.Borrower;
 import client.model.user.librarian.Librarian;
 import client.network.Client;
+import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -24,37 +25,37 @@ public class UserModelManagerClient implements UserModelClient
       String l_name, String email, String tel_no, Address address,
       String password)
   {
-    //TODO call the method registerBorrower(args) from the Client and then fire an event//
-    return null;
+    Borrower borrower = client.registerBorrower(cpr_no, f_name, l_name, email, tel_no, address, password);
+    //support.firePropertyChange(EventTypes.BORROWERREGISTERED, null, borrower);
+    return borrower;
   }
 
   @Override public boolean borrowerLogin(String cprNo, String password)
   {
-    //TODO call the method Login from the Client and then fire an event//
     return client.borrowerLogin(cprNo, password);
   }
 
   @Override public Borrower getLoginUser()
   {
-    //TODO call the method getLogInUser from the Client and then fire an event//
-    return null;
+   return client.getLoginUser();
   }
 
   @Override public Librarian registerLibrarian(int employee_no,
       String firstName, String lastName, String cpr, String tlfNumber,
       String email, Address address, String password)
   {
-    return null;
+    Librarian librarian = client.registerLibrarian(employee_no, firstName, lastName, cpr, tlfNumber, email, address, password);
+    return librarian;
   }
 
   @Override public boolean librarianLogin(int employee_no, String password)
   {
-    return false;
+    return client.librarianLogin(employee_no, password);
   }
 
   @Override public Librarian getLoginLibrarian()
   {
-    return null;
+    return client.getLoginLibrarian();
   }
 
   @Override public void addPropertyChangeListener(String name,

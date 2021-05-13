@@ -82,8 +82,7 @@ public class ViewModelFactory
   {
     if (myMaterialVM == null)
     {
-      myMaterialVM = new MyMaterialVM(
-          ModelFactoryClient.getInstance().getLoanModelClient());
+      myMaterialVM = new MyMaterialVM();
     }
     return myMaterialVM;
   }
@@ -92,9 +91,7 @@ public class ViewModelFactory
   {
     if (registerMaterialVM == null)
     {
-      registerMaterialVM = new RegisterMaterialVM(
-          ModelFactoryClient.getInstance().getMaterialModelClient()
-      );
+      registerMaterialVM = new RegisterMaterialVM();
     }
     return registerMaterialVM;
   }
