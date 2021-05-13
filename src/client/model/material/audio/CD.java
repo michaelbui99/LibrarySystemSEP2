@@ -1,6 +1,8 @@
 package client.model.material.audio;
 
-public class CD extends AudioMaterial
+import java.io.Serializable;
+
+public class CD extends AudioMaterial implements Serializable
 {
   private int placeID;
   public CD(int materialID, int copyNumber, String title, String publisher,

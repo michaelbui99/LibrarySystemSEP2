@@ -2,7 +2,9 @@ package client.model.material.audio;
 
 import client.model.material.Material;
 
-public abstract class AudioMaterial extends Material
+import java.io.Serializable;
+
+public abstract class AudioMaterial extends Material implements Serializable
 {
   private int playDuration;
   public AudioMaterial(int materialID, int copyNumber, String title,

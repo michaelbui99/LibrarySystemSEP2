@@ -1,6 +1,8 @@
 package client.model.material;
 
-public abstract class Material implements MaterialInterface
+import java.io.Serializable;
+
+public abstract class Material implements MaterialInterface, Serializable
 {
   private int materialID, copyNumber;
   private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL;

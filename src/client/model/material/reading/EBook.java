@@ -1,6 +1,8 @@
 package client.model.material.reading;
 
-public class EBook extends ReadingMaterial
+import java.io.Serializable;
+
+public class EBook extends ReadingMaterial implements Serializable
 {
   private String licenseNr;
   private String genre, author;

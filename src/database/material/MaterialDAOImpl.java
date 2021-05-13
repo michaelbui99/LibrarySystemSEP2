@@ -36,24 +36,22 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   }
 
   @Override public int create(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String genre, String url)
+      String releaseDate, String description, String targetAudience, String language, String genre, String url)
       throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO Material ( title, audience, description_of_the_content, keywords, publisher,  language_, release_date, genre, url) values (?,?,?,?,?,?,?,?,?)",
+          "INSERT INTO Material ( title, audience, description_of_the_content, publisher,  language_, release_date, genre, url) values (?,?,?,?,?,?,?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setString(1, title);
       stm.setString(2, targetAudience);
       stm.setString(3, description);
-      stm.setString(4, tags);
-      stm.setString(5, publisher);
-      stm.setString(6, language);
-      stm.setDate(7, Date.valueOf(releaseDate));
-      stm.setString(8, genre);
-      stm.setString(9, url);
+      stm.setString(4, publisher);
+      stm.setString(5, language);
+      stm.setDate(6, Date.valueOf(releaseDate));
+      stm.setString(7, genre);
+      stm.setString(8, url);
 
       stm.executeUpdate();
       ResultSet keys = stm.getGeneratedKeys();

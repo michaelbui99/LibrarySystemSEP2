@@ -52,7 +52,7 @@ public class RegisterMaterialController
   {
     if (materialTypeCompo.getItems().equals("book"))
     {
-      //ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook(title.getText(), publisher.getText(), releaseDate.get);
+     // ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook(title.getText(), publisher.getText(), releaseDate.getAccessibleText(), description.getText(), keywords.getText(),);
     }
   }
 

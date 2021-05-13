@@ -23,6 +23,11 @@ public class Book extends ReadingMaterial implements Serializable
     return isbn;
   }
 
+  public int getPlaceId()
+  {
+    return placeId;
+  }
+
   @Override public String getMaterialType()
   {
     return "Book";

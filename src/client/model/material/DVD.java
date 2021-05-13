@@ -1,6 +1,8 @@
 package client.model.material;
 
-public class DVD extends Material
+import java.io.Serializable;
+
+public class DVD extends Material implements Serializable
 {
   private int placeID;
   private String subtitlesLanguage;
