@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.addlibrarian.AddLibrarianController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="58.0" prefWidth="600.0">
+         <children>
+            <Label text="Nye medarbejder">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <VBox layoutY="58.0" prefHeight="418.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <ScrollPane prefHeight="421.0" prefWidth="600.0">
+               <content>
+                  <HBox prefHeight="680.0" prefWidth="600.0">
+                     <children>
+                        <GridPane prefHeight="638.0" prefWidth="607.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="237.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.0" minWidth="10.0" prefWidth="363.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="83.0" minHeight="0.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="270.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="173.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="250.0" minHeight="0.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="299.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="333.0" minHeight="10.0" prefHeight="168.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Indsæt dine oplysninger nedenfor:">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Medarbejdernavn" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                 <children>
+                                    <GridPane prefHeight="126.0" prefWidth="325.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Fornavn:" />
+                                          <Label layoutX="10.0" layoutY="24.0" text="Efternavn:" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="274.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <children>
+                                    <GridPane prefHeight="120.0" prefWidth="319.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="lastName" layoutX="10.0" layoutY="20.0" promptText="Efternavn:" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets right="100.0" />
+                                             </GridPane.margin>
+                                          </TextField>
+                                          <TextField fx:id="firstName" promptText="Fornavn:">
+                                             <GridPane.margin>
+                                                <Insets right="100.0" />
+                                             </GridPane.margin>
+                                          </TextField>
+                                          <Label fx:id="fNameError" text="!" textFill="RED">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="lNameError" layoutX="310.0" layoutY="21.0" text="!" textFill="RED" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                              <Label text="CPR nummer:" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="cprNumber" promptText="CPR:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets right="100.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Label text="Adresse" GridPane.rowIndex="7">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="8">
+                                 <children>
+                                    <GridPane prefHeight="105.0" prefWidth="313.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Vejnavn:" />
+                                          <Label layoutX="10.0" layoutY="18.0" text="By:" GridPane.rowIndex="3" />
+                                          <Label layoutX="10.0" layoutY="18.0" text="Postnummer" GridPane.rowIndex="2" />
+                                          <Label layoutX="10.0" layoutY="18.0" text="Vejnummer" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="495.0" prefHeight="130.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                 <children>
+                                    <GridPane prefHeight="142.0" prefWidth="262.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="streetName" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="148.0" promptText="Vejnavn:">
+                                             <GridPane.margin>
+                                                <Insets right="100.0" />
+                                             </GridPane.margin>
+                                          </TextField>
+                                          <TextField fx:id="city" layoutX="10.0" layoutY="10.0" promptText="By:" GridPane.rowIndex="3">
+                                             <GridPane.margin>
+                                                <Insets right="100.0" />
+                                             </GridPane.margin>
+                                          </TextField>
+                                          <TextField fx:id="zipCode" layoutX="10.0" layoutY="10.0" promptText="Postnummer:" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets right="100.0" />
+                                             </GridPane.margin>
+                                          </TextField>
+                                          <TextField fx:id="streetNumber" layoutX="10.0" layoutY="10.0" promptText="Vejnummer:" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets right="100.0" />
+                                             </GridPane.margin>
+                                          </TextField>
+                                          <Label fx:id="streetNameError" text="!" textFill="RED">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="streetNoError" layoutX="310.0" layoutY="21.0" text="!" textFill="RED" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="zipCodeError" layoutX="310.0" layoutY="60.0" text="!" textFill="RED" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="cityError" layoutX="310.0" layoutY="99.0" text="!" textFill="RED" GridPane.rowIndex="3">
+                                             <GridPane.margin>
+                                                <Insets left="300.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                              <Label text="Telefonnummer:" GridPane.rowIndex="9">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="phoneNumber" promptText="+45: " GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                 <GridPane.margin>
+                                    <Insets right="100.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Label text="Medarbejdernummer:" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="employeeNo" promptText="Medarbejdernummer:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets right="100.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Label layoutX="20.0" layoutY="85.0" text="Adgangskode" GridPane.rowIndex="6">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <PasswordField fx:id="password" promptText="Adgangskode:" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <GridPane.margin>
+                                    <Insets right="100.0" />
+                                 </GridPane.margin>
+                              </PasswordField>
+                              <Label layoutX="20.0" layoutY="360.0" text="email" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="employeeNoError" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="cprError" layoutX="547.0" layoutY="78.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="emailError" layoutX="547.0" layoutY="78.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="passwordError" layoutX="547.0" layoutY="267.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="phoneError" layoutX="547.0" layoutY="78.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                 <GridPane.margin>
+                                    <Insets left="300.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="email" promptText="email:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets right="100.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <HBox layoutY="480.0" prefHeight="58.0" prefWidth="600.0">
+         <children>
+            <GridPane prefHeight="46.0" prefWidth="587.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onButtonCancel" style="-fx-cursor: hand;" text="Annuller">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="signUpButton" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#onButtonSignUp" style="-fx-cursor: hand;" text="Tilmeld" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button layoutX="20.0" layoutY="33.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbag" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
