@@ -42,6 +42,11 @@ public class LoanServerImpl implements LoanServer
     return ModelFactoryServer.getInstance().getLoanModel().getAllLoansByCPR(cpr);
   }
 
+  @Override
+  public void registerReservation(Material material, Borrower borrower) {
+    ModelFactoryServer.getInstance().getLoanModel().registerReservation(material, borrower);
+  }
+
   public void registerClientCallBack(ClientCallback client)
   {
     PropertyChangeListener listener = new PropertyChangeListener()

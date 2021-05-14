@@ -46,7 +46,6 @@ public class ViewHandler extends Application
     Scene scene;
     FXMLLoader loader = new FXMLLoader();
     Parent root = null;
-    root = loader.load();
     switch (id)
     {
       case "AddUser":
@@ -60,6 +59,7 @@ public class ViewHandler extends Application
       case "AddLibrarian":
         loader.setLocation(
             getClass().getResource("addlibrarian/" + id + "View.fxml"));
+        root = loader.load();
         AddLibrarianController addLibrarianController = loader.getController();
         addLibrarianController.init();
         stage.setTitle("AddLibrarian");
@@ -67,6 +67,7 @@ public class ViewHandler extends Application
       case "BorrowReserve":
         loader.setLocation(
             getClass().getResource("borrowreserve/" + id + "View.fxml"));
+        root = loader.load();
         BorrowReserveController borrowReserveController = loader
             .getController();
         borrowReserveController.init();
@@ -75,12 +76,14 @@ public class ViewHandler extends Application
       case "Copies":
         loader
             .setLocation(getClass().getResource("copies/" + id + "View.fxml"));
+        root = loader.load();
         CopiesController copiesController = loader.getController();
         copiesController.init();
         stage.setTitle("Copies");
         break;
       case "Main":
         loader.setLocation(getClass().getResource("main/" + id + "View.fxml"));
+        root = loader.load();
         MainController mainController = loader.getController();
         mainController.init();
         stage.setTitle("Main");
@@ -88,6 +91,7 @@ public class ViewHandler extends Application
       case "MyMaterial":
         loader.setLocation(
             getClass().getResource("mymaterial/" + id + "View.fxml"));
+        root = loader.load();
         MyMaterialController myMaterialController = loader.getController();
         myMaterialController.init();
         stage.setTitle("MyMaterial");
@@ -95,6 +99,7 @@ public class ViewHandler extends Application
       case "RegisterMaterial":
         loader.setLocation(
             getClass().getResource("registermaterial/" + id + "View.fxml"));
+        root = loader.load();
         RegisterMaterialController registerMaterialController = loader
             .getController();
         registerMaterialController.init();
@@ -103,6 +108,7 @@ public class ViewHandler extends Application
       case "Search":
         loader
             .setLocation(getClass().getResource("search/" + id + "View.fxml"));
+        root = loader.load();
         SearchController searchController = loader.getController();
         searchController.init();
         stage.setTitle("Search");
@@ -110,12 +116,14 @@ public class ViewHandler extends Application
       case "StaffLogin":
         loader.setLocation(
             getClass().getResource("stafflogin/" + id + "View.fxml"));
+        root = loader.load();
         StaffLogInController staffLogInController = loader.getController();
         staffLogInController.init();
         stage.setTitle("StaffLogin");
         break;
       case "UserWindow":
         loader.setLocation(getClass().getResource("user/" + id + "View.fxml"));
+        root = loader.load();
         UserController userController = loader.getController();
         userController.init();
         stage.setTitle("User");
@@ -123,6 +131,7 @@ public class ViewHandler extends Application
       case "Administration":
         loader.setLocation(
             getClass().getResource("administration/" + id + "View.fxml"));
+        root = loader.load();
         AdministrationController administrationController = loader
             .getController();
         administrationController.init();
