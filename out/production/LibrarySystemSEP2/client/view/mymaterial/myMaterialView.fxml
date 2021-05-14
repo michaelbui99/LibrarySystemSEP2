@@ -34,10 +34,9 @@
                      <children>
                         <TableView fx:id="loanTableView" prefHeight="336.0" prefWidth="595.0">
                           <columns>
-                            <TableColumn fx:id="materialColumn" prefWidth="193.0" text="Materiale" />
-                            <TableColumn fx:id="typeColumn" prefWidth="161.0" text="Type" />
-                              <TableColumn fx:id="loanDateColumn" prefWidth="108.0" text="Laan Dato" />
-                              <TableColumn fx:id="deadlineColumn" prefWidth="127.0" text="Afleveringsfrist" />
+                            <TableColumn fx:id="materialColumn" prefWidth="240.0" text="Materiale" />
+                              <TableColumn fx:id="loanDateColumn" prefWidth="162.0" text="Laan Dato" />
+                              <TableColumn fx:id="deadlineColumn" prefWidth="184.0" text="Afleveringsfrist" />
                           </columns>
                         </TableView>
                      </children>

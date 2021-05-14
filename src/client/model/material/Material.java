@@ -7,7 +7,7 @@ public abstract class Material implements MaterialInterface, Serializable
   private int materialID, copyNumber;
   private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL;
   private MaterialStatus materialStatus;
-
+  private final static long serialVersionUID = -8460811401673477634L;
   public Material(int materialID, int copyNumber, String title,
                   String publisher, String releaseDate, String description, String keywords,
                   String targetAudience, String language, String imageURL)
@@ -86,5 +86,10 @@ public abstract class Material implements MaterialInterface, Serializable
 
   public String getImageURL() {
     return imageURL;
+  }
+
+  @Override public String toString()
+  {
+    return "Titel: " + title + "\n" + "Type: " + getMaterialType() + "\n" + "Beskrivelse: " + description + "\n" + "Udgivelsesdato: " + releaseDate;
   }
 }
