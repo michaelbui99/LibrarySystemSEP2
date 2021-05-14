@@ -3,7 +3,9 @@ package client.model.user.borrower;
 import client.model.loan.Address;
 import client.model.material.Material;
 
-public class Borrower
+import java.io.Serializable;
+
+public class Borrower implements Serializable
 {
   private String firstName, lastName, cpr, tlfNumber, email, password;
   private Address address;

@@ -45,7 +45,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
 
     try
     {
-      registry = LocateRegistry.getRegistry(1099);
+      registry = LocateRegistry.getRegistry(1090);
       server = (Server) registry.lookup(Constants.RMISERVER);
 //      server.registerClientCallback(this);
     }

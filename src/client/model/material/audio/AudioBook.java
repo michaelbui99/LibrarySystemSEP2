@@ -1,6 +1,8 @@
 package client.model.material.audio;
 
-public class AudioBook extends AudioMaterial
+import java.io.Serializable;
+
+public class AudioBook extends AudioMaterial implements Serializable
 {
   public AudioBook(int materialID, int copyNumber, String title,
       String publisher, String releaseDate, String description, String tags,

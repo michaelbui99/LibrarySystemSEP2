@@ -1,6 +1,8 @@
 package client.model.material.reading;
 
-public class Book extends ReadingMaterial
+import java.io.Serializable;
+
+public class Book extends ReadingMaterial implements Serializable
 {
  private String isbn;
  private int placeId;
@@ -19,6 +21,11 @@ public class Book extends ReadingMaterial
   public String getIsbn()
   {
     return isbn;
+  }
+
+  public int getPlaceId()
+  {
+    return placeId;
   }
 
   @Override public String getMaterialType()

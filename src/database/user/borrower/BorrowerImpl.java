@@ -3,6 +3,7 @@ package database.user.borrower;
 import client.model.loan.Address;
 import client.model.user.borrower.Borrower;
 import database.BaseDAO;
+import database.address.AddressImpl;
 
 import java.sql.*;
 import java.util.concurrent.locks.Lock;
@@ -35,23 +36,54 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          //the table structure needs to change to the values from the query so we can test it
-          "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      stm.setString(1, cpr);
-      stm.setString(2, firstName);
-      stm.setString(3, lastName);
-      stm.setString(6, email);
-      stm.setString(4, tlfNumber);
-      stm.setObject(5, address);
-      stm.setString(7, password);
-      stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
-      keys.next();
-      connection.commit();
-      return new Borrower(cpr, firstName, lastName, email, tlfNumber, address,
-          password);
+      if (AddressImpl.getInstence()
+          .getAddressId(address.getCity(), address.getStreetName(),
+              address.getZipCode(), address.getStreetNr()) == -1)
+      {
+        Address ad = AddressImpl.getInstence()
+            .create(address.getCity(), address.getStreetName(),
+                address.getZipCode(), address.getStreetNr());
+        PreparedStatement stm = connection.prepareStatement(
+            //the table structure needs to change to the values from the query so we can test it
+            "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setString(1, cpr);
+        stm.setString(2, firstName);
+        stm.setString(3, lastName);
+        stm.setString(4, email);
+        stm.setString(5, tlfNumber);
+        stm.setInt(6, ad.getAddressId());
+        stm.setString(7, password);
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        connection.commit();
+        return new Borrower(cpr, firstName, lastName, email, tlfNumber, address,
+            password);
+      }
+      else
+      {
+        int adId = AddressImpl.getInstence()
+            .getAddressId(address.getCity(), address.getStreetName(),
+                address.getZipCode(), address.getStreetNr());
+        PreparedStatement stm = connection.prepareStatement(
+            //the table structure needs to change to the values from the query so we can test it
+            "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setString(1, cpr);
+        stm.setString(2, firstName);
+        stm.setString(3, lastName);
+        stm.setString(4, email);
+        stm.setString(5, tlfNumber);
+        stm.setInt(6, adId);
+        stm.setString(7, password);
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        connection.commit();
+        return new Borrower(cpr, firstName, lastName, email, tlfNumber, address,
+            password);
+      }
     }
   }
 

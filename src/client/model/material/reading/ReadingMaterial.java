@@ -2,7 +2,9 @@ package client.model.material.reading;
 
 import client.model.material.Material;
 
-public abstract class ReadingMaterial extends Material
+import java.io.Serializable;
+
+public abstract class ReadingMaterial extends Material implements Serializable
 {
   private int pageCount;
 
@@ -16,8 +18,6 @@ public abstract class ReadingMaterial extends Material
 
     this.pageCount = pageCount;
   }
-
-
 
   public int getPageCount()
   {

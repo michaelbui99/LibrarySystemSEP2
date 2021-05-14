@@ -15,7 +15,7 @@ public class MyMaterialVM
   private ObservableList<Loan> activeLoans;
   private StringProperty loanIDProperty;
 
-  public MyMaterialVM(LoanModelClient loanModel)
+  public MyMaterialVM()
   {
     //TODO: Find ud af hvordan vi holder styr på hvem der er logget på.
     //TODO: ændre cpr

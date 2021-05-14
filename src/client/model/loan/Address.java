@@ -1,6 +1,8 @@
 package client.model.loan;
 
-public class Address
+import java.io.Serializable;
+
+public class Address implements Serializable
 {
   private String city, streetName;
   private int addressId ,zipCode, streetNr;
@@ -20,5 +22,30 @@ public class Address
     this.streetName = streetName;
     this.zipCode = zipCode;
     this.streetNr = streetNr;
+  }
+
+  public String getCity()
+  {
+    return city;
+  }
+
+  public String getStreetName()
+  {
+    return streetName;
+  }
+
+  public int getAddressId()
+  {
+    return addressId;
+  }
+
+  public int getZipCode()
+  {
+    return zipCode;
+  }
+
+  public int getStreetNr()
+  {
+    return streetNr;
   }
 }

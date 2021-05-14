@@ -71,6 +71,9 @@ class UserModelManagerServerTest
 
   @Test public void userLoginTrue() throws SQLException
   {
+    borrower = new Borrower("111111-1111", "FirstNameTest", "LastNameTest",
+        "test@test.domain", "+4511111111",
+        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest");
     assertTrue(userModelServer.logInBorrower("111111-1111", "PasswordTest"));
   }
 

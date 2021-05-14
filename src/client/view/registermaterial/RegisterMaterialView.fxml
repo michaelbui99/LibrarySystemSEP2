@@ -5,24 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="506.0" prefWidth="603.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.registermaterial.RegisterMaterialController">
+<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.registermaterial.RegisterMaterialController">
    <children>
-      <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: white;">
+      <VBox style="-fx-background-color: white;">
          <children>
-            <Label text="Registrér materiale ">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <ScrollPane layoutY="48.0" prefHeight="407.0" prefWidth="612.0">
-         <content>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="610.0" style="-fx-background-color: white;">
+            <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: white;">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="129.0" prefWidth="609.0">
+                  <Label text="Registrér materiale ">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="626.0" style="-fx-background-color: white;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="610.0" style="-fx-background-color: white;">
                      <children>
-                        <Label text="Materialet findes allerede i systemet!!!" textFill="RED">
+                        <Label fx:id="materianInSystemError" text="Materialet findes allerede i systemet!!!" textFill="RED">
                            <HBox.margin>
                               <Insets left="100.0" />
                            </HBox.margin>
@@ -32,415 +32,184 @@
                         </Label>
                      </children>
                   </HBox>
-                  <TabPane prefHeight="693.0" prefWidth="611.0" style="-fx-background-color: white;">
-                     <tabs>
-                        <Tab text="Bog">
-                           <content>
-                              <HBox prefHeight="530.0" prefWidth="590.0">
+                  <ScrollPane style="-fx-background-color: white;">
+                     <content>
+                        <HBox prefHeight="1397.0" prefWidth="626.0" style="-fx-background-color: white;">
+                           <children>
+                              <GridPane prefHeight="1080.0" prefWidth="618.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="222.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="143.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="104.0" minHeight="0.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="107.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="164.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="164.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="164.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <GridPane prefHeight="425.0" prefWidth="634.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="104.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="104.0" minHeight="0.0" prefHeight="78.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
+                                    <Label layoutX="121.0" layoutY="114.0" text="Titel" GridPane.rowIndex="1" />
+                                    <TextField fx:id="title" layoutX="305.0" layoutY="110.0" promptText="Titel:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="2" />
+                                    <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="3" />
+                                    <TextField fx:id="publisher" layoutX="305.0" layoutY="155.0" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="4" />
+                                    <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" right="50.0" />
+                                       </GridPane.margin>
+                                    </TextArea>
+                                    <TextArea fx:id="keywords" layoutX="305.0" layoutY="230.0" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" top="5.0" />
+                                       </GridPane.margin>
+                                    </TextArea>
+                                    <Label layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="5" />
+                                    <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="6" />
+                                    <ComboBox fx:id="audiance" prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="8" />
+                                    <TextField fx:id="language" layoutX="305.0" layoutY="150.0" promptText="Sprog:" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Label layoutX="121.0" layoutY="90.0" text="ISBN" GridPane.rowIndex="9" />
+                                    <TextField fx:id="isbn" disable="true" layoutX="305.0" layoutY="86.0" promptText="ISBN:" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                       <GridPane.margin>
+                                          <Insets right="200.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <DatePicker fx:id="releaseDate" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label layoutX="144.0" layoutY="293.0" text="Sidetal" GridPane.rowIndex="7" />
+                                    <TextField fx:id="numberOfPages" layoutX="302.0" layoutY="77.0" promptText="Sidetal:" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <GridPane.margin>
+                                          <Insets right="200.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <ComboBox fx:id="materialTypeCompo" prefWidth="150.0" promptText="Typen" style="-fx-background-color: white;" GridPane.columnIndex="1" />
+                                    <Label layoutX="153.0" layoutY="127.0" text="Vælg typen" />
+                                    <Label layoutX="152.0" layoutY="697.0" text="Licens nummer" GridPane.rowIndex="10" />
+                                    <TextField fx:id="licensNumber" disable="true" layoutX="319.0" layoutY="693.0" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                       <GridPane.margin>
+                                          <Insets right="200.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Label text="Forfatter" GridPane.rowIndex="11" />
+                                    <TextField fx:id="author" disable="true" layoutX="319.0" layoutY="693.0" promptText="Forfatter:" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Label text="Placere" GridPane.rowIndex="12" />
+                                    <HBox prefHeight="145.0" prefWidth="311.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
                                        <children>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Titel" />
-                                          <TextField fx:id="bookTitle" layoutX="305.0" layoutY="110.0" promptText="Titel:" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="1" />
-                                          <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="2" />
-                                          <TextField fx:id="bookPublisher" layoutX="305.0" layoutY="155.0" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="3" />
-                                          <TextArea fx:id="bookDescription" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets bottom="5.0" right="50.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <TextArea fx:id="keywords" layoutX="305.0" layoutY="230.0" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" top="5.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <Label fx:id="bookKeywords" layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="4" />
-                                          <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="6" />
-                                          <ComboBox prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="7" />
-                                          <TextField layoutX="305.0" layoutY="150.0" promptText="Sprog:" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="90.0" text="ISBN" GridPane.rowIndex="8" />
-                                          <TextField layoutX="305.0" layoutY="86.0" promptText="ISBN" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <DatePicker fx:id="releaseDate" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label layoutX="144.0" layoutY="293.0" text="Sidetal" GridPane.rowIndex="5" />
-                                          <TextField layoutX="302.0" layoutY="77.0" promptText="Sidetal:" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
+                                          <GridPane prefHeight="137.0" prefWidth="312.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="116.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="10.0" prefWidth="193.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Hall nummer" />
+                                                <Label layoutX="10.0" layoutY="17.0" text="Genre" GridPane.rowIndex="3" />
+                                                <Label layoutX="10.0" layoutY="17.0" text="Skabernes efternavn" GridPane.rowIndex="2" />
+                                                <Label layoutX="10.0" layoutY="17.0" text="Afdeling" GridPane.rowIndex="1" />
+                                                <TextField fx:id="hallNumber" disable="true" promptText="Hall nummer" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets right="50.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="genre" disable="true" layoutX="107.0" layoutY="13.0" promptText="Genre" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets right="50.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="creatorLastName" disable="true" layoutX="10.0" layoutY="13.0" promptText="Skabernes efternavn" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets right="50.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="department" disable="true" layoutX="10.0" layoutY="13.0" promptText="Afdeling" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets right="50.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                             </children>
+                                          </GridPane>
                                        </children>
-                                    </GridPane>
+                                    </HBox>
+                                    <Label text="Undertekstsprog" GridPane.rowIndex="13" />
+                                    <TextField fx:id="subtitleLanguage" disable="true" promptText="Undertekstsprog" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Label text="Længde" GridPane.rowIndex="14" />
+                                    <TextField fx:id="length" disable="true" promptText="Længde" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" />
+                                       </GridPane.margin>
+                                    </TextField>
                                  </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab text="E-Bog">
-                           <content>
-                              <HBox prefHeight="530.0" prefWidth="590.0">
-                                 <children>
-                                    <GridPane prefHeight="648.0" prefWidth="583.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Titel" />
-                                          <TextField fx:id="ebookTitle" layoutX="305.0" layoutY="110.0" promptText="Titel:" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="1" />
-                                          <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="2" />
-                                          <TextField fx:id="ebookPublisher" layoutX="305.0" layoutY="155.0" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="3" />
-                                          <TextArea fx:id="ebookDescription" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets bottom="5.0" right="50.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <TextArea fx:id="ebookKeywords" layoutX="305.0" layoutY="230.0" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" top="5.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <Label layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="4" />
-                                          <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="6" />
-                                          <ComboBox prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="7" />
-                                          <TextField layoutX="305.0" layoutY="150.0" promptText="Sprog:" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <DatePicker fx:id="releasedDateEbook" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label layoutX="144.0" layoutY="268.0" text="Sidetal" GridPane.rowIndex="5" />
-                                          <TextField layoutX="302.0" layoutY="71.0" promptText="Sidetal:" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="145.0" layoutY="19.0" text="Licens nummer" GridPane.rowIndex="8" />
-                                          <TextField layoutX="302.0" layoutY="225.0" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab text="Lydbog">
-                           <content>
-                              <HBox prefHeight="530.0" prefWidth="590.0">
-                                 <children>
-                                    <GridPane prefHeight="648.0" prefWidth="583.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Titel" />
-                                          <TextField fx:id="audiobookTitle" layoutX="305.0" layoutY="110.0" promptText="Titel:" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="1" />
-                                          <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="2" />
-                                          <TextField fx:id="audiobookPublisher" layoutX="305.0" layoutY="155.0" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="3" />
-                                          <TextArea fx:id="audiobookDescription" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets bottom="5.0" right="50.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <TextArea fx:id="audiobookKeywords" layoutX="305.0" layoutY="230.0" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" top="5.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <Label layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="4" />
-                                          <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="6" />
-                                          <ComboBox prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="7" />
-                                          <TextField layoutX="305.0" layoutY="150.0" promptText="Sprog:" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <DatePicker fx:id="releasedDateAudiobook" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label layoutX="144.0" layoutY="268.0" text="Sidetal" GridPane.rowIndex="5" />
-                                          <TextField layoutX="302.0" layoutY="71.0" promptText="Sidetal:" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="130.0" layoutY="405.0" text="Længde" GridPane.rowIndex="8" />
-                                          <TextField layoutX="302.0" layoutY="70.0" promptText="Længde:" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab text="CD">
-                           <content>
-                              <HBox prefHeight="530.0" prefWidth="590.0">
-                                 <children>
-                                    <GridPane prefHeight="304.0" prefWidth="633.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Titel:" />
-                                          <TextField fx:id="cdTitle" layoutX="305.0" layoutY="110.0" promptText="Title:" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="1" />
-                                          <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="2" />
-                                          <TextField fx:id="cdPublisher" layoutX="305.0" layoutY="155.0" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="3" />
-                                          <TextArea fx:id="cdDescription" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets bottom="5.0" right="50.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <TextArea fx:id="cdKeywords" layoutX="305.0" layoutY="230.0" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" top="5.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <Label layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="4" />
-                                          <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="5" />
-                                          <ComboBox prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="6" />
-                                          <TextField layoutX="305.0" layoutY="150.0" promptText="Sprog:" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="90.0" text="Længde" GridPane.rowIndex="7" />
-                                          <DatePicker fx:id="releasedDateCd" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField promptText="Længde:" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab text="DVD">
-                           <content>
-                              <HBox prefHeight="574.0" prefWidth="583.0">
-                                 <children>
-                                    <GridPane prefHeight="374.0" prefWidth="595.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Titel" />
-                                          <TextField fx:id="dvdTitle" layoutX="305.0" layoutY="110.0" promptText="Titel:" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="1" />
-                                          <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="2" />
-                                          <TextField fx:id="dvdPublisher" layoutX="305.0" layoutY="155.0" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="3" />
-                                          <TextArea fx:id="dvdDescription" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets bottom="5.0" right="50.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <TextArea fx:id="dvdKeywords" layoutX="305.0" layoutY="230.0" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" top="5.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <Label layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="4" />
-                                          <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="5" />
-                                          <ComboBox fx:id="chooseTargetAudience" prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="6" />
-                                          <TextField fx:id="dvdLanguage" layoutX="305.0" layoutY="150.0" promptText="Sprog:" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="121.0" layoutY="90.0" text="Længde" GridPane.rowIndex="7" />
-                                          <DatePicker fx:id="releasedDateDvd" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField promptText="Længde:" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="138.0" layoutY="443.0" text="Undertekstsprog" GridPane.rowIndex="8" />
-                                          <TextField layoutX="302.0" layoutY="24.0" promptText="Undertekstsprog:" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="110.0" layoutY="449.0" text="Skaberen" GridPane.rowIndex="9" />
-                                          <TextField layoutX="302.0" layoutY="351.0" promptText="Skaberen:" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                                             <GridPane.margin>
-                                                <Insets right="50.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <Label layoutX="136.0" layoutY="455.0" text="Type" GridPane.rowIndex="10" />
-                                          <ComboBox layoutX="302.0" layoutY="279.0" prefWidth="150.0" promptText="Type:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                                          <Label layoutX="149.0" layoutY="311.0" text="Licens nummer" GridPane.rowIndex="11" />
-                                          <TextField layoutX="305.0" layoutY="418.0" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                                             <GridPane.margin>
-                                                <Insets right="200.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                     </tabs>
-                  </TabPane>
+                              </GridPane>
+                           </children>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
                </children>
             </VBox>
-         </content>
-      </ScrollPane>
-      <HBox layoutY="455.0" prefHeight="59.0" prefWidth="610.0" style="-fx-background-color: white;">
-         <children>
-            <GridPane prefHeight="103.0" prefWidth="610.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <HBox prefHeight="59.0" prefWidth="610.0" style="-fx-background-color: white;">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onButtonCancel" style="-fx-cursor: hand;" text="Annuller">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirm" style="-fx-cursor: hand;" text="Bekræfte" GridPane.columnIndex="2">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button layoutX="549.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbag" GridPane.columnIndex="1" />
+                  <GridPane prefHeight="103.0" prefWidth="610.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onButtonCancel" style="-fx-cursor: hand;" text="Annuller">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirm" style="-fx-cursor: hand;" text="Bekræfte" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button layoutX="549.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbag" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
                </children>
-            </GridPane>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>

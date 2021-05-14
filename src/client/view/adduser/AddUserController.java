@@ -6,17 +6,24 @@ import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
 public class AddUserController
 {
+  @FXML private Label firstNameError;
+  @FXML private Label lastNameError;
+  @FXML private Label streetNameError;
+  @FXML private Label streetNoError;
+  @FXML private Label cityError;
+  @FXML private Label zipCodeError;
+  @FXML private Label emailError;
+  @FXML private Label passwordError;
+  @FXML private Label cprError;
+  @FXML private Label phoneError;
   @FXML private Button signupButton;
   @FXML private TextField email;
   @FXML private PasswordField password;
@@ -42,14 +49,12 @@ public class AddUserController
   {
     if (email.getText().isEmpty() || !email.getText().contains("@"))
     {
-      email.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      emailError.setVisible(true);
       return true;
     }
     else
     {
-      email.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      emailError.setVisible(false);
       return false;
     }
   }
@@ -58,14 +63,12 @@ public class AddUserController
   {
     if (lastName.getText().isEmpty() || lastName.getText().matches(".*\\d.*"))
     {
-      lastName.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      lastNameError.setVisible(true);
       return true;
     }
     else
     {
-      lastName.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      lastNameError.setVisible(false);
       return false;
     }
   }
@@ -74,14 +77,12 @@ public class AddUserController
   {
     if (firstName.getText().isEmpty() || firstName.getText().matches(".*\\d.*"))
     {
-      firstName.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      firstNameError.setVisible(true);
       return true;
     }
     else
     {
-      firstName.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      firstNameError.setVisible(false);
       return false;
     }
   }
@@ -91,14 +92,12 @@ public class AddUserController
     if ((cprNumber.getText().isEmpty()) || !(cprNumber.getText().contains("-"))
         || (cprNumber.getText().length() != 11))
     {
-      cprNumber.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      cprError.setVisible(true);
       return true;
     }
     else
     {
-      cprNumber.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      cprError.setVisible(false);
       return false;
     }
   }
@@ -108,14 +107,12 @@ public class AddUserController
     if (streetName.getText().isEmpty() || streetName.getText()
         .matches(".*\\d.*"))
     {
-      streetName.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      streetNameError.setVisible(true);
       return true;
     }
     else
     {
-      streetName.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      streetNameError.setVisible(false);
       return false;
     }
   }
@@ -124,14 +121,12 @@ public class AddUserController
   {
     if (city.getText().isEmpty() || city.getText().matches(".*\\d.*"))
     {
-      city.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      cityError.setVisible(true);
       return true;
     }
     else
     {
-      city.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      cityError.setVisible(false);
       return false;
     }
   }
@@ -141,14 +136,12 @@ public class AddUserController
     if (zipCode.getText().isEmpty() || !zipCode.getText().matches(".*\\d.*")
         || (zipCode.getText().length() != 4))
     {
-      zipCode.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      zipCodeError.setVisible(true);
       return true;
     }
     else
     {
-      zipCode.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      zipCodeError.setVisible(false);
       return false;
     }
   }
@@ -158,14 +151,12 @@ public class AddUserController
     if (streetNumber.getText().isEmpty() || !streetNumber.getText()
         .matches(".*\\d.*"))
     {
-      streetNumber.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      streetNoError.setVisible(true);
       return true;
     }
     else
     {
-      streetNumber.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      streetNoError.setVisible(false);
       return false;
     }
   }
@@ -176,14 +167,12 @@ public class AddUserController
         .matches(".*\\d.*")) || !(phoneNumber.getText().contains("+45")) || (
         phoneNumber.getText().length() != 11))
     {
-      phoneNumber.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      phoneError.setVisible(true);
       return true;
     }
     else
     {
-      phoneNumber.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      phoneError.setVisible(false);
       return false;
     }
   }
@@ -192,14 +181,12 @@ public class AddUserController
   {
     if (password.getText().isEmpty())
     {
-      password.setBorder(
-          new Border((BorderStroke) BorderFactory.createLineBorder(Color.red)));
+      passwordError.setVisible(true);
       return true;
     }
     else
     {
-      password.setBorder(new Border(
-          (BorderStroke) BorderFactory.createLineBorder(Color.green)));
+      passwordError.setVisible(false);
       return false;
     }
   }
@@ -207,26 +194,24 @@ public class AddUserController
   @FXML public void onButtonSignup(ActionEvent actionEvent) throws IOException
   {
     int zip_code = Integer.parseInt(zipCode.getText());
-
     int street_no = Integer.parseInt(streetNumber.getText());
+
     if ((onMouseExitCheckEmail()) && (onMouseExitCheckFirstName())
         && (onMouseExitCheckLastName()) && (onMouseExitCheckCPR())
         && (onMouseExitCheckPassword()) && (onMouseExitCheckPhoneNumber())
         && (onMouseExitCheckStreetName()) && (onMouseExitCheckStreetNumber())
         && (onMouseExitCheckZipCode()) && (onMouseExitCheckCity()))
     {
-//      signupButton.setBorder(new Border(
-//          (BorderStroke) BorderFactory.createLineBorder(Color.red)));
       signupButton.setDisable(true);
     }
     else
     {
-      ViewModelFactory.getInstance().getAddUserVM()
+            ViewModelFactory.getInstance().getAddUserVM()
           .addUser(cprNumber.getText(), firstName.getText(), lastName.getText(),
               email.getText(), phoneNumber.getText(),
               new Address(city.getText(), streetName.getText(), zip_code,
                   street_no), password.getText());
-      ViewHandler.getInstance().openView("User");
+      ViewHandler.getInstance().openView("UserWindow");
     }
   }
 

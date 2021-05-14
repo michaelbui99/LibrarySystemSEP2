@@ -1,75 +1,63 @@
 package client.view.registermaterial;
 
 import client.core.ViewModelFactory;
+import client.model.material.Material;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.IOException;
+
 public class RegisterMaterialController
 {
-//
-//  @FXML private TextField bookTitle;
-//  @FXML private TextField bookPublisher;
-//  @FXML private TextArea bookDescription;
-//  @FXML private TextArea keywords;
-//  @FXML private Label bookKeywords;
-//  @FXML private DatePicker releaseDate;
-//  @FXML private TextField ebookTitle;
-//  @FXML private TextField ebookPublisher;
-//  @FXML private TextArea ebookDescription;
-//  @FXML private TextArea ebookKeywords;
-//  @FXML private DatePicker releasedDateEbook;
-//  @FXML private TextField audiobookTitle;
-//  @FXML private TextField audiobookPublisher;
-//  @FXML private TextArea audiobookDescription;
-//  @FXML private TextArea audiobookKeywords;
-//  @FXML private DatePicker releasedDateAudiobook;
-//  @FXML private TextField cdTitle;
-//  @FXML private TextField cdPublisher;
-//  @FXML private TextArea cdDescription;
-//  @FXML private TextArea cdKeywords;
-//  @FXML private DatePicker releasedDateCd;
-//  @FXML private TextField dvdTitle;
-//  @FXML private TextField dvdPublisher;
-//  @FXML private TextArea dvdDescription;
-//  @FXML private TextArea dvdKeywords;
-//  @FXML private ComboBox chooseTargetAudience;
-//  @FXML private TextField dvdLanguage;
-//  @FXML private DatePicker releasedDateDvd;
+  @FXML private ComboBox<String> materialTypeCompo;
+  @FXML private Label  materianInSystemError;
+  @FXML private TextField title;
+  @FXML private TextField publisher;
+  @FXML private TextArea description;
+  @FXML private TextArea keywords;
+  @FXML private ComboBox<String> audiance;
+  @FXML private TextField language;
+  @FXML private TextField isbn;
+  @FXML private DatePicker releaseDate;
+  @FXML private TextField numberOfPages;
+  @FXML private TextField licensNumber;
+  @FXML private TextField author;
+  @FXML private TextField hallNumber;
+  @FXML private TextField genre;
+  @FXML private TextField creatorLastName;
+  @FXML private TextField department;
+  @FXML private TextField subtitleLanguage;
+  @FXML private TextField length;
 
 
-  @FXML private ComboBox materialType;
-  @FXML private TextField materialTitle;
-  @FXML private TextField materialPublisher;
-  @FXML private TextField materialLength;
-  @FXML private TextField materialPageNumber;
-  @FXML private TextArea materialDescription;
-  @FXML private TextArea materialKeywords;
-  @FXML private DatePicker materialReleaseDate;
-  @FXML private ComboBox materialTargetAudience;
-  @FXML private ComboBox materialLanguage;
-
-  RegisterMaterialVM registerMaterialVM;
-  ViewHandler viewHandler;
 
   public void init()
   {
-
+    materialTypeCompo.setItems(ViewModelFactory.getInstance().getRegisterMaterialVM().getMaterialType());
+    if (materialTypeCompo.getItems().equals("book"))
+    {
+      isbn.setDisable(false);
+      author.setDisable(false);
+    }
   }
-
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)
   {
     System.exit(0);
   }
-  @FXML public void onButtonConfirm(ActionEvent actionEvent)
+
+  @FXML public void onButtonConfirm(ActionEvent actionEvent) throws IOException
   {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().registerMaterial();
-  }
-  @FXML public void onButtonBack(ActionEvent actionEvent)
-  {
-    System.exit(0);
+    if (materialTypeCompo.getItems().equals("book"))
+    {
+     // ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook(title.getText(), publisher.getText(), releaseDate.getAccessibleText(), description.getText(), keywords.getText(),);
+    }
   }
 
+  @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
+  {
+    ViewHandler.getInstance().openView("Administation");
+  }
 }
