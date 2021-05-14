@@ -10,54 +10,55 @@ import client.model.user.UserModelClient;
 import client.model.user.UserModelManagerClient;
 import client.network.Client;
 
-public class ModelFactoryClient
-{
-private static ModelFactoryClient modelFactory;
-public static ModelFactoryClient getInstance(){
-  if (modelFactory == null){
+public class ModelFactoryClient {
+    private static ModelFactoryClient modelFactory;
 
-    modelFactory = new ModelFactoryClient();
-  }
-  return modelFactory;
-}
+    public static ModelFactoryClient getInstance() {
+        if (modelFactory == null) {
 
-private ChatModelClient chatModelClient;
-
-private LoanModelClient loanModelClient;
-private MaterialModelClient materialModelClient;
-private UserModelClient userModelClient;
+            modelFactory = new ModelFactoryClient();
+        }
+        return modelFactory;
+    }
 
 
-public ChatModelClient getChatModelClient(){
-  if (chatModelClient == null){
-    chatModelClient = new ChatModelManagerClient((Client)ClientFactory.getInstance()
-        .getClient());
-  }
-  return chatModelClient;
-}
+    private ChatModelClient chatModelClient;
+
+    public ChatModelClient getChatModelClient() {
+        if (chatModelClient == null) {
+            chatModelClient = new ChatModelManagerClient((Client) ClientFactory.getInstance()
+                    .getClient());
+        }
+        return chatModelClient;
+    }
 
 
+    private LoanModelClient loanModelClient;
 
-public LoanModelClient getLoanModelClient(){
-  if (loanModelClient == null){
-    loanModelClient = new LoanModelManagerClient((Client)ClientFactory.getInstance().getClient());
-  }
-  return loanModelClient;
-}
-
-public MaterialModelClient getMaterialModelClient(){
-  if (materialModelClient == null){
-    materialModelClient = (MaterialModelClient) new MaterialModelManagerClient((Client)ClientFactory.getInstance().getClient());
-  }
-  return materialModelClient;
-}
-
-public UserModelClient getUserModelClient(){
-  if (userModelClient==null){
-    userModelClient = new UserModelManagerClient((Client)ClientFactory.getInstance().getClient());
-  }
-  return userModelClient;
-}
+    public LoanModelClient getLoanModelClient() {
+        if (loanModelClient == null) {
+            loanModelClient = new LoanModelManagerClient((Client) ClientFactory.getInstance().getClient());
+        }
+        return loanModelClient;
+    }
 
 
+    private MaterialModelClient materialModelClient;
+
+    public MaterialModelClient getMaterialModelClient() {
+        if (materialModelClient == null) {
+            materialModelClient = (MaterialModelClient) new MaterialModelManagerClient((Client) ClientFactory.getInstance().getClient());
+        }
+        return materialModelClient;
+    }
+
+
+    private UserModelClient userModelClient;
+
+    public UserModelClient getUserModelClient() {
+        if (userModelClient == null) {
+            userModelClient = new UserModelManagerClient((Client) ClientFactory.getInstance().getClient());
+        }
+        return userModelClient;
+    }
 }

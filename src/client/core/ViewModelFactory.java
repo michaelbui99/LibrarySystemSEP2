@@ -10,113 +10,104 @@ import client.view.registermaterial.RegisterMaterialVM;
 import client.view.search.SearchVM;
 import client.view.stafflogin.StaffLogInVM;
 
-public class ViewModelFactory
-{
-  private static ViewModelFactory viewModelFactory;
+public class ViewModelFactory {
+    private static ViewModelFactory viewModelFactory;
 
-  public static ViewModelFactory getInstance()
-  {
-    if (viewModelFactory == null)
-    {
-      viewModelFactory = new ViewModelFactory();
+    public static ViewModelFactory getInstance() {
+        if (viewModelFactory == null) {
+            viewModelFactory = new ViewModelFactory();
+        }
+        return viewModelFactory;
     }
-    return viewModelFactory;
-  }
 
-  private AddUserVM addUserVM;
-  private AddLibrarianVM addLibrarianVM;
-  private BorrowReserveVM borrowReserveVM;
-  private CopiesVM copiesVM;
-  private MainVM mainVM;
-  private MyMaterialVM myMaterialVM;
-  private RegisterMaterialVM registerMaterialVM;
-  private SearchVM searchVM;
-  private StaffLogInVM staffLogInVM;
+    private AddUserVM addUserVM;
 
-  public AddUserVM getAddUserVM()
-  {
-    if (addUserVM == null)
-    {
-      addUserVM = new AddUserVM();
+
+    public AddUserVM getAddUserVM() {
+        if (addUserVM == null) {
+            addUserVM = new AddUserVM();
+        }
+        return addUserVM;
     }
-    return addUserVM;
-  }
 
-  public AddLibrarianVM getAddLibrarianVM()
-  {
-    if (addLibrarianVM == null)
-    {
-      addLibrarianVM = new AddLibrarianVM();
-    }
-    return addLibrarianVM;
-  }
+    private AddLibrarianVM addLibrarianVM;
 
-  public BorrowReserveVM getBorrowReserveVM()
-  {
-    if (borrowReserveVM == null)
-    {
-      borrowReserveVM = new BorrowReserveVM();
+    public AddLibrarianVM getAddLibrarianVM() {
+        if (addLibrarianVM == null) {
+            addLibrarianVM = new AddLibrarianVM();
+        }
+        return addLibrarianVM;
     }
-    return borrowReserveVM;
-  }
 
-  public CopiesVM getCopiesVM()
-  {
-    if (copiesVM == null)
-    {
-      copiesVM = new CopiesVM();
-    }
-    return copiesVM;
-  }
+    private BorrowReserveVM borrowReserveVM;
 
-  public MainVM getMainVM()
-  {
-    if (mainVM == null)
-    {
-      mainVM = new MainVM();
+    public BorrowReserveVM getBorrowReserveVM() {
+        if (borrowReserveVM == null) {
+            borrowReserveVM = new BorrowReserveVM();
+        }
+        return borrowReserveVM;
     }
-    return mainVM;
-  }
 
-  public MyMaterialVM getMyMaterialVM()
-  {
-    if (myMaterialVM == null)
-    {
-      myMaterialVM = new MyMaterialVM(
-          ModelFactoryClient.getInstance().getLoanModelClient());
-    }
-    return myMaterialVM;
-  }
+    private CopiesVM copiesVM;
 
-  public RegisterMaterialVM getRegisterMaterialVM()
-  {
-    if (registerMaterialVM == null)
-    {
-      registerMaterialVM = new RegisterMaterialVM(
-          ModelFactoryClient.getInstance().getMaterialModelClient()
-      );
-    }
-    return registerMaterialVM;
-  }
 
-  public SearchVM getSearchVM()
-  {
-    if (searchVM == null)
-    {
-      searchVM = new SearchVM(
-          ModelFactoryClient.getInstance().getMaterialModelClient()
-      );
+    public CopiesVM getCopiesVM() {
+        if (copiesVM == null) {
+            copiesVM = new CopiesVM();
+        }
+        return copiesVM;
     }
-    return searchVM;
-  }
 
-  public StaffLogInVM getStaffLogInVM()
-  {
-    if (staffLogInVM == null)
-    {
-      staffLogInVM = new StaffLogInVM();
+    private MainVM mainVM;
+
+
+    public MainVM getMainVM() {
+        if (mainVM == null) {
+            mainVM = new MainVM();
+        }
+        return mainVM;
     }
-    return staffLogInVM;
-  }
+
+    private MyMaterialVM myMaterialVM;
+
+    public MyMaterialVM getMyMaterialVM() {
+        if (myMaterialVM == null) {
+            myMaterialVM = new MyMaterialVM(
+                    ModelFactoryClient.getInstance().getLoanModelClient());
+        }
+        return myMaterialVM;
+    }
+
+    private RegisterMaterialVM registerMaterialVM;
+
+
+    public RegisterMaterialVM getRegisterMaterialVM() {
+        if (registerMaterialVM == null) {
+            registerMaterialVM = new RegisterMaterialVM(
+                    ModelFactoryClient.getInstance().getMaterialModelClient()
+            );
+        }
+        return registerMaterialVM;
+    }
+
+    private SearchVM searchVM;
+
+    public SearchVM getSearchVM() {
+        if (searchVM == null) {
+            searchVM = new SearchVM(
+                    ModelFactoryClient.getInstance().getMaterialModelClient()
+            );
+        }
+        return searchVM;
+    }
+
+    private StaffLogInVM staffLogInVM;
+
+    public StaffLogInVM getStaffLogInVM() {
+        if (staffLogInVM == null) {
+            staffLogInVM = new StaffLogInVM();
+        }
+        return staffLogInVM;
+    }
 
 }

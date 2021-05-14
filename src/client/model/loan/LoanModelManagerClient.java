@@ -7,6 +7,7 @@ import client.network.Client;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class LoanModelManagerClient implements LoanModelClient
 {
@@ -26,13 +27,18 @@ public class LoanModelManagerClient implements LoanModelClient
 //    client.registerLoan();
   }
 
+  @Override
+  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException, NoSuchElementException {
+   // client.registerReservation();
+  }
+
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
     //client.getAllLoansByCPR(String cpr)
     return null;
   }
 
-  @Override public void deliverMaterial(int loanID)
+  @Override public void returnMaterial(int loanID)
   {
 
   }

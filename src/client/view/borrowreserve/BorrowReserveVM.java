@@ -7,12 +7,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 
-public class BorrowReserveVM
-{
+public class BorrowReserveVM {
     private StringProperty materialInfoProp;
 
-    public BorrowReserveVM()
-    {
+    public BorrowReserveVM() {
         materialInfoProp = new SimpleStringProperty();
     }
 
@@ -21,31 +19,25 @@ public class BorrowReserveVM
     }
 
 
-    public void loanMaterial()
-    {
+    public void loanMaterial() {
 
         ModelFactoryClient.getInstance().getLoanModelClient().registerLoan(
-            ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
-            ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
+                ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
+                ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
 
     }
 
-    public void reserveMaterial(Material material, Borrower borrower)
-    {
+    public void reserveMaterial() {
 
-       // ModelFactory.getInstance().getLoanModelClient().reserve(material,borrower);
+        ModelFactoryClient.getInstance().getLoanModelClient().registerReservation(
+                ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
+                ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
     }
 
 
-    public String getMaterialImageURL()
-    {
+    public String getMaterialImageURL() {
         return ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial().getImageURL();
     }
-
-
-
-
-
 
 
 }

@@ -68,6 +68,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override
+  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException {
+    try
+    {
+      server.getLoanServer().registerReservation(material, borrower);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
     try

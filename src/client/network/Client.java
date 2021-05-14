@@ -22,6 +22,7 @@ public interface Client
    * @throws NoSuchElementException if the material is not registered in the system.
    */
   public void registerLoan(Material material, Borrower borrower) throws IllegalStateException;
+  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException;
 
   List<Loan> getAllLoansByCPR(String cpr);
   void deliverMaterial(int loanID);

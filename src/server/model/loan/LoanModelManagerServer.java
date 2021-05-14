@@ -29,6 +29,14 @@ public class LoanModelManagerServer implements LoanModelServer
     support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
   }
 
+  @Override
+  public void registerReservation(Material material, Borrower borrower) {
+ /*   //TODO: CHANGE LOAN DAO CREATE METHOD SIGNATURE
+    Regi loan = LoanDAOImpl.getInstance()
+            .create(material, borrower,null, calcDateTime());
+    support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);*/
+  }
+
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
     return LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);

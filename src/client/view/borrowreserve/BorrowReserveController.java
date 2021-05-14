@@ -13,9 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class BorrowReserveController
-{
-    private BorrowReserveVM vm;
+public class BorrowReserveController {
 
     @FXML
     private TextArea materialeInfo;
@@ -30,32 +28,30 @@ public class BorrowReserveController
     ImageView materialImage = new ImageView(imageTest);
 
 
-    public void init()
-    {
+    public void init() throws FileNotFoundException {
         materialeInfo.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialInfoProp());
-
+      //  materialImage.imageProperty().bind(new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL())));
         try {
-            imageTest = new Image(new FileInputStream(vm.getMaterialImageURL()));
+            imageTest = new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
 
-    @FXML void goBack(ActionEvent actionEvent) throws IOException {
+    @FXML
+    void goBack(ActionEvent actionEvent) throws IOException {
         ViewHandler.getInstance().openView("Search");
     }
 
-    @FXML void loanReserve(ActionEvent actionEvent)
-    {
+    @FXML
+    void loanReserve(ActionEvent actionEvent) {
 
-       if (borrowChoice.getSelectionModel().getSelectedItem().equals("Lån")) {
-         //  vm.loanMaterial();
-       }
-       else if (borrowChoice.getSelectionModel().getSelectedItem().equals("Reserve"))
-       {
-          // vm.reserveMaterail;
-       }
+        if (borrowChoice.getSelectionModel().getSelectedItem().equals("Lån")) {
+            ViewModelFactory.getInstance().getBorrowReserveVM().loanMaterial();
+        } else if (borrowChoice.getSelectionModel().getSelectedItem().equals("Reserve")) {
+            ViewModelFactory.getInstance().getBorrowReserveVM().reserveMaterial();
+        }
     }
 
 
