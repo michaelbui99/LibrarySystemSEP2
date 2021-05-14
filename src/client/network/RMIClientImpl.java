@@ -88,8 +88,10 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+//      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
     }
+    return null;
   }
 
   @Override public void deliverMaterial(int loanID)

@@ -18,4 +18,9 @@ class ServerImplTest
   {
     assertDoesNotThrow(()->{server.getUserServer();});
   }
+
+  @Test void getLoanServerTest()
+  {
+    assertDoesNotThrow(() -> {server.getLoanServer();});
+  }
 }

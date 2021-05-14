@@ -22,5 +22,5 @@ public interface LoanServer extends Remote
   public void registerLoan(Material material, Borrower borrower) throws IllegalStateException, RemoteException;
   List<Loan> getAllLoansByCPR(String cpr) throws RemoteException;
 
-    void registerReservation(Material material, Borrower borrower);
+    void registerReservation(Material material, Borrower borrower) throws RemoteException;
 }

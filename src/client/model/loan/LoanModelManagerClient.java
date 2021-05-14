@@ -19,23 +19,24 @@ public class LoanModelManagerClient implements LoanModelClient
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
-//    client.addPropertyChangeListener(EventTypes.LOANREGISTERED, evt -> {support.firePropertyChange(evt)})
+    //    client.addPropertyChangeListener(EventTypes.LOANREGISTERED, evt -> {support.firePropertyChange(evt)})
   }
 
-  @Override public void registerLoan(Material material, Borrower borrower) throws IllegalStateException
+  @Override public void registerLoan(Material material, Borrower borrower)
+      throws IllegalStateException
   {
-//    client.registerLoan();
+        client.registerLoan(material, borrower);
   }
 
-  @Override
-  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException, NoSuchElementException {
-   // client.registerReservation();
+  @Override public void registerReservation(Material material,
+      Borrower borrower) throws IllegalStateException, NoSuchElementException
+  {
+     client.registerReservation(material, borrower);
   }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
-    //client.getAllLoansByCPR(String cpr)
-    return null;
+    return client.getAllLoansByCPR(cpr);
   }
 
   @Override public void returnMaterial(int loanID)
@@ -63,7 +64,7 @@ public class LoanModelManagerClient implements LoanModelClient
   @Override public void removePropertyChangeListener(String name,
       PropertyChangeListener listener)
   {
-  support.removePropertyChangeListener(name, listener);
+    support.removePropertyChangeListener(name, listener);
   }
 
   @Override public void removePropertyChangeListener(

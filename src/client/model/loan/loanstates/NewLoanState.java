@@ -2,7 +2,9 @@ package client.model.loan.loanstates;
 
 import client.model.loan.Loan;
 
-public class NewLoanState implements LoanState
+import java.io.Serializable;
+
+public class NewLoanState implements LoanState, Serializable
 {
 
 
