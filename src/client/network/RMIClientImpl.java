@@ -139,7 +139,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      int playDuration, int placeID, String genre, String url)
+      int playDuration, Place placeID, String genre, String url)
   {
     try
     {
@@ -167,12 +167,13 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, int playDuration, int placeID,
+      String targetAudience, String language, int playDuration, Place place,
       String genre, String url)
   {
     try
     {
-      server.getMaterialServer().registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
+      server.getMaterialServer().registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration,
+          place, genre, url);
     }
     catch (RemoteException e)
     {
@@ -195,11 +196,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, int authorId, String genre, String url)
+      String licenseNr, MaterialCreator author, String genre, String url)
   {
     try
     {
-      server.getMaterialServer().registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, authorId, genre, url);
+      server.getMaterialServer().registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr,
+          author, genre, url);
     }
     catch (RemoteException e)
     {
@@ -223,11 +225,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String genre,
-      int authorId, String url)
+      MaterialCreator author, String url)
   {
     try
     {
-      server.getMaterialServer().registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId,url );
+      server.getMaterialServer().registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre,
+          author,url );
     }
     catch (RemoteException e)
     {

@@ -1,17 +1,20 @@
 package client.model.material.reading;
 
+import client.model.material.strategy.MaterialCreator;
+
 import java.io.Serializable;
 
 public class EBook extends ReadingMaterial implements Serializable
 {
   private String licenseNr;
-  private String genre, author;
+  private String genre;
+  private MaterialCreator author;
 
 
 
   public EBook(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language,  int pageCount, String licenseNr, String genre, String author)
+      String targetAudience, String language,  int pageCount, String licenseNr, String genre, MaterialCreator author)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language, pageCount);
@@ -27,7 +30,7 @@ public class EBook extends ReadingMaterial implements Serializable
     return licenseNr;
   }
 
-  public String getAuthor()
+  public MaterialCreator getAuthor()
   {
     return author;
   }

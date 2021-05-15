@@ -1,16 +1,26 @@
 package client.model.material.audio;
 
+import client.model.material.strategy.MaterialCreator;
+
 import java.io.Serializable;
 
 public class AudioBook extends AudioMaterial implements Serializable
 {
+  private MaterialCreator author;
+
   public AudioBook(int materialID, int copyNumber, String title,
       String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, int playDuration, String author,
+      String targetAudience, String language, int playDuration, MaterialCreator author,
       String url)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language, playDuration, url);
+    this.author = author;
+  }
+
+  public MaterialCreator getAuthor()
+  {
+    return author;
   }
 
   @Override public String getMaterialType()

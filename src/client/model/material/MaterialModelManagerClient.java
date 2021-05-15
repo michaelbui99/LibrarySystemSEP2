@@ -41,8 +41,7 @@ public class MaterialModelManagerClient implements MaterialModelClient
       Place place, MaterialCreator author, String genre, String url)
   {
     client.registerBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, isbn, pageCount, place, author, genre,
-        url);
+        targetAudience, language, isbn, pageCount, place, author, genre, url);
   }
 
   @Override public void createBookCopy(int materialID)
@@ -53,10 +52,10 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      int playDuration, int placeID, String genre, String url)
+      int playDuration, Place place, String genre, String url)
   {
     client.registerDVD(title, publisher, releaseDate, description, tags,
-        targetAudience, language, subtitlesLanguage, playDuration, placeID,
+        targetAudience, language, subtitlesLanguage, playDuration, place,
         genre, url);
   }
 
@@ -67,11 +66,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, int playDuration, int placeID,
+      String targetAudience, String language, int playDuration, Place place,
       String genre, String url)
   {
     client.registerCD(title, publisher, releaseDate, description, tags,
-        targetAudience, language, playDuration, placeID, genre, url);
+        targetAudience, language, playDuration, place, genre, url);
   }
 
   @Override public void createCDCopy(int materialID)
@@ -82,10 +81,10 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, int authorId, String genre, String url)
+      String licenseNr, MaterialCreator author, String genre, String url)
   {
     client.registerEBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, isbn, pageCount, licenseNr, authorId, genre,
+        targetAudience, language, isbn, pageCount, licenseNr, author, genre,
         url);
   }
 
@@ -97,10 +96,10 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String genre,
-      int authorId, String url)
+      MaterialCreator author, String url)
   {
     client.registerAudioBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, playDuration, genre, authorId, url);
+        targetAudience, language, playDuration, genre, author, url);
   }
 
   @Override public void createAudioBookCopy(int materialID)

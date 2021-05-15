@@ -29,7 +29,7 @@ public class MaterialServerImpl implements MaterialServer
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      double playDuration, int placeID, String genre, String url)
+      int playDuration, Place placeID, String genre, String url)
       throws RemoteException
   {
 
@@ -42,7 +42,7 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID,
+      String targetAudience, String language, double playDuration, Place place,
       String genre, String url) throws RemoteException
   {
 
@@ -56,7 +56,7 @@ public class MaterialServerImpl implements MaterialServer
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, int authorId, String genre, String url)
+      String licenseNr, MaterialCreator author, String genre, String url)
       throws RemoteException
   {
 
@@ -70,7 +70,7 @@ public class MaterialServerImpl implements MaterialServer
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, double playDuration, String genre,
-      int authorId, String url) throws RemoteException
+      MaterialCreator author, String url) throws RemoteException
   {
 
   }

@@ -2,10 +2,12 @@ package database.material;
 
 import client.model.material.DVD;
 import client.model.material.Material;
+import client.model.material.Place;
 import client.model.material.audio.AudioBook;
 import client.model.material.audio.CD;
 import client.model.material.reading.Book;
 import client.model.material.reading.EBook;
+import client.model.material.strategy.MaterialCreator;
 import database.BaseDAO;
 
 import java.sql.*;
@@ -204,8 +206,13 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                 resultSet.getString("description_of_the_content"),
                 resultSet.getString("keywords"),
                 resultSet.getString("audience"),
-                resultSet.getString("language_"), resultSet.getInt("length_"),
-                resultSet.getString("author"), resultSet.getString("url"));
+                resultSet.getString("language_"),
+                resultSet.getInt("length_"),
+                new MaterialCreator(resultSet.getString("f_name"),
+                                    resultSet.getString("l_name"),
+                                    String.valueOf(resultSet.getDate("dob")),
+                                    resultSet.getString("country")),
+                resultSet.getString("url"));
             ml.add(mat);
             break;
 
@@ -224,8 +231,14 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                 resultSet.getString("language_"),
                 resultSet.getString("isbn"),
                 resultSet.getInt("page_no"),
-                resultSet.getInt("place_id"),
-                resultSet.getString("author")));
+                new Place(resultSet.getInt("hall_no"),
+                          resultSet.getString("department"),
+                          resultSet.getString("creator_l_name"),
+                          resultSet.getString("genre")),
+                new MaterialCreator(resultSet.getString("f_name"),
+                                    resultSet.getString("l_name"),
+                                    String.valueOf(resultSet.getDate("dob")),
+                                    resultSet.getString("country"))));
             break;
 
           case "cd":
@@ -237,8 +250,13 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                 resultSet.getString("description_of_the_content"),
                 resultSet.getString("keywords"),
                 resultSet.getString("audience"),
-                resultSet.getString("language_"), resultSet.getInt("length_"),
-                resultSet.getInt("place_id"), resultSet.getString("url")));
+                resultSet.getString("language_"),
+                resultSet.getInt("length_"),
+                new Place(resultSet.getInt("hall_no"),
+                          resultSet.getString("department"),
+                          resultSet.getString("creator_l_name"),
+                          resultSet.getString("genre")),
+                resultSet.getString("url")));
             break;
 
           case "dvd":
@@ -252,7 +270,11 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                 resultSet.getString("audience"),
                 resultSet.getString("language_"),
                 resultSet.getString("subtitle_lang"),
-                resultSet.getString("length_"), resultSet.getInt("place_id"),
+                resultSet.getString("length_"),
+                new Place(resultSet.getInt("hall_no"),
+                          resultSet.getString("department"),
+                          resultSet.getString("creator_l_name"),
+                          resultSet.getString("genre")),
                 resultSet.getString("url")));
             break;
 
@@ -267,7 +289,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                 resultSet.getString("audience"),
                 resultSet.getString("language_"), resultSet.getInt("page_no"),
                 resultSet.getString("license_no"), resultSet.getString("genre"),
-                resultSet.getString("author")));
+                new MaterialCreator(resultSet.getString("f_name"),
+                                    resultSet.getString("l_name"),
+                                    String.valueOf(resultSet.getDate("dob")),
+                                    resultSet.getString("country"))));
             break;
         }
       }

@@ -4,6 +4,8 @@ import client.model.material.Place;
 import client.model.material.reading.Book;
 import client.model.material.strategy.MaterialCreator;
 import database.BaseDAO;
+import database.materialcreator.MaterialCreatorImpl;
+import database.place.PlaceImpl;
 
 import java.sql.*;
 import java.util.NoSuchElementException;
@@ -33,22 +35,57 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
   }
 
   @Override public void create(int materialID, String isbn, int pageCount,
-      int authorId, int placeID) throws SQLException
+      MaterialCreator author, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      stm.setInt(1, materialID);
-      stm.setInt(2, pageCount);
-      stm.setInt(3, authorId);
-      stm.setString(4, isbn);
-      stm.setInt(5, placeID);
-      stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
-      keys.next();
-      connection.commit();
+      if ((MaterialCreatorImpl.getInstance()
+          .getCreatorId(author.getfName(), author.getlName(), author.getDob(),
+              author.getCountry()) == -1) || (PlaceImpl.getInstance()
+          .getPlaceID(place.getHallNo(), place.getDepartment(),
+              place.getCreatorLName(), place.getGenre())) == -1)
+      {
+        MaterialCreator mc = MaterialCreatorImpl.getInstance()
+            .create(author.getfName(), author.getlName(), author.getDob(),
+                author.getCountry());
+        Place p = PlaceImpl.getInstance()
+            .create(place.getHallNo(), place.getDepartment(),
+                place.getCreatorLName(), place.getGenre());
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setInt(1, materialID);
+        stm.setInt(2, pageCount);
+        stm.setInt(3, mc.getPersonId());
+        stm.setString(4, isbn);
+        stm.setInt(5, p.getPlaceId());
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        connection.commit();
+      }
+      else
+      {
+        int mcId = MaterialCreatorImpl.getInstance()
+            .getCreatorId(author.getfName(), author.getlName(), author.getDob(),
+                author.getCountry());
+        int pId = PlaceImpl.getInstance()
+            .getPlaceID(place.getHallNo(), place.getDepartment(),
+                place.getCreatorLName(), place.getGenre());
+
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setInt(1, materialID);
+        stm.setInt(2, pageCount);
+        stm.setInt(3, mcId);
+        stm.setString(4, isbn);
+        stm.setInt(5, pId);
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        connection.commit();
+      }
     }
   }
 
@@ -71,15 +108,13 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
       {
         //Creates and returns a Book object if a book with given materialID exists.
         return new Book(bookDetails.getInt("material_id"),
-            bookDetails.getInt("copy_no"),
-            bookDetails.getString("title"),
+            bookDetails.getInt("copy_no"), bookDetails.getString("title"),
             bookDetails.getString("publisher"),
             String.valueOf(bookDetails.getDate("release_date")),
             bookDetails.getString("description_of_the_content"),
             bookDetails.getString("keywords"),
             bookDetails.getString("audience"),
-            bookDetails.getString("language_"),
-            bookDetails.getString("isbn"),
+            bookDetails.getString("language_"), bookDetails.getString("isbn"),
             bookDetails.getInt("page_no"),
             new Place(bookDetails.getInt("hall_no"),
                 bookDetails.getString("department"),

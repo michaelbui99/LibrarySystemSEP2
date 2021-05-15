@@ -1,22 +1,35 @@
 package server.model.material;
 
 import client.model.material.Material;
+import client.model.material.MaterialList;
 import client.model.material.Place;
+import client.model.material.reading.Book;
 import client.model.material.strategy.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
+import database.material.BookDAOImpl;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.List;
 
 public class MaterialModelManagerServer implements MaterialModelServer
 {
+  private PropertyChangeSupport support;
+  private MaterialList materialList;
+
+  public MaterialModelManagerServer()
+  {
+    support = new PropertyChangeSupport(this);
+    materialList = new MaterialList();
+  }
+
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
       Place place, MaterialCreator author, String genre, String url)
   {
-
-  }
+    }
 
   @Override public void createBookCopy(int materialID)
   {
@@ -26,7 +39,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      String playDuration, int placeID, String genre, String url)
+      int playDuration, Place place, String genre, String url)
   {
 
   }
@@ -38,7 +51,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, int placeID,
+      String targetAudience, String language, double playDuration, Place place,
       String genre, String url)
   {
 
@@ -52,7 +65,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, int authorId, String genre, String url)
+      String licenseNr, MaterialCreator author, String genre, String url)
   {
 
   }
@@ -65,7 +78,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, double playDuration, String genre,
-      int authorId, String url)
+      MaterialCreator author, String url)
   {
 
   }
@@ -106,5 +119,29 @@ public class MaterialModelManagerServer implements MaterialModelServer
       throws SQLException
   {
     return null;
+  }
+
+  @Override public void addPropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(name, listener);
+  }
+
+  @Override public void addPropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(listener);
+  }
+
+  @Override public void removePropertyChangeListener(String name,
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(name, listener);
+  }
+
+  @Override public void removePropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(listener);
   }
 }

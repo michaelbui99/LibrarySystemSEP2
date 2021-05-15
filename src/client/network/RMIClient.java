@@ -40,28 +40,28 @@ public interface RMIClient extends Remote
 
   void registerDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String subtitlesLanguage, int playDuration, int placeID, String genre,
+      String subtitlesLanguage, int playDuration, Place place, String genre,
       String url) throws RemoteException;
 
   void createDVDCopy(int materialID) throws RemoteException;
 
   void registerCD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, int placeID, String genre, String url)
+      int playDuration, Place place, String genre, String url)
       throws RemoteException;
 
   void createCDCopy(int materialID) throws RemoteException;
 
   void registerEBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, String licenseNr, int authorId, String genre,
+      String isbn, int pageCount, String licenseNr, MaterialCreator author, String genre,
       String url) throws RemoteException;
 
   void createEBookCopy(int materialID) throws RemoteException;
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, String genre, int authorId, String url) throws RemoteException;
+      int playDuration, String genre, MaterialCreator author, String url) throws RemoteException;
 
   void createAudioBookCopy(int materialID) throws RemoteException;
 

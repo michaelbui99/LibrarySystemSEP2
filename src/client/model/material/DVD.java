@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class DVD extends Material implements Serializable
 {
-  private int placeID;
+  private Place place;
   private String subtitlesLanguage;
   private String playDuration;
 
@@ -12,13 +12,13 @@ public class DVD extends Material implements Serializable
 
   public DVD(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID, String imageURL)
+      String targetAudience, String language, String subtitlesLanguage, String playDuration, Place place, String imageURL)
   {
     super(materialID, title, publisher, releaseDate, description, targetAudience, language, imageURL );
     this.subtitlesLanguage = subtitlesLanguage;
     this.playDuration = playDuration;
 
-    this.placeID = placeID;
+    this.place = place;
   }
 
   public String getSubtitlesLanguage()

@@ -1,12 +1,10 @@
 package client.view.registermaterial;
 
 import client.core.ModelFactoryClient;
-import client.core.ViewModelFactory;
-import client.model.material.MaterialModelClient;
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
 
 public class RegisterMaterialVM
 {
@@ -28,38 +26,38 @@ public class RegisterMaterialVM
 
   public void addBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, int placeID, int authorId, String genre,
+      String isbn, int pageCount, Place place, MaterialCreator author, String genre,
       String url)
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerBook(title, publisher, releaseDate, description, tags,
-            targetAudience, language, isbn, pageCount, placeID, authorId, genre,
+            targetAudience, language, isbn, pageCount, place, author, genre,
             url);
   }
 
   public void addEBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, String licenseNr, int authorId, String genre,
+      String isbn, int pageCount, String licenseNr, MaterialCreator author, String genre,
       String url)
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerEBook(title, publisher, releaseDate, description, tags,
-            targetAudience, language, isbn, pageCount, licenseNr, authorId,
+            targetAudience, language, isbn, pageCount, licenseNr, author,
             genre, url);
   }
 
   public void addAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, String genre, int authorId, String url)
+      int playDuration, String genre, MaterialCreator author, String url)
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerAudioBook(title, publisher, releaseDate, description, tags,
-            targetAudience, language, playDuration, genre, authorId, url);
+            targetAudience, language, playDuration, genre, author, url);
   }
 
   public void addDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String subtitlesLanguage, int playDuration, int placeID, String genre,
+      String subtitlesLanguage, int playDuration, Place placeID, String genre,
       String url)
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
@@ -70,10 +68,10 @@ public class RegisterMaterialVM
 
   public void addCD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, int placeID, String genre, String url)
+      int playDuration, Place place, String genre, String url)
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerCD(title, publisher, releaseDate, description, tags,
-            targetAudience, language, playDuration, placeID, genre, url);
+            targetAudience, language, playDuration, place, genre, url);
   }
 }
