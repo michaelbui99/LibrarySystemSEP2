@@ -1,19 +1,26 @@
 package client.model.material.reading;
 
-public class Book extends ReadingMaterial
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
+
+import java.io.Serializable;
+
+public class Book extends ReadingMaterial implements Serializable
 {
  private String isbn;
- private int placeId;
+ private Place place;
+ private MaterialCreator author;
 
   public Book(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeId, String author)
+      Place placeId, MaterialCreator author)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language, pageCount);
     this.isbn = isbn;
-    this.placeId = placeId;
+    this.place = placeId;
+    this.author = author;
   }
 
   public String getIsbn()
@@ -21,10 +28,13 @@ public class Book extends ReadingMaterial
     return isbn;
   }
 
+  public Place getPlace()
+  {
+    return place;
+  }
+
   @Override public String getMaterialType()
   {
     return "Book";
   }
-
-
 }

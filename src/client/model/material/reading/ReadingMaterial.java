@@ -2,7 +2,9 @@ package client.model.material.reading;
 
 import client.model.material.Material;
 
-public abstract class ReadingMaterial extends Material
+import java.io.Serializable;
+
+public abstract class ReadingMaterial extends Material implements Serializable
 {
   private int pageCount;
 
@@ -11,13 +13,10 @@ public abstract class ReadingMaterial extends Material
       String targetAudience, String language, int pageCount)
   {
     //TODO: INSERT URL IN CONSTRUCTOR
-    super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language, null);
+    super(materialID, title, publisher, releaseDate, description, targetAudience, language, null);
 
     this.pageCount = pageCount;
   }
-
-
 
   public int getPageCount()
   {

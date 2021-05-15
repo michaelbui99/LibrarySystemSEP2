@@ -5,7 +5,9 @@ import client.model.loan.loanstates.NewLoanState;
 import client.model.material.Material;
 import client.model.user.borrower.Borrower;
 
-public class Loan
+import java.io.Serializable;
+
+public class Loan implements Serializable
 {
 
 //  private int loanID, materialID, copyNumber, numberOfExtensions;
@@ -15,6 +17,7 @@ public class Loan
   private String deadline, loanDate, returnDate;
   private int loanID;
   private String materialType;
+  private static final long serialVersionUID = -1663825955959143816L;
 //  public Loan(int loanID, int materialID, int copyNumber, String cpr, String loanDate, String deadline, String title, int numberOfExtensions)
 //  {
 //    this.loanID = loanID;
@@ -63,6 +66,21 @@ public class Loan
   public int getLoanID()
   {
     return loanID;
+  }
+
+  public String getDeadline()
+  {
+    return deadline;
+  }
+
+  public String getLoanDate()
+  {
+    return loanDate;
+  }
+
+  public String getReturnDate()
+  {
+    return returnDate;
   }
   //
 //  public void setReturnDate(String returnDate)

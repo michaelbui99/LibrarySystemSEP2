@@ -11,6 +11,6 @@ public interface LoanDAO
   Loan create(Material material, Borrower borrower, String deadline,
       String loanDate);
   List<Loan> getAllLoansByCPR(String cpr);
-  void endLoan(int loanID);
+  void endLoan(Loan loan);
 
 }

@@ -1,14 +1,15 @@
 package client.model.material;
 
-public abstract class Material implements MaterialInterface
+import java.io.Serializable;
+
+public abstract class Material implements MaterialInterface, Serializable
 {
   private int materialID, copyNumber;
   private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL;
   private MaterialStatus materialStatus;
-
-  public Material(int materialID, int copyNumber, String title,
-                  String publisher, String releaseDate, String description, String keywords,
-                  String targetAudience, String language, String imageURL)
+  private final static long serialVersionUID = -8460811401673477634L;
+  public Material(int materialID, String title, String publisher, String releaseDate, String description,
+      String targetAudience, String language, String imageURL)
   {
     this.materialID = materialID;
     this.copyNumber = copyNumber;
@@ -84,5 +85,10 @@ public abstract class Material implements MaterialInterface
 
   public String getImageURL() {
     return imageURL;
+  }
+
+  @Override public String toString()
+  {
+    return "Titel: " + title + "\n" + "Type: " + getMaterialType() + "\n" + "Beskrivelse: " + description + "\n" + "Udgivelsesdato: " + releaseDate;
   }
 }

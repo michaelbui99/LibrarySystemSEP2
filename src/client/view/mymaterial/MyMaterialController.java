@@ -11,6 +11,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
+
 public class MyMaterialController
 {
 
@@ -30,21 +32,36 @@ public class MyMaterialController
   public void init()
   {
     //TODO: implement toString for Material such that material can be displayed correctly in tableview.
-
-    selectedLoanLabel.textProperty()
-        .bindBidirectional(ViewModelFactory.getInstance().getMyMaterialVM().loanIDProperty());
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
     loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
     deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-    loanTableView.setItems(ViewModelFactory.getInstance().getMyMaterialVM().getLoanList());
+    loanTableView.setItems(
+        ViewModelFactory.getInstance().getMyMaterialVM().getLoanList());
   }
 
   @FXML void onReturnButton(ActionEvent event)
   {
     //TODO: implement this
     //Sets the binded textproperty to the loanId of the selected loan.
-    selectedLoanLabel.textProperty().setValue(String.valueOf(
-        loanTableView.getSelectionModel().getSelectedItem().getLoanID()));
-
+    //    selectedLoanLabel.textProperty().setValue(String.valueOf(
+    //        loanTableView.getSelectionModel().getSelectedItem().getLoanID()));
+    ViewModelFactory.getInstance().getMyMaterialVM().loanProperty()
+        .set(loanTableView.getSelectionModel().getSelectedItem());
+    ViewModelFactory.getInstance().getMyMaterialVM().endLoan();
+    loanTableView.refresh();
   }
+
+
+  @FXML
+  void onBackButton(ActionEvent event) {
+    try
+    {
+      ViewHandler.getInstance().openView("UserWindow");
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
 }

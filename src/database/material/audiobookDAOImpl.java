@@ -1,6 +1,7 @@
 package database.material;
 
 import client.model.material.audio.AudioBook;
+import client.model.material.strategy.MaterialCreator;
 import database.BaseDAO;
 
 import java.sql.*;
@@ -60,21 +61,25 @@ public class audiobookDAOImpl extends BaseDAO implements audiobookDAO
             connection.commit();
 
             //Finds the necessary details to create the AudioBook object from DB.
-            ResultSet AudioBookDetails = getAudioBookDetailsByID(materialID);
-            if (AudioBookDetails.next())
+            ResultSet audioBookDetails = getAudioBookDetailsByID(materialID);
+            if (audioBookDetails.next())
             {
                 //Creates and returns a AudioBook object if a AudioBook with given materialID exists.
-                return new AudioBook(AudioBookDetails.getInt("material_id"),
-                    AudioBookDetails.getInt("copy_no"),
-                AudioBookDetails.getString("title"),
-                    AudioBookDetails.getString("publisher"),
-                    String.valueOf(AudioBookDetails.getDate("release_date")),
-                    AudioBookDetails.getString("description_of_the_content"),
-                    AudioBookDetails.getString("keywords"),
-                    AudioBookDetails.getString("audience"),
-                    AudioBookDetails.getString("language_"),
-                    AudioBookDetails.getInt("length_"),
-                    AudioBookDetails.getString("author"), AudioBookDetails.getString("url"));
+                return new AudioBook(audioBookDetails.getInt("material_id"),
+                    audioBookDetails.getInt("copy_no"),
+                audioBookDetails.getString("title"),
+                    audioBookDetails.getString("publisher"),
+                    String.valueOf(audioBookDetails.getDate("release_date")),
+                    audioBookDetails.getString("description_of_the_content"),
+                    audioBookDetails.getString("keywords"),
+                    audioBookDetails.getString("audience"),
+                    audioBookDetails.getString("language_"),
+                    audioBookDetails.getInt("length_"),
+                    new MaterialCreator(audioBookDetails.getString("f_name"),
+                                        audioBookDetails.getString("l_name"),
+                                        String.valueOf(audioBookDetails.getDate("dob")),
+                                        audioBookDetails.getString("country")),
+                    audioBookDetails.getString("url"));
             }
             return null;
         }
@@ -101,7 +106,7 @@ public class audiobookDAOImpl extends BaseDAO implements audiobookDAO
     public ResultSet getAudioBookDetailsByID(int materialID) throws SQLException, NoSuchElementException {
         try (Connection connection = getConnection()) {
             PreparedStatement stm = connection.prepareStatement(
-                    "SELECT * FROM material join material_copy USING (material_id) JOIN AudioBook using (material_id) where material_id = ?");
+                    "SELECT * FROM material join material_copy USING (material_id) JOIN AudioBook using (material_id) JOIN material_creator mc on audiobook.author = mc.person_id WHERE material_id = ?");
             stm.setInt(1, materialID);
             ResultSet result = stm.executeQuery();
             if (result.next()) {

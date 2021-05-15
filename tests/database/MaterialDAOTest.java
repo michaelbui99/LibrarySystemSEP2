@@ -1,7 +1,6 @@
 package database;
 
 import database.material.BookDAO;
-import database.material.BookDAOImpl;
 import database.material.MaterialDAO;
 import database.material.MaterialDAOImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ class MaterialDAOTest
   @Test
   void testCreate() throws SQLException
   {
-    materialDAO.create("Hello", "Test", "2020-09-14", "TEST DESC", "Hello", "Voksen", "Dansk", "sdsd", null);
+    materialDAO.create("Hello", "Test", "2020-09-14", "TEST DESC", "Voksen", "Dansk", "sdsd", null);
   }
 
   @Test

@@ -12,4 +12,5 @@ public interface ClientCallback extends Remote
   * @param loan the created Loan object. To be used when displaying Loan details in the GUI layer.
   * */
   void loanRegistered(Loan loan) throws RemoteException;
+  void loanEnded(Loan loan) throws RemoteException;
 }

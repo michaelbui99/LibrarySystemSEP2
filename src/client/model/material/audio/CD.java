@@ -1,16 +1,20 @@
 package client.model.material.audio;
 
-public class CD extends AudioMaterial
+import client.model.material.Place;
+
+import java.io.Serializable;
+
+public class CD extends AudioMaterial implements Serializable
 {
-  private int placeID;
+  private Place place;
   public CD(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, int playDuration, int placeID,
+      String targetAudience, String language, int playDuration, Place placeID,
       String url)
   {
     super(materialID, copyNumber, title, publisher, releaseDate, description,
         tags, targetAudience, language, playDuration, url);
-    this.placeID = placeID;
+    this.place = placeID;
   }
 
   @Override public String getMaterialType()

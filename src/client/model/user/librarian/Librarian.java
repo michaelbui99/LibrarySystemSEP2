@@ -2,7 +2,9 @@ package client.model.user.librarian;
 
 import client.model.loan.Address;
 
-public class Librarian
+import java.io.Serializable;
+
+public class Librarian implements Serializable
 {
 
   private String firstName, lastName, cpr, tlfNumber, email, password;

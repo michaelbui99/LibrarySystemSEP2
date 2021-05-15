@@ -3,10 +3,11 @@ package client.network;
 import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import client.model.user.borrower.Borrower;
 import client.model.user.librarian.Librarian;
 
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -22,6 +23,7 @@ public interface Client
    * @throws NoSuchElementException if the material is not registered in the system.
    */
   public void registerLoan(Material material, Borrower borrower) throws IllegalStateException;
+  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException;
 
   List<Loan> getAllLoansByCPR(String cpr);
   void deliverMaterial(int loanID);
@@ -29,35 +31,35 @@ public interface Client
 
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, int placeID, int authorId, String genre,
+      String isbn, int pageCount, Place place, MaterialCreator author, String genre,
       String url);
 
   void createBookCopy(int materialID);
 
   void registerDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String subtitlesLanguage, int playDuration, int placeID, String genre,
+      String subtitlesLanguage, int playDuration, Place placeID, String genre,
       String url);
 
   void createDVDCopy(int materialID);
 
   void registerCD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, int placeID, String genre, String url)
+      int playDuration, Place place, String genre, String url)
       ;
 
   void createCDCopy(int materialID) ;
 
   void registerEBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, String licenseNr, int authorId, String genre,
+      String isbn, int pageCount, String licenseNr, MaterialCreator author, String genre,
       String url);
 
   void createEBookCopy(int materialID);
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, String genre, int authorId, String url);
+      int playDuration, String genre, MaterialCreator author, String url);
 
   void createAudioBookCopy(int materialID);
 
@@ -127,4 +129,7 @@ public interface Client
    * @return the currently logged in Librarian in the system.
    */
   Librarian getLoginLibrarian();
+
+  void endLoan(Loan loan);
+
 }

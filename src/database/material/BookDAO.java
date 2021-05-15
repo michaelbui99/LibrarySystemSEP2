@@ -1,8 +1,9 @@
 package database.material;
 
+import client.model.material.Place;
 import client.model.material.reading.Book;
+import client.model.material.strategy.MaterialCreator;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
@@ -16,9 +17,9 @@ public interface BookDAO
      * @param materialID materialID is the ID of the material that the book is connected to.
      * @param isbn isbn is the unique ISBN code of the book. Must have a length of 10 or 13.
      * @param pageCount pageCount is the total amount pages in the book.
-     * @param placeID placeID is the ID of the physical placement of the book.
-    * */
-  void create(int materialID, String isbn, int pageCount, int authorId, int placeID) throws SQLException;
+     * @param author
+     * @param place placeID is the ID of the physical placement of the book.       */
+  void create(int materialID, String isbn, int pageCount, MaterialCreator author, Place place) throws SQLException;
 
   Book createBookCopy(int materialID, int copyNo) throws SQLException;
 

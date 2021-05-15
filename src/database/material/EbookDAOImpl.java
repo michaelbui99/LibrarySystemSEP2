@@ -1,18 +1,21 @@
 package database.material;
 
 import client.model.material.reading.EBook;
+import client.model.material.strategy.MaterialCreator;
 import database.BaseDAO;
+import database.materialcreator.MaterialCreatorImpl;
 
 import java.sql.*;
 import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class EbogDAOImpl extends BaseDAO implements EbogDAO{
-    private static EbogDAO instance;
+public class EbookDAOImpl extends BaseDAO implements EbookDAO
+{
+    private static EbookDAO instance;
     private static final Lock lock = new ReentrantLock();
 
-    public static EbogDAO getInstance()
+    public static EbookDAO getInstance()
     {
         //Double lock check for Thread safety
         if (instance == null)
@@ -21,7 +24,7 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
             {
                 if (instance == null)
                 {
-                    instance = new EbogDAOImpl();
+                    instance = new EbookDAOImpl();
                 }
             }
         }
@@ -29,20 +32,46 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
     }
 
     @Override
-    public void create(int material_id, int page_no, int authorId, int license_no) throws SQLException {
+    public void create(int material_id, int page_no, MaterialCreator author, int license_no) throws SQLException {
         try (Connection connection = getConnection())
         {
+            if (MaterialCreatorImpl.getInstance().getCreatorId(author.getfName(),
+                author.getlName(), author.getDob(), author.getCountry()) == -1)
+            {
+                MaterialCreator mc = MaterialCreatorImpl.getInstance().create(
+                    author.getfName(), author.getlName(), author.getDob(),
+                    author.getCountry());
+
             PreparedStatement stm = connection.prepareStatement(
                     "INSERT INTO Bog (material_id, page_no, authorId, license_no) values (?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             stm.setInt(1, material_id);
             stm.setInt(2, page_no);
-            stm.setInt(3, authorId);
+            stm.setInt(3, mc.getPersonId());
             stm.setInt(4, license_no);
             stm.executeUpdate();
             ResultSet keys = stm.getGeneratedKeys();
             keys.next();
             connection.commit();
+            }
+            else
+            {
+                int mcId = MaterialCreatorImpl.getInstance().getCreatorId(
+                    author.getfName(), author.getlName(), author.getDob(),
+                    author.getCountry());
+
+                PreparedStatement stm = connection.prepareStatement(
+                    "INSERT INTO Bog (material_id, page_no, authorId, license_no) values (?,?,?,?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
+                stm.setInt(1, material_id);
+                stm.setInt(2, page_no);
+                stm.setInt(3, mcId);
+                stm.setInt(4, license_no);
+                stm.executeUpdate();
+                ResultSet keys = stm.getGeneratedKeys();
+                keys.next();
+                connection.commit();
+            }
         }
     }
 
@@ -75,7 +104,10 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
                         eBookDetails.getInt("pageCount"),
                         eBookDetails.getString("licensNo"),
                         eBookDetails.getString("author"),
-                        eBookDetails.getString("genre"));
+                        new MaterialCreator(eBookDetails.getString("f_name"),
+                                            eBookDetails.getString("l_name"),
+                                            String.valueOf(eBookDetails.getDate("dob")),
+                                            eBookDetails.getString("country")));
                 // added author and genre
             }
             return null;
@@ -87,7 +119,7 @@ public class EbogDAOImpl extends BaseDAO implements EbogDAO{
         try (Connection connection = getConnection())
         {
             PreparedStatement stm = connection.prepareStatement(
-                    "SELECT * FROM material join material_copy USING (material_id) JOIN EBook using (material_id) where material_id = ?");
+                    "SELECT * FROM material join material_copy USING (material_id) JOIN e_book using (material_id) JOIN material_creator mc on e_book.author = mc.person_id WHERE material_id = ?");
             stm.setInt(1, materialID);
             ResultSet result = stm.executeQuery();
             if (result.next())

@@ -3,6 +3,7 @@ package database.user.librarian;
 import client.model.user.librarian.Librarian;
 import client.model.loan.Address;
 import database.BaseDAO;
+import database.address.AddressImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,24 +39,57 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          //the table structure needs to change to the values from the query so we can test it
-          "INSERT INTO Librarian(employee_no,f_name,l_name,cpr_no,tel_no, email, address_id, password) values (?,?,?,?,?,?,?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      stm.setInt(1, employee_no);
-      stm.setString(3, firstName);
-      stm.setString(4, lastName);
-      stm.setString(2, cpr);
-      stm.setString(5, tlfNumber);
-      stm.setString(7, email);
-      stm.setObject(6, address);
-      stm.setString(8, password);
-      stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
-      keys.next();
-      connection.commit();
-      return new Librarian(employee_no, firstName, lastName, cpr, tlfNumber,
-          email, address, password);
+      if (AddressImpl.getInstence()
+          .getAddressId(address.getCity(), address.getStreetName(),
+              address.getZipCode(), address.getStreetNr()) == -1)
+      {
+        Address ad = AddressImpl.getInstence()
+            .create(address.getCity(), address.getStreetName(),
+                address.getZipCode(), address.getStreetNr());
+
+        PreparedStatement stm = connection.prepareStatement(
+            //the table structure needs to change to the values from the query so we can test it
+            "INSERT INTO Librarian(employee_no,f_name,l_name,cpr_no,tel_no, email, address_id, password) values (?,?,?,?,?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setInt(1, employee_no);
+        stm.setString(2, firstName);
+        stm.setString(3, lastName);
+        stm.setString(4, cpr);
+        stm.setString(5, tlfNumber);
+        stm.setString(6, email);
+        stm.setInt(7, ad.getAddressId());
+        stm.setString(8, password);
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        connection.commit();
+        return new Librarian(employee_no, firstName, lastName, cpr, tlfNumber,
+            email, address, password);
+      }
+      else
+      {
+        int adId = AddressImpl.getInstence()
+            .getAddressId(address.getCity(), address.getStreetName(),
+                address.getZipCode(), address.getStreetNr());
+        PreparedStatement stm = connection.prepareStatement(
+            //the table structure needs to change to the values from the query so we can test it
+            "INSERT INTO Librarian(employee_no,f_name,l_name,cpr_no,tel_no, email, address_id, password) values (?,?,?,?,?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setInt(1, employee_no);
+        stm.setString(2, firstName);
+        stm.setString(3, lastName);
+        stm.setString(4, cpr);
+        stm.setString(5, tlfNumber);
+        stm.setString(6, email);
+        stm.setInt(7, adId);
+        stm.setString(8, password);
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        connection.commit();
+        return new Librarian(employee_no, firstName, lastName, cpr, tlfNumber,
+            email, address, password);
+      }
     }
   }
 

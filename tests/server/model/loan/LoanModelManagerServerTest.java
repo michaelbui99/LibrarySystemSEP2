@@ -20,7 +20,7 @@ class LoanModelManagerServerTest extends BaseDAO
   @BeforeEach void setup()
   {
     loanModel = new LoanModelManagerServer();
-    createDummyData();
+//    createDummyData();
   }
 
   @Test
@@ -30,7 +30,8 @@ class LoanModelManagerServerTest extends BaseDAO
     //TODO: Register borrower with cpr "111111-1111", a book and a cd --> register 2 loans.
 
     List<Loan> loans = loanModel.getAllLoansByCPR("111111-1111");
-    assertEquals(2, loans.size());
+    assertEquals(1, loans.size());
+    assertEquals("Title1", loans.get(0).getMaterial().getTitle());
   }
 
   private void createDummyData()
@@ -202,6 +203,8 @@ class LoanModelManagerServerTest extends BaseDAO
           + "\n"
           + "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no)\n"
           + "VALUES (current_date, '2021-12-12', null, '111111-1111', 2,1);");
+      stm.executeUpdate();
+      connection.commit();
     }
     catch (SQLException throwables)
     {

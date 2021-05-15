@@ -20,7 +20,11 @@ public interface LoanModelClient extends PropertyChangeSubject
   void registerLoan(Material material, Borrower borrower)
       throws IllegalStateException, NoSuchElementException;
 
+  void registerReservation(Material material, Borrower borrower)
+          throws IllegalStateException, NoSuchElementException;
+
   List<Loan> getAllLoansByCPR(String cpr);
-  void deliverMaterial(int loanID);
+  void returnMaterial(int loanID);
+  void endLoan(Loan loan);
   void extendLoan();
 }

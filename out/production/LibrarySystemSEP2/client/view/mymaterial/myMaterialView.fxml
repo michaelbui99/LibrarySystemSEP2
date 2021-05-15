@@ -34,10 +34,9 @@
                      <children>
                         <TableView fx:id="loanTableView" prefHeight="336.0" prefWidth="595.0">
                           <columns>
-                            <TableColumn fx:id="materialColumn" prefWidth="193.0" text="Materiale" />
-                            <TableColumn fx:id="typeColumn" prefWidth="161.0" text="Type" />
-                              <TableColumn fx:id="loanDateColumn" prefWidth="108.0" text="Laan Dato" />
-                              <TableColumn fx:id="deadlineColumn" prefWidth="127.0" text="Afleveringsfrist" />
+                            <TableColumn fx:id="materialColumn" prefWidth="240.0" text="Materiale" />
+                              <TableColumn fx:id="loanDateColumn" prefWidth="162.0" text="Laan Dato" />
+                              <TableColumn fx:id="deadlineColumn" prefWidth="184.0" text="Afleveringsfrist" />
                           </columns>
                         </TableView>
                      </children>
@@ -72,14 +71,14 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
+                        <Button layoutX="10.0" layoutY="27.0" mnemonicParsing="false" onAction="#onBackButton" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </Button>
                         <Button mnemonicParsing="false" style="-fx-cursor: hand;" text="Annuller">
                            <GridPane.margin>
                               <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="27.0" mnemonicParsing="false" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1">
-                           <GridPane.margin>
-                              <Insets right="10.0" />
                            </GridPane.margin>
                         </Button>
                      </children>

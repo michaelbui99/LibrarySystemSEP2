@@ -3,11 +3,14 @@ package client.network;
 import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import client.model.user.borrower.Borrower;
 import client.model.user.librarian.Librarian;
 import shared.ClientCallback;
 import shared.Server;
 import shared.util.Constants;
+import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -45,9 +48,9 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
 
     try
     {
-      registry = LocateRegistry.getRegistry(1099);
+      registry = LocateRegistry.getRegistry(1090);
       server = (Server) registry.lookup(Constants.RMISERVER);
-//      server.registerClientCallback(this);
+      server.getLoanServer().registerClientCallBack(this);
     }
     catch (RemoteException | NotBoundException e)
     {
@@ -68,6 +71,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override
+  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException {
+    try
+    {
+      server.getLoanServer().registerReservation(material, borrower);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
     try
@@ -76,8 +91,10 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+//      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
     }
+    return null;
   }
 
   @Override public void deliverMaterial(int loanID)
@@ -93,11 +110,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeID, int authorId, String genre, String url)
+      Place place, MaterialCreator author, String genre, String url)
   {
     try
     {
-      server.getMaterialServer().registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, placeID, authorId, genre, url);
+      server.getMaterialServer().registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount,
+          place, author, genre, url);
     }
     catch (RemoteException e)
     {
@@ -122,7 +140,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
-      int playDuration, int placeID, String genre, String url)
+      int playDuration, Place placeID, String genre, String url)
   {
     try
     {
@@ -150,12 +168,13 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, int playDuration, int placeID,
+      String targetAudience, String language, int playDuration, Place place,
       String genre, String url)
   {
     try
     {
-      server.getMaterialServer().registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, placeID, genre, url);
+      server.getMaterialServer().registerCD(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration,
+          place, genre, url);
     }
     catch (RemoteException e)
     {
@@ -178,11 +197,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, int authorId, String genre, String url)
+      String licenseNr, MaterialCreator author, String genre, String url)
   {
     try
     {
-      server.getMaterialServer().registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr, authorId, genre, url);
+      server.getMaterialServer().registerEBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, licenseNr,
+          author, genre, url);
     }
     catch (RemoteException e)
     {
@@ -206,11 +226,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String genre,
-      int authorId, String url)
+      MaterialCreator author, String url)
   {
     try
     {
-      server.getMaterialServer().registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre, authorId,url );
+      server.getMaterialServer().registerAudioBook(title, publisher, releaseDate, description, tags, targetAudience, language, playDuration, genre,
+          author,url );
     }
     catch (RemoteException e)
     {
@@ -322,6 +343,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public void endLoan(Loan loan)
+  {
+    try
+    {
+      server.getLoanServer().endLoan(loan);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)
   {
@@ -346,8 +379,14 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     support.removePropertyChangeListener(listener);
   }
 
-  @Override public void loanRegistered(Loan loan) throws RemoteException
+  @Override public void loanRegistered(Loan loan)
   {
-    support.firePropertyChange("LoanRegistered", null, loan);
+    support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
   }
+
+  @Override public void loanEnded(Loan loan)
+  {
+    support.firePropertyChange(EventTypes.LOANENDED, null, loan);
+  }
+
 }
