@@ -3,10 +3,11 @@ package client.network;
 import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import client.model.user.borrower.Borrower;
 import client.model.user.librarian.Librarian;
 
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -30,7 +31,7 @@ public interface Client
 
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, int placeID, int authorId, String genre,
+      String isbn, int pageCount, Place place, MaterialCreator author, String genre,
       String url);
 
   void createBookCopy(int materialID);

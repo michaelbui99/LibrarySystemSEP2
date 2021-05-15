@@ -1,9 +1,9 @@
 package server.model.material;
 
 import client.model.material.Material;
-import client.model.material.MaterialList;
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
-import database.material.MaterialDAOImpl;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,7 +13,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeID, int authorId, String genre, String url)
+      Place place, MaterialCreator author, String genre, String url)
   {
 
   }

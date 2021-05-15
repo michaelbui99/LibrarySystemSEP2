@@ -1,9 +1,8 @@
 package client.model.material;
 
-import client.model.material.strategy.SearchStrategy;
+import client.model.material.strategy.MaterialCreator;
 import shared.PropertyChangeSubject;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface MaterialModelClient extends
@@ -15,7 +14,7 @@ public interface MaterialModelClient extends
    *
    */
   void registerBook(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, int placeID, int authorId, String genre,
+      String targetAudience, String language, String isbn, int pageCount, Place place, MaterialCreator author, String genre,
       String url);
 
   void createBookCopy(int materialID);

@@ -3,6 +3,8 @@ package client.network;
 import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import client.model.user.borrower.Borrower;
 import client.model.user.librarian.Librarian;
 import shared.ClientCallback;
@@ -107,11 +109,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeID, int authorId, String genre, String url)
+      Place place, MaterialCreator author, String genre, String url)
   {
     try
     {
-      server.getMaterialServer().registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount, placeID, authorId, genre, url);
+      server.getMaterialServer().registerBook(title, publisher, releaseDate, description, tags, targetAudience, language, isbn, pageCount,
+          place, author, genre, url);
     }
     catch (RemoteException e)
     {

@@ -1,6 +1,6 @@
 package client.model.material;
 
-import client.model.material.strategy.SearchStrategy;
+import client.model.material.strategy.MaterialCreator;
 import client.model.material.strategy.SearchStrategyManager;
 import client.network.Client;
 
@@ -38,10 +38,10 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeID, int authorId, String genre, String url)
+      Place place, MaterialCreator author, String genre, String url)
   {
     client.registerBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, isbn, pageCount, placeID, authorId, genre,
+        targetAudience, language, isbn, pageCount, place, author, genre,
         url);
   }
 

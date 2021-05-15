@@ -37,11 +37,11 @@ public class PlaceImpl extends BaseDAO implements PlaceDAO
   @Override public Place create(int hallNo, String department,
       String creatorLName, String genre) throws SQLException
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
           "INSERT INTO place (hall_no, department, creator_l_name, genre) VALUES (?,?,?,?)",
-      PreparedStatement.RETURN_GENERATED_KEYS);
+          PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, hallNo);
       stm.setString(2, department);
       stm.setString(3, creatorLName);
@@ -57,24 +57,46 @@ public class PlaceImpl extends BaseDAO implements PlaceDAO
   @Override public int getPlaceID(int hallNo, String department,
       String creatorLName, String genre) throws SQLException
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
           "SELECT place_id FROM place WHERE hall_no = ? AND department = ? AND creator_l_name = ? AND genre = ?");
-    stm.setInt(1, hallNo);
-    stm.setString(2, department);
-    stm.setString(3, creatorLName);
-    stm.setString(4, genre);
-    ResultSet result = stm.executeQuery();
+      stm.setInt(1, hallNo);
+      stm.setString(2, department);
+      stm.setString(3, creatorLName);
+      stm.setString(4, genre);
+      ResultSet result = stm.executeQuery();
 
-    if (result.next())
-    {
-      return  result.getInt(1);
+      if (result.next())
+      {
+        return result.getInt(1);
+      }
+      else
+      {
+        return -1;
+      }
     }
-    else
+  }
+
+  @Override public int getPlaceIDForMaterial(int material_id, String type)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
     {
-      return -1;
-    }
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT place_id FROM ?  WHERE material_id = ?");
+      stm.setInt(1, material_id);
+      stm.setString(2, type);
+      ResultSet result = stm.executeQuery();
+
+      if (result.next())
+      {
+        return result.getInt(1);
+      }
+      else
+      {
+        return -1;
+      }
     }
   }
 }

@@ -14,8 +14,7 @@ public class DVD extends Material implements Serializable
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage, String playDuration, int placeID, String imageURL)
   {
-    super(materialID, copyNumber, title, publisher, releaseDate, description,
-        tags, targetAudience, language, imageURL );
+    super(materialID, title, publisher, releaseDate, description, targetAudience, language, imageURL );
     this.subtitlesLanguage = subtitlesLanguage;
     this.playDuration = playDuration;
 

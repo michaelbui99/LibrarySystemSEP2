@@ -1,6 +1,8 @@
 package database.material;
 
+import client.model.material.Place;
 import client.model.material.reading.Book;
+import client.model.material.strategy.MaterialCreator;
 import database.BaseDAO;
 
 import java.sql.*;
@@ -30,8 +32,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return instance;
   }
 
-  @Override public void create(int materialID, String isbn, int pageCount, int authorId,
-      int placeID) throws SQLException
+  @Override public void create(int materialID, String isbn, int pageCount,
+      int authorId, int placeID) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -40,14 +42,13 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, materialID);
       stm.setInt(2, pageCount);
-      stm.setInt( 3,authorId);
+      stm.setInt(3, authorId);
       stm.setString(4, isbn);
       stm.setInt(5, placeID);
       stm.executeUpdate();
       ResultSet keys = stm.getGeneratedKeys();
       keys.next();
       connection.commit();
-
     }
   }
 
@@ -70,14 +71,24 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
       {
         //Creates and returns a Book object if a book with given materialID exists.
         return new Book(bookDetails.getInt("material_id"),
-            bookDetails.getInt("copy_no"), bookDetails.getString("title"),
+            bookDetails.getInt("copy_no"),
+            bookDetails.getString("title"),
             bookDetails.getString("publisher"),
             String.valueOf(bookDetails.getDate("release_date")),
             bookDetails.getString("description_of_the_content"),
             bookDetails.getString("keywords"),
             bookDetails.getString("audience"),
-            bookDetails.getString("language_"), bookDetails.getString("isbn"),
-            bookDetails.getInt("page_no"), bookDetails.getInt("place_id"), bookDetails.getString("author"));
+            bookDetails.getString("language_"),
+            bookDetails.getString("isbn"),
+            bookDetails.getInt("page_no"),
+            new Place(bookDetails.getInt("hall_no"),
+                bookDetails.getString("department"),
+                bookDetails.getString("creator_l_name"),
+                bookDetails.getString("genre")),
+            new MaterialCreator(bookDetails.getString("f_name"),
+                bookDetails.getString("l_name"),
+                String.valueOf(bookDetails.getDate("dob")),
+                bookDetails.getString("country")));
       }
       return null;
     }
@@ -89,7 +100,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM material join material_copy USING (material_id) JOIN book using (material_id) where material_id = ?");
+          "SELECT * FROM material join material_copy USING (material_id) JOIN book using (material_id) join material_creator mc on book.author = mc.person_id join place p on book.place_id = p.place_id where material_id = ?");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
       if (result.next())
@@ -101,6 +112,5 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
             "No book with materialID " + materialID + " exists.");
     }
   }
-
 
 }

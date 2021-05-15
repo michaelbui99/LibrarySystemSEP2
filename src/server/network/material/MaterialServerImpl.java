@@ -1,5 +1,7 @@
 package server.network.material;
 
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
 import shared.MaterialServer;
 
@@ -13,7 +15,7 @@ public class MaterialServerImpl implements MaterialServer
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      int placeID, int authorId, String genre, String url)
+      Place place, MaterialCreator author, String genre, String url)
       throws RemoteException
   {
 

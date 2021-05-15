@@ -3,9 +3,10 @@ package client.network;
 import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.Place;
+import client.model.material.strategy.MaterialCreator;
 import client.model.user.borrower.Borrower;
 import client.model.user.librarian.Librarian;
-import shared.PropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.rmi.Remote;
@@ -32,7 +33,7 @@ public interface RMIClient extends Remote
 
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, int placeID, int authorId, String genre,
+      String isbn, int pageCount, Place place, MaterialCreator author, String genre,
       String url) throws RemoteException;
 
   void createBookCopy(int materialID) throws RemoteException;
