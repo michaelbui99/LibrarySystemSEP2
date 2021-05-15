@@ -3,8 +3,10 @@ package database.loan;
 import client.model.loan.Address;
 import client.model.loan.Loan;
 import client.model.material.Material;
+import client.model.material.Place;
 import client.model.material.audio.AudioBook;
 import client.model.material.reading.Book;
+import client.model.material.strategy.MaterialCreator;
 import client.model.user.borrower.Borrower;
 import database.BaseDAO;
 
@@ -81,22 +83,25 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         List<Loan> loans = new ArrayList<>();
         //Get all loans where material is known to be book
         PreparedStatement stm = connection.prepareStatement(
-            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id where cpr_no = ?;");
+            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id join place using (place_id) where cpr_no = ?;");
         stm.setString(1, cpr);
         ResultSet bookLoans = stm.executeQuery();
         while (bookLoans.next())
         {
-          Book book = new Book(
-              bookLoans.getInt("material_id"),
-              bookLoans.getInt("copy_no"),
-              bookLoans.getString("title"),
+          Book book = new Book(bookLoans.getInt("material_id"),
+              bookLoans.getInt("copy_no"), bookLoans.getString("title"),
               bookLoans.getString("publisher"),
               String.valueOf(bookLoans.getDate("release_date")),
               bookLoans.getString("description_of_the_content"), null,
               bookLoans.getString("audience"), bookLoans.getString("language_"),
               bookLoans.getString("isbn"), bookLoans.getInt("page_no"),
-              bookLoans.getInt("place_id"),
-              bookLoans.getString(28) + " " + bookLoans.getString(29));
+              new Place(bookLoans.getInt("place_id"),
+                  bookLoans.getInt("hall_no"),
+                  bookLoans.getString("department"), bookLoans.getString("creator_l_name"), bookLoans.getString("genre")),
+              new MaterialCreator(bookLoans.getInt("person_id"),
+                  bookLoans.getString(28), bookLoans.getString(29),
+                  String.valueOf(bookLoans.getDate("dob")),
+                  bookLoans.getString("country")));
           Address address = new Address(bookLoans.getInt("address_id"),
               bookLoans.getString("street_name"), bookLoans.getInt("street_no"),
               bookLoans.getInt("zip_code"), bookLoans.getString("city"));
