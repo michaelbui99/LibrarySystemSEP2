@@ -106,7 +106,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
             selectBorrowerAddressResult.getString("password"));
 
         PreparedStatement stm = connection.prepareStatement(
-            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id join place using (place_id) where cpr_no = ?;");
+            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id join place using (place_id) where cpr_no = ? and return_date IS NULL;");
         stm.setString(1, cpr);
         ResultSet bookLoans = stm.executeQuery();
         while (bookLoans.next())
@@ -137,7 +137,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         }
         //Get all loans where material is known to be audiobook
         PreparedStatement stm2 = connection.prepareStatement(
-            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join audiobook using (material_id) join material_creator mc ON audiobook.author = mc.person_id where cpr_no = ?;");
+            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join audiobook using (material_id) join material_creator mc ON audiobook.author = mc.person_id where cpr_no = ? and return_date IS NULL;");
         stm2.setString(1, cpr);
         ResultSet audiobookLoans = stm2.executeQuery();
         while (audiobookLoans.next())
@@ -166,7 +166,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         }
         //Get all loans where material is known to be DVD
         PreparedStatement stm3 = connection.prepareStatement(
-            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN dvd USING (material_id) join place using (place_id) WHERE cpr_no = ?");
+            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN dvd USING (material_id) join place using (place_id) WHERE cpr_no = ? and return_date IS NULL");
         stm3.setString(1, cpr);
         ResultSet dvdLoans = stm3.executeQuery();
         while (dvdLoans.next())
@@ -192,7 +192,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         }
         //Get all loans where Material is known to be CD
         PreparedStatement stm4 = connection.prepareStatement(
-            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN cd USING (material_id) join place using (place_id) WHERE cpr_no = ?");
+            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN cd USING (material_id) join place using (place_id) WHERE cpr_no = ? and return_date IS NULL");
         stm4.setString(1, cpr);
         ResultSet cdLoans = stm4.executeQuery();
         while (cdLoans.next())
@@ -218,7 +218,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         }
         //Get all loans where material is known to be Ebook.
         PreparedStatement stm5 = connection.prepareStatement(
-            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN e_book USING (material_id) join material_creator mc ON e_book.author = mc.person_id WHERE cpr_no = ?");
+            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN e_book USING (material_id) join material_creator mc ON e_book.author = mc.person_id WHERE cpr_no = ? and return_date IS NULL");
         stm5.setString(1, cpr);
         ResultSet ebookLoans = stm5.executeQuery();
         while (ebookLoans.next())
@@ -252,7 +252,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     } return null;
   }
 
-  @Override public void endLoan(int loanID)
+  @Override public void endLoan(Loan loan)
   {
     try
     {
@@ -261,7 +261,13 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         //TODO: ADD SQL Statement to find the material copy which is in loan and update the status of the copy.
         PreparedStatement stm = connection.prepareStatement(
             "UPDATE loan set return_date = CURRENT_DATE where loan_no = ?");
-        stm.setInt(1, loanID);
+        stm.setInt(1, loan.getLoanID());
+        stm.executeUpdate();
+        PreparedStatement stm2 = connection.prepareStatement("UPDATE material_copy set available = true where material_id = ? and copy_no = ? ;");
+        stm2.setInt(1, loan.getMaterial().getMaterialID());
+        stm2.setInt(2, loan.getMaterial().getCopyNumber());
+        stm.executeUpdate();
+        connection.commit();
       }
     }
     catch (SQLException throwables)

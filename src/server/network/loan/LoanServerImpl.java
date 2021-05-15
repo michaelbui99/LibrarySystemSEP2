@@ -47,9 +47,14 @@ public class LoanServerImpl implements LoanServer
     ModelFactoryServer.getInstance().getLoanModel().registerReservation(material, borrower);
   }
 
+  @Override public void endLoan(Loan loan)
+  {
+    ModelFactoryServer.getInstance().getLoanModel().endLoan(loan);
+  }
+
   public void registerClientCallBack(ClientCallback client)
   {
-    PropertyChangeListener listener = new PropertyChangeListener()
+    PropertyChangeListener listenerLoanRegister = new PropertyChangeListener()
     {
       @Override public void propertyChange(PropertyChangeEvent evt)
       {
@@ -66,6 +71,23 @@ public class LoanServerImpl implements LoanServer
         }
       }
     };
-    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANREGISTERED, listener);
+    PropertyChangeListener listenerLoanEnd = new PropertyChangeListener()
+    {
+      @Override public void propertyChange(PropertyChangeEvent evt)
+      {
+        try
+        {
+          client.loanEnded((Loan) evt.getNewValue());
+        }
+        catch (RemoteException e)
+        {
+          e.printStackTrace();
+          ModelFactoryServer.getInstance().getLoanModel().removePropertyChangeListener(EventTypes.LOANENDED, this);
+        }
+      }
+    };
+    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANREGISTERED, listenerLoanRegister);
+    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANENDED, listenerLoanEnd);
+
   }
 }

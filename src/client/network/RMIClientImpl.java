@@ -10,6 +10,7 @@ import client.model.user.librarian.Librarian;
 import shared.ClientCallback;
 import shared.Server;
 import shared.util.Constants;
+import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -49,7 +50,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     {
       registry = LocateRegistry.getRegistry(1090);
       server = (Server) registry.lookup(Constants.RMISERVER);
-//      server.registerClientCallback(this);
+      server.getLoanServer().registerClientCallBack(this);
     }
     catch (RemoteException | NotBoundException e)
     {
@@ -342,6 +343,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public void endLoan(Loan loan)
+  {
+    try
+    {
+      server.getLoanServer().endLoan(loan);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)
   {
@@ -366,8 +379,14 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     support.removePropertyChangeListener(listener);
   }
 
-  @Override public void loanRegistered(Loan loan) throws RemoteException
+  @Override public void loanRegistered(Loan loan)
   {
-    support.firePropertyChange("LoanRegistered", null, loan);
+    support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
   }
+
+  @Override public void loanEnded(Loan loan)
+  {
+    support.firePropertyChange(EventTypes.LOANENDED, null, loan);
+  }
+
 }

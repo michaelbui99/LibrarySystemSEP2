@@ -71,14 +71,14 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
+                        <Button layoutX="10.0" layoutY="27.0" mnemonicParsing="false" onAction="#onBackButton" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </Button>
                         <Button mnemonicParsing="false" style="-fx-cursor: hand;" text="Annuller">
                            <GridPane.margin>
                               <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="27.0" mnemonicParsing="false" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1">
-                           <GridPane.margin>
-                              <Insets right="10.0" />
                            </GridPane.margin>
                         </Button>
                      </children>

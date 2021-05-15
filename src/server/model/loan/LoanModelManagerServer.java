@@ -42,6 +42,12 @@ public class LoanModelManagerServer implements LoanModelServer
     return LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
   }
 
+  @Override public void endLoan(Loan loan)
+  {
+    LoanDAOImpl.getInstance().endLoan(loan);
+    support.firePropertyChange(EventTypes.LOANENDED, null, loan);
+  }
+
   private String calcDateTime()
   {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

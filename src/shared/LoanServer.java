@@ -23,4 +23,7 @@ public interface LoanServer extends Remote
   List<Loan> getAllLoansByCPR(String cpr) throws RemoteException;
 
     void registerReservation(Material material, Borrower borrower) throws RemoteException;
+
+  void endLoan(Loan loan) throws RemoteException;
+  void registerClientCallBack(ClientCallback client) throws RemoteException;
 }

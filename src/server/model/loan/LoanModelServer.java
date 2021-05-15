@@ -12,4 +12,6 @@ public interface LoanModelServer extends PropertyChangeSubject
    public void registerLoan(Material material, Borrower borrower);
    public void registerReservation(Material material, Borrower borrower);
    List<Loan> getAllLoansByCPR(String cpr);
+   void endLoan(Loan loan);
+
 }

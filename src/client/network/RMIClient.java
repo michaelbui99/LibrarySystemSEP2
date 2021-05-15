@@ -134,6 +134,7 @@ public interface RMIClient extends Remote
    */
   Librarian getLoginLibrarian() throws RemoteException;
 
+  void endLoan(Loan loan) throws  RemoteException;
 
   void addPropertyChangeListener(String name, PropertyChangeListener listener) throws RemoteException;
   void addPropertyChangeListener(PropertyChangeListener listener) throws RemoteException;

@@ -129,4 +129,7 @@ public interface Client
    * @return the currently logged in Librarian in the system.
    */
   Librarian getLoginLibrarian();
+
+  void endLoan(Loan loan);
+
 }

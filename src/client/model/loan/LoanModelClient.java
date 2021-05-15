@@ -25,5 +25,6 @@ public interface LoanModelClient extends PropertyChangeSubject
 
   List<Loan> getAllLoansByCPR(String cpr);
   void returnMaterial(int loanID);
+  void endLoan(Loan loan);
   void extendLoan();
 }
