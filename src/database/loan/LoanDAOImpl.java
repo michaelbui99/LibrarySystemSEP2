@@ -2,14 +2,18 @@ package database.loan;
 
 import client.model.loan.Address;
 import client.model.loan.Loan;
+import client.model.material.DVD;
 import client.model.material.Material;
 import client.model.material.Place;
 import client.model.material.audio.AudioBook;
+import client.model.material.audio.CD;
 import client.model.material.reading.Book;
+import client.model.material.reading.EBook;
 import client.model.material.strategy.MaterialCreator;
 import client.model.user.borrower.Borrower;
 import database.BaseDAO;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +86,25 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       {
         List<Loan> loans = new ArrayList<>();
         //Get all loans where material is known to be book
+        PreparedStatement selectBorrowerAddress = connection.prepareStatement(
+            "SELECT * from borrower join address using (address_id) where cpr_no = ?");
+        selectBorrowerAddress.setString(1, cpr);
+        ResultSet selectBorrowerAddressResult = selectBorrowerAddress
+            .executeQuery();
+        selectBorrowerAddressResult.next();
+        Address address = new Address(
+            selectBorrowerAddressResult.getInt("address_id"),
+            selectBorrowerAddressResult.getString("street_name"),
+            selectBorrowerAddressResult.getInt("street_no"),
+            selectBorrowerAddressResult.getInt("zip_code"),
+            selectBorrowerAddressResult.getString("city"));
+        Borrower borrower = new Borrower(cpr,
+            selectBorrowerAddressResult.getString("f_name"),
+            selectBorrowerAddressResult.getString("l_name"),
+            selectBorrowerAddressResult.getString("email"),
+            selectBorrowerAddressResult.getString("tel_no"), address,
+            selectBorrowerAddressResult.getString("password"));
+
         PreparedStatement stm = connection.prepareStatement(
             "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join book using (material_id) join material_creator mc ON book.author = mc.person_id join place using (place_id) where cpr_no = ?;");
         stm.setString(1, cpr);
@@ -97,18 +120,13 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               bookLoans.getString("isbn"), bookLoans.getInt("page_no"),
               new Place(bookLoans.getInt("place_id"),
                   bookLoans.getInt("hall_no"),
-                  bookLoans.getString("department"), bookLoans.getString("creator_l_name"), bookLoans.getString("genre")),
+                  bookLoans.getString("department"),
+                  bookLoans.getString("creator_l_name"),
+                  bookLoans.getString("genre")),
               new MaterialCreator(bookLoans.getInt("person_id"),
                   bookLoans.getString(28), bookLoans.getString(29),
                   String.valueOf(bookLoans.getDate("dob")),
                   bookLoans.getString("country")));
-          Address address = new Address(bookLoans.getInt("address_id"),
-              bookLoans.getString("street_name"), bookLoans.getInt("street_no"),
-              bookLoans.getInt("zip_code"), bookLoans.getString("city"));
-          Borrower borrower = new Borrower(cpr, bookLoans.getString("f_name"),
-              bookLoans.getString("l_name"), bookLoans.getString("email"),
-              bookLoans.getString("tel_no"), address,
-              bookLoans.getString("password"));
 
           Loan loan = new Loan(book, borrower,
               String.valueOf(bookLoans.getDate("deadline")),
@@ -118,34 +136,112 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
           loans.add(loan);
         }
         //Get all loans where material is known to be audiobook
-        //        PreparedStatement stm2 = connection.prepareStatement(
-        //            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join audiobook using (material_id) join material_creator mc ON audiobook.author = mc.person_id where cpr_no = ?;");
-        //        stm.setString(1, cpr);
-        //        ResultSet audiobookLoans = stm2.executeQuery();
-        //        while (audiobookLoans.next())
-        //        {
-        //          AudioBook audioBook = new AudioBook(audiobookLoans.getInt("material_id"),
-        //              audiobookLoans.getInt("copy_no"), audiobookLoans.getString("title"),
-        //              audiobookLoans.getString("publisher"),
-        //              String.valueOf(audiobookLoans.getDate("release_date")),
-        //              audiobookLoans.getString("description_of_the_content"), null,
-        //              audiobookLoans.getString("audience"), audiobookLoans.getString("language_"),
-        //              audiobookLoans.getInt("length_"),
-        //              audiobookLoans.getString("mc.f_name") + " "+audiobookLoans
-        //                  .getString("mc.l_name"), audiobookLoans.getString("url"));
-        //          Address address = new Address(audiobookLoans.getInt("address_id"),
-        //              audiobookLoans.getString("street_name"), audiobookLoans.getInt("street_no"),
-        //              audiobookLoans.getInt("zip_code"), audiobookLoans.getString("city"));
-        //          Borrower borrower = new Borrower(cpr,
-        //              audiobookLoans.getString("f_name"),
-        //              audiobookLoans.getString("l_name"),audiobookLoans.getString("email"),
-        //              audiobookLoans.getString("tel_no"), address, audiobookLoans.getString("password"));
-        //          Loan loan = new Loan(audioBook, borrower,
-        //              String.valueOf(audiobookLoans.getDate("deadline")),
-        //              String.valueOf(audiobookLoans.getDate("loan_date")),
-        //              String.valueOf(audiobookLoans.getDate("return_date")), audiobookLoans.getInt("loan_no"));
-        //          loans.add(loan);
-        //        }
+        PreparedStatement stm2 = connection.prepareStatement(
+            "SELECT * from loan join borrower using (cpr_no) join address using (address_id) join material_copy using (material_id, copy_no) join material using (material_id) join audiobook using (material_id) join material_creator mc ON audiobook.author = mc.person_id where cpr_no = ?;");
+        stm2.setString(1, cpr);
+        ResultSet audiobookLoans = stm2.executeQuery();
+        while (audiobookLoans.next())
+        {
+          AudioBook audioBook = new AudioBook(
+              audiobookLoans.getInt("material_id"),
+              audiobookLoans.getInt("copy_no"),
+              audiobookLoans.getString("title"),
+              audiobookLoans.getString("publisher"),
+              String.valueOf(audiobookLoans.getDate("release_date")),
+              audiobookLoans.getString("description_of_the_content"), null,
+              audiobookLoans.getString("audience"),
+              audiobookLoans.getString("language_"),
+              audiobookLoans.getInt("length_"),
+              new MaterialCreator(audiobookLoans.getInt("person_id"),
+                  audiobookLoans.getString(26), audiobookLoans.getString(27),
+                  String.valueOf(audiobookLoans.getDate("dob")),
+                  audiobookLoans.getString("city")),
+              audiobookLoans.getString("url"));
+          Loan loan = new Loan(audioBook, borrower,
+              String.valueOf(audiobookLoans.getDate("deadline")),
+              String.valueOf(audiobookLoans.getDate("loan_date")),
+              String.valueOf(audiobookLoans.getDate("return_date")),
+              audiobookLoans.getInt("loan_no"));
+          loans.add(loan);
+        }
+        //Get all loans where material is known to be DVD
+        PreparedStatement stm3 = connection.prepareStatement(
+            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN dvd USING (material_id) join place using (place_id) WHERE cpr_no = ?");
+        stm3.setString(1, cpr);
+        ResultSet dvdLoans = stm3.executeQuery();
+        while (dvdLoans.next())
+        {
+          DVD dvd = new DVD(dvdLoans.getInt("material_id"),
+              dvdLoans.getInt("copy_no"), dvdLoans.getString("title"),
+              dvdLoans.getString("publisher"),
+              String.valueOf(dvdLoans.getDate("release_date")),
+              dvdLoans.getString("description_of_the_content"), null,
+              dvdLoans.getString("audience"), dvdLoans.getString("language_"),
+              dvdLoans.getString("subtitle_lang"),
+              String.valueOf(dvdLoans.getInt("length_")),
+              new Place(dvdLoans.getInt("place_id"), dvdLoans.getInt("hall_no"),
+                  dvdLoans.getString("department"),
+                  dvdLoans.getString("creator_l_name"),
+                  dvdLoans.getString("genre")), dvdLoans.getString("URL"));
+          Loan loan = new Loan(dvd, borrower,
+              String.valueOf(dvdLoans.getDate("deadline")),
+              String.valueOf(dvdLoans.getDate("loan_date")),
+              String.valueOf(dvdLoans.getDate("return_date")),
+              dvdLoans.getInt("loan_no"));
+          loans.add(loan);
+        }
+        //Get all loans where Material is known to be CD
+        PreparedStatement stm4 = connection.prepareStatement(
+            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN cd USING (material_id) join place using (place_id) WHERE cpr_no = ?");
+        stm4.setString(1, cpr);
+        ResultSet cdLoans = stm4.executeQuery();
+        while (cdLoans.next())
+        {
+          CD cd = new CD(cdLoans.getInt("material_id"),
+              cdLoans.getInt("copy_no"), cdLoans.getString("title"),
+              cdLoans.getString("publisher"),
+              String.valueOf(cdLoans.getDate("release_date")),
+              cdLoans.getString("description_of_the_content"), null,
+              cdLoans.getString("audience"), cdLoans.getString("language_"),
+              cdLoans.getInt("length_"),
+              new Place(cdLoans.getInt("place_id"), cdLoans.getInt("hall_no"),
+                  cdLoans.getString("department"),
+                  cdLoans.getString("creator_l_name"),
+                  cdLoans.getString("genre")), cdLoans.getString("url"));
+
+          Loan loan = new Loan(cd, borrower,
+              String.valueOf(dvdLoans.getDate("deadline")),
+              String.valueOf(dvdLoans.getDate("loan_date")),
+              String.valueOf(dvdLoans.getDate("return_date")),
+              dvdLoans.getInt("loan_no"));
+          loans.add(loan);
+        }
+        //Get all loans where material is known to be Ebook.
+        PreparedStatement stm5 = connection.prepareStatement(
+            "SELECT * FROM loan JOIN borrower USING (cpr_no) JOIN address USING (address_id)  JOIN material_copy USING (material_id, copy_no) JOIN material USING (material_id) JOIN e_book USING (material_id) join material_creator mc ON e_book.author = mc.person_id WHERE cpr_no = ?");
+        stm5.setString(1, cpr);
+        ResultSet ebookLoans = stm5.executeQuery();
+        while (ebookLoans.next())
+        {
+          EBook eBook = new EBook(ebookLoans.getInt("material_id"),
+              ebookLoans.getInt("copy_no"), ebookLoans.getString("title"),
+              ebookLoans.getString("publisher"),
+              String.valueOf(ebookLoans.getDate("release_date")),
+              ebookLoans.getString("description_of_the_content"), null,
+              ebookLoans.getString("audience"), ebookLoans.getString("language_"),
+              ebookLoans.getInt("page_no"), ebookLoans.getString("license_no"),
+              ebookLoans.getString("genre"),
+              new MaterialCreator(audiobookLoans.getInt("person_id"),
+                  audiobookLoans.getString(26), audiobookLoans.getString(27),
+                  String.valueOf(audiobookLoans.getDate("dob")),
+                  audiobookLoans.getString("city")));
+          Loan loan = new Loan(eBook, borrower,
+              String.valueOf(ebookLoans.getDate("deadline")),
+              String.valueOf(ebookLoans.getDate("loan_date")),
+              String.valueOf(ebookLoans.getDate("return_date")),
+              ebookLoans.getInt("loan_no"));
+          loans.add(loan);
+        }
 
         return loans;
       }
@@ -153,8 +249,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     catch (SQLException throwables)
     {
       throwables.printStackTrace();
-    }
-    return null;
+    } return null;
   }
 
   @Override public void endLoan(int loanID)
