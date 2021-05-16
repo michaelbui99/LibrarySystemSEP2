@@ -1,6 +1,6 @@
 package client.model.material.strategy;
 
-import client.model.material.Material;
+import shared.materials.Material;
 import database.material.MaterialDAOImpl;
 
 import java.sql.SQLException;

@@ -1,7 +1,7 @@
 package database.material;
 
-import client.model.material.Place;
-import client.model.material.audio.CD;
+import shared.places.Place;
+import shared.materials.audio.CD;
 import database.BaseDAO;
 import database.place.PlaceImpl;
 
@@ -31,7 +31,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     return instance;
   }
 
-  @Override public void create(int material_id, double length_, Place place)
+  @Override public void create(int material_id, int length_, Place place)
       throws SQLException
   {
     try (Connection connection = getConnection())
@@ -47,7 +47,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
             "INSERT INTO CD (material_id, length_, place_id) values (?,?,?)",
             PreparedStatement.RETURN_GENERATED_KEYS);
         stm.setInt(1, material_id);
-        stm.setDouble(2, length_);
+        stm.setInt(2, length_);
         stm.setInt(3, p.getPlaceId());
 
         stm.executeUpdate();
@@ -64,7 +64,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
             "INSERT INTO CD (material_id, length_, place_id) values (?,?,?)",
             PreparedStatement.RETURN_GENERATED_KEYS);
         stm.setInt(1, material_id);
-        stm.setDouble(2, length_);
+        stm.setInt(2, length_);
         stm.setInt(3, pId);
 
         stm.executeUpdate();

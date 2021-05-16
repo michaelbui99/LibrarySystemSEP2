@@ -1,10 +1,10 @@
 package server.model.user;
 
-import client.model.loan.Address;
-import client.model.user.borrower.Borrower;
-import client.model.user.borrower.BorrowerList;
-import client.model.user.librarian.Librarian;
-import client.model.user.librarian.LibrarianList;
+import shared.places.Address;
+import shared.person.borrower.Borrower;
+import shared.person.borrower.BorrowerList;
+import shared.person.librarian.Librarian;
+import shared.person.librarian.LibrarianList;
 import database.user.borrower.BorrowerImpl;
 import database.user.librarian.LibrarianImpl;
 import shared.util.EventTypes;

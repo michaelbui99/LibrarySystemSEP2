@@ -1,6 +1,6 @@
 package database.address;
 
-import client.model.loan.Address;
+import shared.places.Address;
 import database.BaseDAO;
 
 import java.sql.Connection;

@@ -1,6 +1,6 @@
 package database;
 
-import client.model.loan.Loan;
+import shared.loan.Loan;
 import database.loan.LoanDAO;
 import database.loan.LoanDAOImpl;
 import org.junit.jupiter.api.BeforeEach;

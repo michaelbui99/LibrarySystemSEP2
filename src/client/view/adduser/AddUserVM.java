@@ -1,7 +1,7 @@
 package client.view.adduser;
 
 import client.core.ModelFactoryClient;
-import client.model.loan.Address;
+import shared.places.Address;
 
 public class AddUserVM
 {

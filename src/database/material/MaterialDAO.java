@@ -1,6 +1,6 @@
 package database.material;
 
-import client.model.material.Material;
+import shared.materials.Material;
 
 import java.sql.SQLException;
 import java.util.List;

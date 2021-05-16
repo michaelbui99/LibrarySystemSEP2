@@ -1,15 +1,13 @@
 package server.network.user;
 
-import client.model.loan.Address;
-import client.model.user.borrower.Borrower;
-import client.model.user.librarian.Librarian;
+import shared.places.Address;
+import shared.person.borrower.Borrower;
+import shared.person.librarian.Librarian;
 import server.core.ModelFactoryServer;
-import server.model.user.UserModelServer;
-import shared.UserServer;
+import shared.servers.UserServer;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.SQLException;
 
 public class UserServerImpl implements UserServer
 {

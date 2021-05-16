@@ -1,7 +1,7 @@
 package database.user.librarian;
 
-import client.model.user.librarian.Librarian;
-import client.model.loan.Address;
+import shared.person.librarian.Librarian;
+import shared.places.Address;
 
 import java.sql.SQLException;
 

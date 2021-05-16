@@ -1,12 +1,11 @@
 package server.network.loan;
 
-import client.model.loan.Loan;
-import client.model.material.Material;
-import client.model.user.borrower.Borrower;
+import shared.loan.Loan;
+import shared.materials.Material;
+import shared.person.borrower.Borrower;
 import server.core.ModelFactoryServer;
-import server.model.loan.LoanModelServer;
-import shared.ClientCallback;
-import shared.LoanServer;
+import shared.servers.ClientCallback;
+import shared.servers.LoanServer;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeEvent;

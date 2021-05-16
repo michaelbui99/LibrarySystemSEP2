@@ -1,7 +1,7 @@
 package database.material;
 
-import client.model.material.reading.EBook;
-import client.model.material.strategy.MaterialCreator;
+import shared.materials.reading.EBook;
+import shared.person.MaterialCreator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

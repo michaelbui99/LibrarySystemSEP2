@@ -1,6 +1,6 @@
 package client.model.loan.loanstates;
 
-import client.model.loan.Loan;
+import shared.loan.Loan;
 
 import java.io.Serializable;
 

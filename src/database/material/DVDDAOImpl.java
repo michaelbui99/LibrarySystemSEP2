@@ -1,7 +1,7 @@
 package database.material;
 
-import client.model.material.DVD;
-import client.model.material.Place;
+import shared.materials.DVD;
+import shared.places.Place;
 import database.BaseDAO;
 import database.place.PlaceImpl;
 
@@ -32,7 +32,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
   }
 
   @Override public void create(int material_id, String subtitle_lang,
-      String length_, Place place) throws SQLException
+      int length_, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -46,7 +46,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
           PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, material_id);
       stm.setString(2, subtitle_lang);
-      stm.setString(3, length_);
+      stm.setInt(3, length_);
       stm.setInt(4, p.getPlaceId());
 
       stm.executeUpdate();
@@ -63,7 +63,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
             PreparedStatement.RETURN_GENERATED_KEYS);
         stm.setInt(1, material_id);
         stm.setString(2, subtitle_lang);
-        stm.setString(3, length_);
+        stm.setInt(3, length_);
         stm.setInt(4, pId);
 
         stm.executeUpdate();

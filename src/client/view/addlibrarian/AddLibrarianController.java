@@ -1,7 +1,7 @@
 package client.view.addlibrarian;
 
 import client.core.ViewModelFactory;
-import client.model.loan.Address;
+import shared.places.Address;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,11 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
 public class AddLibrarianController

@@ -1,8 +1,8 @@
 package database.loan;
 
-import client.model.loan.Loan;
-import client.model.material.Material;
-import client.model.user.borrower.Borrower;
+import shared.loan.Loan;
+import shared.materials.Material;
+import shared.person.borrower.Borrower;
 
 import java.util.List;
 

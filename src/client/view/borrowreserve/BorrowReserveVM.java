@@ -1,8 +1,6 @@
 package client.view.borrowreserve;
 
 import client.core.ModelFactoryClient;
-import client.model.material.Material;
-import client.model.user.borrower.Borrower;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

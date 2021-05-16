@@ -1,7 +1,7 @@
 package database.user.borrower;
 
-import client.model.loan.Address;
-import client.model.user.borrower.Borrower;
+import shared.places.Address;
+import shared.person.borrower.Borrower;
 import database.BaseDAO;
 import database.address.AddressImpl;
 

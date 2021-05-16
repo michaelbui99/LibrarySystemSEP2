@@ -1,6 +1,5 @@
 package server.network;
 
-import server.core.ModelFactoryServer;
 import server.model.chat.ChatModelServer;
 import server.model.loan.LoanModelServer;
 import server.model.user.UserModelServer;
@@ -8,6 +7,10 @@ import server.network.loan.LoanServerImpl;
 import server.network.material.MaterialServerImpl;
 import server.network.user.UserServerImpl;
 import shared.*;
+import shared.servers.ChatServer;
+import shared.servers.LoanServer;
+import shared.servers.MaterialServer;
+import shared.servers.UserServer;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
