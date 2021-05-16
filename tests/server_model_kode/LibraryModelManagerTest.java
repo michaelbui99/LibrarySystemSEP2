@@ -1,8 +1,8 @@
 //package server_model_kode;
 //
-//import client.model.loan.Loan;
-//import client.model.material.Material;
-//import client.model.material.reading.Book;
+//import shared.loan.Loan;
+//import shared.materials.Material;
+//import shared.materials.reading.Book;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //

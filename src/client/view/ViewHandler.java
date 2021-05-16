@@ -136,6 +136,14 @@ public class ViewHandler extends Application
             .getController();
         administrationController.init();
         stage.setTitle("Administration");
+        break;
+      case "ConfirmationRegisterMaterial":
+        loader.setLocation(
+            getClass().getResource("registermaterial/" + id + "View.fxml"));
+        root = loader.load();
+        RegisterMaterialController registerMaterialController1 = loader.getController();
+        registerMaterialController1.init();
+        stage.setTitle("Confirmation");
     }
     scene = new Scene(root);
     stage.setScene(scene);

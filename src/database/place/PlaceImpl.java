@@ -1,6 +1,6 @@
 package database.place;
 
-import client.model.material.Place;
+import shared.places.Place;
 import database.BaseDAO;
 
 import java.sql.Connection;

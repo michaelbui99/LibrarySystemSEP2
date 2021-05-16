@@ -1,6 +1,6 @@
 package client.model.chat;
 
-import shared.PropertyChangeSubject;
+import shared.servers.PropertyChangeSubject;
 
 import java.io.IOException;
 import java.util.List;

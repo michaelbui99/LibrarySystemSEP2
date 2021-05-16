@@ -1,14 +1,8 @@
 package client.model.material.strategy;
 
-import client.model.material.Material;
-import client.model.material.audio.AudioBook;
-import client.model.material.MaterialList;
-import database.BaseDAO;
+import shared.materials.Material;
 import database.material.MaterialDAOImpl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 

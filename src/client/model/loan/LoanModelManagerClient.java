@@ -1,10 +1,10 @@
 package client.model.loan;
 
-import client.model.material.Material;
-import client.model.user.borrower.Borrower;
+import shared.loan.Loan;
+import shared.materials.Material;
+import shared.person.borrower.Borrower;
 import client.network.Client;
 import client.network.RMIClient;
-import client.network.RMIClientImpl;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;

@@ -1,13 +1,13 @@
 package database.material;
 
-import client.model.material.DVD;
-import client.model.material.Material;
-import client.model.material.Place;
-import client.model.material.audio.AudioBook;
-import client.model.material.audio.CD;
-import client.model.material.reading.Book;
-import client.model.material.reading.EBook;
-import client.model.material.strategy.MaterialCreator;
+import shared.materials.DVD;
+import shared.materials.Material;
+import shared.places.Place;
+import shared.materials.audio.AudioBook;
+import shared.materials.audio.CD;
+import shared.materials.reading.Book;
+import shared.materials.reading.EBook;
+import shared.person.MaterialCreator;
 import database.BaseDAO;
 
 import java.sql.*;

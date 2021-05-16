@@ -1,14 +1,9 @@
 package client.model.material.strategy;
 
-import client.model.material.DVD;
-import client.model.material.Material;
-import client.model.material.MaterialList;
+import shared.materials.Material;
 import database.BaseDAO;
 import database.material.MaterialDAOImpl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 

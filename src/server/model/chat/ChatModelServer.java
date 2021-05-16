@@ -1,8 +1,7 @@
 package server.model.chat;
 
-import shared.PropertyChangeSubject;
+import shared.servers.PropertyChangeSubject;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface ChatModelServer extends PropertyChangeSubject

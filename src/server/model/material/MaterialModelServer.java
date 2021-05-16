@@ -1,10 +1,10 @@
 package server.model.material;
 
-import client.model.material.Material;
-import client.model.material.Place;
-import client.model.material.strategy.MaterialCreator;
+import shared.materials.Material;
+import shared.places.Place;
+import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
-import shared.PropertyChangeSubject;
+import shared.servers.PropertyChangeSubject;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -24,13 +24,13 @@ public interface MaterialModelServer extends PropertyChangeSubject
   void createDVDCopy(int materialID);
 
   void registerCD(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, Place place, String genre,
+      String targetAudience, String language, int playDuration, Place place, String genre,
       String url);
 
   void createCDCopy(int materialID);
 
   void registerEBook(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, String licenseNr, MaterialCreator author, String genre,
+      String targetAudience, String language, String isbn, int pageCount, int licenseNr, MaterialCreator author, String genre,
       String url);
 
   void createEBookCopy(int materialID);
@@ -38,7 +38,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      double playDuration, String genre, MaterialCreator author, String url);
+      int playDuration, String genre, MaterialCreator author, String url);
 
   void createAudioBookCopy(int materialID);
 

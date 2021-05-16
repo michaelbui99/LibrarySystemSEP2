@@ -1,8 +1,8 @@
 package database.material;
 
-import client.model.material.Place;
-import client.model.material.reading.Book;
-import client.model.material.strategy.MaterialCreator;
+import shared.places.Place;
+import shared.materials.reading.Book;
+import shared.person.MaterialCreator;
 import database.BaseDAO;
 import database.materialcreator.MaterialCreatorImpl;
 import database.place.PlaceImpl;

@@ -1,6 +1,10 @@
 package shared;
 
-import java.io.Serializable;
+import shared.servers.ChatServer;
+import shared.servers.LoanServer;
+import shared.servers.MaterialServer;
+import shared.servers.UserServer;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

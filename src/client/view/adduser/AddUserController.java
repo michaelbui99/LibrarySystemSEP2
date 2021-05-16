@@ -1,7 +1,7 @@
 package client.view.adduser;
 
 import client.core.ViewModelFactory;
-import client.model.loan.Address;
+import shared.places.Address;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

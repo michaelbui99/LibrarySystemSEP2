@@ -1,8 +1,7 @@
 package client.model.material.strategy;
 
-import client.model.material.Material;
+import shared.materials.Material;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class test

@@ -1,7 +1,7 @@
 package server.model.user;
 
-import client.model.loan.Address;
-import client.model.user.borrower.Borrower;
+import shared.places.Address;
+import shared.person.borrower.Borrower;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

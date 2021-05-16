@@ -1,6 +1,6 @@
 package database.materialcreator;
 
-import client.model.material.strategy.MaterialCreator;
+import shared.person.MaterialCreator;
 import database.BaseDAO;
 
 import java.sql.*;

@@ -1,7 +1,7 @@
 package client.view.search;
 
 import client.core.ModelFactoryClient;
-import client.model.material.Material;
+import shared.materials.Material;
 import client.model.material.MaterialModelClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

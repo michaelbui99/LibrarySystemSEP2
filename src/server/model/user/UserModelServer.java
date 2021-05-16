@@ -1,11 +1,9 @@
 package server.model.user;
 
-import client.model.loan.Address;
-import client.model.user.borrower.Borrower;
-import client.model.user.librarian.Librarian;
-import shared.PropertyChangeSubject;
-
-import java.sql.SQLException;
+import shared.places.Address;
+import shared.person.borrower.Borrower;
+import shared.person.librarian.Librarian;
+import shared.servers.PropertyChangeSubject;
 
 public interface UserModelServer extends PropertyChangeSubject
 {

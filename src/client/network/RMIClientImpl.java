@@ -1,13 +1,13 @@
 package client.network;
 
-import client.model.loan.Address;
-import client.model.loan.Loan;
-import client.model.material.Material;
-import client.model.material.Place;
-import client.model.material.strategy.MaterialCreator;
-import client.model.user.borrower.Borrower;
-import client.model.user.librarian.Librarian;
-import shared.ClientCallback;
+import shared.places.Address;
+import shared.loan.Loan;
+import shared.materials.Material;
+import shared.places.Place;
+import shared.person.MaterialCreator;
+import shared.person.borrower.Borrower;
+import shared.person.librarian.Librarian;
+import shared.servers.ClientCallback;
 import shared.Server;
 import shared.util.Constants;
 import shared.util.EventTypes;
@@ -119,7 +119,8 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      //throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
     }
   }
 

@@ -1,8 +1,7 @@
 package database.materialcreator;
 
-import client.model.material.strategy.MaterialCreator;
+import shared.person.MaterialCreator;
 
-import java.sql.Date;
 import java.sql.SQLException;
 
 public interface MaterialCreatorDAO

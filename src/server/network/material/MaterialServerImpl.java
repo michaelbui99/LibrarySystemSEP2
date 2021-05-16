@@ -1,27 +1,40 @@
 package server.network.material;
 
-import client.model.material.Place;
-import client.model.material.strategy.MaterialCreator;
+import shared.places.Place;
+import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
-import shared.MaterialServer;
+import server.core.ModelFactoryServer;
+import shared.servers.MaterialServer;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 public class MaterialServerImpl implements MaterialServer
 {
-
-
+  public MaterialServerImpl()
+  {
+    try
+    {
+      UnicastRemoteObject.exportObject(this, 0);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+  }
 
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
       Place place, MaterialCreator author, String genre, String url)
-      throws RemoteException
   {
-
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .registerBook(title, publisher, releaseDate, description, tags,
+            targetAudience, language, isbn, pageCount, place, author, genre,
+            url);
   }
 
-  @Override public void createBookCopy(int materialID) throws RemoteException
+  @Override public void createBookCopy(int materialID)
   {
 
   }
@@ -30,12 +43,11 @@ public class MaterialServerImpl implements MaterialServer
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
       int playDuration, Place placeID, String genre, String url)
-      throws RemoteException
   {
 
   }
 
-  @Override public void createDVDCopy(int materialID) throws RemoteException
+  @Override public void createDVDCopy(int materialID)
   {
 
   }
@@ -43,12 +55,12 @@ public class MaterialServerImpl implements MaterialServer
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, double playDuration, Place place,
-      String genre, String url) throws RemoteException
+      String genre, String url)
   {
 
   }
 
-  @Override public void createCDCopy(int materialID) throws RemoteException
+  @Override public void createCDCopy(int materialID)
   {
 
   }
@@ -57,12 +69,11 @@ public class MaterialServerImpl implements MaterialServer
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
       String licenseNr, MaterialCreator author, String genre, String url)
-      throws RemoteException
   {
 
   }
 
-  @Override public void createEBookCopy(int materialID) throws RemoteException
+  @Override public void createEBookCopy(int materialID)
   {
 
   }
@@ -70,19 +81,17 @@ public class MaterialServerImpl implements MaterialServer
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, double playDuration, String genre,
-      MaterialCreator author, String url) throws RemoteException
+      MaterialCreator author, String url)
   {
 
   }
 
   @Override public void createAudioBookCopy(int materialID)
-      throws RemoteException
   {
 
   }
 
   @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
-      throws RemoteException
   {
 
   }

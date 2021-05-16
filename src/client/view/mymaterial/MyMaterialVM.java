@@ -1,10 +1,7 @@
 package client.view.mymaterial;
 
 import client.core.ModelFactoryClient;
-import client.model.loan.Loan;
-import client.model.loan.LoanModelClient;
-import client.model.loan.LoanModelManagerClient;
-import database.loan.LoanDAOImpl;
+import shared.loan.Loan;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

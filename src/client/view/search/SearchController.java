@@ -1,8 +1,7 @@
 package client.view.search;
 
 import client.core.ViewModelFactory;
-import client.model.loan.Loan;
-import client.model.material.Material;
+import shared.materials.Material;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

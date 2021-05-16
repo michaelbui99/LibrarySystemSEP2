@@ -1,7 +1,9 @@
 package client.model.material;
 
-import client.model.material.strategy.MaterialCreator;
-import shared.PropertyChangeSubject;
+import shared.materials.Material;
+import shared.person.MaterialCreator;
+import shared.places.Place;
+import shared.servers.PropertyChangeSubject;
 
 import java.util.List;
 
@@ -13,9 +15,10 @@ public interface MaterialModelClient extends
    * Registers a new Material in the system and binds it to a book.
    *
    */
-  void registerBook(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, Place place, MaterialCreator author, String genre,
-      String url);
+  void registerBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, String isbn, int pageCount,
+      Place place, MaterialCreator author, String genre, String url);
 
   void createBookCopy(int materialID);
 

@@ -1,12 +1,11 @@
 package server.model.material;
 
-import client.model.material.Material;
-import client.model.material.MaterialList;
-import client.model.material.Place;
-import client.model.material.reading.Book;
-import client.model.material.strategy.MaterialCreator;
+import shared.materials.Material;
+import shared.materials.MaterialList;
+import shared.places.Place;
+import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
-import database.material.BookDAOImpl;
+import database.material.*;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -29,7 +28,20 @@ public class MaterialModelManagerServer implements MaterialModelServer
       String targetAudience, String language, String isbn, int pageCount,
       Place place, MaterialCreator author, String genre, String url)
   {
+    int materialID = 0;
+    try
+    {
+      materialID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, targetAudience,
+              language, genre, url);
+      BookDAOImpl.getInstance()
+          .create(materialID, isbn, pageCount, author, place);
     }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
   @Override public void createBookCopy(int materialID)
   {
@@ -41,7 +53,19 @@ public class MaterialModelManagerServer implements MaterialModelServer
       String targetAudience, String language, String subtitlesLanguage,
       int playDuration, Place place, String genre, String url)
   {
-
+    int materialID = 0;
+    try
+    {
+      materialID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, targetAudience,
+              language, genre, url);
+      DVDDAOImpl.getInstance()
+          .create(materialID, subtitlesLanguage, playDuration, place);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public void createDVDCopy(int materialID)
@@ -51,10 +75,21 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, Place place,
+      String targetAudience, String language, int playDuration, Place place,
       String genre, String url)
   {
-
+    int materialID = 0;
+    try
+    {
+      materialID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, targetAudience,
+              language, genre, url);
+      CDDAOImpl.getInstance().create(materialID, playDuration, place);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public void createCDCopy(int materialID)
@@ -65,9 +100,20 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, MaterialCreator author, String genre, String url)
+      int licenseNr, MaterialCreator author, String genre, String url)
   {
-
+    int materialID = 0;
+    try
+    {
+      materialID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, targetAudience,
+              language, genre, url);
+      EbookDAOImpl.getInstance().create(materialID, pageCount, author, licenseNr);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public void createEBookCopy(int materialID)
@@ -77,17 +123,26 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, String genre,
+      String targetAudience, String language, int playDuration, String genre,
       MaterialCreator author, String url)
   {
-
+    int materialID = 0;
+    try
+    {
+      materialID = MaterialDAOImpl.getInstance().create(title, publisher, releaseDate, description,
+          targetAudience, language, genre, url);
+    AudioBookDAOImpl.getInstance().create(materialID, playDuration, author);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public void createAudioBookCopy(int materialID)
   {
 
   }
-
 
   @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
   {

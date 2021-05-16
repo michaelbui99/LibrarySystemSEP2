@@ -1,8 +1,9 @@
 package client.model.loan;
 
-import client.model.material.Material;
-import client.model.user.borrower.Borrower;
-import shared.PropertyChangeSubject;
+import shared.loan.Loan;
+import shared.materials.Material;
+import shared.person.borrower.Borrower;
+import shared.servers.PropertyChangeSubject;
 
 import java.util.List;
 import java.util.NoSuchElementException;
