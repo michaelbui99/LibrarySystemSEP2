@@ -61,8 +61,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         int generatedKey = keys.getInt(1);
 
         PreparedStatement stm2 = connection.prepareStatement(
-            "update " + material.getMaterialType().toLowerCase()
-                + "set available = false where material_id = ? and copy_no = ?");
+            "update material_copy set available = false where material_id = ? and copy_no = ?");
         stm.setInt(1, material.getMaterialID());
         stm.setInt(2, material.getCopyNumber());
         return new Loan(material, borrower, deadline, loanDate, null,
