@@ -1,14 +1,15 @@
 package database.material;
 
+import database.BaseDAO;
 import shared.materials.DVD;
 import shared.materials.Material;
-import shared.places.Place;
+import shared.materials.MaterialStatus;
 import shared.materials.audio.AudioBook;
 import shared.materials.audio.CD;
 import shared.materials.reading.Book;
 import shared.materials.reading.EBook;
 import shared.person.MaterialCreator;
-import database.BaseDAO;
+import shared.places.Place;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -149,7 +150,6 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       String keywords, String genre, String targetAudience, String type)
       throws SQLException
   {
-
     //list where we store the results
     List<Material> ml = new ArrayList<>();
     try (Connection connection = getConnection())
@@ -157,10 +157,16 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       //get resultSet for each category
 
       List<String> queryFragments = new ArrayList<>();
-      String sql =
-          "SELECT * FROM material join " + type + " on material.material_id = "
-              + type + ".material_id  ";
-
+      String sql = "SELECT * FROM material join " + type + " on material.material_id = " + type + ".material_id  join material_copy mt on " + type + ".material_id = mt.material_id " ;
+      if (!type.equals("e_book") && !type.equals("audiobook")){
+        sql += "join place p on " + type + ".place_id = p.place_id ";
+      }
+      if (!type.equals("cd") && !type.equals("dvd")){
+        sql += "join material_creator mc on " + type + ".author = mc.person_id ";
+      }
+      if(!keywords.isEmpty()){
+        sql += " join material_keywords mk on " + type + ".material_id = mk.material_id ";
+      }
       if (!title.isEmpty() || !language.isEmpty() || !keywords.isEmpty()
           || !genre.isEmpty() || !targetAudience.isEmpty())
       {
@@ -169,27 +175,27 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
       if (!title.isEmpty())
       {
-        queryFragments.add(" material.title LIKE  (?) ");
+        queryFragments.add(" material.title LIKE  ('%" + title + "%') ");
       }
       if (!language.isEmpty())
       {
-        queryFragments.add(" material.language_ LIKE  (?) ");
+        queryFragments.add(" material.language_  = '" + language + "' ");
       }
       if (!keywords.isEmpty())
       {
-        queryFragments.add(" material.keywords LIKE  (?) ");
+        queryFragments.add(" mk.keyword LIKE  ('%" + keywords + "%')");
       }
       if (!genre.isEmpty())
       {
-        queryFragments.add(" material.genre LIKE  (?) ");
+        queryFragments.add(" material.genre LIKE ('%" + genre + "%')");
       }
       if (!targetAudience.isEmpty())
       {
-        queryFragments.add(" material.audience LIKE  (?) ");
+        queryFragments.add(" material.audience = '" + targetAudience + "' ");
       }
       // i can not put a question mark because i do not know how many parameters are we searching by and it could be zero and it could be 5
       sql += String.join(" and ", queryFragments);
-
+      System.out.println(sql);
       PreparedStatement stm = connection.prepareStatement(sql);
       ResultSet resultSet = stm.executeQuery();
       while (resultSet.next())
@@ -217,7 +223,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
             break;
 
           case "book":
-            ml.add(new Book(
+            Book book = new Book(
                 resultSet.getInt("material_id"),
                 MaterialDAOImpl.getInstance()
                     .getCopyNumberForMaterial(
@@ -232,72 +238,82 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
                 resultSet.getString("isbn"),
                 resultSet.getInt("page_no"),
                 new Place(resultSet.getInt("hall_no"),
-                          resultSet.getString("department"),
-                          resultSet.getString("creator_l_name"),
-                          resultSet.getString("genre")),
+                    resultSet.getString("department"),
+                    resultSet.getString("creator_l_name"),
+                    resultSet.getString("genre")),
                 new MaterialCreator(resultSet.getString("f_name"),
-                                    resultSet.getString("l_name"),
-                                    String.valueOf(resultSet.getDate("dob")),
-                                    resultSet.getString("country"))));
+                    resultSet.getString("l_name"),
+                    String.valueOf(resultSet.getDate("dob")),
+                    resultSet.getString("country")));
+                book.setMaterialStatus(!resultSet.getBoolean("available") ? MaterialStatus.NotAvailable : MaterialStatus.Available);
+            ml.add(book);
             break;
 
           case "cd":
-            ml.add(new CD(resultSet.getInt("material_id"),
+            CD cd = new CD(resultSet.getInt("material_id"),
                 MaterialDAOImpl.getInstance()
                     .getCopyNumberForMaterial(resultSet.getInt("material_id")),
                 resultSet.getString("title"), resultSet.getString("publisher"),
                 String.valueOf(resultSet.getDate("release_date")),
                 resultSet.getString("description_of_the_content"),
-                resultSet.getString("keywords"),
+                "",
                 resultSet.getString("audience"),
                 resultSet.getString("language_"),
                 resultSet.getInt("length_"),
                 new Place(resultSet.getInt("hall_no"),
-                          resultSet.getString("department"),
-                          resultSet.getString("creator_l_name"),
-                          resultSet.getString("genre")),
-                resultSet.getString("url")));
+                    resultSet.getString("department"),
+                    resultSet.getString("creator_l_name"),
+                    resultSet.getString("genre")),
+                resultSet.getString("url"));
+            cd.setMaterialStatus(!resultSet.getBoolean("available") ? MaterialStatus.NotAvailable : MaterialStatus.Available);
+            ml.add(cd);
             break;
 
           case "dvd":
-            ml.add(new DVD(resultSet.getInt("material_id"),
+            DVD dvd = (new DVD(resultSet.getInt("material_id"),
                 MaterialDAOImpl.getInstance()
                     .getCopyNumberForMaterial(resultSet.getInt("material_id")),
                 resultSet.getString("title"), resultSet.getString("publisher"),
                 String.valueOf(resultSet.getDate("release_date")),
                 resultSet.getString("description_of_the_content"),
-                resultSet.getString("keywords"),
+                "",
                 resultSet.getString("audience"),
                 resultSet.getString("language_"),
                 resultSet.getString("subtitle_lang"),
                 resultSet.getString("length_"),
                 new Place(resultSet.getInt("hall_no"),
-                          resultSet.getString("department"),
-                          resultSet.getString("creator_l_name"),
-                          resultSet.getString("genre")),
+                    resultSet.getString("department"),
+                    resultSet.getString("creator_l_name"),
+                    resultSet.getString("genre")),
                 resultSet.getString("url")));
+            dvd.setMaterialStatus(!resultSet.getBoolean("available") ? MaterialStatus.NotAvailable : MaterialStatus.Available);
+            ml.add(dvd);
             break;
 
           case "e_book":
-            ml.add(new EBook(resultSet.getInt("material_id"),
+            EBook eBook = new EBook(resultSet.getInt("material_id"),
                 MaterialDAOImpl.getInstance()
                     .getCopyNumberForMaterial(resultSet.getInt("material_id")),
                 resultSet.getString("title"), resultSet.getString("publisher"),
                 String.valueOf(resultSet.getDate("release_date")),
                 resultSet.getString("description_of_the_content"),
-                resultSet.getString("keywords"),
+                "",
                 resultSet.getString("audience"),
                 resultSet.getString("language_"), resultSet.getInt("page_no"),
                 resultSet.getString("license_no"), resultSet.getString("genre"),
                 new MaterialCreator(resultSet.getString("f_name"),
-                                    resultSet.getString("l_name"),
-                                    String.valueOf(resultSet.getDate("dob")),
-                                    resultSet.getString("country"))));
+                    resultSet.getString("l_name"),
+                    String.valueOf(resultSet.getDate("dob")),
+                    resultSet.getString("country")));
+            eBook.setMaterialStatus(!resultSet.getBoolean("available") ? MaterialStatus.NotAvailable : MaterialStatus.Available);
+            ml.add(eBook);
             break;
+          default: break;
         }
       }
     }
 
+    System.out.println("result size: " + ml.size());
     return ml;
   }
 
