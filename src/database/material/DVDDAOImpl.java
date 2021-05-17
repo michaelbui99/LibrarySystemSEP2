@@ -1,7 +1,7 @@
 package database.material;
 
 import shared.materials.DVD;
-import shared.places.Place;
+import shared.materials.Place;
 import database.BaseDAO;
 import database.place.PlaceImpl;
 

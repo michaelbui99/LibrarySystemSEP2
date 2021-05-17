@@ -1,6 +1,6 @@
 package shared.materials.reading;
 
-import shared.places.Place;
+import shared.materials.Place;
 import shared.person.MaterialCreator;
 
 import java.io.Serializable;

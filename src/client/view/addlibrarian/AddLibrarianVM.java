@@ -1,7 +1,7 @@
 package client.view.addlibrarian;
 
 import client.core.ModelFactoryClient;
-import shared.places.Address;
+import shared.person.Address;
 
 public class AddLibrarianVM
 {

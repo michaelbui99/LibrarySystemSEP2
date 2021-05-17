@@ -1,10 +1,10 @@
 package database.loan;
 
-import shared.places.Address;
+import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.DVD;
 import shared.materials.Material;
-import shared.places.Place;
+import shared.materials.Place;
 import shared.materials.audio.AudioBook;
 import shared.materials.audio.CD;
 import shared.materials.reading.Book;
@@ -93,7 +93,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         Address address = new Address(
             selectBorrowerAddressResult.getInt("address_id"),
             selectBorrowerAddressResult.getString("street_name"),
-            selectBorrowerAddressResult.getInt("street_no"),
+            selectBorrowerAddressResult.getString("street_no"),
             selectBorrowerAddressResult.getInt("zip_code"),
             selectBorrowerAddressResult.getString("city"));
         Borrower borrower = new Borrower(cpr,

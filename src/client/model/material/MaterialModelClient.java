@@ -2,7 +2,7 @@ package client.model.material;
 
 import shared.materials.Material;
 import shared.person.MaterialCreator;
-import shared.places.Place;
+import shared.materials.Place;
 import shared.servers.PropertyChangeSubject;
 
 import java.util.List;

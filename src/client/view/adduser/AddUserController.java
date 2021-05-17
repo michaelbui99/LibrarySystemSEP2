@@ -1,7 +1,7 @@
 package client.view.adduser;
 
 import client.core.ViewModelFactory;
-import shared.places.Address;
+import shared.person.Address;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -194,7 +194,6 @@ public class AddUserController
   @FXML public void onButtonSignup(ActionEvent actionEvent) throws IOException
   {
     int zip_code = Integer.parseInt(zipCode.getText());
-    int street_no = Integer.parseInt(streetNumber.getText());
 
     if ((onMouseExitCheckEmail()) && (onMouseExitCheckFirstName())
         && (onMouseExitCheckLastName()) && (onMouseExitCheckCPR())
@@ -210,7 +209,7 @@ public class AddUserController
           .addUser(cprNumber.getText(), firstName.getText(), lastName.getText(),
               email.getText(), phoneNumber.getText(),
               new Address(city.getText(), streetName.getText(), zip_code,
-                  street_no), password.getText());
+                  streetNumber.getText()), password.getText());
       ViewHandler.getInstance().openView("UserWindow");
     }
   }

@@ -4,7 +4,7 @@ import shared.materials.Material;
 import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategyManager;
 import client.network.Client;
-import shared.places.Place;
+import shared.materials.Place;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

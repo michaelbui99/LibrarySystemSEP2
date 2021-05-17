@@ -1,13 +1,13 @@
 package database.address;
 
-import shared.places.Address;
+import shared.person.Address;
 
 import java.sql.SQLException;
 
 public interface AddressDAO
 {
-  Address create(String city, String streetName, int zipCode, int streetNr) throws
+  Address create(String city, String streetName, int zipCode, String streetNr) throws
       SQLException;
 
-  int getAddressId(String city, String streetName, int zipCode, int streetNr) throws SQLException;
+  int getAddressId(String city, String streetName, int zipCode, String streetNr) throws SQLException;
 }

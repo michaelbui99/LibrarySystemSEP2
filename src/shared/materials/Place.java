@@ -1,4 +1,4 @@
-package shared.places;
+package shared.materials;
 
 import java.io.Serializable;
 

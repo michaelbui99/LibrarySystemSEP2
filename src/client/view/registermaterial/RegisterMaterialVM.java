@@ -1,7 +1,7 @@
 package client.view.registermaterial;
 
 import client.core.ModelFactoryClient;
-import shared.places.Place;
+import shared.materials.Place;
 import shared.person.MaterialCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,11 +17,6 @@ public class RegisterMaterialVM
 
     targetAudiance = FXCollections.observableArrayList();
     targetAudiance.addAll("Voksen", "Barn", "Teenager", "Familie", "Ældre", "Studerende");
-    targetAudiance.add("Barn");
-    targetAudiance.add("Teenager");
-    targetAudiance.add("Familie");
-    targetAudiance.add("Ældre");
-    targetAudiance.add("Studerende");
   }
 
   public ObservableList<String> getMaterialType()

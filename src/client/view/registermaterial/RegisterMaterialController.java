@@ -1,7 +1,7 @@
 package client.view.registermaterial;
 
 import client.core.ViewModelFactory;
-import shared.places.Place;
+import shared.materials.Place;
 import shared.person.MaterialCreator;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
@@ -58,18 +58,15 @@ public class RegisterMaterialController
   @FXML public void onButtonConfirmWindow(ActionEvent actionEvent)
       throws IOException
   {
-    ViewHandler.getInstance().openView("ConfirmationRegisterMaterial");
-  }
-
-  @FXML public void onButtonConfirm(ActionEvent actionEvent)
-  {
+   // ViewHandler.getInstance().openView("ConfirmationRegisterMaterial");
     int page = Integer.parseInt(numberOfPages.getText());
     int hall = Integer.parseInt(hallNumber.getText());
-    int lg = Integer.parseInt(length.getText());
+   // int lg = Integer.parseInt(length.getText());
+
     String rd = String.valueOf(releaseDate.getValue());
     String dob = String.valueOf(dateOfBirth.getValue());
 
-    String type = materialTypeCompo.getValue().toString();
+    String type = materialTypeCompo.getValue();
     String aud = audiance.getValue().toString();
 
     if (type.equals("Book"))
@@ -83,7 +80,7 @@ public class RegisterMaterialController
               new MaterialCreator(firstName.getText(), lastName.getText(), dob,
                   country.getText()), genre.getText(), null);
     }
-    else if (type.equals("EBook"))
+    /*else if (type.equals("EBook"))
     {
       ViewModelFactory.getInstance().getRegisterMaterialVM()
           .addEBook(title.getText(), publisher.getText(), rd,
@@ -118,6 +115,11 @@ public class RegisterMaterialController
               language.getText(), subtitleLanguage.getText(), lg,
               new Place(hall, department.getText(), creatorLastName.getText(),
                   genre.getText()), genre.getText(), null);
-    }
+    }*/
+  }
+
+  @FXML public void onButtonConfirm(ActionEvent actionEvent)
+  {
+
   }
 }

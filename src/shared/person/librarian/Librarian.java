@@ -1,6 +1,6 @@
 package shared.person.librarian;
 
-import shared.places.Address;
+import shared.person.Address;
 
 import java.io.Serializable;
 

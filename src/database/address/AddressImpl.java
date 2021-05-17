@@ -1,6 +1,6 @@
 package database.address;
 
-import shared.places.Address;
+import shared.person.Address;
 import database.BaseDAO;
 
 import java.sql.Connection;
@@ -36,7 +36,7 @@ public class AddressImpl extends BaseDAO implements AddressDAO
   }
 
   @Override public Address create(String city, String streetName, int zipCode,
-      int streetNr) throws SQLException
+      String streetNr) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -46,7 +46,7 @@ public class AddressImpl extends BaseDAO implements AddressDAO
       stm.setString(1, city);
       stm.setInt(2, zipCode);
       stm.setString(3, streetName);
-      stm.setInt(4, streetNr);
+      stm.setString(4, streetNr);
       stm.executeUpdate();
       ResultSet keys = stm.getGeneratedKeys();
       keys.next();
@@ -56,7 +56,7 @@ public class AddressImpl extends BaseDAO implements AddressDAO
   }
 
   @Override public int getAddressId(String city, String streetName, int zipCode,
-      int streetNr) throws SQLException
+      String streetNr) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -65,7 +65,7 @@ public class AddressImpl extends BaseDAO implements AddressDAO
       stm.setString(1, city);
       stm.setInt(2, zipCode);
       stm.setString(3, streetName);
-      stm.setInt(4, streetNr);
+      stm.setString(4, streetNr);
       ResultSet result = stm.executeQuery();
 
       if (result.next())

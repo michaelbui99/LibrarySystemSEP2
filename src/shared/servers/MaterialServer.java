@@ -1,6 +1,6 @@
 package shared.servers;
 
-import shared.places.Place;
+import shared.materials.Place;
 import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
 

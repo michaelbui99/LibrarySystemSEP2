@@ -9,7 +9,7 @@ import shared.materials.audio.CD;
 import shared.materials.reading.Book;
 import shared.materials.reading.EBook;
 import shared.person.MaterialCreator;
-import shared.places.Place;
+import shared.materials.Place;
 
 import java.sql.*;
 import java.util.ArrayList;

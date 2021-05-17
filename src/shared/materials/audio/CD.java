@@ -1,6 +1,6 @@
 package shared.materials.audio;
 
-import shared.places.Place;
+import shared.materials.Place;
 
 import java.io.Serializable;
 

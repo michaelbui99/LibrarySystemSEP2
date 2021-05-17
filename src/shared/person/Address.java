@@ -1,13 +1,13 @@
-package shared.places;
+package shared.person;
 
 import java.io.Serializable;
 
 public class Address implements Serializable
 {
-  private String city, streetName;
-  private int addressId ,zipCode, streetNr;
+  private int addressId ,zipCode;
+  private String city, streetName, streetNr;
 
-  public Address(int addressId, String streetName, int streetNr, int zipCode, String city)
+  public Address(int addressId, String streetName, String streetNr, int zipCode, String city)
   {
     this.addressId = addressId;
     this.streetName = streetName;
@@ -16,7 +16,7 @@ public class Address implements Serializable
     this.city = city;
   }
 
-  public Address(String city, String streetName, int zipCode, int streetNr)
+  public Address(String city, String streetName, int zipCode, String streetNr)
   {
     this.city = city;
     this.streetName = streetName;
@@ -44,7 +44,7 @@ public class Address implements Serializable
     return zipCode;
   }
 
-  public int getStreetNr()
+  public String getStreetNr()
   {
     return streetNr;
   }

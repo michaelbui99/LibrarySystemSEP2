@@ -1,7 +1,7 @@
 package client.view.addlibrarian;
 
 import client.core.ViewModelFactory;
-import shared.places.Address;
+import shared.person.Address;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -214,7 +214,6 @@ public class AddLibrarianController
   {
     int employee_no = Integer.parseInt(employeeNo.getText());
     int zip_code = Integer.parseInt(zipCode.getText());
-    int street_no = Integer.parseInt(streetNumber.getText());
 
     if ((onMouseExitedCheckEmployeeNumber()) && (onMouseExitedCheckEmail())
         && (onMouseExitedCheckFirstName()) && (onMouseExitedCheckLastName())
@@ -232,7 +231,7 @@ public class AddLibrarianController
           .addLibrarian(employee_no, firstName.getText(), lastName.getText(),
               cprNumber.getText(), phoneNumber.getText(), email.getText(),
               new Address(city.getText(), streetName.getText(), zip_code,
-                  street_no), password.getText());
+                  streetNumber.getText()), password.getText());
       ViewHandler.getInstance().openView("Administration");
     }
   }

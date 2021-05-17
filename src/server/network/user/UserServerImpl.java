@@ -1,6 +1,6 @@
 package server.network.user;
 
-import shared.places.Address;
+import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
 import server.core.ModelFactoryServer;

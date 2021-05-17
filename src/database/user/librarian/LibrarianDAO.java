@@ -1,7 +1,7 @@
 package database.user.librarian;
 
 import shared.person.librarian.Librarian;
-import shared.places.Address;
+import shared.person.Address;
 
 import java.sql.SQLException;
 

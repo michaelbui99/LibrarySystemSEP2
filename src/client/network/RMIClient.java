@@ -1,9 +1,9 @@
 package client.network;
 
-import shared.places.Address;
+import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
-import shared.places.Place;
+import shared.materials.Place;
 import shared.person.MaterialCreator;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;

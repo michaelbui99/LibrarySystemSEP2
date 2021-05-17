@@ -1,6 +1,6 @@
 package database.material;
 
-import shared.places.Place;
+import shared.materials.Place;
 import shared.materials.reading.Book;
 import shared.person.MaterialCreator;
 

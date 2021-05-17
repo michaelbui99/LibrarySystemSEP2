@@ -2,7 +2,7 @@ package server.model.material;
 
 import shared.materials.Material;
 import shared.materials.MaterialList;
-import shared.places.Place;
+import shared.materials.Place;
 import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
 import database.material.*;

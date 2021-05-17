@@ -47,7 +47,7 @@ public class MaterialCreatorImpl extends BaseDAO implements MaterialCreatorDAO
       ResultSet keys = stm.getGeneratedKeys();
       keys.next();
       connection.commit();
-      return new MaterialCreator(fName, lName, dob, country);
+      return new MaterialCreator(keys.getInt(1) ,fName, lName, dob, country);
     }
   }
 

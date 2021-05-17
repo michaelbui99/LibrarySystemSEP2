@@ -1,6 +1,6 @@
 package database.user.borrower;
 
-import shared.places.Address;
+import shared.person.Address;
 import shared.person.borrower.Borrower;
 import database.BaseDAO;
 import database.address.AddressImpl;

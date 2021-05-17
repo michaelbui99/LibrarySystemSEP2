@@ -1,6 +1,6 @@
 package server.model.user;
 
-import shared.places.Address;
+import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.borrower.BorrowerList;
 import shared.person.librarian.Librarian;

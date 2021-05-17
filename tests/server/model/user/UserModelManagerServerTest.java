@@ -1,6 +1,6 @@
 package server.model.user;
 
-import shared.places.Address;
+import shared.person.Address;
 import shared.person.borrower.Borrower;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,40 +19,40 @@ class UserModelManagerServerTest
     userModelServer = new UserModelManagerServer();
     borrower = new Borrower("111111-1111", "FirstNameTest", "LastNameTest",
         "test@test.domain", "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest");
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest");
   }
 
   @Test public void registerBorrowerTest() throws SQLException
   {
     userModelServer.create("111111-1111", "FirstNameTest", "LastNameTest",
         "test@test.domain", "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest");
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest");
   }
 
   @Test public void registerBorrowerWithoutCPR() throws SQLException
   {
     assertThrows(NullPointerException.class, ()-> userModelServer.create(null,"FirstNameTest", "LastNameTest",
         "test@test.domain", "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest"));
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest"));
   }
 
   @Test public void registerBorrowerWithoutFirstName() throws SQLException
   {
     assertThrows(NullPointerException.class, ()-> userModelServer.create("111111-1111",null, "LastNameTest",
         "test@test.domain", "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest"));
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest"));
   }
   @Test public void registerBorrowerWithoutLastName() throws SQLException
   {
     assertThrows(NullPointerException.class, ()-> userModelServer.create(null,"FirstNameTest", null,
         "test@test.domain", "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest"));
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest"));
   }
   @Test public void registerBorrowerWithoutEmail() throws SQLException
   {
     assertThrows(NullPointerException.class, ()-> userModelServer.create(null,"FirstNameTest", "LastNameTest",
         null, "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest"));
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest"));
   }
   @Test public void registerBorrowerWithoutAddress() throws SQLException
   {
@@ -65,7 +65,7 @@ class UserModelManagerServerTest
   {
     userModelServer.create("111111-1111", "FirstNameTest", "LastNameTest",
         "test@test.domain", "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest");
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest");
 
   }
 
@@ -73,7 +73,7 @@ class UserModelManagerServerTest
   {
     borrower = new Borrower("111111-1111", "FirstNameTest", "LastNameTest",
         "test@test.domain", "+4511111111",
-        new Address("CityTest", "StreetNameTest", 1, 1111), "PasswordTest");
+        new Address("CityTest", "StreetNameTest", 1, "1111"), "PasswordTest");
     assertTrue(userModelServer.logInBorrower("111111-1111", "PasswordTest"));
   }
 

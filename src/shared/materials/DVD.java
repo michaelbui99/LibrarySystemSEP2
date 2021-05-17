@@ -1,7 +1,5 @@
 package shared.materials;
 
-import shared.places.Place;
-
 import java.io.Serializable;
 
 public class DVD extends Material implements Serializable
