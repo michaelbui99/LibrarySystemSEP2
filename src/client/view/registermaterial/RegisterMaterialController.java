@@ -42,6 +42,29 @@ public class RegisterMaterialController
             .getMaterialType());
     audiance.setItems(ViewModelFactory.getInstance().getRegisterMaterialVM()
         .getTargetAudiance());
+
+    title.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .titleProperty());
+    publisher.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().publisherProperty());
+    description.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().departmentProperty());
+    keywords.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().keywordsProperty());
+    language.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().languageProperty());
+    isbn.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().isbnProperty());
+    releaseDate.promptTextProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().releaseDateProperty());
+    numberOfPages.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().numberOfPagesProperty());
+    firstName.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().firstNameProperty());
+    lastName.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().lastNameProperty());
+    country.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM().countryProperty());
+    dateOfBirth.promptTextProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .dateOfBirthProperty());
+    hallNumber.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .hallNumberProperty());
+    genre.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .genreProperty());
+    creatorLastName.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .creatorLastNameProperty());
+    department.textProperty().bind(ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .departmentProperty());
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)
