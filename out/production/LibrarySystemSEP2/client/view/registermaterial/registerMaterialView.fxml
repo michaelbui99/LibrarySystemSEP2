@@ -112,7 +112,7 @@
                                        </cursor></ComboBox>
                                     <Label layoutX="153.0" layoutY="127.0" text="Vælg typen" />
                                     <Label layoutX="152.0" layoutY="697.0" text="Licens nummer" GridPane.rowIndex="10" />
-                                    <TextField fx:id="licensNumber" disable="false" layoutX="319.0" layoutY="693.0" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                    <TextField fx:id="licensNumber" disable="true" layoutX="319.0" layoutY="693.0" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                        <GridPane.margin>
                                           <Insets right="200.0" />
                                        </GridPane.margin>
@@ -162,13 +162,13 @@
                                        </children>
                                     </HBox>
                                     <Label text="Undertekstsprog" GridPane.rowIndex="13" />
-                                    <TextField fx:id="subtitleLanguage" disable="false" promptText="Undertekstsprog" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                    <TextField fx:id="subtitleLanguage" disable="true" promptText="Undertekstsprog" GridPane.columnIndex="1" GridPane.rowIndex="13">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
                                     </TextField>
                                     <Label text="Længde" GridPane.rowIndex="14" />
-                                    <TextField fx:id="length" disable="false" promptText="Længde" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                                    <TextField fx:id="length" disable="true" promptText="Længde" GridPane.columnIndex="1" GridPane.rowIndex="14">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
