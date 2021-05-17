@@ -40,6 +40,7 @@ public interface MaterialDAO
   // List<EBook> getAllEBooksByTitle(String title) throws SQLException;
   boolean returnMaterial(int materialID, String cpr, int copy_no);
   public int getCopyNumberForMaterial(int materialid);
+  public int getNumberOfAvailableCopies(int materialid);
 
 
 

@@ -132,4 +132,6 @@ public interface Client
 
   void endLoan(Loan loan);
 
+  int numberOfAvailableCopies();
 }
+

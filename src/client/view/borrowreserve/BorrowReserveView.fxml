@@ -63,6 +63,11 @@
                         <Insets left="100.0" />
                      </HBox.margin>
                   </ComboBox>
+                  <TextArea fx:id="availNumber" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" text="Antal kopier tilgængelige: 0">
+                     <HBox.margin>
+                        <Insets left="80.0" />
+                     </HBox.margin>
+                  </TextArea>
                </children>
             </HBox>
             <HBox prefHeight="90.0" prefWidth="602.0">

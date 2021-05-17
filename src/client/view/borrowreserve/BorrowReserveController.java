@@ -2,9 +2,11 @@ package client.view.borrowreserve;
 
 import client.core.ViewModelFactory;
 import client.view.ViewHandler;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,12 +27,16 @@ public class BorrowReserveController {
     private Image imageTest;
 
     @FXML
+    private TextArea availNumber;
+
+    @FXML
     ImageView materialImage = new ImageView(imageTest);
 
 
     public void init() throws FileNotFoundException {
         materialeInfo.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialInfoProp());
-      //  materialImage.imageProperty().bind(new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL())));
+        availNumber.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getAvailNumberProp().asString());
+       // materialImage.imageProperty().bind((ObservableValue<? extends Image>) new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL())));
         try {
             imageTest = new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL()));
         } catch (FileNotFoundException e) {

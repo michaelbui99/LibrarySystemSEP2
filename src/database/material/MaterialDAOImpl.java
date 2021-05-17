@@ -120,6 +120,27 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return copyno;
   }
 
+  @Override
+  public int getNumberOfAvailableCopies(int materialid) {
+    int availableCopies = 0;
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+              "SELECT count (*) as availability_no  FROM material_copy where available = true AND material_id = "
+                      + materialid);
+      ResultSet resultSet = stm.executeQuery();
+      if (resultSet.next())
+      {
+        return resultSet.getInt("availability_no");
+      }
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return availableCopies;
+  }
+
   public boolean deliverMaterial(int materialID, String cpr, int copy_no)
   {
 

@@ -37,6 +37,12 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   }
 
+  @Override
+  public int numberOfAvailableCopies()
+  {
+    return client.numberOfAvailableCopies();
+  }
+
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
