@@ -1,10 +1,12 @@
 package database.material;
 
+import shared.materials.Material;
 import shared.materials.audio.AudioBook;
 import shared.person.MaterialCreator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public interface AudioBookDAO
@@ -15,4 +17,9 @@ public interface AudioBookDAO
 
     ResultSet getAudioBookDetailsByID(int materialID) throws SQLException,
             NoSuchElementException;
+
+    List<Material> findMaterial(String title, String language,
+        String keywords, String genre, String targetAudience);
+
+
 }

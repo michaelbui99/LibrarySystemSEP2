@@ -1,5 +1,6 @@
 package client.model.material;
 
+import client.model.material.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategyManager;
@@ -113,10 +114,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createAudioBookCopy(materialID);
   }
 
+
   @Override public List<Material> findMaterial(String title, String language,
-      String keywords, String genre, String targetAudience, String type)
+      String keywords, String genre, String targetAudience, SearchStrategy searchStrategy)
   {
-    searchStrategyManager.selectStrategy(type);
+
     return searchStrategyManager
         .findMaterial(title, language, keywords, genre, targetAudience);
   }

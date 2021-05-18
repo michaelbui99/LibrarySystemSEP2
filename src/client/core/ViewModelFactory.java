@@ -100,9 +100,7 @@ public class ViewModelFactory
   {
     if (searchVM == null)
     {
-      searchVM = new SearchVM(
-          ModelFactoryClient.getInstance().getMaterialModelClient()
-      );
+      searchVM = new SearchVM();
     }
     return searchVM;
   }
