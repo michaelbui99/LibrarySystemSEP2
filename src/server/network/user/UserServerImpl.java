@@ -1,5 +1,6 @@
 package server.network.user;
 
+import client.core.ModelFactoryClient;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
@@ -59,5 +60,11 @@ public class UserServerImpl implements UserServer
   @Override public Librarian getLoginLibrarian()
   {
     return ModelFactoryServer.getInstance().getUserModel().getLoginLibrarian();
+  }
+
+  @Override public void setBorrowerCpr(String borrowerCpr)
+      throws RemoteException
+  {
+    ModelFactoryServer.getInstance().getUserModel().setBorrowerCpr(borrowerCpr);
   }
 }

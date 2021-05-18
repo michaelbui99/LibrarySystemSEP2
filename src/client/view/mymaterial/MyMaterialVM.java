@@ -15,7 +15,7 @@ public class MyMaterialVM
   public MyMaterialVM()
   {
     //TODO: Find ud af hvordan vi holder styr på hvem der er logget på.
-    //TODO: ændre cpr
+
 
     activeLoans = FXCollections.observableArrayList();
 

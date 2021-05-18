@@ -133,5 +133,8 @@ public interface Client
   void endLoan(Loan loan);
 
   int numberOfAvailableCopies();
+
+//  void setBorrowerCpr(String borrowerCpr);
+
 }
 

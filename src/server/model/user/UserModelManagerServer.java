@@ -18,7 +18,7 @@ public class UserModelManagerServer implements UserModelServer
   private PropertyChangeSupport support;
   private BorrowerList borrowerList;
   private LibrarianList librarianList;
-  private String borrowerSpr;
+  private String borrowerCpr;
   private int librarianEMPNr;
 
   public UserModelManagerServer()
@@ -57,7 +57,7 @@ public class UserModelManagerServer implements UserModelServer
 
       if (login)
       {
-        borrowerSpr = cprNo;
+        borrowerCpr = cprNo;
       }
 
     }
@@ -74,7 +74,7 @@ public class UserModelManagerServer implements UserModelServer
     Borrower borrower = null;
     try
     {
-      borrower = BorrowerImpl.getInstance().getBorrower(borrowerSpr);
+      borrower = BorrowerImpl.getInstance().getBorrower(borrowerCpr);
     }
     catch (SQLException throwables)
     {
@@ -116,6 +116,11 @@ public class UserModelManagerServer implements UserModelServer
     }
     support.firePropertyChange(EventTypes.LOGINREQUESTED, null, login);
     return login;
+  }
+
+  public void setBorrowerCpr(String borrowerCpr)
+  {
+    this.borrowerCpr = borrowerCpr;
   }
 
   @Override public Librarian getLoginLibrarian()

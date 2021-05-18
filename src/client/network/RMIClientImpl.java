@@ -393,6 +393,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     support.removePropertyChangeListener(listener);
   }
 
+//  @Override public void setBorrowerCpr(String borrowerCpr)
+//  {
+//    try
+//    {
+//      server.getUserServer().setBorrowerCpr(borrowerCpr);
+//    }
+//    catch (RemoteException e)
+//    {
+//      e.printStackTrace();
+//    }
+//  }
+
   @Override public void loanRegistered(Loan loan)
   {
     support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);

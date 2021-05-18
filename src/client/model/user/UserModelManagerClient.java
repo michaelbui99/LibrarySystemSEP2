@@ -57,6 +57,11 @@ public class UserModelManagerClient implements UserModelClient
     return client.getLoginLibrarian();
   }
 
+  @Override public void setBorrowerCpr(String borrowerCpr)
+  {
+    client.setBorrowerCpr(borrowerCpr);
+  }
+
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)
   {
