@@ -14,6 +14,7 @@ import shared.person.borrower.Borrower;
 import database.BaseDAO;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -47,10 +48,13 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     {
       try (Connection connection = getConnection())
       {
+        LocalDate today = LocalDate.now();
+        //Sets deadline to be one month after loan date.
+        LocalDate loanDeadline = today.plusMonths(1);
         PreparedStatement stm = connection.prepareStatement(
             "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no) values (CURRENT_DATE,?,?,?,?,?)",
             Statement.RETURN_GENERATED_KEYS);
-        stm.setDate(1, Date.valueOf(deadline));
+        stm.setDate(1, Date.valueOf(loanDeadline));
         stm.setDate(2, null);
         stm.setString(3, borrower.getCpr());
         stm.setInt(4, material.getMaterialID());
@@ -63,7 +67,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
             "update material_copy set available = false where material_id = ? and copy_no = ?");
         stm.setInt(1, material.getMaterialID());
         stm.setInt(2, material.getCopyNumber());
-        return new Loan(material, borrower, deadline, loanDate, null,
+        return new Loan(material, borrower, loanDeadline.toString(), loanDate, null,
             generatedKey);
       }
     }

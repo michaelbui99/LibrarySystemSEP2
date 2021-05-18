@@ -44,7 +44,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
                 author.getCountry()
             );
             PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (material_id, length_, authorId) values (?,?,?)",
+                    "INSERT INTO audiobook (material_id, length_, author) values (?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             stm.setInt(1, material_id);
             stm.setInt(2, length_);
@@ -61,7 +61,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
                     author.getCountry()
                 );
                 PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (material_id, length_, authorId) values (?,?,?)",
+                    "INSERT INTO audiobook (material_id, length_, author) values (?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
                 stm.setInt(1, material_id);
                 stm.setInt(2, length_);

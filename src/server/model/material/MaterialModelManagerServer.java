@@ -99,8 +99,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      int licenseNr, MaterialCreator author, String genre, String url)
+      String targetAudience, String language, int pageCount, int licenseNr,
+      MaterialCreator author, String genre, String url)
   {
     int materialID = 0;
     try

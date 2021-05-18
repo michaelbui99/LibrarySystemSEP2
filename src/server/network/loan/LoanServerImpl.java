@@ -85,8 +85,16 @@ public class LoanServerImpl implements LoanServer
         }
       }
     };
+    PropertyChangeListener listenerReservationRegistered = new PropertyChangeListener()
+    {
+      @Override public void propertyChange(PropertyChangeEvent evt)
+      {
+        //TODO: Implement reservationRegistered callback method on Client and call it here. Catch remoteexception and unsubscribe as listener
+      }
+    };
     ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANREGISTERED, listenerLoanRegister);
     ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANENDED, listenerLoanEnd);
+    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
 
   }
 }

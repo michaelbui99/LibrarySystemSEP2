@@ -44,7 +44,10 @@ public class MaterialServerImpl implements MaterialServer
       String targetAudience, String language, String subtitlesLanguage,
       int playDuration, Place placeID, String genre, String url)
   {
-
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .registerDVD(title, publisher, releaseDate, description, tags,
+            targetAudience, language, subtitlesLanguage, playDuration, placeID,
+            genre, url);
   }
 
   @Override public void createDVDCopy(int materialID)
@@ -54,10 +57,12 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, Place place,
+      String targetAudience, String language, int playDuration, Place place,
       String genre, String url)
   {
-
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .registerCD(title, publisher, releaseDate, description, tags,
+            targetAudience, language, playDuration, place, genre, url);
   }
 
   @Override public void createCDCopy(int materialID)
@@ -67,10 +72,12 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, MaterialCreator author, String genre, String url)
+      String targetAudience, String language, int pageCount, int licenseNr,
+      MaterialCreator author, String genre, String url) throws RemoteException
   {
-
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .registerEBook(title, publisher, releaseDate, description, tags,
+            targetAudience, language, pageCount, licenseNr, author, genre, url);
   }
 
   @Override public void createEBookCopy(int materialID)
@@ -80,10 +87,12 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, double playDuration, String genre,
+      String targetAudience, String language, int playDuration, String genre,
       MaterialCreator author, String url)
   {
-
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .registerAudioBook(title, publisher, releaseDate, description, tags,
+            targetAudience, language, playDuration, genre, author, url);
   }
 
   @Override public void createAudioBookCopy(int materialID)
