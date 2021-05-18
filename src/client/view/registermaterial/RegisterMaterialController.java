@@ -164,35 +164,47 @@ public class RegisterMaterialController
     String type = materialTypeCompo.getValue();
     String aud = audiance.getValue().toString();
 
-    if (type.equals("Book"))
-    {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
-      setTestForLabelGreen("Bogen");
-    }
-    else if (type.equals("EBook"))
-    {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
-      setTestForLabelGreen("E-bogen");
-    }
-    else if (type.equals("AudioBook"))
-    {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
-      setTestForLabelGreen("Lydbogen");
-    }
-    else if (type.equals("CD"))
-    {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
-      setTestForLabelGreen("CD'en");
-    }
-    else if (type.equals("DVD"))
-    {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
-      setTestForLabelGreen("DVD'en");
-    }
-    else if (type.equals(null))
-    {
-      error.setVisible(true);
-    }
+    /*if (onMouseExitHallCheck() && onMouseExitDepartmentCheck()
+        && onMouseExitCreatorCheck() && onMouseExitGenreCheck()
+        && onMouseExitFNameCheck() && onMouseExitLNameCheck()
+        && onMouseExitDobCheck() && onMouseExitCountryCheck()
+        && onMouseExitTypeCheck() && onMouseExitTitleCheck()
+        && onMouseExitPublisherCheck() && onMouseExitReleseDateCheck()
+        && onMouseExitDescriptionCheck() && onMouseExitKeywordCheck()
+        && onMouseExitAudianceCheck() && onMouseExitPageNoCheck()
+        && onMouseExitLanguageCheck() && onMouseExitIsbnCheck()
+        && onMouseExitLicensNoCheck() && onMouseExitSubtitleCheck()
+        && onMouseExitLengthCheck())*/
+
+      if (type.equals("Book"))
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
+        setTestForLabelGreen("Bogen");
+      }
+      else if (type.equals("EBook"))
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
+        setTestForLabelGreen("E-bogen");
+      }
+      else if (type.equals("AudioBook"))
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
+        setTestForLabelGreen("Lydbogen");
+      }
+      else if (type.equals("CD"))
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
+        setTestForLabelGreen("CD'en");
+      }
+      else if (type.equals("DVD"))
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
+        setTestForLabelGreen("DVD'en");
+      }
+      else if (type.equals(null))
+      {
+        error.setVisible(true);
+      }
   }
 
   private void clearFields()
@@ -461,7 +473,8 @@ public class RegisterMaterialController
     if (language.getText().isEmpty() || !(
         language.getText().equalsIgnoreCase("Dansk") || language.getText()
             .equalsIgnoreCase("Engelsk") || language.getText()
-            .equalsIgnoreCase("Arabisk")) || language.getText().matches(".*\\d.*"))
+            .equalsIgnoreCase("Arabisk")) || language.getText()
+        .matches(".*\\d.*"))
     {
       languageWarning.setVisible(true);
       return true;
@@ -489,7 +502,8 @@ public class RegisterMaterialController
 
   @FXML public boolean onMouseExitLicensNoCheck()
   {
-    if (licensNumber.getText().isEmpty() || licensNumber.getText().matches(".*\\d.*"))
+    if (licensNumber.getText().isEmpty() || licensNumber.getText()
+        .matches(".*\\d.*"))
     {
       licensNoWarning.setVisible(true);
       return true;
@@ -503,10 +517,30 @@ public class RegisterMaterialController
 
   @FXML public boolean onMouseExitSubtitleCheck()
   {
-    if (subtitleLanguage.getText().isEmpty() || subtitleLanguage.getText().matches(".*\\d.*"))
+    if (subtitleLanguage.getText().isEmpty() || subtitleLanguage.getText()
+        .matches(".*\\d.*"))
+    {
+      subtitileWarning.setVisible(true);
+      return true;
+    }
+    else
+    {
+      subtitileWarning.setVisible(false);
+      return false;
+    }
   }
 
-  @FXML public void onMouseExitLengthCheck(MouseEvent mouseEvent)
+  @FXML public boolean onMouseExitLengthCheck()
   {
+    if (length.getText().isEmpty() || !length.getText().matches(".*\\d.*"))
+    {
+      lengthWarning.setVisible(true);
+      return true;
+    }
+    else
+    {
+      lengthWarning.setVisible(false);
+      return false;
+    }
   }
 }
