@@ -1,5 +1,6 @@
 package client.model.material;
 
+import client.model.material.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.person.MaterialCreator;
 import shared.materials.Place;
@@ -49,7 +50,7 @@ public interface MaterialModelClient extends
   void createAudioBookCopy(int materialID);
 
 
-  List<Material> findMaterial(String title, String language, String keywords, String genre, String targetAudience, String type);
+  List<Material> findMaterial(String title, String language, String keywords, String genre, String targetAudience, SearchStrategy searchStrategy);
 
 
   public Material getSelectMaterial();

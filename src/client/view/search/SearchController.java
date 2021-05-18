@@ -39,39 +39,21 @@ public class SearchController
    publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
    releaseDateColumn.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
     statusColumn.setCellValueFactory(new PropertyValueFactory<>("materialStatus"));
-    chooseType.getItems().addAll(
-        "audiobook",
-        "book",
-        "cd",
-        "dvd",
-        "e_book"
-    );
-   chooseLanguage.getItems().addAll(
-       "Engelsk",
-       "Dansk",
-       "Arabisk"
-   );
-   targetAudience.getItems().addAll(
-       "Voksen",
-       "Barn",
-       "Teenager",
-       "Familie",
-       "Ældre",
-       "Studerende"
-   );
-
+   title.textProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+       .titleProperty());
+   genre.textProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+       .genreProperty());
+   keywords.textProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+       .keywordProperty());
+   chooseType.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM().chooseTypeProperty());
+   chooseLanguage.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM().languageProperty());
+   targetAudience.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+       .targetAudienceProperty());
   }
 
   @FXML public void onButtonSearch(ActionEvent actionEvent)
   {
-    ObservableList<Material> materials = ViewModelFactory.getInstance().getSearchVM().searchMaterial(
-        this.title.getText(),
-        (String) this.chooseLanguage.getValue(),
-        this.keywords.getText(),
-        this.genre.getText(),
-        (String) this.targetAudience.getValue(),
-        (String) this.chooseType.getValue()
-    );
+    ObservableList<Material> materials = ViewModelFactory.getInstance().getSearchVM().searchMaterial();
     searchTableView.setItems(materials);
     if (materials.size() > 0 ){
     }

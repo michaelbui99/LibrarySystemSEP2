@@ -1,10 +1,12 @@
 package database.material;
 
 import shared.materials.DVD;
+import shared.materials.Material;
 import shared.materials.Place;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public interface DVDDAO {
@@ -15,6 +17,8 @@ public interface DVDDAO {
 
     ResultSet getDVDDetailsByID(int materialID) throws SQLException,
             NoSuchElementException;
+    List<Material> findMaterial(String title, String language,
+        String keywords, String genre, String targetAudience);
 }
 
 

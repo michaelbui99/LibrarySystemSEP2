@@ -87,6 +87,11 @@ public abstract class Material implements MaterialInterface, Serializable
     return imageURL;
   }
 
+  public void setKeywords(String keywords)
+  {
+    this.keywords = keywords;
+  }
+
   @Override public String toString()
   {
     return "Titel: " + title + "\n" + "Type: " + getMaterialType() + "\n" + "Beskrivelse: " + description + "\n" + "Udgivelsesdato: " + releaseDate;

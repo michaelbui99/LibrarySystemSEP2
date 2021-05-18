@@ -1,11 +1,18 @@
 package database.material;
 
+import shared.materials.Material;
+import shared.materials.MaterialStatus;
 import shared.materials.Place;
+import shared.materials.audio.AudioBook;
 import shared.materials.audio.CD;
 import database.BaseDAO;
 import database.place.PlaceImpl;
+import shared.person.MaterialCreator;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -127,6 +134,103 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
         throw new NoSuchElementException(
             "No CD with materialID " + materialID + " exists.");
     }
+  }
+
+  @Override public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience)
+  {
+    //list where we store the results
+    List<Material> ml = new ArrayList<>();
+    try (Connection connection = getConnection())
+    {
+      List<String> queryFragments = new ArrayList<>();
+      String sql = "SELECT * FROM material "
+          + "join cd  on material.material_id = cd.material_id  "
+          + "join material_copy mt on cd.material_id = mt.material_id "
+          + "join place p on cd.place_id = p.place_id"
+          + "join material_creator mc on cd.author = mc.person_id"
+          + "join material_keywords mk on cd.material_id = mk.material_id";
+
+      if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
+      {
+        sql += "where ";
+      }
+
+      if (!title.isEmpty())
+      {
+        queryFragments.add(" LOWER(material.title) LIKE  LOWER('%" + title + "%') ");
+      }
+      if (!language.isEmpty())
+      {
+        queryFragments.add(" material.language_  = '" + language + "' ");
+      }
+      if (!genre.isEmpty())
+      {
+        queryFragments.add(" LOWER(material.genre) LIKE LOWER('%" + genre + "%')");
+      }
+      if (!targetAudience.isEmpty())
+      {
+        queryFragments.add(" material.audience = '" + targetAudience + "' ");
+      }
+      sql += String.join(" and ", queryFragments);
+      PreparedStatement stm = connection.prepareStatement(sql);
+      ResultSet resultSet = stm.executeQuery();
+      while (resultSet.next())
+      {
+        //find all keywords related to this material id
+        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+            .getKeywordsForMaterial(resultSet.getInt("material_id"));
+        String materialKeywords = String.join(", ", materialKeywordList);
+        boolean match = false;
+        if (!keywords.isEmpty())
+        { //if keywords were specified in search, compare them to material keywords from DB (materialKeywordList)
+          for (int i = 0; i < keywords.split(",").length; i++)
+          {
+            if (materialKeywords.toLowerCase(Locale.ROOT).contains(
+                keywords.split(",")[i].toLowerCase(Locale.ROOT)))
+            {
+              match = true; //search keyword matched material keyword - material will be added to result list
+              break;
+            }
+          }
+        }
+        else
+        {
+          match = true; //if no keywords were specified by user - just add material keywords from DB to its material
+        }
+        if (match)
+        {
+
+          CD cd = new CD(resultSet.getInt("material_id"),
+              MaterialDAOImpl.getInstance()
+                  .getCopyNumberForMaterial(resultSet.getInt("material_id")),
+              resultSet.getString("title"),
+              resultSet.getString("publisher"),
+              String.valueOf(resultSet.getDate("release_date")),
+              resultSet.getString("description_of_the_content"),
+              "",
+              resultSet.getString("audience"),
+              resultSet.getString("language_"),
+              resultSet.getInt("length_"),
+              new Place(resultSet.getInt("place_id"),
+                  resultSet.getInt("hall_no"),
+                  resultSet.getString("department"),
+              resultSet.getString("creator_l_name"),
+              resultSet.getString("genre")),
+          resultSet.getString("url"));
+          cd.setMaterialStatus(MaterialDAOImpl.getInstance().checkIfCopyAvailable(
+               resultSet.getInt("material_id")) ? MaterialStatus.Available : MaterialStatus.NotAvailable);
+          cd.setKeywords(materialKeywords);
+          ml.add(cd);
+        }
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    System.out.println("result size: " + ml.size());
+    return ml;
   }
 
 }

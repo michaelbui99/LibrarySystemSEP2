@@ -41,7 +41,8 @@ public interface MaterialDAO
   boolean returnMaterial(int materialID, String cpr, int copy_no);
   public int getCopyNumberForMaterial(int materialid);
   public int getNumberOfAvailableCopies(int materialid);
-
+  boolean checkIfCopyAvailable(int materialid);
+  public List<String> getKeywordsForMaterial(int materialid);
 
 
 

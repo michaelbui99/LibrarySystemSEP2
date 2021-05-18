@@ -1,6 +1,9 @@
 package client.view.search;
 
 import client.core.ModelFactoryClient;
+import client.model.material.strategy.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import shared.materials.Material;
 import client.model.material.MaterialModelClient;
 import javafx.collections.FXCollections;
@@ -9,21 +12,138 @@ import shared.util.EventTypes;
 
 public class SearchVM
 {
-  private MaterialModelClient materialModelClient;
   private ObservableList<Material> foundMaterials;
+  private ObservableList<String> materialType;
+  private ObservableList<String> materialLanguage;
+  private ObservableList<String> materialAudience;
 
-  public SearchVM(MaterialModelClient materialModelClient)
+
+  private StringProperty titleProperty;
+  private StringProperty genreProperty;
+  private StringProperty keywordProperty;
+  private StringProperty typeProperty;
+  private StringProperty languageProperty;
+  private StringProperty targetAudienceProperty;
+  private StringProperty chooseTypeProperty;
+
+
+
+  public SearchVM()
   {
-    this.materialModelClient = materialModelClient;
+
     foundMaterials = FXCollections.observableArrayList();
+    materialType = FXCollections.observableArrayList();
+    materialType.addAll("bog",
+        "lydbog",
+        "cd",
+        "dvd",
+        "ebog");
+   materialLanguage = FXCollections.observableArrayList();
+   materialLanguage.addAll(
+       "Engelsk",
+       "Dansk",
+       "Arabisk"
+   );
+   materialAudience = FXCollections.observableArrayList();
+   materialAudience.addAll("Voksen",
+       "Barn",
+       "Teenager",
+       "Familie",
+       "Ældre",
+       "Studerende");
 
+   titleProperty = new SimpleStringProperty();
+   genreProperty = new SimpleStringProperty();
+   keywordProperty = new SimpleStringProperty();
+   typeProperty = new SimpleStringProperty();
+   languageProperty = new SimpleStringProperty();
+   targetAudienceProperty = new SimpleStringProperty();
+   chooseTypeProperty = new SimpleStringProperty();
   }
-  public ObservableList<Material> searchMaterial(String title, String language,
-      String keywords, String genre, String targetAudience, String type){
 
-   foundMaterials.addAll(materialModelClient.findMaterial(title,  language,
-      keywords,  genre,  targetAudience,  type));
-   materialModelClient.addPropertyChangeListener(EventTypes.MATERIALFOUND,
+
+  public ObservableList<Material> getFoundMaterials()
+  {
+    return foundMaterials;
+  }
+
+  public ObservableList<String> getMaterialType()
+  {
+    return materialType;
+  }
+
+  public ObservableList<String> getMaterialLanguage()
+  {
+    return materialLanguage;
+  }
+
+  public ObservableList<String> getMaterialAudience()
+  {
+    return materialAudience;
+  }
+
+
+  public StringProperty titleProperty()
+  {
+    return titleProperty;
+  }
+
+
+  public StringProperty genreProperty()
+  {
+    return genreProperty;
+  }
+
+
+  public StringProperty keywordProperty()
+  {
+    return keywordProperty;
+  }
+
+
+  public StringProperty typeProperty()
+  {
+    return typeProperty;
+  }
+
+  public StringProperty languageProperty()
+  {
+    return languageProperty;
+  }
+
+
+  public StringProperty targetAudienceProperty()
+  {
+    return targetAudienceProperty;
+  }
+
+
+  public StringProperty chooseTypeProperty()
+  {
+    return chooseTypeProperty;
+  }
+
+  public ObservableList<Material> searchMaterial(){
+     SearchStrategy searchStrategy = null;
+     if (typeProperty.get().equals("bog")){
+       searchStrategy = new BookStrategy();
+     }
+     else if (typeProperty.get().equals("lydbog")){
+       searchStrategy = new AudioBookStrategy();
+     }
+     else if (typeProperty.get().equals("cd")){
+       searchStrategy = new CDStrategy();
+     }
+     else if (typeProperty.get().equals("dvd")){
+       searchStrategy = new DVDStrategy();
+     }
+     else if (typeProperty.get().equals("ebog")){
+       searchStrategy = new EBookStrategy();
+     }
+
+   foundMaterials.addAll(ModelFactoryClient.getInstance().getMaterialModelClient().findMaterial(titleProperty.get(),  languageProperty.get(),
+      keywordProperty.get(),  genreProperty.get(),  targetAudienceProperty.get(),searchStrategy));
+   ModelFactoryClient.getInstance().getMaterialModelClient().addPropertyChangeListener(EventTypes.MATERIALFOUND,
        evt -> foundMaterials.add((Material) evt.getNewValue()));
    return foundMaterials;
   }
