@@ -6,6 +6,8 @@ import server.model.loan.LoanModelManagerServer;
 import server.model.loan.LoanModelServer;
 import server.model.material.MaterialModelManagerServer;
 import server.model.material.MaterialModelServer;
+import server.model.reservation.ReservationModelManagerServer;
+import server.model.reservation.ReservationModelServer;
 import server.model.user.UserModelManagerServer;
 import server.model.user.UserModelServer;
 
@@ -16,6 +18,7 @@ public class ModelFactoryServer
   private LoanModelServer loanModelServer;
   private MaterialModelServer materialModelServer;
   private UserModelServer userModelServer;
+  private ReservationModelServer reservationModelServer;
 
   private ModelFactoryServer()
   {
@@ -58,6 +61,15 @@ public class ModelFactoryServer
       userModelServer = new UserModelManagerServer();
     }
     return userModelServer;
+  }
+
+  public ReservationModelServer getReservationModelServer()
+  {
+    if (reservationModelServer == null)
+    {
+      reservationModelServer= new ReservationModelManagerServer();
+    }
+    return reservationModelServer;
   }
 
 }

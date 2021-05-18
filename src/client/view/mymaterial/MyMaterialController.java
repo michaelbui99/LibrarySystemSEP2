@@ -1,6 +1,8 @@
 package client.view.mymaterial;
 
 import client.core.ViewModelFactory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import shared.loan.Loan;
 import shared.materials.Material;
 import client.view.ViewHandler;

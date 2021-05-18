@@ -20,10 +20,10 @@ public class MyMaterialVM
     activeLoans = FXCollections.observableArrayList();
 
     if (ModelFactoryClient.getInstance().getLoanModelClient()
-        .getAllLoansByCPR("111111-1111") != null)
+        .getAllLoansByCPR(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr()) != null)
     {
       activeLoans.addAll(ModelFactoryClient.getInstance().getLoanModelClient()
-          .getAllLoansByCPR("111111-1111"));
+          .getAllLoansByCPR(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr()));
     }
     ModelFactoryClient.getInstance().getLoanModelClient()
         .addPropertyChangeListener(EventTypes.LOANREGISTERED,

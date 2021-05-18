@@ -6,6 +6,8 @@ import client.model.loan.LoanModelClient;
 import client.model.loan.LoanModelManagerClient;
 import client.model.material.MaterialModelClient;
 import client.model.material.MaterialModelManagerClient;
+import client.model.reservation.ReservationModelClient;
+import client.model.reservation.ReservationModelManagerClient;
 import client.model.user.UserModelClient;
 import client.model.user.UserModelManagerClient;
 import client.network.Client;
@@ -60,5 +62,16 @@ public class ModelFactoryClient {
             userModelClient = new UserModelManagerClient((Client) ClientFactory.getInstance().getClient());
         }
         return userModelClient;
+    }
+
+    private ReservationModelClient reservationModelClient;
+
+    public ReservationModelClient getReservationModelClient()
+    {
+        if (reservationModelClient == null)
+        {
+            reservationModelClient = new ReservationModelManagerClient((Client) ClientFactory.getInstance().getClient());
+        }
+        return reservationModelClient;
     }
 }
