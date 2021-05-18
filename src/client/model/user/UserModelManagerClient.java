@@ -59,7 +59,7 @@ public class UserModelManagerClient implements UserModelClient
 
   @Override public void setBorrowerCpr(String borrowerCpr)
   {
-    client.setBorrowerCpr(borrowerCpr);
+    //client.setBorrowerCpr(borrowerCpr);
   }
 
   @Override public void addPropertyChangeListener(String name,

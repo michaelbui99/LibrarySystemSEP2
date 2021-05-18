@@ -42,6 +42,7 @@ public class RegisterMaterialVM
   private StringProperty subtitleLanguageProperty;
   private StringProperty lengthProperty;
   private StringProperty audiance;
+  private StringProperty type;
 
   public RegisterMaterialVM()
   {
@@ -76,6 +77,7 @@ public class RegisterMaterialVM
     subtitleLanguageProperty = new SimpleStringProperty();
     lengthProperty = new SimpleStringProperty();
     audiance = new SimpleStringProperty();
+    type = new SimpleStringProperty();
   }
 
   public ObjectProperty<LocalDate> releaseDateProperty()
@@ -191,6 +193,11 @@ public class RegisterMaterialVM
   public StringProperty audianceProperty()
   {
     return audiance;
+  }
+
+  public StringProperty typeProperty()
+  {
+    return type;
   }
 
   public void addBook()

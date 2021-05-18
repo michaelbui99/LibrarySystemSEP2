@@ -31,7 +31,7 @@
                   </Label>
                </children>
             </HBox>
-            <ScrollPane prefHeight="382.0" prefWidth="677.0">
+            <ScrollPane prefHeight="385.0" prefWidth="654.0">
                <content>
                   <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1461.0" prefWidth="657.0" style="-fx-background-color: white;">
                      <children>
@@ -61,54 +61,54 @@
                                 </rowConstraints>
                                  <children>
                                     <Label layoutX="121.0" layoutY="114.0" text="Titel" GridPane.rowIndex="1" />
-                                    <TextField fx:id="title" layoutX="305.0" layoutY="110.0" promptText="Titel:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <TextField fx:id="title" layoutX="305.0" layoutY="110.0" onKeyTyped="#onTypedTitle" promptText="Titel:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
                                     </TextField>
                                     <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="2" />
                                     <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="3" />
-                                    <TextField fx:id="publisher" layoutX="305.0" layoutY="155.0" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <TextField fx:id="publisher" layoutX="305.0" layoutY="155.0" onKeyTyped="#onTypedPublisher" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
                                     </TextField>
                                     <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="4" />
-                                    <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <TextArea fx:id="description" onKeyTyped="#onTypedDescribtion" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" right="50.0" />
                                        </GridPane.margin>
                                     </TextArea>
-                                    <TextArea fx:id="keywords" layoutX="305.0" layoutY="230.0" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                    <TextArea fx:id="keywords" layoutX="305.0" layoutY="230.0" onKeyTyped="#onTypedKeywords" prefHeight="200.0" prefWidth="200.0" promptText="Text, Text:" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <GridPane.margin>
                                           <Insets right="50.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextArea>
                                     <Label layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="5" />
                                     <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="6" />
-                                    <ComboBox fx:id="audiance" prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <ComboBox fx:id="audiance" onMouseExited="#onMouseExitedAudiance" prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                     <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="8" />
                                     <Label layoutX="121.0" layoutY="90.0" text="ISBN" GridPane.rowIndex="9" />
-                                    <TextField fx:id="isbn" disable="false" layoutX="305.0" layoutY="86.0" promptText="ISBN:" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                    <TextField fx:id="isbn" disable="false" layoutX="305.0" layoutY="86.0" onKeyTyped="#onTypedIsbn" promptText="ISBN:" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                        <GridPane.margin>
                                           <Insets right="200.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                    <DatePicker fx:id="releaseDate" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <DatePicker fx:id="releaseDate" onMouseDragExited="#onMouseExitedReleseDate" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Label layoutX="144.0" layoutY="293.0" text="Sidetal" GridPane.rowIndex="7" />
-                                    <TextField fx:id="numberOfPages" layoutX="302.0" layoutY="77.0" promptText="Sidetal:" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                    <TextField fx:id="numberOfPages" layoutX="302.0" layoutY="77.0" onKeyTyped="#onTypedPageNumber" promptText="Sidetal:" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <GridPane.margin>
                                           <Insets right="200.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                    <ComboBox fx:id="materialTypeCompo" prefWidth="150.0" promptText="Typen" style="-fx-background-color: white;" GridPane.columnIndex="1">
+                                    <ComboBox fx:id="materialTypeCompo" onMouseExited="#onMouseExitedType" prefWidth="150.0" promptText="Typen" style="-fx-background-color: white;" GridPane.columnIndex="1">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </ComboBox>
                                     <Label layoutX="153.0" layoutY="127.0" text="Vælg typen" />
                                     <Label layoutX="152.0" layoutY="697.0" text="Licens nummer" GridPane.rowIndex="10" />
-                                    <TextField fx:id="licensNumber" disable="false" layoutX="319.0" layoutY="693.0" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                    <TextField fx:id="licensNumber" disable="false" layoutX="319.0" layoutY="693.0" onKeyTyped="#onTypeLicensNumber" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                        <GridPane.margin>
                                           <Insets right="200.0" />
                                        </GridPane.margin>
@@ -133,22 +133,22 @@
                                                 <Label layoutX="10.0" layoutY="17.0" text="Genre" GridPane.rowIndex="3" />
                                                 <Label layoutX="10.0" layoutY="17.0" text="Skabernes efternavn" GridPane.rowIndex="2" />
                                                 <Label layoutX="10.0" layoutY="17.0" text="Afdeling" GridPane.rowIndex="1" />
-                                                <TextField fx:id="hallNumber" disable="false" promptText="Hall nummer" GridPane.columnIndex="1">
+                                                <TextField fx:id="hallNumber" disable="false" onKeyTyped="#onTypedHallNumber" promptText="Hall nummer" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="genre" disable="false" layoutX="107.0" layoutY="13.0" promptText="Genre" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <TextField fx:id="genre" disable="false" layoutX="107.0" layoutY="13.0" onKeyTyped="#onTypeGenre" promptText="Genre" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="creatorLastName" disable="false" layoutX="10.0" layoutY="13.0" promptText="Skabernes efternavn" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <TextField fx:id="creatorLastName" disable="false" layoutX="10.0" layoutY="13.0" onKeyTyped="#onTypeCreatorLastName" promptText="Skabernes efternavn" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="department" disable="false" layoutX="10.0" layoutY="13.0" promptText="Afdeling" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="department" disable="false" layoutX="10.0" layoutY="13.0" onKeyTyped="#onTypeDepartment" promptText="Afdeling" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
@@ -178,13 +178,13 @@
                                        </children>
                                     </HBox>
                                     <Label text="Undertekstsprog" GridPane.rowIndex="13" />
-                                    <TextField fx:id="subtitleLanguage" disable="false" promptText="Undertekstsprog" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                    <TextField fx:id="subtitleLanguage" disable="false" onKeyTyped="#onTypeSubtitleLanguage" promptText="Undertekstsprog" GridPane.columnIndex="1" GridPane.rowIndex="13">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
                                     </TextField>
                                     <Label text="Længde" GridPane.rowIndex="14" />
-                                    <TextField fx:id="length" disable="false" promptText="Længde" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                                    <TextField fx:id="length" disable="false" onKeyTyped="#onTypedLength" promptText="Længde" GridPane.columnIndex="1" GridPane.rowIndex="14">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
@@ -207,22 +207,22 @@
                                                 <Label layoutX="10.0" layoutY="60.0" text="Fornavn" />
                                                 <Label layoutX="10.0" layoutY="21.0" text="Land" GridPane.rowIndex="3" />
                                                 <Label layoutX="10.0" layoutY="21.0" text="Fødselsdato" GridPane.rowIndex="2" />
-                                                <TextField fx:id="lastName" disable="false" promptText="Efternavn:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="lastName" disable="false" onKeyTyped="#onTypedLastName" promptText="Efternavn:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="country" disable="false" layoutX="86.0" layoutY="56.0" promptText="Land:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <TextField fx:id="country" disable="false" layoutX="86.0" layoutY="56.0" onKeyTyped="#onTypeCountry" promptText="Land:" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="firstName" disable="false" layoutX="10.0" layoutY="17.0" promptText="Fornavn:" GridPane.columnIndex="1">
+                                                <TextField fx:id="firstName" disable="false" layoutX="10.0" layoutY="17.0" onKeyTyped="#onTypeFirstName" promptText="Fornavn:" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <DatePicker fx:id="dateOfBirth" disable="false" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <DatePicker fx:id="dateOfBirth" disable="false" onMouseExited="#birthDate" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label fx:id="firstNameWarning" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
@@ -252,7 +252,7 @@
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="titWar" layoutX="639.0" layoutY="31.0" onMouseExited="#onError" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label fx:id="titleWarning" layoutX="639.0" layoutY="31.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
@@ -312,7 +312,7 @@
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <ComboBox fx:id="language" prefWidth="150.0" promptText="Sprog" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                    <ComboBox fx:id="language" onMouseExited="#onMouseExitedLanguage" prefWidth="150.0" promptText="Sprog" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
