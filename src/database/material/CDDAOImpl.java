@@ -204,18 +204,20 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
           CD cd = new CD(resultSet.getInt("material_id"),
               MaterialDAOImpl.getInstance()
                   .getCopyNumberForMaterial(resultSet.getInt("material_id")),
-              resultSet.getString("title"), resultSet.getString("publisher"),
+              resultSet.getString("title"),
+              resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"),
               "",
               resultSet.getString("audience"),
               resultSet.getString("language_"),
               resultSet.getInt("length_"),
-              new Place(resultSet.getInt("hall_no"),
+              new Place(resultSet.getInt("place_id"),
+                  resultSet.getInt("hall_no"),
                   resultSet.getString("department"),
-                  resultSet.getString("creator_l_name"),
-                  resultSet.getString("genre")),
-              resultSet.getString("url"));
+              resultSet.getString("creator_l_name"),
+              resultSet.getString("genre")),
+          resultSet.getString("url"));
           cd.setMaterialStatus(MaterialDAOImpl.getInstance().checkIfCopyAvailable(
                resultSet.getInt("material_id")) ? MaterialStatus.Available : MaterialStatus.NotAvailable);
           cd.setKeywords(materialKeywords);
