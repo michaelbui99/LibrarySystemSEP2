@@ -68,4 +68,7 @@ public interface UserModelServer extends PropertyChangeSubject
    * @return the currently logged in Librarian in the system.
    */
   Librarian getLoginLibrarian();
+
+  void setBorrowerCpr(String borrowerCpr);
+
 }

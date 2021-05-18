@@ -77,4 +77,6 @@ public interface UserServer extends Remote
    * @throws RemoteException .
    */
   Librarian getLoginLibrarian() throws RemoteException;
+
+  void setBorrowerCpr(String borrowerCpr) throws RemoteException;
 }

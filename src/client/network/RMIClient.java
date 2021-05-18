@@ -140,4 +140,7 @@ public interface RMIClient extends Remote
   void addPropertyChangeListener(PropertyChangeListener listener) throws RemoteException;
   void removePropertyChangeListener(String name, PropertyChangeListener listener) throws RemoteException;
   void removePropertyChangeListener(PropertyChangeListener listener) throws RemoteException;
+
+//  void setBorrowerCpr(String borrowerCpr) throws RemoteException;
+
 }

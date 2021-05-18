@@ -9,6 +9,7 @@ import client.view.mymaterial.MyMaterialVM;
 import client.view.registermaterial.RegisterMaterialVM;
 import client.view.search.SearchVM;
 import client.view.stafflogin.StaffLogInVM;
+import client.view.user.UserVM;
 
 public class ViewModelFactory
 {
@@ -32,6 +33,7 @@ public class ViewModelFactory
   private RegisterMaterialVM registerMaterialVM;
   private SearchVM searchVM;
   private StaffLogInVM staffLogInVM;
+  private UserVM userVM;
 
   public AddUserVM getAddUserVM()
   {
@@ -101,8 +103,7 @@ public class ViewModelFactory
     if (searchVM == null)
     {
       searchVM = new SearchVM(
-          ModelFactoryClient.getInstance().getMaterialModelClient()
-      );
+          ModelFactoryClient.getInstance().getMaterialModelClient());
     }
     return searchVM;
   }
@@ -114,6 +115,15 @@ public class ViewModelFactory
       staffLogInVM = new StaffLogInVM();
     }
     return staffLogInVM;
+  }
+
+  public UserVM getUserVM()
+  {
+    if (userVM == null)
+    {
+      userVM = new UserVM();
+    }
+    return userVM;
   }
 
 }

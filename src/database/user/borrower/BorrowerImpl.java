@@ -114,7 +114,8 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
           "SELECT * FROM borrower JOIN address a on a.address_id = borrower.address_id WHERE cpr_no = ?"
       );
       stm.setString(1, sprNo);
-      ResultSet result = stm.executeQuery();/*String cpr_no, String f_name, String l_name, String email,
+      ResultSet result = stm.executeQuery();
+      result.next();/*String cpr_no, String f_name, String l_name, String email,
       String tel_no, Address address_id, String password*/
       /*int addressId, String streetName, String streetNr, int zipCode, String city*/
       return new Borrower(result.getString("cpr_no"), result.getString("f_name"), result.getString("l_name"),
