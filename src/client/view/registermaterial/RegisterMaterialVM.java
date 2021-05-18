@@ -20,6 +20,7 @@ public class RegisterMaterialVM
 {
   private ObservableList<String> materialType;
   private ObservableList<String> targetAudiance;
+  private ObservableList<String> lang;
 
   private StringProperty titleProperty;
   private StringProperty publisherProperty;
@@ -51,6 +52,9 @@ public class RegisterMaterialVM
     targetAudiance
         .addAll("Voksen", "Barn", "Teenager", "Familie", "Ældre", "Studerende");
 
+    lang = FXCollections.observableArrayList();
+    lang.addAll("Dansk", "Engelsk", "Arabisk");
+
     releaseDateProperty = new SimpleObjectProperty<>();
     dateOfBirthProperty = new SimpleObjectProperty<>();
     titleProperty = new SimpleStringProperty();
@@ -74,104 +78,9 @@ public class RegisterMaterialVM
     audiance = new SimpleStringProperty();
   }
 
-  public StringProperty titlePropertyProperty()
-  {
-    return titleProperty;
-  }
-
-  public StringProperty publisherPropertyProperty()
-  {
-    return publisherProperty;
-  }
-
-  public StringProperty descriptionPropertyProperty()
-  {
-    return descriptionProperty;
-  }
-
-  public StringProperty keywordsPropertyProperty()
-  {
-    return keywordsProperty;
-  }
-
-  public StringProperty languagePropertyProperty()
-  {
-    return languageProperty;
-  }
-
-  public StringProperty isbnPropertyProperty()
-  {
-    return isbnProperty;
-  }
-
-  public ObjectProperty<LocalDate> releaseDatePropertyProperty()
+  public ObjectProperty<LocalDate> releaseDateProperty()
   {
     return releaseDateProperty;
-  }
-
-  public StringProperty numberOfPagesPropertyProperty()
-  {
-    return numberOfPagesProperty;
-  }
-
-  public StringProperty licensNumberPropertyProperty()
-  {
-    return licensNumberProperty;
-  }
-
-  public StringProperty firstNamePropertyProperty()
-  {
-    return firstNameProperty;
-  }
-
-  public StringProperty lastNamePropertyProperty()
-  {
-    return lastNameProperty;
-  }
-
-  public StringProperty countryPropertyProperty()
-  {
-    return countryProperty;
-  }
-
-  public ObjectProperty<LocalDate> dateOfBirthPropertyProperty()
-  {
-    return dateOfBirthProperty;
-  }
-
-  public StringProperty hallNumberPropertyProperty()
-  {
-    return hallNumberProperty;
-  }
-
-  public StringProperty genrePropertyProperty()
-  {
-    return genreProperty;
-  }
-
-  public StringProperty creatorLastNamePropertyProperty()
-  {
-    return creatorLastNameProperty;
-  }
-
-  public StringProperty departmentPropertyProperty()
-  {
-    return departmentProperty;
-  }
-
-  public StringProperty subtitleLanguagePropertyProperty()
-  {
-    return subtitleLanguageProperty;
-  }
-
-  public StringProperty lengthPropertyProperty()
-  {
-    return lengthProperty;
-  }
-
-  public StringProperty audianceProperty()
-  {
-    return audiance;
   }
 
   public ObservableList<String> getMaterialType()
@@ -182,6 +91,106 @@ public class RegisterMaterialVM
   public ObservableList<String> getTargetAudiance()
   {
     return targetAudiance;
+  }
+
+  public ObservableList<String> getLang()
+  {
+    return lang;
+  }
+
+  public StringProperty titleProperty()
+  {
+    return titleProperty;
+  }
+
+  public StringProperty publisherProperty()
+  {
+    return publisherProperty;
+  }
+
+  public StringProperty descriptionProperty()
+  {
+    return descriptionProperty;
+  }
+
+  public StringProperty keywordsProperty()
+  {
+    return keywordsProperty;
+  }
+
+  public StringProperty languageProperty()
+  {
+    return languageProperty;
+  }
+
+  public StringProperty isbnProperty()
+  {
+    return isbnProperty;
+  }
+
+  public StringProperty numberOfPagesProperty()
+  {
+    return numberOfPagesProperty;
+  }
+
+  public StringProperty licensNumberProperty()
+  {
+    return licensNumberProperty;
+  }
+
+  public StringProperty firstNameProperty()
+  {
+    return firstNameProperty;
+  }
+
+  public StringProperty lastNameProperty()
+  {
+    return lastNameProperty;
+  }
+
+  public StringProperty countryProperty()
+  {
+    return countryProperty;
+  }
+
+  public ObjectProperty<LocalDate> dateOfBirthPropertyProperty()
+  {
+    return dateOfBirthProperty;
+  }
+
+  public StringProperty hallNumberProperty()
+  {
+    return hallNumberProperty;
+  }
+
+  public StringProperty genreProperty()
+  {
+    return genreProperty;
+  }
+
+  public StringProperty creatorLastNameProperty()
+  {
+    return creatorLastNameProperty;
+  }
+
+  public StringProperty departmentProperty()
+  {
+    return departmentProperty;
+  }
+
+  public StringProperty subtitleLanguageProperty()
+  {
+    return subtitleLanguageProperty;
+  }
+
+  public StringProperty lengthProperty()
+  {
+    return lengthProperty;
+  }
+
+  public StringProperty audianceProperty()
+  {
+    return audiance;
   }
 
   public void addBook()
@@ -248,4 +257,9 @@ public class RegisterMaterialVM
                 departmentProperty.get(), creatorLastNameProperty.getName(),
                 countryProperty.get()), genreProperty.get(), null);
   }
+
+/*  private boolean titleCheck()
+  {
+    titleProperty.get().isEmpty();
+  }*/
 }
