@@ -33,4 +33,6 @@ public interface BorrowerDAO
    *                      or establish a connection.
    */
   boolean loginBorrower(String cprNo, String password) throws SQLException;
+
+  Borrower getBorrower(String sprNo) throws SQLException;
 }

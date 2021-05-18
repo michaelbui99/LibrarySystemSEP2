@@ -1,9 +1,6 @@
 package shared;
 
-import shared.servers.ChatServer;
-import shared.servers.LoanServer;
-import shared.servers.MaterialServer;
-import shared.servers.UserServer;
+import shared.servers.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -14,4 +11,5 @@ public interface Server extends Remote
   MaterialServer getMaterialServer() throws RemoteException;
   LoanServer getLoanServer() throws RemoteException;
   ChatServer getChatServer() throws RemoteException;
+  ReservationServer getReservationServer() throws RemoteException;
 }

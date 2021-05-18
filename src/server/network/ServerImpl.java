@@ -5,12 +5,10 @@ import server.model.loan.LoanModelServer;
 import server.model.user.UserModelServer;
 import server.network.loan.LoanServerImpl;
 import server.network.material.MaterialServerImpl;
+import server.network.reservation.ReservationServerImpl;
 import server.network.user.UserServerImpl;
 import shared.*;
-import shared.servers.ChatServer;
-import shared.servers.LoanServer;
-import shared.servers.MaterialServer;
-import shared.servers.UserServer;
+import shared.servers.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -51,5 +49,11 @@ public class ServerImpl implements Server
   @Override public ChatServer getChatServer()
   {
     return null;
+  }
+
+  @Override public ReservationServer getReservationServer()
+      throws RemoteException
+  {
+    return new ReservationServerImpl();
   }
 }

@@ -18,6 +18,8 @@ public class UserModelManagerServer implements UserModelServer
   private PropertyChangeSupport support;
   private BorrowerList borrowerList;
   private LibrarianList librarianList;
+  private String borrowerSpr;
+  private int librarianEMPNr;
 
   public UserModelManagerServer()
   {
@@ -52,6 +54,12 @@ public class UserModelManagerServer implements UserModelServer
     try
     {
       login = BorrowerImpl.getInstance().loginBorrower(cprNo, password);
+
+      if (login)
+      {
+        borrowerSpr = cprNo;
+      }
+
     }
     catch (SQLException throwables)
     {
@@ -63,7 +71,16 @@ public class UserModelManagerServer implements UserModelServer
 
   @Override public Borrower getLoginBorrower()
   {
-    return null;
+    Borrower borrower = null;
+    try
+    {
+      borrower = BorrowerImpl.getInstance().getBorrower(borrowerSpr);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return borrower;
   }
 
   @Override public Librarian registerLibrarian(int employee_no,

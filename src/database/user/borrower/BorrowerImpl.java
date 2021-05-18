@@ -105,4 +105,21 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
     }
     return false;
   }
+
+  @Override public Borrower getBorrower(String sprNo) throws SQLException
+  {
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM borrower JOIN address a on a.address_id = borrower.address_id WHERE cpr_no = ?"
+      );
+      stm.setString(1, sprNo);
+      ResultSet result = stm.executeQuery();/*String cpr_no, String f_name, String l_name, String email,
+      String tel_no, Address address_id, String password*/
+      /*int addressId, String streetName, String streetNr, int zipCode, String city*/
+      return new Borrower(result.getString("cpr_no"), result.getString("f_name"), result.getString("l_name"),
+          result.getString("email"), result.getString("tel_no"), new Address(result.getInt("address_id"), result.getString("street_name"),
+          result.getString("street_no"), result.getInt("zip_code"), result.getString("city")), result.getString("password"));
+    }
+  }
 }
