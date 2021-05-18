@@ -15,8 +15,8 @@ public class UserController
 
   public void init()
   {
-    cprLabel.textProperty().bind(ViewModelFactory.getInstance().getUserVM()
-        .cprPropertyProperty());
+    /*cprLabel.textProperty().bind(ViewModelFactory.getInstance().getUserVM()
+        .cprPropertyProperty());*/
   }
 
   public void onButtonLoanReserve(ActionEvent actionEvent) throws IOException
@@ -26,7 +26,7 @@ public class UserController
 
   public void OnButtonMyMaterial(ActionEvent actionEvent) throws IOException
   {
-    ViewModelFactory.getInstance().getUserVM().setBorrowerCPR();
+//    ViewModelFactory.getInstance().getUserVM().setBorrowerCPR();
     ViewHandler.getInstance().openView("MyMaterial");
   }
 
