@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.registermaterial.RegisterMaterialController">
+<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.registermaterial.RegisterMaterialController">
    <children>
-      <VBox prefHeight="609.0" prefWidth="668.0" style="-fx-background-color: white;">
+      <VBox prefHeight="557.0" prefWidth="668.0" style="-fx-background-color: white;">
          <children>
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: white;">
                <children>
@@ -42,7 +31,7 @@
                   </Label>
                </children>
             </HBox>
-            <ScrollPane prefHeight="440.0" prefWidth="690.0">
+            <ScrollPane prefHeight="382.0" prefWidth="677.0">
                <content>
                   <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1461.0" prefWidth="657.0" style="-fx-background-color: white;">
                      <children>
@@ -99,11 +88,6 @@
                                     <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="6" />
                                     <ComboBox fx:id="audiance" prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                     <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="8" />
-                                    <TextField fx:id="language" layoutX="305.0" layoutY="150.0" promptText="Sprog:" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                       <GridPane.margin>
-                                          <Insets right="50.0" />
-                                       </GridPane.margin>
-                                    </TextField>
                                     <Label layoutX="121.0" layoutY="90.0" text="ISBN" GridPane.rowIndex="9" />
                                     <TextField fx:id="isbn" disable="false" layoutX="305.0" layoutY="86.0" promptText="ISBN:" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                        <GridPane.margin>
@@ -169,23 +153,22 @@
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <Label fx:id="hallNoWarning" onMouseExited="#onMouseExitHallCheck" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
+                                                <Label fx:id="hallNoWarning"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="departmentWaning" onMouseExited="#onMouseExitDepartmentCheck" layoutX="310.0" layoutY="25.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <Label fx:id="departmentWaning" layoutX="310.0" layoutY="25.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="creatorLNameWarning"
-                                                       onMouseExited="#onMouseExitCreatorCheck" layoutX="310.0" layoutY="72.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <Label fx:id="creatorLNameWarning" layoutX="310.0" layoutY="72.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="genreWarning" onMouseExited="#onMouseExitGenreCheck" layoutX="310.0" layoutY="118.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <Label fx:id="genreWarning" layoutX="310.0" layoutY="118.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
@@ -240,22 +223,22 @@
                                                    </GridPane.margin>
                                                 </TextField>
                                                 <DatePicker fx:id="dateOfBirth" disable="false" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label fx:id="firstNameWarning" onMouseExited="#onMouseExitFNameCheck" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
+                                                <Label fx:id="firstNameWarning"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="lastNameWarning" onMouseExited="#onMouseExitLNameCheck" layoutX="310.0" layoutY="33.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <Label fx:id="lastNameWarning" layoutX="310.0" layoutY="33.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="dobWarning" onMouseExited="#onMouseExitDobCheck" layoutX="310.0" layoutY="96.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <Label fx:id="dobWarning" layoutX="310.0" layoutY="96.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="countryWarning" onMouseExited="#onMouseExitCountryCheck" layoutX="310.0" layoutY="159.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <Label fx:id="countryWarning" layoutX="310.0" layoutY="159.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
@@ -264,71 +247,76 @@
                                           </GridPane>
                                        </children>
                                     </HBox>
-                                    <Label fx:id="typeWarning" onMouseExited="#onMouseExitTypeCheck" text="!" textFill="RED" GridPane.columnIndex="1">
+                                    <Label fx:id="typeWarning"  text="!" textFill="RED" GridPane.columnIndex="1">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="titleWarning" onMouseExited="#onMouseExitTitleCheck" layoutX="639.0" layoutY="31.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label fx:id="titleWarning" layoutX="639.0" layoutY="31.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="publisherWarning" onMouseExited="#onMouseExitPublisherCheck" layoutX="639.0" layoutY="91.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <Label fx:id="publisherWarning" layoutX="639.0" layoutY="91.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="releseDateWarning" onMouseExited="#onMouseExitReleseDateCheck" layoutX="639.0" layoutY="159.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <Label fx:id="releseDateWarning" layoutX="639.0" layoutY="159.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="descriptionWarning" onMouseExited="#onMouseExitDescriptionCheck" layoutX="639.0" layoutY="231.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <Label fx:id="descriptionWarning" layoutX="639.0" layoutY="231.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="keywordsWarning" onMouseExited="#onMouseExitKeywordCheck" layoutX="639.0" layoutY="318.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                    <Label fx:id="keywordsWarning" layoutX="639.0" layoutY="318.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="audianceWarning" onMouseExited="#onMouseExitAudianceCheck" layoutX="639.0" layoutY="397.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                    <Label fx:id="audianceWarning" layoutX="639.0" layoutY="397.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="pageNoWarning" onMouseExited="#onMouseExitPageNoCheck" layoutX="639.0" layoutY="456.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                    <Label fx:id="pageNoWarning" layoutX="639.0" layoutY="456.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="languageWarning" onMouseExited="#onMouseExitLanguageCheck" layoutX="639.0" layoutY="517.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                    <Label fx:id="languageWarning" layoutX="639.0" layoutY="517.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="isbnWarning" onMouseExited="#onMouseExitIsbnCheck" layoutX="639.0" layoutY="578.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                    <Label fx:id="isbnWarning" layoutX="639.0" layoutY="578.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="licensNoWarning" onMouseExited="#onMouseExitLicensNoCheck" layoutX="639.0" layoutY="651.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                    <Label fx:id="licensNoWarning" layoutX="639.0" layoutY="651.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="subtitileWarning" onMouseExited="#onMouseExitSubtitleCheck" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                    <Label fx:id="subtitileWarning" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="13">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="lengthWarning" onMouseExited="#onMouseExitLengthCheck" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                                    <Label fx:id="lengthWarning" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="14">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
+                                    <ComboBox fx:id="language" prefWidth="150.0" promptText="Sprog" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ComboBox>
                                  </children>
                               </GridPane>
                            </children>
@@ -354,7 +342,7 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirmWindow" style="-fx-cursor: hand;" text="Bekræfte" GridPane.columnIndex="2">
+                        <Button fx:id="confirmButton" layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirmWindow" style="-fx-cursor: hand;" text="Bekræfte" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
