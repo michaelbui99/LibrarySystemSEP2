@@ -5,10 +5,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
 import javafx.collections.FXCollections;
@@ -41,8 +37,9 @@ public class RegisterMaterialVM
   private StringProperty departmentProperty;
   private StringProperty subtitleLanguageProperty;
   private StringProperty lengthProperty;
-  private StringProperty audiance;
-  private StringProperty type;
+  private StringProperty audianceProperty;
+  private StringProperty typeProperty;
+  private StringProperty urlProperty;
 
   public RegisterMaterialVM()
   {
@@ -76,8 +73,9 @@ public class RegisterMaterialVM
     departmentProperty = new SimpleStringProperty();
     subtitleLanguageProperty = new SimpleStringProperty();
     lengthProperty = new SimpleStringProperty();
-    audiance = new SimpleStringProperty();
-    type = new SimpleStringProperty();
+    audianceProperty = new SimpleStringProperty();
+    typeProperty = new SimpleStringProperty();
+    urlProperty = new SimpleStringProperty();
   }
 
   public ObjectProperty<LocalDate> releaseDateProperty()
@@ -190,14 +188,19 @@ public class RegisterMaterialVM
     return lengthProperty;
   }
 
-  public StringProperty audianceProperty()
+  public StringProperty audiancePropertyProperty()
   {
-    return audiance;
+    return audianceProperty;
   }
 
-  public StringProperty typeProperty()
+  public StringProperty typePropertyProperty()
   {
-    return type;
+    return typeProperty;
+  }
+
+  public StringProperty urlProperty()
+  {
+    return urlProperty;
   }
 
   public void addBook()
@@ -205,14 +208,14 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audiance.get(), languageProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
             isbnProperty.get(), Integer.parseInt(numberOfPagesProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
                 departmentProperty.get(), creatorLastNameProperty.getName(),
                 genreProperty.get()),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()),
-            genreProperty.get(), null);
+            genreProperty.get(), urlProperty.get());
   }
 
   public void addEBook()
@@ -220,12 +223,12 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerEBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audiance.get(), languageProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
             Integer.parseInt(numberOfPagesProperty.get()),
             Integer.parseInt(licensNumberProperty.get()),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()),
-            genreProperty.get(), null);
+            genreProperty.get(), urlProperty.get());
   }
 
   public void addAudioBook()
@@ -233,11 +236,11 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerAudioBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audiance.get(), languageProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
             Integer.parseInt(lengthProperty.get()), genreProperty.get(),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()),
-            null);
+            urlProperty.get());
   }
 
   public void addDVD()
@@ -245,12 +248,12 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerDVD(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audiance.get(), languageProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
             subtitleLanguageProperty.get(),
             Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
                 departmentProperty.get(), creatorLastNameProperty.getName(),
-                genreProperty.get()), genreProperty.get(), null);
+                genreProperty.get()), genreProperty.get(), urlProperty.get());
   }
 
   public void addCD()
@@ -258,10 +261,10 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerCD(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audiance.get(), languageProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
             Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
                 departmentProperty.get(), creatorLastNameProperty.getName(),
-                countryProperty.get()), genreProperty.get(), null);
+                countryProperty.get()), genreProperty.get(), urlProperty.get());
   }
 }
