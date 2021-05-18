@@ -43,12 +43,12 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
                     author.getCountry());
 
             PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (material_id, page_no, authorId, license_no) values (?,?,?,?)",
+                    "INSERT INTO e_book (material_id, page_no, license_no, author) values (?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             stm.setInt(1, material_id);
             stm.setInt(2, page_no);
-            stm.setInt(3, mc.getPersonId());
-            stm.setInt(4, license_no);
+            stm.setInt(3, license_no);
+            stm.setInt(4, mc.getPersonId());
             stm.executeUpdate();
             ResultSet keys = stm.getGeneratedKeys();
             keys.next();
@@ -61,12 +61,12 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
                     author.getCountry());
 
                 PreparedStatement stm = connection.prepareStatement(
-                    "INSERT INTO Bog (material_id, page_no, authorId, license_no) values (?,?,?,?)",
+                    "INSERT INTO e_book (material_id, page_no, license_no, author) values (?,?,?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
                 stm.setInt(1, material_id);
                 stm.setInt(2, page_no);
-                stm.setInt(3, mcId);
-                stm.setInt(4, license_no);
+                stm.setInt(3, license_no);
+                stm.setInt(4, mcId);
                 stm.executeUpdate();
                 ResultSet keys = stm.getGeneratedKeys();
                 keys.next();

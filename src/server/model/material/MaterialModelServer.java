@@ -29,9 +29,10 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createCDCopy(int materialID);
 
-  void registerEBook(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, int licenseNr, MaterialCreator author, String genre,
-      String url);
+  void registerEBook(String title, String publisher,
+      String releaseDate, String description, String tags,
+      String targetAudience, String language, int pageCount, int licenseNr,
+      MaterialCreator author, String genre, String url);
 
   void createEBookCopy(int materialID);
 

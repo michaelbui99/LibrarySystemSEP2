@@ -52,7 +52,7 @@ public interface Client
 
   void registerEBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      String isbn, int pageCount, String licenseNr, MaterialCreator author, String genre,
+      int pageCount, int licenseNr, MaterialCreator author, String genre,
       String url);
 
   void createEBookCopy(int materialID);

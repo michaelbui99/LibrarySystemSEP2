@@ -37,8 +37,7 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   }
 
-  @Override
-  public int numberOfAvailableCopies()
+  @Override public int numberOfAvailableCopies()
   {
     return client.numberOfAvailableCopies();
   }
@@ -63,8 +62,8 @@ public class MaterialModelManagerClient implements MaterialModelClient
       int playDuration, Place place, String genre, String url)
   {
     client.registerDVD(title, publisher, releaseDate, description, tags,
-        targetAudience, language, subtitlesLanguage, playDuration, place,
-        genre, url);
+        targetAudience, language, subtitlesLanguage, playDuration, place, genre,
+        url);
   }
 
   @Override public void createDVDCopy(int materialID)
@@ -88,12 +87,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      String licenseNr, MaterialCreator author, String genre, String url)
+      String targetAudience, String language, int pageCount, int licenseNr,
+      MaterialCreator author, String genre, String url)
   {
     client.registerEBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, isbn, pageCount, licenseNr, author, genre,
-        url);
+        targetAudience, language, pageCount, licenseNr, author, genre, url);
   }
 
   @Override public void createEBookCopy(int materialID)

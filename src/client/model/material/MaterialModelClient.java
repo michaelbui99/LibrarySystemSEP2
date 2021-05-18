@@ -35,8 +35,8 @@ public interface MaterialModelClient extends
   void createCDCopy(int materialID);
 
   void registerEBook(String title, String publisher, String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount, String licenseNr, MaterialCreator author, String genre,
-      String url);
+      String targetAudience, String language, int pageCount, int licenseNr, MaterialCreator author,
+      String genre, String url);
 
 
   void createEBookCopy(int materialID);

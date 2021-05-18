@@ -109,11 +109,10 @@
                      <children>
                         <TableView fx:id="searchTableView" prefHeight="280.0" prefWidth="831.0">
                           <columns>
-                            <TableColumn prefWidth="263.0" text="Titel" />
-                            <TableColumn minWidth="0.0" prefWidth="174.0" text="Forlægger" />
-                              <TableColumn prefWidth="127.0" text="Udgivelses dato" />
-                              <TableColumn prefWidth="136.0" text="Type" />
-                              <TableColumn prefWidth="96.0" text="Status" />
+                            <TableColumn fx:id="titleColumn" prefWidth="263.0" text="Titel" />
+                            <TableColumn fx:id="publisherColumn" minWidth="0.0" prefWidth="174.0" text="Forlægger" />
+                              <TableColumn fx:id="releaseDateColumn" prefWidth="127.0" text="Udgivelses dato" />
+                              <TableColumn fx:id="statusColumn" prefWidth="96.0" text="Status" />
                           </columns>
                         </TableView>
                      </children>
