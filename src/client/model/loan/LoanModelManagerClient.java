@@ -41,11 +41,6 @@ public class LoanModelManagerClient implements LoanModelClient
         client.registerLoan(material, borrower);
   }
 
-  @Override public void registerReservation(Material material,
-      Borrower borrower) throws IllegalStateException, NoSuchElementException
-  {
-     client.registerReservation(material, borrower);
-  }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {

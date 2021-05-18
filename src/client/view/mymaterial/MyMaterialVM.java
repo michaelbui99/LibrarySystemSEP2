@@ -11,6 +11,7 @@ public class MyMaterialVM
 {
   private ObservableList<Loan> activeLoans;
   private ObjectProperty<Loan> loanProperty;
+  private StringProperty cprProperty;
 
   public MyMaterialVM()
   {
@@ -20,25 +21,34 @@ public class MyMaterialVM
     activeLoans = FXCollections.observableArrayList();
 
     if (ModelFactoryClient.getInstance().getLoanModelClient()
-        .getAllLoansByCPR(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr()) != null)
+        .getAllLoansByCPR(cprProperty.get()) != null)
     {
       activeLoans.addAll(ModelFactoryClient.getInstance().getLoanModelClient()
-          .getAllLoansByCPR(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr()));
+          .getAllLoansByCPR(cprProperty.get()));
     }
     ModelFactoryClient.getInstance().getLoanModelClient()
+        /*Listens to for the LOANREGISTERED and LOANENDED event that is specific to the borrowers cpr
+        * To ensure that other users Loan events won't affect the specific users window. */
         .addPropertyChangeListener(EventTypes.LOANREGISTERED,
             evt -> {
-              activeLoans.add((Loan) evt.getNewValue());
-              System.out.println("LOAN REGISTERED CAUGHT");
+
+              if (((Loan) evt.getNewValue()).getBorrower().getCpr().equals(cprProperty.get()))
+              {
+                activeLoans.add((Loan) evt.getNewValue());
+                System.out.println("LOAN REGISTERED CAUGHT");
+              }
             });
     ModelFactoryClient.getInstance().getLoanModelClient()
-        .addPropertyChangeListener(EventTypes.LOANENDED,
+        .addPropertyChangeListener(EventTypes.LOANENDED + cprProperty.get(),
             evt -> {
-              activeLoans.removeIf(
-                  activeLoan -> activeLoan.getLoanID() == ((Loan) evt
-                      .getNewValue()).getLoanID());
-              System.out.println("LOAN ENDED EVT CAUGHT");
-              System.out.println(((Loan) evt.getNewValue()).getBorrower().getCpr());
+              if (((Loan) evt.getNewValue()).getBorrower().getCpr().equals(cprProperty.get()))
+              {
+                activeLoans.removeIf(
+                    activeLoan -> activeLoan.getLoanID() == ((Loan) evt
+                        .getNewValue()).getLoanID());
+                System.out.println("LOAN ENDED EVT CAUGHT");
+                System.out.println(((Loan) evt.getNewValue()).getBorrower().getCpr());
+              }
             });
     loanProperty = new SimpleObjectProperty<>();
   }

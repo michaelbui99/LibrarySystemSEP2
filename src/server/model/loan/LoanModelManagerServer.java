@@ -33,13 +33,6 @@ public class LoanModelManagerServer implements LoanModelServer
     support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
   }
 
-  @Override
-  public void registerReservation(Material material, Borrower borrower) {
-   //TODO: CHANGE LOAN DAO CREATE METHOD SIGNATURE
-    Reservation reservation = ReservationDAOImpl.getInstance().create(borrower, material);
-    //Event is fired and caught in LoanServer. LoanSever redirects the event to the client using the Client Callback.
-    support.firePropertyChange(EventTypes.RESERVATIONREGISTERED, null, reservation);
-  }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
@@ -49,7 +42,7 @@ public class LoanModelManagerServer implements LoanModelServer
   @Override public void endLoan(Loan loan)
   {
     LoanDAOImpl.getInstance().endLoan(loan);
-    support.firePropertyChange(EventTypes.LOANENDED, null, loan);
+    support.firePropertyChange(EventTypes.LOANENDED + loan.getBorrower().getCpr(), null, loan);
   }
 
 
