@@ -3,6 +3,7 @@ package client.view.registermaterial;
 import client.core.ViewModelFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
@@ -37,6 +38,8 @@ public class RegisterMaterialController
   @FXML private TextField department;
   @FXML private TextField subtitleLanguage;
   @FXML private TextField length;
+
+  @FXML private Label titWar;
 
   private ObservableList<TextField> listT = FXCollections.observableArrayList();
 
@@ -131,7 +134,6 @@ public class RegisterMaterialController
     if (type.equals("Book"))
     {
       ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
-      setErrorOnEmptyType();
       setTestForLabelGreen("Bogen");
     }
     else if (type.equals("EBook"))
@@ -193,15 +195,29 @@ public class RegisterMaterialController
 
   private void setErrorOnEmptyFields()
   {
-    if (ViewModelFactory.getInstance().getRegisterMaterialVM().titleProperty().get().isEmpty())
-    {
       error.setText("Title is Empty");
       error.setTextFill(Paint.valueOf("red"));
-    }
+  }
+
+  private boolean titleIsEmp()
+  {
+    return ViewModelFactory.getInstance().getRegisterMaterialVM().titleProperty().get().isEmpty();
   }
 
   @FXML public void onButtonConfirm(ActionEvent actionEvent)
   {
 
+  }
+
+  public void onError(MouseEvent mouseEvent)
+  {
+    if (titleIsEmp())
+    {
+      titWar.setVisible(true);
+    }
+    else
+    {
+      titWar.setVisible(false);
+    }
   }
 }

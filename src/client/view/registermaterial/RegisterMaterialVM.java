@@ -257,9 +257,4 @@ public class RegisterMaterialVM
                 departmentProperty.get(), creatorLastNameProperty.getName(),
                 countryProperty.get()), genreProperty.get(), null);
   }
-
-/*  private boolean titleCheck()
-  {
-    titleProperty.get().isEmpty();
-  }*/
 }

@@ -153,22 +153,22 @@
                                                       <Insets right="50.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <Label fx:id="hallNoWarning"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
+                                                <Label fx:id="hallNoWarning" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="departmentWaning" layoutX="310.0" layoutY="25.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <Label fx:id="departmentWaning" layoutX="310.0" layoutY="25.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="creatorLNameWarning" layoutX="310.0" layoutY="72.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <Label fx:id="creatorLNameWarning" layoutX="310.0" layoutY="72.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="genreWarning" layoutX="310.0" layoutY="118.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <Label fx:id="genreWarning" layoutX="310.0" layoutY="118.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="182.0" />
                                                    </GridPane.margin>
@@ -223,22 +223,22 @@
                                                    </GridPane.margin>
                                                 </TextField>
                                                 <DatePicker fx:id="dateOfBirth" disable="false" promptText="dd-MM-yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label fx:id="firstNameWarning"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
+                                                <Label fx:id="firstNameWarning" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="lastNameWarning" layoutX="310.0" layoutY="33.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <Label fx:id="lastNameWarning" layoutX="310.0" layoutY="33.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="dobWarning" layoutX="310.0" layoutY="96.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <Label fx:id="dobWarning" layoutX="310.0" layoutY="96.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label fx:id="countryWarning" layoutX="310.0" layoutY="159.0"  prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <Label fx:id="countryWarning" layoutX="310.0" layoutY="159.0" prefHeight="17.0" prefWidth="0.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="205.0" />
                                                    </GridPane.margin>
@@ -247,17 +247,17 @@
                                           </GridPane>
                                        </children>
                                     </HBox>
-                                    <Label fx:id="typeWarning"  text="!" textFill="RED" GridPane.columnIndex="1">
+                                    <Label fx:id="typeWarning" text="!" textFill="RED" GridPane.columnIndex="1">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="titleWarning" layoutX="639.0" layoutY="31.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label fx:id="titWar" layoutX="639.0" layoutY="31.0" onMouseExited="#onError" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="publisherWarning" layoutX="639.0" layoutY="91.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <Label fx:id="publisherWarning" layoutX="639.0" layoutY="91.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
@@ -267,12 +267,12 @@
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="descriptionWarning" layoutX="639.0" layoutY="231.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <Label fx:id="descriptionWarning" layoutX="639.0" layoutY="231.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="keywordsWarning" layoutX="639.0" layoutY="318.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                    <Label fx:id="keywordsWarning" layoutX="639.0" layoutY="318.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
@@ -282,17 +282,17 @@
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="pageNoWarning" layoutX="639.0" layoutY="456.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                    <Label fx:id="pageNoWarning" layoutX="639.0" layoutY="456.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="languageWarning" layoutX="639.0" layoutY="517.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                    <Label fx:id="languageWarning" layoutX="639.0" layoutY="517.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="isbnWarning" layoutX="639.0" layoutY="578.0"  text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                    <Label fx:id="isbnWarning" layoutX="639.0" layoutY="578.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
