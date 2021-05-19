@@ -173,7 +173,7 @@ public class AddUserController
   @FXML public void onTypedPhoneNoCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM().phoneNoProperty().get();
-    if (arg.isEmpty() || !arg.contains("+45") || arg.length() != 11)
+    if (arg.isEmpty() || !arg.contains("+45") || arg.length() != 11 || !arg.matches(".*\\d.*"))
     {
       phoneError.setVisible(true);
     }

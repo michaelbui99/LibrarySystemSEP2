@@ -130,7 +130,7 @@ public class AddLibrarianController
   @FXML public void onTypedPhoneNo(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM().phoneProperty().get();
-    if (arg.isEmpty() || !arg.contains("+45"))
+    if (arg.isEmpty() || !arg.contains("+45") || arg.length() != 11 || !arg.matches(".*\\d.*"))
     {
       phoneError.setVisible(true);
     }
