@@ -50,6 +50,10 @@ public class SearchController
     keywords.textProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
         .keywordProperty());
     chooseType.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM().chooseTypeProperty());
+    chooseLanguage.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+        .languageProperty());
+    targetAudience.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+        .targetAudienceProperty());
 
     chooseType.setItems(ViewModelFactory.getInstance().getSearchVM().getMaterialType());
     chooseLanguage.setItems(ViewModelFactory.getInstance().getSearchVM()

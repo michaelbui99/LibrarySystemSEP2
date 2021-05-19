@@ -36,4 +36,7 @@ public interface BookDAO
   List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience);
 
+  boolean bookAlreadyExists(String title, String publisher, String releaseDate, String description,
+      String targetAudience, String language, String isbn, int pageCount, MaterialCreator author, String genre)
+      throws SQLException;
 }

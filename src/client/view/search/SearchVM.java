@@ -56,9 +56,9 @@ public class SearchVM
     genreProperty = new SimpleStringProperty("");
     keywordProperty = new SimpleStringProperty("");
     typeProperty = new SimpleStringProperty("");
-    languageProperty = new SimpleStringProperty("");
-    targetAudienceProperty = new SimpleStringProperty("");
-    chooseTypeProperty = new SimpleStringProperty("");
+    languageProperty = new SimpleStringProperty();
+    targetAudienceProperty = new SimpleStringProperty();
+    chooseTypeProperty = new SimpleStringProperty();
   }
 
 

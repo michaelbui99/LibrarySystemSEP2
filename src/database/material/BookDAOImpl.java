@@ -24,7 +24,6 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
   private static BookDAO instance;
   private static final Lock lock = new ReentrantLock();
 
-
   public static BookDAO getInstance()
   {
     //Double lock check for Thread safety
@@ -169,14 +168,16 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
           + "join material_copy mt on book.material_id = mt.material_id "
           + "join place p on book.place_id = p.place_id "
           + "join material_creator mc on book.author = mc.person_id ";
-      if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
+      if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty()
+          || !targetAudience.isEmpty())
       {
         sql += "where ";
       }
 
       if (!title.isEmpty())
       {
-        queryFragments.add(" LOWER(material.title) LIKE  LOWER('%" + title + "%') ");
+        queryFragments
+            .add(" LOWER(material.title) LIKE  LOWER('%" + title + "%') ");
       }
       if (!language.isEmpty())
       {
@@ -184,7 +185,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
       }
       if (!genre.isEmpty())
       {
-        queryFragments.add(" LOWER(material.genre) LIKE LOWER('%" + genre + "%')");
+        queryFragments
+            .add(" LOWER(material.genre) LIKE LOWER('%" + genre + "%')");
       }
       if (!targetAudience.isEmpty())
       {
@@ -196,14 +198,16 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
       while (resultSet.next())
       {
         //find all keywords related to this material id
-        List<String> materialKeywordList = MaterialDAOImpl.getInstance().getKeywordsForMaterial(resultSet.getInt("material_id"));
+        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+            .getKeywordsForMaterial(resultSet.getInt("material_id"));
         String materialKeywords = String.join(", ", materialKeywordList);
         boolean match = false;
         if (!keywords.isEmpty())
         { //if keywords were specified in search, compare them to material keywords from DB (materialKeywordList)
           for (int i = 0; i < keywords.split(",").length; i++)
           {
-            if (materialKeywords.toLowerCase(Locale.ROOT).contains(keywords.split(",")[i].toLowerCase(Locale.ROOT)))
+            if (materialKeywords.toLowerCase(Locale.ROOT)
+                .contains(keywords.split(",")[i].toLowerCase(Locale.ROOT)))
             {
               match = true; //search keyword matched material keyword - material will be added to result list
               break;
@@ -214,7 +218,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
         {
           match = true; //if no keywords were specified by user - just add material keywords from DB to its material
         }
-        if (match){
+        if (match)
+        {
 
           Book book = new Book(resultSet.getInt("material_id"),
               MaterialDAOImpl.getInstance()
@@ -233,8 +238,10 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
                   String.valueOf(resultSet.getDate("dob")),
                   resultSet.getString("country")));
           book.setMaterialStatus(MaterialDAOImpl.getInstance()
-              .checkIfCopyAvailable(MaterialDAOImpl.getInstance().getCopyNumberForMaterial(resultSet.getInt("material_id"))) ?
-              MaterialStatus.Available : MaterialStatus.NotAvailable);
+              .checkIfCopyAvailable(MaterialDAOImpl.getInstance()
+                  .getCopyNumberForMaterial(resultSet.getInt("material_id"))) ?
+              MaterialStatus.Available :
+              MaterialStatus.NotAvailable);
           book.setKeywords(materialKeywords);
           System.out.println("Keywords: " + book.getKeywords());
           ml.add(book);
@@ -247,5 +254,32 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     }
     System.out.println("result size: " + ml.size());
     return ml;
+  }
+
+  @Override public boolean bookAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String isbn, int pageCount,
+      MaterialCreator author, String genre) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * from material join book b using (material_id) join material_creator mc ON b.author = mc.person_id where title = ? and audience = ? and description_of_the_content = ? and publisher = ? and language_ = ? and release_date = ? and genre = ? and page_no = ? and isbn = ? and f_name = ? and l_name = ? and dob = ? and country = ?");
+      stm.setString(1, title);
+      stm.setString(2, targetAudience);
+      stm.setString(3, description);
+      stm.setString(4, publisher);
+      stm.setString(5, language);
+      stm.setDate(6,Date.valueOf(releaseDate));
+      stm.setString(7,genre);
+      stm.setInt(8, pageCount);
+      stm.setString(9, isbn);
+      stm.setString(10, author.getfName());
+      stm.setString(11, author.getlName());
+      stm.setDate(12,Date.valueOf(author.getDob()));
+      stm.setString(13,author.getCountry());
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
   }
 }
