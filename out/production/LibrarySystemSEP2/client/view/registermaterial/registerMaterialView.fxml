@@ -31,7 +31,7 @@
                   </Label>
                </children>
             </HBox>
-            <ScrollPane prefHeight="385.0" prefWidth="654.0">
+            <ScrollPane prefHeight="396.0" prefWidth="656.0">
                <content>
                   <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1461.0" prefWidth="657.0" style="-fx-background-color: white;">
                      <children>
@@ -57,6 +57,7 @@
                                     <RowConstraints maxHeight="252.0" minHeight="10.0" prefHeight="252.0" valignment="TOP" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="176.0" valignment="TOP" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="164.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="164.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
@@ -317,6 +318,12 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </ComboBox>
+                                    <Label text="Billede" GridPane.rowIndex="15" />
+                                    <TextField fx:id="url" promptText="URL:" GridPane.columnIndex="1" GridPane.rowIndex="15">
+                                       <GridPane.margin>
+                                          <Insets right="50.0" />
+                                       </GridPane.margin>
+                                    </TextField>
                                  </children>
                               </GridPane>
                            </children>

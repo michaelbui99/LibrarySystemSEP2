@@ -1,5 +1,6 @@
 package client.network;
 
+import client.model.material.strategy.SearchStrategy;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -66,7 +67,7 @@ public interface RMIClient extends Remote
   void createAudioBookCopy(int materialID) throws RemoteException;
 
   List<Material> findMaterial(String title, String language, String keywords,
-      String genre, String targetAudience, String type) throws RemoteException;
+      String genre, String targetAudience, SearchStrategy searchStrategy) throws RemoteException;
   public Material getSelectMaterial() throws RemoteException;
   public void setSelectMaterial(Material selectMaterial) throws RemoteException;
   /**

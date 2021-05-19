@@ -147,9 +147,8 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
       String sql = "SELECT * FROM material "
           + "join cd  on material.material_id = cd.material_id  "
           + "join material_copy mt on cd.material_id = mt.material_id "
-          + "join place p on cd.place_id = p.place_id"
-          + "join material_creator mc on cd.author = mc.person_id"
-          + "join material_keywords mk on cd.material_id = mk.material_id";
+          + "join place p on cd.place_id = p.place_id "
+          + "join material_keywords mk on cd.material_id = mk.material_id ";
 
       if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
       {

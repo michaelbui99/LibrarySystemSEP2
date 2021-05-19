@@ -1,5 +1,6 @@
 package client.network;
 
+import client.model.material.strategy.SearchStrategy;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -26,6 +27,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
 
   private PropertyChangeSupport support;
   private Server server;
+  private SearchStrategy searchStrategy;
 
   public RMIClientImpl()
   {
@@ -75,7 +77,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.getLoanServer().registerReservation(material, borrower);
+      server.getReservationServer().registerReservation(material, borrower);
     }
     catch (RemoteException e)
     {
@@ -257,8 +259,16 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   }
 
   @Override public List<Material> findMaterial(String title, String language,
-      String keywords, String genre, String targetAudience, String type)
+      String keywords, String genre, String targetAudience, SearchStrategy searchStrategy)
   {
+    try
+    {
+      return server.getMaterialServer().findMaterial(title, language, keywords, genre, targetAudience, searchStrategy);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
     return null;
   }
 

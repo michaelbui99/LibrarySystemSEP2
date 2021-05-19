@@ -1,5 +1,6 @@
 package server.network.material;
 
+import shared.materials.Material;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
@@ -8,6 +9,7 @@ import shared.servers.MaterialServer;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class MaterialServerImpl implements MaterialServer
 {
@@ -100,8 +102,11 @@ public class MaterialServerImpl implements MaterialServer
 
   }
 
-  @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
+  @Override public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience,
+      SearchStrategy searchStrategy) throws RemoteException
   {
-
+    return ModelFactoryServer.getInstance().getMaterialModel().findMaterial(title, language, keywords, genre, targetAudience, searchStrategy);
   }
+
 }

@@ -1,5 +1,6 @@
 package server.model.material;
 
+import server.core.ModelFactoryServer;
 import shared.materials.Material;
 import shared.materials.MaterialList;
 import shared.materials.Place;
@@ -16,6 +17,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
 {
   private PropertyChangeSupport support;
   private MaterialList materialList;
+  private SearchStrategy searchStrategy;
 
   public MaterialModelManagerServer()
   {
@@ -144,37 +146,14 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   }
 
-  @Override public void findMaterial(String arg, SearchStrategy searchStrategy)
+  @Override public List<Material> findMaterial(String title, String language, String keywords,
+      String genre, String targetAudience, SearchStrategy searchStrategy)
   {
+    this.searchStrategy = searchStrategy;
+    return searchStrategy.findMaterial(title, language, keywords, genre, targetAudience);
 
   }
 
-  @Override public List<Material> searchAll() throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<Material> searchTitle(String title) throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<Material> searchGenre(String genre) throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<Material> searchTargetAudience(String targetAudience)
-      throws SQLException
-  {
-    return null;
-  }
-
-  @Override public List<Material> searchLanguage(String language)
-      throws SQLException
-  {
-    return null;
-  }
 
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)

@@ -152,9 +152,8 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
       String sql = "SELECT * FROM material "
           + "join dvd  on material.material_id = dvd.material_id  "
           + "join material_copy mt on dvd.material_id = mt.material_id "
-          + "join place p on dvd.place_id = p.place_id"
-          + "join material_creator mc on dvd.author = mc.person_id"
-          + "join material_keywords mk on dvd.material_id = mk.material_id";
+          + "join place p on dvd.place_id = p.place_id "
+          + "join material_keywords mk on dvd.material_id = mk.material_id ";
 
       if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
       {

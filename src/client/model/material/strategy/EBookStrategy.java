@@ -1,5 +1,6 @@
 package client.model.material.strategy;
 
+import database.material.EbookDAOImpl;
 import shared.materials.Material;
 import database.material.MaterialDAOImpl;
 
@@ -9,46 +10,16 @@ import java.util.List;
 public class EBookStrategy implements SearchStrategy
 {
   private String materialType = "e_book";
+  private static final long serialVersionUID = -8799770373490598593L;
 
   public EBookStrategy()
   {
 
   }
-
-  @Override public List<Material> searchAll() throws SQLException
+  @Override public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience)
   {
-    return MaterialDAOImpl.getInstance()
-        .findMaterial("", "", "", "", "", materialType);
+    return EbookDAOImpl.getInstance().findMaterial(title, language, keywords, genre, targetAudience);
   }
-
-  @Override public List<Material> searchTitle(String title) throws SQLException
-  {
-
-    return MaterialDAOImpl.getInstance()
-        .findMaterial(title, "", "", "", "", materialType);
-  }
-
-  @Override public List<Material> searchGenre(String genre) throws SQLException
-  {
-    return MaterialDAOImpl.getInstance()
-        .findMaterial("", "", "", genre, "", materialType);
-
-  }
-
-  @Override public List<Material> searchTargetAudience(String targetAudience)
-      throws SQLException
-  {
-    return MaterialDAOImpl.getInstance()
-        .findMaterial("", "", "", "", targetAudience, materialType);
-
-  }
-
-  @Override public List<Material> searchLanguage(String language) throws SQLException
-  {
-    return MaterialDAOImpl.getInstance()
-        .findMaterial("", language, "", "", "", materialType);
-
-  }
-
 
 }

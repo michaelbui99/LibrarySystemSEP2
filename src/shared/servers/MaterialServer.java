@@ -1,11 +1,13 @@
 package shared.servers;
 
+import shared.materials.Material;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface MaterialServer extends Remote
 {
@@ -46,5 +48,6 @@ public interface MaterialServer extends Remote
 
   void createAudioBookCopy(int materialID) throws RemoteException;
 
-  void findMaterial(String arg, SearchStrategy searchStrategy) throws RemoteException;
+  List<Material> findMaterial(String title, String language, String keywords,
+      String genre, String targetAudience, SearchStrategy searchStrategy) throws RemoteException;
 }

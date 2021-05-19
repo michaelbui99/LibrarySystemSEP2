@@ -1,5 +1,6 @@
 package client.network;
 
+import client.model.material.strategy.SearchStrategy;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -64,7 +65,7 @@ public interface Client
   void createAudioBookCopy(int materialID);
 
   List<Material> findMaterial(String title, String language, String keywords,
-      String genre, String targetAudience, String type);
+      String genre, String targetAudience, SearchStrategy searchStrategy);
   public Material getSelectMaterial();
   public void setSelectMaterial(Material selectMaterial);
   /**

@@ -2,15 +2,14 @@ package client.model.material.strategy;
 
 import shared.materials.Material;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface SearchStrategy
+public interface SearchStrategy extends Serializable
 {
   //Strategy
-  List<Material> searchAll() throws SQLException;
-  List<Material> searchTitle(String title) throws SQLException;
-  List<Material> searchGenre(String genre) throws SQLException;
-  List<Material> searchTargetAudience(String targetAudience) throws SQLException;
-  List<Material> searchLanguage(String language) throws SQLException;
+  List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience);
+
 }

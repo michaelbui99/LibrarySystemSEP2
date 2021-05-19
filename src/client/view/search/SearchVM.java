@@ -38,27 +38,27 @@ public class SearchVM
         "cd",
         "dvd",
         "ebog");
-   materialLanguage = FXCollections.observableArrayList();
-   materialLanguage.addAll(
-       "Engelsk",
-       "Dansk",
-       "Arabisk"
-   );
-   materialAudience = FXCollections.observableArrayList();
-   materialAudience.addAll("Voksen",
-       "Barn",
-       "Teenager",
-       "Familie",
-       "Ældre",
-       "Studerende");
+    materialLanguage = FXCollections.observableArrayList();
+    materialLanguage.addAll(
+        "Engelsk",
+        "Dansk",
+        "Arabisk"
+    );
+    materialAudience = FXCollections.observableArrayList();
+    materialAudience.addAll("Voksen",
+        "Barn",
+        "Teenager",
+        "Familie",
+        "Ældre",
+        "Studerende");
 
-   titleProperty = new SimpleStringProperty();
-   genreProperty = new SimpleStringProperty();
-   keywordProperty = new SimpleStringProperty();
-   typeProperty = new SimpleStringProperty();
-   languageProperty = new SimpleStringProperty();
-   targetAudienceProperty = new SimpleStringProperty();
-   chooseTypeProperty = new SimpleStringProperty();
+    titleProperty = new SimpleStringProperty("");
+    genreProperty = new SimpleStringProperty("");
+    keywordProperty = new SimpleStringProperty("");
+    typeProperty = new SimpleStringProperty("");
+    languageProperty = new SimpleStringProperty("");
+    targetAudienceProperty = new SimpleStringProperty("");
+    chooseTypeProperty = new SimpleStringProperty("");
   }
 
 
@@ -124,28 +124,31 @@ public class SearchVM
   }
 
   public ObservableList<Material> searchMaterial(){
-     SearchStrategy searchStrategy = null;
-     if (typeProperty.get().equals("bog")){
-       searchStrategy = new BookStrategy();
-     }
-     else if (typeProperty.get().equals("lydbog")){
-       searchStrategy = new AudioBookStrategy();
-     }
-     else if (typeProperty.get().equals("cd")){
-       searchStrategy = new CDStrategy();
-     }
-     else if (typeProperty.get().equals("dvd")){
-       searchStrategy = new DVDStrategy();
-     }
-     else if (typeProperty.get().equals("ebog")){
-       searchStrategy = new EBookStrategy();
-     }
-
-   foundMaterials.addAll(ModelFactoryClient.getInstance().getMaterialModelClient().findMaterial(titleProperty.get(),  languageProperty.get(),
-      keywordProperty.get(),  genreProperty.get(),  targetAudienceProperty.get(),searchStrategy));
-   ModelFactoryClient.getInstance().getMaterialModelClient().addPropertyChangeListener(EventTypes.MATERIALFOUND,
-       evt -> foundMaterials.add((Material) evt.getNewValue()));
-   return foundMaterials;
+    SearchStrategy searchStrategy = null;
+    if (chooseTypeProperty.getValue().equals("bog")){
+      searchStrategy = new BookStrategy();
+    }
+    else if (chooseTypeProperty.getValue().equals("lydbog")){
+      searchStrategy = new AudioBookStrategy();
+    }
+    else if (chooseTypeProperty.getValue().equals("cd")){
+      searchStrategy = new CDStrategy();
+    }
+    else if (chooseTypeProperty.getValue().equals("dvd")){
+      searchStrategy = new DVDStrategy();
+    }
+    else if (chooseTypeProperty.getValue().equals("ebog")){
+      searchStrategy = new EBookStrategy();
+    }
+    foundMaterials.clear();
+    if (ModelFactoryClient.getInstance().getMaterialModelClient().findMaterial(titleProperty.get(),  languageProperty.get(),
+        keywordProperty.get(),  genreProperty.get(),  targetAudienceProperty.get(),searchStrategy) != null){
+      foundMaterials.addAll(ModelFactoryClient.getInstance().getMaterialModelClient().findMaterial(titleProperty.get(),  languageProperty.get(),
+          keywordProperty.get(),  genreProperty.get(),  targetAudienceProperty.get(),searchStrategy));
+      ModelFactoryClient.getInstance().getMaterialModelClient().addPropertyChangeListener(EventTypes.MATERIALFOUND,
+          evt -> foundMaterials.add((Material) evt.getNewValue()));
+    }
+    return foundMaterials;
   }
 
 

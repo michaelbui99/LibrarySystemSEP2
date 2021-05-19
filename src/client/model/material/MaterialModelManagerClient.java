@@ -3,7 +3,6 @@ package client.model.material;
 import client.model.material.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.person.MaterialCreator;
-import client.model.material.strategy.SearchStrategyManager;
 import client.network.Client;
 import shared.materials.Place;
 
@@ -16,14 +15,13 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   private Client client;
   private PropertyChangeSupport support;
-  private SearchStrategyManager searchStrategyManager;
   private Material selectMaterial;
 
   public MaterialModelManagerClient(Client client)
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
-    searchStrategyManager = new SearchStrategyManager();
+
 
   }
 
@@ -118,9 +116,8 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience, SearchStrategy searchStrategy)
   {
+ return client.findMaterial(title, language, keywords, genre, targetAudience, searchStrategy);
 
-    return searchStrategyManager
-        .findMaterial(title, language, keywords, genre, targetAudience);
   }
 
   @Override public void addPropertyChangeListener(String name,

@@ -167,9 +167,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
       String sql = "SELECT * FROM material "
           + "join book  on material.material_id = book.material_id  "
           + "join material_copy mt on book.material_id = mt.material_id "
-          + "join place p on book.place_id = p.place_id"
-          + "join material_creator mc on book.author = mc.person_id"
-          + "join material_keywords mk on book.material_id = mk.material_id";
+          + "join place p on book.place_id = p.place_id "
+          + "join material_creator mc on book.author = mc.person_id ";
       if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
       {
         sql += "where ";

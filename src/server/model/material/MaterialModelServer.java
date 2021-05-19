@@ -44,11 +44,8 @@ public interface MaterialModelServer extends PropertyChangeSubject
   void createAudioBookCopy(int materialID);
 
 
-  void findMaterial(String arg, SearchStrategy searchStrategy);
+  List<Material> findMaterial(String title, String language, String keywords,
+      String genre, String targetAudience, SearchStrategy searchStrategy);
 
-  List<Material> searchAll() throws SQLException;
-  List<Material> searchTitle(String title) throws SQLException;
-  List<Material> searchGenre(String genre) throws SQLException;
-  List<Material> searchTargetAudience(String targetAudience) throws SQLException;
-  List<Material> searchLanguage(String language) throws SQLException;
+
 }

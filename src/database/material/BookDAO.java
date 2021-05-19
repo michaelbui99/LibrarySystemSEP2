@@ -1,5 +1,6 @@
 package database.material;
 
+import client.model.material.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.materials.Place;
 import shared.materials.reading.Book;

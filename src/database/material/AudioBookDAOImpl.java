@@ -162,9 +162,9 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
             String sql = "SELECT * FROM material "
                 + "join audiobook  on material.material_id = audiobook.material_id  "
                 + "join material_copy mt on audiobook.material_id = mt.material_id "
-                + "join place p on audiobook.place_id = p.place_id"
-                + "join material_creator mc on audiobook.author = mc.person_id"
-                + "join material_keywords mk on audiobook.material_id = mk.material_id";
+                + "join place p on audiobook.place_id = p.place_id "
+                + "join material_creator mc on audiobook.author = mc.person_id "
+                + "join material_keywords mk on audiobook.material_id = mk.material_id ";
 
             if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
             {
