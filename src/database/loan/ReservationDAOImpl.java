@@ -36,16 +36,15 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         //todo: lige nu reserverer man en specific kopy. Evt. tilføje materiale + materiale kopi som java object, så man skelner mellem dem?
         //todo:
         LocalDate today = LocalDate.now();
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (material_id, copy_no, cpr_no, reservation_date) values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (material_id, cpr_no, reservation_date, ready) values (?,?,?,false)", Statement.RETURN_GENERATED_KEYS);
         stm.setInt(1, material.getMaterialID());
-        stm.setInt(2, material.getCopyNumber());
-        stm.setString(3, borrower.getCpr());
-        stm.setDate(4,Date.valueOf(today));
+        stm.setString(2, borrower.getCpr());
+        stm.setDate(3,Date.valueOf(today));
         stm.executeUpdate();
         ResultSet keys = stm.getGeneratedKeys();
         keys.next();
         connection.commit();
-        return new Reservation(material, borrower, today, keys.getInt(1));
+        return new Reservation(material, borrower, today, keys.getInt(1), false);
       }
     }
     catch (SQLException throwables)

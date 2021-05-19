@@ -11,6 +11,7 @@ public class Reservation
   private Borrower borrower;
   private LocalDate reservationDate;
   private int reservationID;
+  private boolean readyForPickup;
 
   public Reservation(Material material, Borrower borrower, LocalDate reservationDate)
   {
@@ -20,12 +21,13 @@ public class Reservation
   }
 
   public Reservation(Material material, Borrower borrower,
-      LocalDate reservationDate, int reservationID)
+      LocalDate reservationDate, int reservationID, boolean readyForPickup)
   {
     this.material = material;
     this.borrower = borrower;
     this.reservationDate = reservationDate;
     this.reservationID = reservationID;
+    this.readyForPickup = readyForPickup;
   }
 
   public Material getMaterial()
