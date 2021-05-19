@@ -27,13 +27,12 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   public Material getSelectMaterial()
   {
-    return selectMaterial;
+    return client.getSelectMaterial();
   }
 
   public void setSelectMaterial(Material selectMaterial)
   {
-    this.selectMaterial = selectMaterial;
-
+    client.setSelectMaterial(selectMaterial);
   }
 
   @Override public int numberOfAvailableCopies()

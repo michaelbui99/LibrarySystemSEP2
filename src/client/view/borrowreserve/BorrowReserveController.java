@@ -18,7 +18,7 @@ import java.io.IOException;
 public class BorrowReserveController {
 
     @FXML
-    private TextArea materialeInfo;
+    private TextArea materialInfo;
 
     @FXML
     private ComboBox<String> borrowChoice;
@@ -34,11 +34,15 @@ public class BorrowReserveController {
 
 
     public void init() throws FileNotFoundException {
-        materialeInfo.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialInfoProp());
+        ViewModelFactory.getInstance().getBorrowReserveVM();
         availNumber.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getAvailNumberProp().asString());
-       // materialImage.imageProperty().bind((ObservableValue<? extends Image>) new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL())));
+        materialInfo.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialInfoProp());
+       // materialIma11ge.imageProperty().bind((ObservableValue<? extends Image>) new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL())));
         try {
-            imageTest = new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL()));
+            if (ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL() != null)
+            {
+                imageTest = new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL()));
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -50,15 +54,16 @@ public class BorrowReserveController {
         ViewHandler.getInstance().openView("Search");
     }
 
-    @FXML
-    void loanReserve(ActionEvent actionEvent) {
 
-        if (borrowChoice.getSelectionModel().getSelectedItem().equals("Lån")) {
-            ViewModelFactory.getInstance().getBorrowReserveVM().loanMaterial();
-        } else if (borrowChoice.getSelectionModel().getSelectedItem().equals("Reserve")) {
-            ViewModelFactory.getInstance().getBorrowReserveVM().reserveMaterial();
-        }
+
+    @FXML
+    void onLoanButton(ActionEvent event) {
+        ViewModelFactory.getInstance().getBorrowReserveVM().loanMaterial();
     }
 
-
+    @FXML
+    void onReserveButton(ActionEvent event)
+    {
+        ViewModelFactory.getInstance().getBorrowReserveVM().reserveMaterial();
+    }
 }

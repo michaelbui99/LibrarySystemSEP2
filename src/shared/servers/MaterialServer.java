@@ -16,6 +16,8 @@ public interface MaterialServer extends Remote
    *
    */
 
+  void setSelectedMaterial(Material material) throws RemoteException;
+  Material getSelectedMaterial() throws  RemoteException;
 
   void registerBook(String title, String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount, Place place, MaterialCreator author, String genre,
@@ -50,4 +52,6 @@ public interface MaterialServer extends Remote
 
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience, SearchStrategy searchStrategy) throws RemoteException;
+  int numberOfAvailableCopies() throws RemoteException;
+
 }

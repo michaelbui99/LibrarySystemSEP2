@@ -19,7 +19,7 @@ public class MyMaterialVM
 
 
     activeLoans = FXCollections.observableArrayList();
-
+    cprProperty = new SimpleStringProperty(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr());
     if (ModelFactoryClient.getInstance().getLoanModelClient()
         .getAllLoansByCPR(cprProperty.get()) != null)
     {

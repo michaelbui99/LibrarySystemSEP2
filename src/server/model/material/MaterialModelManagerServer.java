@@ -18,9 +18,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
   private PropertyChangeSupport support;
   private MaterialList materialList;
   private SearchStrategy searchStrategy;
+  private Material selectedMaterial;
 
   public MaterialModelManagerServer()
   {
+    selectedMaterial = null;
     support = new PropertyChangeSupport(this);
     materialList = new MaterialList();
   }
@@ -154,6 +156,20 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   }
 
+  @Override public int numberOfAvailableCopies()
+  {
+    return MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(selectedMaterial.getMaterialID());
+  }
+
+  @Override public Material getSelectMaterial()
+  {
+    return selectedMaterial;
+  }
+
+  @Override public void setSelectedMaterial(Material material)
+  {
+    this.selectedMaterial = material;
+  }
 
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)

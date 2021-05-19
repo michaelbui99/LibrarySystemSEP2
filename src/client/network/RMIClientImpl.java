@@ -274,12 +274,27 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
 
   @Override public Material getSelectMaterial()
   {
+    try
+    {
+      return server.getMaterialServer().getSelectedMaterial();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
     return null;
   }
 
-  @Override public void setSelectMaterial(Material selectMaterial)
+  @Override public void setSelectMaterial(Material material)
   {
-
+    try
+    {
+      server.getMaterialServer().setSelectedMaterial(material);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public Borrower registerBorrower(String cpr_no, String f_name,
@@ -376,7 +391,15 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
 
   @Override public int numberOfAvailableCopies()
   {
-    return 0;
+    try
+    {
+      return server.getMaterialServer().numberOfAvailableCopies();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return -1;
   }
 
   @Override public void addPropertyChangeListener(String name,
@@ -403,17 +426,17 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     support.removePropertyChangeListener(listener);
   }
 
-//  @Override public void setBorrowerCpr(String borrowerCpr)
-//  {
-//    try
-//    {
-//      server.getUserServer().setBorrowerCpr(borrowerCpr);
-//    }
-//    catch (RemoteException e)
-//    {
-//      e.printStackTrace();
-//    }
-//  }
+  @Override public void setBorrowerCpr(String borrowerCpr)
+  {
+    try
+    {
+      server.getUserServer().setBorrowerCpr(borrowerCpr);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
 
   @Override public void loanRegistered(Loan loan)
   {

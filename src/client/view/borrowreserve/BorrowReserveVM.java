@@ -1,19 +1,21 @@
 package client.view.borrowreserve;
 
 import client.core.ModelFactoryClient;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
+import client.model.material.MaterialModelClient;
+import javafx.beans.property.*;
+import shared.materials.Material;
 
 public class BorrowReserveVM {
     private StringProperty materialInfoProp;
     private IntegerProperty availNumberProp;
+    private ObjectProperty<Material> materialProperty;
 
     public BorrowReserveVM() {
-        materialInfoProp = new SimpleStringProperty();
-        availNumberProp = new SimpleIntegerProperty();
+        this.materialProperty = new SimpleObjectProperty<>();
+        materialProperty.set(ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial());
+        availNumberProp = new SimpleIntegerProperty(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies());
+        materialInfoProp = new SimpleStringProperty(materialProperty.get().toString());
+        System.out.println(materialProperty.get().toString());
     }
 
 
@@ -25,6 +27,10 @@ public class BorrowReserveVM {
         return materialInfoProp;
     }
 
+    public ObjectProperty<Material> materialProperty()
+    {
+        return materialProperty;
+    }
 
     public void loanMaterial() {
 

@@ -69,7 +69,7 @@ public interface RMIClient extends Remote
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience, SearchStrategy searchStrategy) throws RemoteException;
   public Material getSelectMaterial() throws RemoteException;
-  public void setSelectMaterial(Material selectMaterial) throws RemoteException;
+  public void setSelectMaterial(Material material) throws RemoteException;
   /**
    * Registers a new Borrower into the system.
    *
@@ -142,6 +142,6 @@ public interface RMIClient extends Remote
   void removePropertyChangeListener(String name, PropertyChangeListener listener) throws RemoteException;
   void removePropertyChangeListener(PropertyChangeListener listener) throws RemoteException;
 
-//  void setBorrowerCpr(String borrowerCpr) throws RemoteException;
+  void setBorrowerCpr(String borrowerCpr) throws RemoteException;
 
 }

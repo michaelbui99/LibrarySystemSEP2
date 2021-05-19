@@ -80,8 +80,8 @@ public class SearchController
 
   @FXML public void onButtonContinue(ActionEvent actionEvent) throws IOException
   {
-    ViewHandler.getInstance().openView("BorrowReserve");
     ViewModelFactory.getInstance().getSearchVM().setSelectMaterial(searchTableView.getSelectionModel().getSelectedItem());
+    ViewHandler.getInstance().openView("BorrowReserve");
   }
 
 

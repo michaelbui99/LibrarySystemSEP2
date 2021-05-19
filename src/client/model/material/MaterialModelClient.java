@@ -58,7 +58,7 @@ public interface MaterialModelClient extends
   public int numberOfAvailableCopies();
 
 
-  public void setSelectMaterial(Material selectMaterial);
+  public void setSelectMaterial(Material material);
 
 
 }

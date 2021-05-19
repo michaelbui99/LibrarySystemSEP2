@@ -47,5 +47,10 @@ public interface MaterialModelServer extends PropertyChangeSubject
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience, SearchStrategy searchStrategy);
 
+  int numberOfAvailableCopies();
+   Material getSelectMaterial();
+ void setSelectedMaterial(Material material);
+
+
 
 }

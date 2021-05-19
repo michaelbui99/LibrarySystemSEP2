@@ -30,5 +30,10 @@ class MaterialDAOImplTest
     assertEquals(1, MaterialDAOImpl.getInstance().getCopyNumberForMaterial(1));
   }
 
+  @Test void getNumberOfAvailableCopies()
+  {
+    assertEquals(1, MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(1));
+  }
+
 
 }

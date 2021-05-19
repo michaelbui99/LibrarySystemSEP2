@@ -67,7 +67,7 @@ public interface Client
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience, SearchStrategy searchStrategy);
   public Material getSelectMaterial();
-  public void setSelectMaterial(Material selectMaterial);
+  public void setSelectMaterial(Material material);
   /**
    * Registers a new Borrower into the system.
    *
@@ -135,7 +135,7 @@ public interface Client
 
   int numberOfAvailableCopies();
 
-//  void setBorrowerCpr(String borrowerCpr);
+  void setBorrowerCpr(String borrowerCpr);
 
 }
 

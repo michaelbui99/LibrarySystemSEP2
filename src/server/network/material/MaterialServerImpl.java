@@ -25,6 +25,17 @@ public class MaterialServerImpl implements MaterialServer
     }
   }
 
+  @Override public void setSelectedMaterial(Material material)
+  {
+    ModelFactoryServer.getInstance().getMaterialModel().setSelectedMaterial(material);
+  }
+
+  @Override public Material getSelectedMaterial()
+  {
+    return ModelFactoryServer.getInstance().getMaterialModel()
+        .getSelectMaterial();
+  }
+
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
@@ -107,6 +118,11 @@ public class MaterialServerImpl implements MaterialServer
       SearchStrategy searchStrategy) throws RemoteException
   {
     return ModelFactoryServer.getInstance().getMaterialModel().findMaterial(title, language, keywords, genre, targetAudience, searchStrategy);
+  }
+
+  @Override public int numberOfAvailableCopies()
+  {
+    return ModelFactoryServer.getInstance().getMaterialModel().numberOfAvailableCopies();
   }
 
 }
