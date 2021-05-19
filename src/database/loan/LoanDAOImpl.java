@@ -1,5 +1,6 @@
 package database.loan;
 
+import database.material.MaterialCopyDAOImpl;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.DVD;
@@ -58,7 +59,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         stm.setDate(2, null);
         stm.setString(3, borrower.getCpr());
         stm.setInt(4, material.getMaterialID());
-        stm.setInt(5, material.getCopyNumber());
+        stm.setInt(5, MaterialCopyDAOImpl.getInstance()
+            .getFirstAvailableCopyNo(material.getMaterialID()));
         ResultSet keys = stm.getGeneratedKeys();
         keys.next();
         int generatedKey = keys.getInt(1);
