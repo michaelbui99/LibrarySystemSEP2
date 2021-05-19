@@ -1,7 +1,6 @@
 package client.view.addlibrarian;
 
 import client.core.ViewModelFactory;
-import shared.person.Address;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
@@ -45,195 +45,37 @@ public class AddLibrarianController
    */
   public void init()
   {
-
-  }
-
-  @FXML public boolean onMouseExitedCheckLastName()
-  {
-    if (lastName.getText().isEmpty() || lastName.getText().matches(".*\\d.*"))
-    {
-      lNameError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      lNameError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckFirstName()
-  {
-    if (firstName.getText().isEmpty() || firstName.getText().matches(".*\\d.*"))
-    {
-      fNameError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      fNameError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckCPR()
-  {
-    if ((cprNumber.getText().isEmpty()) || !(cprNumber.getText().contains("-"))
-        || (cprNumber.getText().length() != 11) || !(cprNumber.getText()
-        .matches(".*\\d.*")))
-    {
-      cprError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      cprError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckStreetName()
-  {
-    if (streetName.getText().isEmpty() || streetName.getText()
-        .matches(".*\\d.*"))
-    {
-      streetNameError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      streetNameError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckCity()
-  {
-    if (city.getText().isEmpty() || city.getText().matches(".*\\d.*"))
-    {
-      cityError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      cityError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckZipCode()
-  {
-    if (zipCode.getText().isEmpty() || !zipCode.getText().matches(".*\\d.*")
-        || (zipCode.getText().length() != 4))
-    {
-      zipCodeError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      zipCodeError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckStreetNumber()
-  {
-    if (streetNumber.getText().isEmpty() || !streetNumber.getText()
-        .matches(".*\\d.*"))
-    {
-      streetNoError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      streetNoError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckPhoneNumber()
-  {
-    if ((phoneNumber.getText().isEmpty()) || !(phoneNumber.getText()
-        .matches(".*\\d.*")) || !(phoneNumber.getText().contains("+45")) || (
-        phoneNumber.getText().length() != 11))
-    {
-      phoneError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      phoneError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckEmployeeNumber()
-  {
-    if ((employeeNo.getText().isEmpty()) || (!(phoneNumber.getText()
-        .matches(".*\\d.*"))))
-    {
-      employeeNoError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      employeeNoError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckPassword()
-  {
-    if (password.getText().isEmpty())
-    {
-      passwordError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      passwordError.setVisible(false);
-      return false;
-    }
-  }
-
-  @FXML public boolean onMouseExitedCheckEmail()
-  {
-    if (email.getText().isEmpty() || !email.getText().contains("@"))
-    {
-      emailError.setVisible(true);
-      return true;
-    }
-    else
-    {
-      emailError.setVisible(false);
-      return false;
-    }
+    lastName.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().lastNameProperty());
+    firstName.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().firstNameProperty());
+    cprNumber.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().cprProperty());
+    streetName.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM()
+            .streetnameProperty());
+    city.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().cityProperty());
+    zipCode.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().zipCodeproperty());
+    streetNumber.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().streetNoProperty());
+    phoneNumber.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().phoneProperty());
+    employeeNo.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM()
+            .employeeNoProperty());
+    password.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM().passwordProperty());
+    employeeNo.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddLibrarianVM()
+            .employeeNoProperty());
   }
 
   @FXML public void onButtonSignUp(ActionEvent actionEvent) throws IOException
   {
-    int employee_no = Integer.parseInt(employeeNo.getText());
-    int zip_code = Integer.parseInt(zipCode.getText());
-
-    if ((onMouseExitedCheckEmployeeNumber()) && (onMouseExitedCheckEmail())
-        && (onMouseExitedCheckFirstName()) && (onMouseExitedCheckLastName())
-        && (onMouseExitedCheckPassword()) && (onMouseExitedCheckCity())
-        && (onMouseExitedCheckStreetName()) && (onMouseExitedCheckZipCode())
-        && (onMouseExitedCheckStreetNumber())
-        && (onMouseExitedCheckPhoneNumber()) && (onMouseExitedCheckCPR()))
-    {
-      signUpButton.setDisable(true);
-    }
-    else
-    {
-      signUpButton.setDisable(false);
-      ViewModelFactory.getInstance().getAddLibrarianVM()
-          .addLibrarian(employee_no, firstName.getText(), lastName.getText(),
-              cprNumber.getText(), phoneNumber.getText(), email.getText(),
-              new Address(city.getText(), streetName.getText(), zip_code,
-                  streetNumber.getText()), password.getText());
-      ViewHandler.getInstance().openView("Administration");
-    }
+    ViewModelFactory.getInstance().getAddLibrarianVM().addLibrarian();
+    ViewHandler.getInstance().openView("Administration");
   }
 
   @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
@@ -244,5 +86,141 @@ public class AddLibrarianController
   @FXML public void onButtonCancel(ActionEvent actionEvent)
   {
     System.exit(0);
+  }
+
+  @FXML public void onTypedEmailCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().emailProperty().get();
+    if (arg.isEmpty() || !arg.contains("@"))
+    {
+      emailError.setVisible(true);
+    }
+    else
+    {
+      emailError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypedPasswordCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().passwordProperty().get();
+    if (arg.isEmpty())
+    {
+      passwordError.setVisible(true);
+    }
+    else
+    {
+      passwordError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypedEmployyeNOCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().employeeNoProperty().get();
+    if (arg.isEmpty() || !arg.matches(".*\\d.*"))
+    {
+      employeeNoError.setVisible(true);
+    }
+    else
+    {
+      employeeNoError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypedPhoneNo(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().phoneProperty().get();
+    if (arg.isEmpty() || !arg.contains("+45") || arg.length() != 11 || !arg.matches(".*\\d.*"))
+    {
+      phoneError.setVisible(true);
+    }
+    else
+    {
+      phoneError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypeStreetNoCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().streetNoProperty().get();
+    if (arg.isEmpty())
+    {
+      streetNoError.setVisible(true);
+    }
+    else
+    {
+      streetNoError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypedZipCode(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().zipCodeproperty().get();
+    if (arg.isEmpty() || !arg.matches(".*\\d.*") || arg.length() != 4);
+  }
+
+  @FXML public void onTypedCity(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().cityProperty().get();
+    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    {
+      cityError.setVisible(true);
+    }
+    else
+    {
+      cityError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypeStreetNameCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().streetnameProperty().get();
+    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    {
+      streetNameError.setVisible(true);
+    }
+    else
+    {
+      streetNameError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypedCprCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().cprProperty().get();
+    if (arg.isEmpty() || !arg.matches(".*\\d.*") || !arg.contains("-") || arg.length() != 11)
+    {
+      cprError.setVisible(true);
+    }
+    else
+    {
+      cprError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypedFirstNameCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().firstNameProperty().get();
+    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    {
+      fNameError.setDisable(true);
+    }
+    else
+    {
+      fNameError.setVisible(false);
+    }
+  }
+
+  @FXML public void onTypedLastNameCheck(KeyEvent keyEvent)
+  {
+    String arg = ViewModelFactory.getInstance().getAddLibrarianVM().lastNameProperty().get();
+    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    {
+      lNameError.setVisible(true);
+    }
+    else
+    {
+      lNameError.setVisible(false);
+    }
   }
 }

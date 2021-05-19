@@ -42,7 +42,6 @@ public class LoanServerImpl implements LoanServer
   }
 
 
-
   @Override public void endLoan(Loan loan)
   {
     ModelFactoryServer.getInstance().getLoanModel().endLoan(loan);

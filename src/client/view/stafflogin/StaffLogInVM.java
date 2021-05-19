@@ -1,16 +1,34 @@
 package client.view.stafflogin;
 
 import client.core.ModelFactoryClient;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class StaffLogInVM
 {
+  private StringProperty employeeNoProperty;
+  private StringProperty passwordProperty;
+
   public StaffLogInVM()
   {
+    employeeNoProperty = new SimpleStringProperty();
+    passwordProperty = new SimpleStringProperty();
   }
 
-  public boolean login(int employee_no, String password)
+  public StringProperty employeeNoProperty()
   {
-    return ModelFactoryClient
-        .getInstance().getUserModelClient().librarianLogin(employee_no, password);
+    return employeeNoProperty;
+  }
+
+  public StringProperty passwordProperty()
+  {
+    return passwordProperty;
+  }
+
+  public boolean login()
+  {
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .librarianLogin(Integer.parseInt(employeeNoProperty.get()), passwordProperty
+            .get());
   }
 }

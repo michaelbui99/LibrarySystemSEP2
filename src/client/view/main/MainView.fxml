@@ -42,12 +42,12 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="cprNo" promptText="******-****" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="cprNo" onKeyTyped="#onTypedCprCheck" promptText="******-****" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="20.0" right="100.0" />
                            </GridPane.margin>
                         </TextField>
-                        <PasswordField fx:id="password" promptText="Indtast dit adgangskode her:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <PasswordField fx:id="password" onKeyTyped="#onTypedPasswordCheck" promptText="Indtast dit adgangskode her:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="20.0" right="100.0" />
                            </GridPane.margin>
@@ -70,6 +70,16 @@
                         <Label text="Arbejder du her?">
                            <GridPane.margin>
                               <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="cprError" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="300.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="passwordError" layoutX="443.0" layoutY="90.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="300.0" />
                            </GridPane.margin>
                         </Label>
                      </children>
