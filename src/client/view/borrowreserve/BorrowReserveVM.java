@@ -36,7 +36,7 @@ public class BorrowReserveVM {
 
     public void reserveMaterial() {
 
-        ModelFactoryClient.getInstance().getLoanModelClient().registerReservation(
+        ModelFactoryClient.getInstance().getReservationModelClient().registerReservation(
                 ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
                 ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
     }

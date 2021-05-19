@@ -75,7 +75,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.getLoanServer().registerReservation(material, borrower);
+      server.getReservationServer().registerReservation(material, borrower);
     }
     catch (RemoteException e)
     {
