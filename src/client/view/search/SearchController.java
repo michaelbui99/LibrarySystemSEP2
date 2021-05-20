@@ -68,6 +68,10 @@ public class SearchController
     ObservableList<Material> materials = ViewModelFactory.getInstance().getSearchVM().searchMaterial();
     searchTableView.setItems(materials);
     if (materials.size() > 0 ){
+      errorLabel.setVisible(false);
+    }
+    else {
+      errorLabel.setVisible(true);
     }
     searchTableView.refresh();
 
