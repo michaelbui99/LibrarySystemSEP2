@@ -18,24 +18,30 @@ public interface Client
   /**
    * Registers a new Loan for the given material and loaner.
    *
-   * @param material  material is the Material the loaner wants to loan.
+   * @param material material is the Material the loaner wants to loan.
    * @param borrower borrower is the owner of the loan which the material is connected to.
-   * @throws IllegalStateException if the material is is not available for loan.
+   * @throws IllegalStateException  if the material is is not available for loan.
    * @throws NoSuchElementException if the material is not registered in the system.
    */
-  public void registerLoan(Material material, Borrower borrower) throws IllegalStateException;
-  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException;
+  public void registerLoan(Material material, Borrower borrower)
+      throws IllegalStateException;
+  public void registerReservation(Material material, Borrower borrower)
+      throws IllegalStateException;
 
   List<Loan> getAllLoansByCPR(String cpr);
   void deliverMaterial(int loanID);
   void extendLoan();
 
-  void registerBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      Place place, MaterialCreator author, String genre, String url);
+  void registerBook(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      String isbn, int pageCount, Place place, MaterialCreator author,
+      String genre, String url);
 
   void createBookCopy(int materialID);
+
+  boolean bookAlreadyExists(String title, String publisher, String releaseDate,
+      String description, String targetAudience, String language, String isbn,
+      int pageCount, MaterialCreator author, String genre);
 
   void registerDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
@@ -44,12 +50,19 @@ public interface Client
 
   void createDVDCopy(int materialID);
 
+  boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
+      String description, String targetAudience, String language,
+      String playDuration, String genre);
+
   void registerCD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, Place place, String genre, String url)
-      ;
+      int playDuration, Place place, String genre, String url);
 
-  void createCDCopy(int materialID) ;
+  void createCDCopy(int materialID);
+
+  boolean cdAlreadyExists(String title, String publisher, String releaseDate,
+      String description, String targetAudience, String language,
+      int playDuration, String genre);
 
   void registerEBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
@@ -58,11 +71,19 @@ public interface Client
 
   void createEBookCopy(int materialID);
 
+  boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
+      String description, String targetAudience, String language, int pageCount,
+      String licenseNr, String genre, MaterialCreator author);
+
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       int playDuration, String genre, MaterialCreator author, String url);
 
   void createAudioBookCopy(int materialID);
+
+  boolean audioBookAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, int playDuration, MaterialCreator author, String genre);
 
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience, SearchStrategy searchStrategy);
