@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.borrowreserve.BorrowReserveController">
+<AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.borrowreserve.BorrowReserveController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="602.0">
          <children>
@@ -63,7 +63,7 @@
                         <Insets left="100.0" />
                      </HBox.margin>
                   </ComboBox>
-                  <TextArea fx:id="availNumber" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" text="Antal kopier tilgængelige: 0">
+                  <TextArea fx:id="availNumber" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" text="Antal kopier tilgængelige: 0">
                      <HBox.margin>
                         <Insets left="80.0" />
                      </HBox.margin>
@@ -82,16 +82,17 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#loanReserve" style="-fx-cursor: hand;" text="Lån / Reserve" GridPane.columnIndex="2">
-                           <GridPane.margin>
-                              <Insets right="10.0" />
-                           </GridPane.margin>
-                        </Button>
                         <Button layoutX="211.0" layoutY="41.0" mnemonicParsing="false" onAction="#goBack" style="-fx-cursor: hand;" text="Tilbage">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
+                        <Button mnemonicParsing="false" onAction="#onLoanButton" style="-fx-cursor: hand;" text="Lån" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onReserveButton" style="-fx-cursor: hand;" text="Reserver" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>

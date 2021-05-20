@@ -52,6 +52,25 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   }
 
+  @Override public boolean bookAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String isbn, int pageCount, MaterialCreator author,
+      String genre)
+  {
+    boolean bookIn = false;
+    try
+    {
+      bookIn = BookDAOImpl.getInstance()
+          .bookAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, isbn, pageCount, author, genre);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return bookIn;
+  }
+
   @Override public void registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
@@ -75,6 +94,24 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void createDVDCopy(int materialID)
   {
 
+  }
+
+  @Override public boolean dvdAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String playDuration, String genre)
+  {
+    boolean dvdIn = false;
+    try
+    {
+      dvdIn = DVDDAOImpl.getInstance()
+          .dvdAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, playDuration, genre);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return dvdIn;
   }
 
   @Override public void registerCD(String title, String publisher,
@@ -101,6 +138,24 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   }
 
+  @Override public boolean cdAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, int playDuration, String genre)
+  {
+    boolean cdIn = false;
+    try
+    {
+      cdIn = CDDAOImpl.getInstance()
+          .cdAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, playDuration, genre);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return cdIn;
+  }
+
   @Override public void registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int pageCount, int licenseNr,
@@ -112,7 +167,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url);
-      EbookDAOImpl.getInstance().create(materialID, pageCount, author, licenseNr);
+      EbookDAOImpl.getInstance()
+          .create(materialID, pageCount, author, licenseNr);
     }
     catch (SQLException throwables)
     {
@@ -125,6 +181,25 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   }
 
+  @Override public boolean eBookAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, int pageCount, String licenseNr, String genre,
+      MaterialCreator author)
+  {
+    boolean eBookIn = false;
+    try
+    {
+      eBookIn = EbookDAOImpl.getInstance()
+          .eBookAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, pageCount, licenseNr, genre, author);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return eBookIn;
+  }
+
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String genre,
@@ -133,9 +208,10 @@ public class MaterialModelManagerServer implements MaterialModelServer
     int materialID = 0;
     try
     {
-      materialID = MaterialDAOImpl.getInstance().create(title, publisher, releaseDate, description,
-          targetAudience, language, genre, url);
-    AudioBookDAOImpl.getInstance().create(materialID, playDuration, author);
+      materialID = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, targetAudience,
+              language, genre, url);
+      AudioBookDAOImpl.getInstance().create(materialID, playDuration, author);
     }
     catch (SQLException throwables)
     {
@@ -148,17 +224,39 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   }
 
-  @Override public List<Material> findMaterial(String title, String language, String keywords,
-      String genre, String targetAudience, SearchStrategy searchStrategy)
+  @Override public boolean audioBookAlreadyExists(String title,
+      String publisher, String releaseDate, String description,
+      String targetAudience, String language, int playDuration,
+      MaterialCreator author, String genre)
+  {
+    boolean audioBookIn = false;
+    try
+    {
+      audioBookIn = AudioBookDAOImpl.getInstance()
+          .audioBookAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, playDuration, author, genre);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return audioBookIn;
+  }
+
+  @Override public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience,
+      SearchStrategy searchStrategy)
   {
     this.searchStrategy = searchStrategy;
-    return searchStrategy.findMaterial(title, language, keywords, genre, targetAudience);
+    return searchStrategy
+        .findMaterial(title, language, keywords, genre, targetAudience);
 
   }
 
   @Override public int numberOfAvailableCopies()
   {
-    return MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(selectedMaterial.getMaterialID());
+    return MaterialDAOImpl.getInstance()
+        .getNumberOfAvailableCopies(selectedMaterial.getMaterialID());
   }
 
   @Override public Material getSelectMaterial()

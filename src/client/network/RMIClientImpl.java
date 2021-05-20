@@ -140,6 +140,23 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public boolean bookAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String isbn, int pageCount, MaterialCreator author,
+      String genre)
+  {
+    try
+    {
+      return server.getMaterialServer()
+          .bookAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, isbn, pageCount, author, genre);
+    }
+    catch (RemoteException remoteException)
+    {
+      throw new RuntimeException("server connection failed");
+    }
+  }
+
   public void registerDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       String subtitlesLanguage, int playDuration, Place placeID, String genre,
@@ -170,6 +187,22 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public boolean dvdAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String playDuration, String genre)
+  {
+    try
+    {
+      return server.getMaterialServer()
+          .dvdAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, playDuration, genre);
+    }
+    catch (RemoteException remoteException)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public void registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, Place place,
@@ -194,6 +227,22 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
       server.getMaterialServer().createCDCopy(materialID);
     }
     catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public boolean cdAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, int playDuration, String genre)
+  {
+    try
+    {
+      return server.getMaterialServer()
+          .cdAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, playDuration, genre);
+    }
+    catch (RemoteException remoteException)
     {
       throw new RuntimeException("Server Connection failed.");
     }
@@ -229,6 +278,23 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public boolean eBookAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, int pageCount, String licenseNr, String genre,
+      MaterialCreator author)
+  {
+    try
+    {
+      return server.getMaterialServer()
+          .eBookAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, pageCount, licenseNr, genre, author);
+    }
+    catch (RemoteException remoteException)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public void registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String genre,
@@ -258,12 +324,32 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
-  @Override public List<Material> findMaterial(String title, String language,
-      String keywords, String genre, String targetAudience, SearchStrategy searchStrategy)
+  @Override public boolean audioBookAlreadyExists(String title,
+      String publisher, String releaseDate, String description,
+      String targetAudience, String language, int playDuration,
+      MaterialCreator author, String genre)
   {
     try
     {
-      return server.getMaterialServer().findMaterial(title, language, keywords, genre, targetAudience, searchStrategy);
+      return server.getMaterialServer()
+          .audioBookAlreadyExists(title, publisher, releaseDate, description,
+              targetAudience, language, playDuration, author, genre);
+    }
+    catch (RemoteException remoteException)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public List<Material> findMaterial(String title, String language,
+      String keywords, String genre, String targetAudience,
+      SearchStrategy searchStrategy)
+  {
+    try
+    {
+      return server.getMaterialServer()
+          .findMaterial(title, language, keywords, genre, targetAudience,
+              searchStrategy);
     }
     catch (RemoteException e)
     {

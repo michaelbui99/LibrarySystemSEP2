@@ -31,6 +31,7 @@ public class AddLibrarianVM
     phoneProperty = new SimpleStringProperty();
     employeeNoProperty = new SimpleStringProperty();
     passwordProperty = new SimpleStringProperty();
+    emailProperty = new SimpleStringProperty();
   }
 
   public StringProperty lastNameProperty()

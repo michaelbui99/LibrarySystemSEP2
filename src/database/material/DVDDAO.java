@@ -9,16 +9,22 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public interface DVDDAO {
+public interface DVDDAO
+{
 
-    void create(int material_id,String subtitle_lang, int length_,
-        Place place) throws SQLException;
-    DVD createDVDCopy(int materialID, int copyNo) throws SQLException;
+  void create(int material_id, String subtitle_lang, int length_, Place place)
+      throws SQLException;
+  DVD createDVDCopy(int materialID, int copyNo) throws SQLException;
 
-    ResultSet getDVDDetailsByID(int materialID) throws SQLException,
-            NoSuchElementException;
-    List<Material> findMaterial(String title, String language,
-        String keywords, String genre, String targetAudience);
+  ResultSet getDVDDetailsByID(int materialID)
+      throws SQLException, NoSuchElementException;
+
+  boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
+      String description, String targetAudience, String language,
+      String playDuration, String genre) throws SQLException;
+
+  List<Material> findMaterial(String title, String language, String keywords,
+      String genre, String targetAudience);
 }
 
 

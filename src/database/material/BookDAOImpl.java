@@ -258,26 +258,26 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
-      String language, String isbn, int pageCount,
-      MaterialCreator author, String genre) throws SQLException
+      String language, String isbn, int pageCount, MaterialCreator author,
+      String genre) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT * from material join book b using (material_id) join material_creator mc ON b.author = mc.person_id where title = ? and audience = ? and description_of_the_content = ? and publisher = ? and language_ = ? and release_date = ? and genre = ? and page_no = ? and isbn = ? and f_name = ? and l_name = ? and dob = ? and country = ?");
+          "SELECT * FROM material JOIN book b USING (material_id) JOIN material_creator mc ON b.author = mc.person_id WHERE title = ? AND audience = ? AND description_of_the_content = ? AND publisher = ? AND language_ = ? AND release_date = ? AND genre = ? AND page_no = ? AND isbn = ? AND f_name = ? AND l_name = ? AND dob = ? AND country = ?");
       stm.setString(1, title);
       stm.setString(2, targetAudience);
       stm.setString(3, description);
       stm.setString(4, publisher);
       stm.setString(5, language);
-      stm.setDate(6,Date.valueOf(releaseDate));
-      stm.setString(7,genre);
+      stm.setDate(6, Date.valueOf(releaseDate));
+      stm.setString(7, genre);
       stm.setInt(8, pageCount);
       stm.setString(9, isbn);
       stm.setString(10, author.getfName());
       stm.setString(11, author.getlName());
-      stm.setDate(12,Date.valueOf(author.getDob()));
-      stm.setString(13,author.getCountry());
+      stm.setDate(12, Date.valueOf(author.getDob()));
+      stm.setString(13, author.getCountry());
       ResultSet result = stm.executeQuery();
       return result.next();
     }
