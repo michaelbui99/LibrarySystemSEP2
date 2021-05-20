@@ -24,7 +24,7 @@ public class ReservationModelManagerServer implements ReservationModelServer
   @Override public void registerReservation(Material material,
       Borrower borrower)
   {
-    if (MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(material.getMaterialID()) < 0)
+    if (MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(material.getMaterialID()) <= 0)
     {
       Reservation reservation = ReservationDAOImpl
           .getInstance().create(borrower, material);

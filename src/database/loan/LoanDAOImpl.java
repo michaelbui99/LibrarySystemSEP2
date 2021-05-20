@@ -44,7 +44,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   @Override public Loan create(Material material, Borrower borrower,
       String deadline, String loanDate)
   {
-    //todo: Change stm.setString(3, 111111-1111) to borrower.getcpr()
+    //todo: Change stm.setString(3, 111111-1111) to borrower.getcpr()7
+    //Todo: lav en error besked hvis materiale ikke kan lånes
     try
     {
       try (Connection connection = getConnection())
@@ -52,6 +53,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         LocalDate today = LocalDate.now();
         //Sets deadline to be one month after loan date.
         LocalDate loanDeadline = today.plusMonths(1);
+        int copyNo = MaterialCopyDAOImpl.getInstance()
+            .getFirstAvailableCopyNo(material.getMaterialID());
         PreparedStatement stm = connection.prepareStatement(
             "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no) values (CURRENT_DATE,?,?,?,?,?)",
             Statement.RETURN_GENERATED_KEYS);
@@ -59,8 +62,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         stm.setDate(2, null);
         stm.setString(3, borrower.getCpr());
         stm.setInt(4, material.getMaterialID());
-        stm.setInt(5, MaterialCopyDAOImpl.getInstance()
-            .getFirstAvailableCopyNo(material.getMaterialID()));
+        stm.setInt(5, copyNo);
         stm.executeUpdate();
         ResultSet generatedKeys = stm.getGeneratedKeys();
         generatedKeys.next();
@@ -68,8 +70,9 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
 
         PreparedStatement stm2 = connection.prepareStatement(
             "update material_copy set available = false where material_id = ? and copy_no = ?");
-        stm.setInt(1, material.getMaterialID());
-        stm.setInt(2, material.getCopyNumber());
+        stm2.setInt(1, material.getMaterialID());
+        stm2.setInt(2, copyNo);
+        stm2.executeUpdate();
 
         connection.commit();
         return new Loan(material, borrower, loanDeadline.toString(), loanDate, null,

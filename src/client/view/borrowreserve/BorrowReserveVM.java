@@ -11,6 +11,7 @@ public class BorrowReserveVM {
     private ObjectProperty<Material> materialProperty;
 
     public BorrowReserveVM() {
+        //TODO: Lav om til listener, så antallet af kopier opdateres dynamisk.
         this.materialProperty = new SimpleObjectProperty<>();
         materialProperty.set(ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial());
         availNumberProp = new SimpleIntegerProperty(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies());
