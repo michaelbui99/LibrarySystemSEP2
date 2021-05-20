@@ -208,8 +208,9 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
-            isbnProperty.get(), Integer.parseInt(numberOfPagesProperty.get()),
+            keywordsProperty.get(), audianceProperty.get(),
+            languageProperty.get(), isbnProperty.get(),
+            Integer.parseInt(numberOfPagesProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
                 departmentProperty.get(), creatorLastNameProperty.getName(),
                 genreProperty.get()),
@@ -218,12 +219,25 @@ public class RegisterMaterialVM
             genreProperty.get(), urlProperty.get());
   }
 
+  public boolean bookAlreadyExists()
+  {
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
+        .bookAlreadyExists(titleProperty.get(), publisherProperty.get(),
+            releaseDateProperty.get().toString(), descriptionProperty.get(),
+            audianceProperty.get(), languageProperty.get(), isbnProperty.get(),
+            Integer.parseInt(numberOfPagesProperty.get()),
+            new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
+                dateOfBirthProperty.get().toString(), countryProperty.get()),
+            genreProperty.get());
+  }
+
   public void addEBook()
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerEBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(),
+            languageProperty.get(),
             Integer.parseInt(numberOfPagesProperty.get()),
             Integer.parseInt(licensNumberProperty.get()),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
@@ -231,16 +245,41 @@ public class RegisterMaterialVM
             genreProperty.get(), urlProperty.get());
   }
 
+  public boolean eBookAlreadyExists()
+  {
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
+        .eBookAlreadyExists(titleProperty.get(), publisherProperty.get(),
+            releaseDateProperty.get().toString(), descriptionProperty.get(),
+            audianceProperty.get(), languageProperty.get(),
+            Integer.parseInt(numberOfPagesProperty.get()),
+            licensNumberProperty.get(), genreProperty.get(),
+            new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
+                dateOfBirthProperty.get().toString(), countryProperty.get()));
+  }
+
   public void addAudioBook()
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerAudioBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
-            Integer.parseInt(lengthProperty.get()), genreProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(),
+            languageProperty.get(), Integer.parseInt(lengthProperty.get()),
+            genreProperty.get(),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()),
             urlProperty.get());
+  }
+
+  public boolean audioBookAlreadyExists()
+  {
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
+        .audioBookAlreadyExists(titleProperty.get(), publisherProperty.get(),
+            releaseDateProperty.get().toString(), descriptionProperty.get(),
+            audianceProperty.get(), languageProperty.get(),
+            Integer.parseInt(lengthProperty.get()),
+            new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
+                dateOfBirthProperty.get().toString(), countryProperty.get()),
+            genreProperty.get());
   }
 
   public void addDVD()
@@ -248,12 +287,21 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerDVD(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
-            subtitleLanguageProperty.get(),
+            keywordsProperty.get(), audianceProperty.get(),
+            languageProperty.get(), subtitleLanguageProperty.get(),
             Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
                 departmentProperty.get(), creatorLastNameProperty.getName(),
                 genreProperty.get()), genreProperty.get(), urlProperty.get());
+  }
+
+  public boolean dvdAlreadyExists()
+  {
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
+        .dvdAlreadyExists(titleProperty.get(), publisherProperty.get(),
+            releaseDateProperty.get().toString(), descriptionProperty.get(),
+            audianceProperty.get(), languageProperty.get(),
+            lengthProperty.get(), genreProperty.get());
   }
 
   public void addCD()
@@ -261,10 +309,19 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerCD(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(), languageProperty.get(),
-            Integer.parseInt(lengthProperty.get()),
+            keywordsProperty.get(), audianceProperty.get(),
+            languageProperty.get(), Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
                 departmentProperty.get(), creatorLastNameProperty.getName(),
                 countryProperty.get()), genreProperty.get(), urlProperty.get());
+  }
+
+  public boolean cdAlreadyExists()
+  {
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
+        .cdAlreadyExists(titleProperty.get(), publisherProperty.get(),
+            releaseDateProperty.get().toString(), descriptionProperty.get(),
+            audianceProperty.get(), languageProperty.get(),
+            Integer.parseInt(lengthProperty.get()), genreProperty.get());
   }
 }

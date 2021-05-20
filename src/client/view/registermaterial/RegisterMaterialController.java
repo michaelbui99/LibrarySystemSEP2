@@ -18,7 +18,6 @@ public class RegisterMaterialController
   @FXML private ComboBox<String> materialTypeCompo;
   @FXML private ComboBox<String> audiance;
   @FXML private ComboBox<String> language;
-  @FXML private Label error;
 
   @FXML private TextField title;
   @FXML private TextField publisher;
@@ -40,6 +39,7 @@ public class RegisterMaterialController
   @FXML private TextField length;
   @FXML private TextField url;
 
+  @FXML private Label error;
   @FXML private Label hallNoWarning;
   @FXML private Label departmentWaning;
   @FXML private Label creatorLNameWarning;
@@ -156,34 +156,85 @@ public class RegisterMaterialController
 
     if (type.equals("Book"))
     {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
-      setTestForLabelGreen("Bogen");
-      clearFields();
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .bookAlreadyExists())
+      {
+        error.setText("Book already exists");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else
+      {
+        error.setVisible(false);
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
+        setTestForLabelGreen("Bogen");
+        clearFields();
+      }
     }
     else if (type.equals("EBook"))
     {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
-      setTestForLabelGreen("E-bogen");
-      clearFields();
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .eBookAlreadyExists())
+      {
+        error.setText("EBook already exists");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
+        setTestForLabelGreen("E-bogen");
+        clearFields();
+      }
     }
     else if (type.equals("AudioBook"))
     {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
-      setTestForLabelGreen("Lydbogen");
-      clearFields();
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .audioBookAlreadyExists())
+      {
+        error.setText("AudioBook already exists");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
+        setTestForLabelGreen("Lydbogen");
+        clearFields();
+      }
     }
     else if (type.equals("CD"))
     {
-      cdSelectedFields();
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
-      setTestForLabelGreen("CD'en");
-      clearFields();
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .cdAlreadyExists())
+      {
+        error.setText("CD already exists");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else
+      {
+        cdSelectedFields();
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
+        setTestForLabelGreen("CD'en");
+        clearFields();
+      }
     }
     else if (type.equals("DVD"))
     {
-      ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
-      setTestForLabelGreen("DVD'en");
-      clearFields();
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .dvdAlreadyExists())
+      {
+        error.setText("DVD already exists");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
+        setTestForLabelGreen("DVD'en");
+        clearFields();
+      }
     }
     else if (type.equals(null))
     {
@@ -626,7 +677,8 @@ public class RegisterMaterialController
     }
     catch (NullPointerException e)
     {
-      System.out.println("");;
+      System.out.println("");
+      ;
     }
   }
 
