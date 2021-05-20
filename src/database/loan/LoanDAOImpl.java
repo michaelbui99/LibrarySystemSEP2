@@ -1,6 +1,7 @@
 package database.loan;
 
 import database.material.MaterialCopyDAOImpl;
+import database.material.MaterialDAOImpl;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.DVD;
@@ -18,6 +19,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -44,39 +46,49 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   @Override public Loan create(Material material, Borrower borrower,
       String deadline, String loanDate)
   {
-    //todo: Change stm.setString(3, 111111-1111) to borrower.getcpr()7
-    //Todo: lav en error besked hvis materiale ikke kan lånes
     try
     {
       try (Connection connection = getConnection())
       {
-        LocalDate today = LocalDate.now();
-        //Sets deadline to be one month after loan date.
-        LocalDate loanDeadline = today.plusMonths(1);
-        int copyNo = MaterialCopyDAOImpl.getInstance()
-            .getFirstAvailableCopyNo(material.getMaterialID());
-        PreparedStatement stm = connection.prepareStatement(
-            "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no) values (CURRENT_DATE,?,?,?,?,?)",
-            Statement.RETURN_GENERATED_KEYS);
-        stm.setDate(1, Date.valueOf(loanDeadline));
-        stm.setDate(2, null);
-        stm.setString(3, borrower.getCpr());
-        stm.setInt(4, material.getMaterialID());
-        stm.setInt(5, copyNo);
-        stm.executeUpdate();
-        ResultSet generatedKeys = stm.getGeneratedKeys();
-        generatedKeys.next();
-        int generatedKey = generatedKeys.getInt(1);
 
-        PreparedStatement stm2 = connection.prepareStatement(
-            "update material_copy set available = false where material_id = ? and copy_no = ?");
-        stm2.setInt(1, material.getMaterialID());
-        stm2.setInt(2, copyNo);
-        stm2.executeUpdate();
+        if (!MaterialDAOImpl.getInstance().materialExistInDB(material.getMaterialID()))
+        {
+          throw new NoSuchElementException("Materialet eksisterer ikke");
+        }
 
-        connection.commit();
-        return new Loan(material, borrower, loanDeadline.toString(), loanDate, null,
-            generatedKey);
+        //Create a new loan if an there exists an available copy of the material.
+        if (MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID()))
+        {
+          LocalDate today = LocalDate.now();
+          //Sets deadline to be one month after loan date.
+          LocalDate loanDeadline = today.plusMonths(1);
+          int copyNo = MaterialCopyDAOImpl.getInstance()
+              .getFirstAvailableCopyNo(material.getMaterialID());
+          PreparedStatement stm = connection.prepareStatement(
+              "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no) values (CURRENT_DATE,?,?,?,?,?)",
+              Statement.RETURN_GENERATED_KEYS);
+          stm.setDate(1, Date.valueOf(loanDeadline));
+          stm.setDate(2, null);
+          stm.setString(3, borrower.getCpr());
+          stm.setInt(4, material.getMaterialID());
+          stm.setInt(5, copyNo);
+          stm.executeUpdate();
+          ResultSet generatedKeys = stm.getGeneratedKeys();
+          generatedKeys.next();
+          int generatedKey = generatedKeys.getInt(1);
+
+          PreparedStatement stm2 = connection.prepareStatement(
+              "update material_copy set available = false where material_id = ? and copy_no = ?");
+          stm2.setInt(1, material.getMaterialID());
+          stm2.setInt(2, copyNo);
+          stm2.executeUpdate();
+
+          connection.commit();
+          return new Loan(material, borrower, loanDeadline.toString(), loanDate, null,
+              generatedKey);
+        }
+        else
+          throw new IllegalStateException("Ingen tilgængelige kopier, materialet kan reserveres i stedet");
       }
     }
     catch (SQLException throwables)

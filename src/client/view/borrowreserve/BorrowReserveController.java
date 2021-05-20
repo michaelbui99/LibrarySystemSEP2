@@ -32,12 +32,15 @@ public class BorrowReserveController {
     @FXML
     ImageView materialImage = new ImageView(imageTest);
 
+    @FXML
+    private Label warningLabel;
+
 
     public void init() throws FileNotFoundException {
         ViewModelFactory.getInstance().getBorrowReserveVM();
         availNumber.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getAvailNumberProp().asString());
         materialInfo.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialInfoProp());
-       // materialIma11ge.imageProperty().bind((ObservableValue<? extends Image>) new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL())));
+        warningLabel.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().warningPropertyProperty());
         try {
             if (ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL() != null)
             {

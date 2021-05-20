@@ -4,11 +4,15 @@ import client.core.ModelFactoryClient;
 import client.model.material.MaterialModelClient;
 import javafx.beans.property.*;
 import shared.materials.Material;
+import shared.util.EventTypes;
+
+import java.util.NoSuchElementException;
 
 public class BorrowReserveVM {
     private StringProperty materialInfoProp;
     private IntegerProperty availNumberProp;
     private ObjectProperty<Material> materialProperty;
+    private StringProperty warningProperty;
 
     public BorrowReserveVM() {
         //TODO: Lav om til listener, så antallet af kopier opdateres dynamisk.
@@ -17,6 +21,11 @@ public class BorrowReserveVM {
         availNumberProp = new SimpleIntegerProperty(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies());
         materialInfoProp = new SimpleStringProperty(materialProperty.get().toString());
         System.out.println(materialProperty.get().toString());
+        warningProperty = new SimpleStringProperty();
+
+        //Checks number of copies everytime a loan is made in the system.
+        ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
+            EventTypes.LOANREGISTERED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
     }
 
 
@@ -35,9 +44,17 @@ public class BorrowReserveVM {
 
     public void loanMaterial() {
 
-        ModelFactoryClient.getInstance().getLoanModelClient().registerLoan(
-                ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
-                ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
+        try
+        {
+            ModelFactoryClient.getInstance().getLoanModelClient().registerLoan(
+                    ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
+                    ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
+            warningProperty.set("");
+        }
+        catch (IllegalStateException | NoSuchElementException e)
+        {
+           warningProperty.set(e.getMessage());
+        }
 
     }
 
@@ -54,4 +71,8 @@ public class BorrowReserveVM {
     }
 
 
+    public StringProperty warningPropertyProperty()
+    {
+        return warningProperty;
+    }
 }

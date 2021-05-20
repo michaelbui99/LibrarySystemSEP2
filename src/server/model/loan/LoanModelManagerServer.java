@@ -26,11 +26,17 @@ public class LoanModelManagerServer implements LoanModelServer
 
   @Override public void registerLoan(Material material, Borrower borrower)
   {
-    //TODO: CHANGE LOAN DAO CREATE METHOD SIGNATURE
-    Loan loan = LoanDAOImpl.getInstance()
-        .create(material, borrower,null, LocalDate.now().toString());
-    //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
-    support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
+    try
+    {
+      Loan loan = LoanDAOImpl.getInstance()
+          .create(material, borrower,null, LocalDate.now().toString());
+      //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
+      support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
+    }
+    catch (IllegalStateException e)
+    {
+      throw new IllegalStateException(e.getMessage());
+    }
   }
 
 
