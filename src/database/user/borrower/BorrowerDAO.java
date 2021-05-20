@@ -35,4 +35,12 @@ public interface BorrowerDAO
   boolean loginBorrower(String cprNo, String password) throws SQLException;
 
   Borrower getBorrower(String sprNo) throws SQLException;
+
+  boolean borrowerCprNumberAlreadyExists(String cpr) throws SQLException;
+
+  boolean borrowerEmailAlreadyExists(String email) throws SQLException;
+
+  boolean borrowerPhoneNumberAlreadyExists(String phone) throws SQLException;
+
+  boolean borrowerAlreadyExists(String cpr, String email, String phone) throws SQLException;
 }

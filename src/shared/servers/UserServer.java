@@ -79,4 +79,25 @@ public interface UserServer extends Remote
   Librarian getLoginLibrarian() throws RemoteException;
 
   void setBorrowerCpr(String borrowerCpr) throws RemoteException;
+
+  boolean borrowerCprNumberAlreadyExists(String cpr) throws RemoteException;
+
+  boolean borrowerEmailAlreadyExists(String email) throws RemoteException;
+
+  boolean borrowerPhoneNumberAlreadyExists(String phone) throws RemoteException;
+
+  boolean borrowerAlreadyExists(String cpr, String email, String phone)
+      throws RemoteException;
+
+  boolean employeeNumberAlreadyExists(int employeeNo) throws RemoteException;
+
+  boolean librarianCprNumberAlreadyExists(String cpr) throws RemoteException;
+
+  boolean librarianEmailAlreadyExists(String email) throws RemoteException;
+
+  boolean librarianPhoneNumberAlreadyExists(String phone)
+      throws RemoteException;
+
+  boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
+      String phone) throws RemoteException;
 }

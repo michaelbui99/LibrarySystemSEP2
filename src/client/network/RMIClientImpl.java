@@ -524,6 +524,125 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public boolean borrowerCprNumberAlreadyExists(String cpr)
+  {
+    try
+    {
+      server.getUserServer().borrowerCprNumberAlreadyExists(cpr);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean borrowerEmailAlreadyExists(String email)
+  {
+    try
+    {
+      return server.getUserServer().borrowerEmailAlreadyExists(email);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean borrowerPhoneNumberAlreadyExists(String phone)
+  {
+    try
+    {
+      return server.getUserServer().borrowerPhoneNumberAlreadyExists(phone);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean borrowerAlreadyExists(String cpr, String email,
+      String phone)
+  {
+    try
+    {
+      return server.getUserServer().borrowerAlreadyExists(cpr, email, phone);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean employeeNumberAlreadyExists(int employeeNo)
+  {
+    try
+    {
+      return server.getUserServer().employeeNumberAlreadyExists(employeeNo);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean librarianCprNumberAlreadyExists(String cpr)
+  {
+    try
+    {
+      return server.getUserServer().librarianCprNumberAlreadyExists(cpr);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean librarianEmailAlreadyExists(String email)
+  {
+    try
+    {
+      return server.getUserServer().librarianEmailAlreadyExists(email);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean librarianPhoneNumberAlreadyExists(String phone)
+  {
+    try
+    {
+      return server.getUserServer().librarianPhoneNumberAlreadyExists(phone);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean librarianAlreadyExists(int employeeNo, String cpr,
+      String email, String phone)
+  {
+    try
+    {
+      return server.getUserServer().librarianAlreadyExists(employeeNo, cpr, email, phone);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return false;
+  }
+
   @Override public void loanRegistered(Loan loan)
   {
     support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);

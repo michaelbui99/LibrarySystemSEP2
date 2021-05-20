@@ -71,4 +71,23 @@ public interface UserModelServer extends PropertyChangeSubject
 
   void setBorrowerCpr(String borrowerCpr);
 
+  boolean borrowerCprNumberAlreadyExists(String cpr);
+
+  boolean borrowerEmailAlreadyExists(String email);
+
+  boolean borrowerPhoneNumberAlreadyExists(String phone);
+
+  boolean borrowerAlreadyExists(String cpr, String email, String phone);
+
+  boolean employeeNumberAlreadyExists(int employeeNo);
+
+  boolean librarianCprNumberAlreadyExists(String cpr);
+
+  boolean librarianEmailAlreadyExists(String email);
+
+  boolean librarianPhoneNumberAlreadyExists(String phone);
+
+  boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
+      String phone);
+
 }

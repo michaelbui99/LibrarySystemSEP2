@@ -112,4 +112,71 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
     }
     return false;
   }
+
+  @Override public boolean employeeNumberAlreadyExists(int employeeNo)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM librarian WHERE employee_no = ?");
+      stm.setInt(1, employeeNo);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
+  @Override public boolean librarianCprNumberAlreadyExists(String cpr)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM librarian WHERE cpr_no = ?");
+      stm.setString(1, cpr);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
+  @Override public boolean librarianEmailAlreadyExists(String email) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM librarian WHERE email = ?");
+      stm.setString(1, email);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
+  @Override public boolean librarianPhoneNumberAlreadyExists(String phone)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM librarian WHERE tel_no = ?");
+      stm.setString(1, phone);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
+  @Override public boolean librarianAlreadyExists(int employeeNo, String cpr,
+      String email, String phone) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM librarian WHERE employee_no = ? AND cpr_no = ? AND email = ? AND tel_no = ?");
+      stm.setInt(1, employeeNo);
+      stm.setString(2, cpr);
+      stm.setString(3, email);
+      stm.setString(4, phone);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
 }

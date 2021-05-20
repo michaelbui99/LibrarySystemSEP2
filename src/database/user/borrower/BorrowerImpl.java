@@ -108,19 +108,73 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
 
   @Override public Borrower getBorrower(String sprNo) throws SQLException
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM borrower JOIN address a on a.address_id = borrower.address_id WHERE cpr_no = ?"
-      );
+          "SELECT * FROM borrower JOIN address a on a.address_id = borrower.address_id WHERE cpr_no = ?");
       stm.setString(1, sprNo);
       ResultSet result = stm.executeQuery();
-      result.next();/*String cpr_no, String f_name, String l_name, String email,
-      String tel_no, Address address_id, String password*/
-      /*int addressId, String streetName, String streetNr, int zipCode, String city*/
-      return new Borrower(result.getString("cpr_no"), result.getString("f_name"), result.getString("l_name"),
-          result.getString("email"), result.getString("tel_no"), new Address(result.getInt("address_id"), result.getString("street_name"),
-          result.getString("street_no"), result.getInt("zip_code"), result.getString("city")), result.getString("password"));
+      result.next();
+      return new Borrower(result.getString("cpr_no"),
+          result.getString("f_name"), result.getString("l_name"),
+          result.getString("email"), result.getString("tel_no"),
+          new Address(result.getInt("address_id"),
+              result.getString("street_name"), result.getString("street_no"),
+              result.getInt("zip_code"), result.getString("city")),
+          result.getString("password"));
+    }
+  }
+
+  @Override public boolean borrowerCprNumberAlreadyExists(String cpr)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM borrower WHERE cpr_no = ?");
+      stm.setString(1, cpr);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
+  @Override public boolean borrowerEmailAlreadyExists(String email) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM borrower WHERE email = ?");
+      stm.setString(1, email);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
+  @Override public boolean borrowerPhoneNumberAlreadyExists(String phone)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM borrower WHERE tel_no = ?");
+      stm.setString(1, phone);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
+  @Override public boolean borrowerAlreadyExists(String cpr, String email,
+      String phone) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * FROM borrower WHERE cpr_no = ? AND email = ? AND tel_no = ?");
+      stm.setString(1, cpr);
+      stm.setString(2, email);
+      stm.setString(3, phone);
+      ResultSet result = stm.executeQuery();
+      return result.next();
     }
   }
 }

@@ -17,6 +17,7 @@ public class AddUserVM
   private StringProperty zipCodeProperty;
   private StringProperty cityproperty;
   private StringProperty phoneNoProperty;
+  private StringProperty errorLabelProperty;
 
   public AddUserVM()
   {
@@ -30,6 +31,7 @@ public class AddUserVM
     zipCodeProperty = new SimpleStringProperty();
     cityproperty = new SimpleStringProperty();
     phoneNoProperty = new SimpleStringProperty();
+    errorLabelProperty = new SimpleStringProperty();
   }
 
   public StringProperty emailProperty()
@@ -82,6 +84,11 @@ public class AddUserVM
     return phoneNoProperty;
   }
 
+  public StringProperty errorLabelProperty()
+  {
+    return errorLabelProperty;
+  }
+
   public void addUser()
   {
     ModelFactoryClient.getInstance().getUserModelClient()
@@ -90,5 +97,34 @@ public class AddUserVM
             new Address(cityproperty.get(), streetNameProperty.get(),
                 Integer.parseInt(zipCodeProperty.get()),
                 streetNoProperty.get()), passwordProperty.get());
+  }
+
+  public boolean cprAlreadyExists()
+  {
+    errorLabelProperty.setValue("Cpr number Already exists!!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .borrowerCprNumberAlreadyExists(cprProperty.get());
+  }
+
+  public boolean emailAlreadyExists()
+  {
+    errorLabelProperty.setValue("Email already exists!!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .borrowerEmailAlreadyExists(emailProperty.get());
+  }
+
+  public boolean phoneNumberAlreadyExists()
+  {
+    errorLabelProperty.setValue("Phone number already exists!!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .borrowerPhoneNumberAlreadyExists(phoneNoProperty.get());
+  }
+
+  public boolean borrowerAlreadyExists()
+  {
+    errorLabelProperty.setValue("User already exists!!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .borrowerAlreadyExists(cprProperty.get(), emailProperty.get(),
+            phoneNoProperty.get());
   }
 }
