@@ -265,7 +265,12 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
           loans.add(loan);
         }
 
-        return loans;
+        if (!loans.isEmpty())
+        {
+          return loans;
+        }
+        else
+          throw new NoSuchElementException("Ingen aktive lån");
       }
     }
     catch (SQLException throwables)

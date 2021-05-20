@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class CD extends AudioMaterial implements Serializable
 {
   private Place place;
+
   public CD(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, Place placeID,
@@ -20,5 +21,15 @@ public class CD extends AudioMaterial implements Serializable
   @Override public String getMaterialType()
   {
     return "CD";
+  }
+
+  @Override public String getMaterialDetails()
+  {
+    return "Titlel: " + getTitle() + " \n" + "Forlag: " + getPublisher() + "\n"
+        + "Udgivelsesdato: " + getReleaseDate() + "\n" + "Sprog: "
+        + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience() + "\n"
+        + "Spillelængde (minutter): " + getPlayDuration() + "\n"
+        + "Beskrivelse: " + getDescription() + "\n" + "Emneord: "
+        + getKeywords() + "\n";
   }
 }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public abstract class Material implements MaterialInterface, Serializable
 {
   private int materialID, copyNumber;
-  private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL;
+  private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL, materialDetails;
   private MaterialStatus materialStatus;
   private final static long serialVersionUID = -8460811401673477634L;
   public Material(int materialID, String title, String publisher, String releaseDate, String description,
@@ -30,6 +30,8 @@ public abstract class Material implements MaterialInterface, Serializable
   }
 
 
+  public abstract String getMaterialType();
+  public abstract String getMaterialDetails();
 
   public int getMaterialID()
   {
@@ -81,7 +83,6 @@ public abstract class Material implements MaterialInterface, Serializable
     return materialStatus;
   }
 
-  public abstract String getMaterialType();
 
   public String getImageURL() {
     return imageURL;

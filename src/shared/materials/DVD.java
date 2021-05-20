@@ -35,4 +35,14 @@ public class DVD extends Material implements Serializable
   {
     return "DVD";
   }
+
+  @Override public String getMaterialDetails()
+  {
+    return "Titlel: " + getTitle() + "\n" + "Undertekstsprog: " + getSubtitlesLanguage()
+        + " \n" + "Forlag: " + getPublisher() + "\n"
+        + "Udgivelsesdato: " + getReleaseDate() + "\n"
+        + "Sprog: " + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience()
+        + "\n" + "Spillelængde (minutter): " + playDuration + "\n" + "Beskrivelse: "
+        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n";
+  }
 }

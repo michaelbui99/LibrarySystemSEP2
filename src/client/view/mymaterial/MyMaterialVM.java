@@ -41,14 +41,16 @@ public class MyMaterialVM
     ModelFactoryClient.getInstance().getLoanModelClient()
         .addPropertyChangeListener(EventTypes.LOANENDED + cprProperty.get(),
             evt -> {
+
               if (((Loan) evt.getNewValue()).getBorrower().getCpr().equals(cprProperty.get()))
               {
                 activeLoans.removeIf(
                     activeLoan -> activeLoan.getLoanID() == ((Loan) evt
                         .getNewValue()).getLoanID());
-                System.out.println("LOAN ENDED EVT CAUGHT");
-                System.out.println(((Loan) evt.getNewValue()).getBorrower().getCpr());
               }
+              System.out.println("LOAN ENDED EVT CAUGHT");
+                System.out.println(((Loan) evt.getNewValue()).getBorrower().getCpr());
+
             });
     loanProperty = new SimpleObjectProperty<>();
   }

@@ -19,13 +19,16 @@ public class BorrowReserveVM {
         this.materialProperty = new SimpleObjectProperty<>();
         materialProperty.set(ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial());
         availNumberProp = new SimpleIntegerProperty(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies());
-        materialInfoProp = new SimpleStringProperty(materialProperty.get().toString());
+        materialInfoProp = new SimpleStringProperty(materialProperty.get().getMaterialDetails());
         System.out.println(materialProperty.get().toString());
         warningProperty = new SimpleStringProperty();
 
-        //Checks number of copies everytime a loan is made in the system.
+        //Checks number of copies everytime a loan is made and end in the system.
         ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
             EventTypes.LOANREGISTERED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
+        ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
+            EventTypes.LOANENDED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
+
     }
 
 
