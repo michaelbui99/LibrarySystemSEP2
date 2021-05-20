@@ -43,28 +43,31 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
   {
     try (Connection connection = getConnection())
     {
-      if (PlaceImpl.getInstance().getPlaceID(place.getHallNo(),
-          place.getDepartment(), place.getDepartment(), place.getGenre()) == -1)
+      if (PlaceImpl.getInstance()
+          .getPlaceID(place.getHallNo(), place.getDepartment(),
+              place.getDepartment(), place.getGenre()) == -1)
       {
-        Place p = PlaceImpl.getInstance().create(place.getHallNo(),
-            place.getDepartment(), place.getCreatorLName(), place.getGenre());
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO DVD (material_id, subtitle_lang, length_, place_id) values (?,?,?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      stm.setInt(1, material_id);
-      stm.setString(2, subtitle_lang);
-      stm.setInt(3, length_);
-      stm.setInt(4, p.getPlaceId());
+        Place p = PlaceImpl.getInstance()
+            .create(place.getHallNo(), place.getDepartment(),
+                place.getCreatorLName(), place.getGenre());
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO DVD (material_id, subtitle_lang, length_, place_id) values (?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setInt(1, material_id);
+        stm.setString(2, subtitle_lang);
+        stm.setInt(3, length_);
+        stm.setInt(4, p.getPlaceId());
 
-      stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
-      keys.next();
-      connection.commit();
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+        connection.commit();
       }
       else
       {
-        int pId = PlaceImpl.getInstance().getPlaceID(place.getHallNo(),
-            place.getDepartment(), place.getCreatorLName(), place.getGenre());
+        int pId = PlaceImpl.getInstance()
+            .getPlaceID(place.getHallNo(), place.getDepartment(),
+                place.getCreatorLName(), place.getGenre());
         PreparedStatement stm = connection.prepareStatement(
             "INSERT INTO DVD (material_id, subtitle_lang, length_, place_id) values (?,?,?,?)",
             PreparedStatement.RETURN_GENERATED_KEYS);
@@ -100,21 +103,18 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
       {
         //Creates and returns a DVD object if a DVD with given materialID exists.
         return new DVD(dvdDetails.getInt("material_id"),
-            dvdDetails.getInt("copy_no"),
-            dvdDetails.getString("title"),
+            dvdDetails.getInt("copy_no"), dvdDetails.getString("title"),
             dvdDetails.getString("publisher"),
             String.valueOf(dvdDetails.getDate("release_date")),
             dvdDetails.getString("description_of_the_content"),
-            dvdDetails.getString("keywords"),
-            dvdDetails.getString("audience"),
+            dvdDetails.getString("keywords"), dvdDetails.getString("audience"),
             dvdDetails.getString("language_"),
             dvdDetails.getString("subtitle_lang"),
             dvdDetails.getString("length_"),
             new Place(dvdDetails.getInt("hall_no"),
                 dvdDetails.getString("department"),
                 dvdDetails.getString("creator_l_name"),
-                dvdDetails.getString("genre")),
-            dvdDetails.getString("url"));
+                dvdDetails.getString("genre")), dvdDetails.getString("url"));
         // i removed the creator from here and i added place_id
       }
       return null;
@@ -140,6 +140,26 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     }
   }
 
+  @Override public boolean dvdAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String playDuration, String genre) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM material JOIN dvd d USING (material_id) WHERE title = ? AND audience = ? AND description_of_the_content = ? AND publisher = ? AND language_ = ? AND release_date = ? AND genre = ? AND length_ = ?");
+      stm.setString(1, title);
+      stm.setString(2, targetAudience);
+      stm.setString(3, description);
+      stm.setString(4, publisher);
+      stm.setString(5, language);
+      stm.setDate(6, Date.valueOf(releaseDate));
+      stm.setString(7, genre);
+      stm.setInt(8, Integer.parseInt(playDuration));
+    ResultSet result = stm.executeQuery();
+    return result.next();
+    }
+  }
 
   @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience)
@@ -155,14 +175,16 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
           + "join place p on dvd.place_id = p.place_id "
           + "join material_keywords mk on dvd.material_id = mk.material_id ";
 
-      if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
+      if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty()
+          || !targetAudience.isEmpty())
       {
         sql += "where ";
       }
 
       if (!title.isEmpty())
       {
-        queryFragments.add(" LOWER(material.title) LIKE  LOWER('%" + title + "%') ");
+        queryFragments
+            .add(" LOWER(material.title) LIKE  LOWER('%" + title + "%') ");
       }
       if (!language.isEmpty())
       {
@@ -170,7 +192,8 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
       }
       if (!genre.isEmpty())
       {
-        queryFragments.add(" LOWER(material.genre) LIKE LOWER('%" + genre + "%')");
+        queryFragments
+            .add(" LOWER(material.genre) LIKE LOWER('%" + genre + "%')");
       }
       if (!targetAudience.isEmpty())
       {
@@ -190,8 +213,8 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
         { //if keywords were specified in search, compare them to material keywords from DB (materialKeywordList)
           for (int i = 0; i < keywords.split(",").length; i++)
           {
-            if (materialKeywords.toLowerCase(Locale.ROOT).contains(
-                keywords.split(",")[i].toLowerCase(Locale.ROOT)))
+            if (materialKeywords.toLowerCase(Locale.ROOT)
+                .contains(keywords.split(",")[i].toLowerCase(Locale.ROOT)))
             {
               match = true; //search keyword matched material keyword - material will be added to result list
               break;
@@ -210,18 +233,18 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
               resultSet.getString("title"), resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"),
-              resultSet.getString("keyword"),
-              resultSet.getString("audience"),
+              resultSet.getString("keyword"), resultSet.getString("audience"),
               resultSet.getString("language_"),
               resultSet.getString("subtitle_lang"),
               resultSet.getString("length_"),
               new Place(resultSet.getInt("hall_no"),
                   resultSet.getString("department"),
                   resultSet.getString("creator_l_name"),
-                  resultSet.getString("genre")),
-              resultSet.getString("url")));
-          dvd.setMaterialStatus(MaterialDAOImpl.getInstance().checkIfCopyAvailable(
-              resultSet.getInt("material_id")) ? MaterialStatus.Available : MaterialStatus.NotAvailable);
+                  resultSet.getString("genre")), resultSet.getString("url")));
+          dvd.setMaterialStatus(MaterialDAOImpl.getInstance()
+              .checkIfCopyAvailable(resultSet.getInt("material_id")) ?
+              MaterialStatus.Available :
+              MaterialStatus.NotAvailable);
           dvd.setKeywords(materialKeywords);
           ml.add(dvd);
         }

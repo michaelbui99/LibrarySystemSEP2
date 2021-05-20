@@ -136,6 +136,27 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     }
   }
 
+  @Override public boolean cdAlreadyExists(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, int playDuration, String genre) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM material JOIN cd c USING (material_id) WHERE title = ? AND audience = ? AND description_of_the_content = ? AND publisher = ? AND language_ = ? AND release_date = ? AND genre = ? AND length_ = ?");
+      stm.setString(1, title);
+      stm.setString(2, targetAudience);
+      stm.setString(3, description);
+      stm.setString(4, publisher);
+      stm.setString(5, language);
+      stm.setDate(6, Date.valueOf(releaseDate));
+      stm.setString(7, genre);
+      stm.setInt(8, playDuration);
+      ResultSet result = stm.executeQuery();
+      return result.next();
+    }
+  }
+
   @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience)
   {
@@ -150,14 +171,16 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
           + "join place p on cd.place_id = p.place_id "
           + "join material_keywords mk on cd.material_id = mk.material_id ";
 
-      if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty() || !targetAudience.isEmpty())
+      if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty()
+          || !targetAudience.isEmpty())
       {
         sql += "where ";
       }
 
       if (!title.isEmpty())
       {
-        queryFragments.add(" LOWER(material.title) LIKE  LOWER('%" + title + "%') ");
+        queryFragments
+            .add(" LOWER(material.title) LIKE  LOWER('%" + title + "%') ");
       }
       if (!language.isEmpty())
       {
@@ -165,7 +188,8 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
       }
       if (!genre.isEmpty())
       {
-        queryFragments.add(" LOWER(material.genre) LIKE LOWER('%" + genre + "%')");
+        queryFragments
+            .add(" LOWER(material.genre) LIKE LOWER('%" + genre + "%')");
       }
       if (!targetAudience.isEmpty())
       {
@@ -185,8 +209,8 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
         { //if keywords were specified in search, compare them to material keywords from DB (materialKeywordList)
           for (int i = 0; i < keywords.split(",").length; i++)
           {
-            if (materialKeywords.toLowerCase(Locale.ROOT).contains(
-                keywords.split(",")[i].toLowerCase(Locale.ROOT)))
+            if (materialKeywords.toLowerCase(Locale.ROOT)
+                .contains(keywords.split(",")[i].toLowerCase(Locale.ROOT)))
             {
               match = true; //search keyword matched material keyword - material will be added to result list
               break;
@@ -203,22 +227,20 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
           CD cd = new CD(resultSet.getInt("material_id"),
               MaterialDAOImpl.getInstance()
                   .getCopyNumberForMaterial(resultSet.getInt("material_id")),
-              resultSet.getString("title"),
-              resultSet.getString("publisher"),
+              resultSet.getString("title"), resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
-              resultSet.getString("description_of_the_content"),
-              "",
-              resultSet.getString("audience"),
-              resultSet.getString("language_"),
+              resultSet.getString("description_of_the_content"), "",
+              resultSet.getString("audience"), resultSet.getString("language_"),
               resultSet.getInt("length_"),
               new Place(resultSet.getInt("place_id"),
                   resultSet.getInt("hall_no"),
                   resultSet.getString("department"),
-              resultSet.getString("creator_l_name"),
-              resultSet.getString("genre")),
-          resultSet.getString("url"));
-          cd.setMaterialStatus(MaterialDAOImpl.getInstance().checkIfCopyAvailable(
-               resultSet.getInt("material_id")) ? MaterialStatus.Available : MaterialStatus.NotAvailable);
+                  resultSet.getString("creator_l_name"),
+                  resultSet.getString("genre")), resultSet.getString("url"));
+          cd.setMaterialStatus(MaterialDAOImpl.getInstance()
+              .checkIfCopyAvailable(resultSet.getInt("material_id")) ?
+              MaterialStatus.Available :
+              MaterialStatus.NotAvailable);
           cd.setKeywords(materialKeywords);
           ml.add(cd);
         }
