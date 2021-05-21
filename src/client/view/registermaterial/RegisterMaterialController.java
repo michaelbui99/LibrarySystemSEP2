@@ -3,6 +3,7 @@ package client.view.registermaterial;
 import client.core.ViewModelFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.scene.input.*;
 import javafx.scene.paint.Paint;
 import client.view.ViewHandler;
@@ -48,15 +49,12 @@ public class RegisterMaterialController
   @FXML private Label lastNameWarning;
   @FXML private Label dobWarning;
   @FXML private Label countryWarning;
-  @FXML private Label typeWarning;
   @FXML private Label titleWarning;
   @FXML private Label publisherWarning;
   @FXML private Label releseDateWarning;
   @FXML private Label descriptionWarning;
   @FXML private Label keywordsWarning;
-  @FXML private Label audianceWarning;
   @FXML private Label pageNoWarning;
-  @FXML private Label languageWarning;
   @FXML private Label isbnWarning;
   @FXML private Label licensNoWarning;
   @FXML private Label subtitileWarning;
@@ -153,7 +151,6 @@ public class RegisterMaterialController
       throws IOException
   {
     String type = materialTypeCompo.getValue();
-
     if (type.equals("Book"))
     {
       if (ViewModelFactory.getInstance().getRegisterMaterialVM()
@@ -617,27 +614,6 @@ public class RegisterMaterialController
     }
   }
 
-  @FXML public void onMouseExitedAudiance(MouseEvent mouseEvent)
-  {
-    String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .audiancePropertyProperty().get();
-    try
-    {
-      if (arg.equals("Målgruppe:"))
-      {
-        audianceWarning.setVisible(true);
-      }
-      else
-      {
-        audianceWarning.setVisible(false);
-      }
-    }
-    catch (NullPointerException e)
-    {
-      System.out.println("");
-    }
-  }
-
   @FXML public void onMouseExitedReleseDate(MouseDragEvent mouseDragEvent)
   {
     LocalDate arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
@@ -656,29 +632,6 @@ public class RegisterMaterialController
     catch (NullPointerException e)
     {
       System.out.println("");
-    }
-  }
-
-  @FXML public void onMouseExitedType(MouseEvent mouseEvent)
-  {
-    String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .typePropertyProperty().get();
-    try
-    {
-      if (arg.equals("Typen"))
-      {
-        typeWarning.setVisible(true);
-      }
-      else
-      {
-        typeWarning.setVisible(false);
-        releventFields();
-      }
-    }
-    catch (NullPointerException e)
-    {
-      System.out.println("");
-      ;
     }
   }
 
@@ -703,24 +656,8 @@ public class RegisterMaterialController
     }
   }
 
-  @FXML public void onMouseExitedLanguage(MouseEvent mouseEvent)
+  public void onChooseTypeCheck(ActionEvent actionEvent)
   {
-    String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .languageProperty().get();
-    try
-    {
-      if (arg.equals("Sprog"))
-      {
-        languageWarning.setVisible(true);
-      }
-      else
-      {
-        languageWarning.setVisible(false);
-      }
-    }
-    catch (NullPointerException e)
-    {
-      System.out.println("");
-    }
+    releventFields();
   }
 }

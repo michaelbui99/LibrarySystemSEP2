@@ -59,7 +59,7 @@ public class RegisterMaterialVM
     descriptionProperty = new SimpleStringProperty();
     publisherProperty = new SimpleStringProperty();
     keywordsProperty = new SimpleStringProperty();
-    languageProperty = new SimpleStringProperty();
+    languageProperty = new SimpleStringProperty("Dansk");
     isbnProperty = new SimpleStringProperty();
     numberOfPagesProperty = new SimpleStringProperty();
     titleProperty = new SimpleStringProperty();
@@ -73,8 +73,8 @@ public class RegisterMaterialVM
     departmentProperty = new SimpleStringProperty();
     subtitleLanguageProperty = new SimpleStringProperty();
     lengthProperty = new SimpleStringProperty();
-    audianceProperty = new SimpleStringProperty();
-    typeProperty = new SimpleStringProperty();
+    audianceProperty = new SimpleStringProperty("Voksen");
+    typeProperty = new SimpleStringProperty("Book");
     urlProperty = new SimpleStringProperty();
   }
 
