@@ -62,7 +62,7 @@ public interface UserModelClient extends PropertyChangeSubject
    *
    * @param employee_no And
    * @param password    matches the employee number and password of an existed borrower
-   * @return true if:
+   * @return true
    */
 
   boolean librarianLogin(int employee_no, String password);
@@ -72,24 +72,87 @@ public interface UserModelClient extends PropertyChangeSubject
    */
   Librarian getLoginLibrarian();
 
+  /**
+   * Give the cpr number for the borrower a value give in the
+   * @param borrowerCpr .
+   * */
   void setBorrowerCpr(String borrowerCpr);
 
+  /**
+   * Check if the borrower that is beeing created is using
+   * the same cpr number.
+   * @return true
+   * @param cpr maches that of an already existing borrower.
+   * */
   boolean borrowerCprNumberAlreadyExists(String cpr);
 
+  /**
+   * Check if the borrower that is beeing created is using
+   * the same email address.
+   * @return true
+   * @param email maches that of an already existing borrower.
+   * */
   boolean borrowerEmailAlreadyExists(String email);
 
+  /**
+   * Check if the borrower that is beeing created is using
+   * the same cpr phone number.
+   * @return true
+   * @param phone maches that of an already existing borrower.
+   * */
   boolean borrowerPhoneNumberAlreadyExists(String phone);
 
+  /**
+   * Check if the borrower that is beeing created is using
+   * the same cpr number, email address and phone number.
+   * @return true
+   * @param cpr and
+   * @param email and
+   * @param phone maches that of an already existing borrower.
+   * */
   boolean borrowerAlreadyExists(String cpr, String email, String phone);
 
+  /**
+   * Check if the librarian that is beeing created is using
+   * the same employee number .
+   * @return true
+   * @param employeeNo maches that of an already existing librarian.
+   * */
   boolean employeeNumberAlreadyExists(int employeeNo);
 
+  /**
+   * Check if the librarian that is beeing created is using
+   * the same cpr number .
+   * @return true
+   * @param cpr maches that of an already existing librarian.
+   * */
   boolean librarianCprNumberAlreadyExists(String cpr);
 
+  /**
+   * Check if the librarian that is beeing created is using
+   * the same email address .
+   * @return true
+   * @param email maches that of an already existing librarian.
+   * */
   boolean librarianEmailAlreadyExists(String email);
 
+  /**
+   * Check if the librarian that is beeing created is using
+   * the same phone number .
+   * @return true
+   * @param phone maches that of an already existing librarian.
+   * */
   boolean librarianPhoneNumberAlreadyExists(String phone);
 
+  /**
+   * Check if the librarian that is beeing created is using
+   * the same employee number, cpr number, email address and phone number.
+   * @return true
+   * @param employeeNo and
+   * @param cpr and
+   * @param email and
+   * @param phone maches that of an already existing librarian.
+   * */
   boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
       String phone);
 }
