@@ -1,10 +1,8 @@
-package server.model.loan;
+package database;
 
-import database.DatabaseBuilder;
-import database.loan.LoanDAOImpl;
 import shared.loan.Loan;
-
-import database.BaseDAO;
+import database.loan.LoanDAO;
+import database.loan.LoanDAOImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shared.materials.reading.Book;
@@ -19,43 +17,42 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LoanModelManagerServerTest extends DatabaseBuilder
+class LoanDAOTest
 {
-  private LoanModelServer loanModel;
-  private DatabaseBuilder databaseBuilder;
-  private Borrower borrower;
-  private Book book;
-  @BeforeEach void setup()
+  LoanDAO loanDAO;
+  DatabaseBuilder databaseBuilder;
+  Borrower borrower;
+  Book book;
+
+  @BeforeEach void setup() throws SQLException
   {
-  loanModel = new LoanModelManagerServer();
+    loanDAO = new LoanDAOImpl();
     databaseBuilder = new DatabaseBuilder();
     borrower = new Borrower("111111-1111", "Michael", "Bui",
         "michael@gmail.com", "+4512345678", null, "password");
-    book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
-        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+     book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
+         "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+  }
+
+  @Test void createLoanTest() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    assertDoesNotThrow(()->{loanDAO.create(book,borrower, LocalDate.now().plusMonths(1).toString(), LocalDate.now().toString());});
+    assertEquals(1, loanDAO.getAllLoansByCPR(borrower.getCpr()).size());
   }
 
   @Test void getAllLoansByCPRReturnsAllLoansTest() throws SQLException
   {
     //Creates DB with 1 borrower, 1 Loan and 1 Book with 1 copy.
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    List<Loan> loans = loanModel.getAllLoansByCPR("111111-1111");
+    List<Loan> loans = loanDAO.getAllLoansByCPR("111111-1111");
     assertEquals(1, loans.size());
-  }
-
-  @Test void registerLoanMaterialNotRegisteredThrowsNoSuchElementExceptionTest() throws SQLException
-  {
-    databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    Book notRegisteredBook = new Book(10, 10, "Test", "TEST", "2020-12-12", "DESC",
-        "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
-    assertThrows(NoSuchElementException.class,
-        () -> loanModel.registerLoan(notRegisteredBook, borrower));
   }
 
   @Test void getAllLoansByCPRReturnsCorrectLoan() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    List<Loan> loans = loanModel.getAllLoansByCPR("111111-1111");
+    List<Loan> loans = loanDAO.getAllLoansByCPR("111111-1111");
     Loan loan = loans.get(0);
     assertEquals("Book", loan.getMaterial().getMaterialType());
     assertEquals(1, loan.getLoanID());
@@ -64,11 +61,24 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     assertEquals("111111-1111", loan.getBorrower().getCpr());
   }
 
-  @Test void registerLoanTest()
+  @Test void getAllLoansByCPRNoLoansThrowsNoSuchElementException()
+      throws SQLException
   {
-    assertDoesNotThrow(()->{loanModel.registerLoan(book,borrower);});
-    assertEquals(1, loanModel.getAllLoansByCPR(borrower.getCpr()).size());
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    assertThrows(NoSuchElementException.class, ()->loanDAO.getAllLoansByCPR("111111-1111"));
   }
+
+
+  @Test void createLoanMaterialNotRegisteredThrowsNoSuchElementExceptionTest() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    Book notRegisteredBook = new Book(10, 10, "Test", "TEST", "2020-12-12", "DESC",
+        "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
+    assertThrows(NoSuchElementException.class,
+        () -> loanDAO.create(notRegisteredBook, borrower, "2020-12-12", "2020-12-12"));
+  }
+
+
 
   @Test void endLoanTest() throws SQLException
   {
@@ -77,8 +87,9 @@ class LoanModelManagerServerTest extends DatabaseBuilder
         "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
 
     Loan loan = new Loan(book, borrower,"2021-12-12", "2021-05-21", null, 1 );
-    assertDoesNotThrow(() -> loanModel.endLoan(loan));
+    assertDoesNotThrow(() -> loanDAO.endLoan(loan));
   }
+
 
 
 
