@@ -40,7 +40,7 @@ class LoanDAOTestTest
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     Book book = new Book(10, 10, "Test", "TEST", "2020-12-12", "DESC",
-        "Fantasu", "Voksen", "Dansk", "12321321", 200, null, null);
+        "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
     Borrower borrower = new Borrower("111111-1111", "Michael", "Bui",
         "michael@gmail.com", "+4512345678", null, "password");
     assertThrows(NoSuchElementException.class, () ->loanDAO.create(book, borrower, "2020-12-12", "2020-12-12"));

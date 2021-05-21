@@ -10,7 +10,7 @@ public class DatabaseBuilder extends BaseDAO
 {
 
   public void createDummyDatabaseDataWithLoan() throws SQLException
-  {
+  { //LoanQueries.sql
     try(Connection connection = getConnection())
     {
       PreparedStatement ddl = connection.prepareStatement("DROP SCHEMA IF EXISTS librarysystem CASCADE;\n"
@@ -360,4 +360,6 @@ public class DatabaseBuilder extends BaseDAO
       connection.commit();
     }
   }
+
+
 }

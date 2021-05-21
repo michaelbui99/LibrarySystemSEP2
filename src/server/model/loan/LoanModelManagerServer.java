@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class LoanModelManagerServer implements LoanModelServer
 {
@@ -42,13 +43,20 @@ public class LoanModelManagerServer implements LoanModelServer
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
-    return LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
+    try
+    {
+      return LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
+    }
+    catch (NoSuchElementException e)
+    {
+      return null;
+    }
   }
 
   @Override public void endLoan(Loan loan)
   {
     LoanDAOImpl.getInstance().endLoan(loan);
-    support.firePropertyChange(EventTypes.LOANENDED + loan.getBorrower().getCpr(), null, loan);
+    support.firePropertyChange(EventTypes.LOANENDED, null, loan);
   }
 
 

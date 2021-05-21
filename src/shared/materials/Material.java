@@ -12,6 +12,22 @@ public abstract class Material implements MaterialInterface, Serializable
       String targetAudience, String language, String imageURL)
   {
     this.materialID = materialID;
+    this.title = title;
+    this.targetAudience = targetAudience;
+    this.description = description;
+    this.publisher = publisher;
+    this.releaseDate = releaseDate;
+    this.language = language;
+    this.imageURL = imageURL;
+    materialStatus = MaterialStatus.Available;
+  }
+
+  public Material(int materialID, int copyNumber, String title,
+      String targetAudience, String description, String keywords,
+      String publisher, String releaseDate, String language, String imageURL,
+      MaterialStatus materialStatus)
+  {
+    this.materialID = materialID;
     this.copyNumber = copyNumber;
     this.title = title;
     this.targetAudience = targetAudience;
@@ -21,7 +37,7 @@ public abstract class Material implements MaterialInterface, Serializable
     this.releaseDate = releaseDate;
     this.language = language;
     this.imageURL = imageURL;
-    materialStatus = MaterialStatus.Available;
+    this.materialStatus = materialStatus;
   }
 
   public void setMaterialStatus(MaterialStatus materialStatus)

@@ -293,7 +293,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         PreparedStatement stm2 = connection.prepareStatement("UPDATE material_copy set available = true where material_id = ? and copy_no = ? ;");
         stm2.setInt(1, loan.getMaterial().getMaterialID());
         stm2.setInt(2, loan.getMaterial().getCopyNumber());
-        stm.executeUpdate();
+        stm2.executeUpdate();
         connection.commit();
       }
     }
