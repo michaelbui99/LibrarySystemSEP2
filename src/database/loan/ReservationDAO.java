@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ReservationDAO
 {
+
   Reservation create(Borrower borrower, Material material);
   List<Reservation> getAllReservationsByCPR(String cpr);
   void endReservation(Reservation reservation);
