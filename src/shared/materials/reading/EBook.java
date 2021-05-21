@@ -44,4 +44,14 @@ public class EBook extends ReadingMaterial implements Serializable
   {
     return "E-Book";
   }
+
+  @Override public String getMaterialDetails()
+  {
+    return "Titlel: " + getTitle() + "\n" + "Forfatter: " + author.getfName()
+        + " " + author.getlName() + " \n" + "Forlag: " + getPublisher() + "\n"
+        + "Udgivelsesdato: " + getReleaseDate() + "\n"
+        + "Sprog: " + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience()
+        + "\n" + "Sidetal: " + getPageCount() + "\n" + "Beskrivelse: "
+        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n";
+  }
 }

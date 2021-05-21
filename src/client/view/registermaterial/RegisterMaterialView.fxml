@@ -87,7 +87,7 @@
                                     </TextArea>
                                     <Label layoutX="128.0" layoutY="249.0" text="Emneord" GridPane.rowIndex="5" />
                                     <Label layoutX="145.0" layoutY="386.0" text="Målgruppe" GridPane.rowIndex="6" />
-                                    <ComboBox fx:id="audiance" onMouseExited="#onMouseExitedAudiance" prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <ComboBox fx:id="audiance" prefWidth="150.0" promptText="Målgruppe:" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                     <Label layoutX="146.0" layoutY="32.0" text="Sprog" GridPane.rowIndex="8" />
                                     <Label layoutX="121.0" layoutY="90.0" text="ISBN" GridPane.rowIndex="9" />
                                     <TextField fx:id="isbn" disable="false" layoutX="305.0" layoutY="86.0" onKeyTyped="#onTypedIsbn" promptText="ISBN:" GridPane.columnIndex="1" GridPane.rowIndex="9">
@@ -102,7 +102,7 @@
                                           <Insets right="200.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                    <ComboBox fx:id="materialTypeCompo" onMouseExited="#onMouseExitedType" prefWidth="150.0" promptText="Typen" style="-fx-background-color: white;" GridPane.columnIndex="1">
+                                    <ComboBox fx:id="materialTypeCompo" onAction="#onChooseTypeCheck" prefWidth="150.0" promptText="Typen" style="-fx-background-color: white;" GridPane.columnIndex="1">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -248,11 +248,6 @@
                                           </GridPane>
                                        </children>
                                     </HBox>
-                                    <Label fx:id="typeWarning" text="!" textFill="RED" GridPane.columnIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="300.0" />
-                                       </GridPane.margin>
-                                    </Label>
                                     <Label fx:id="titleWarning" layoutX="639.0" layoutY="31.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
@@ -278,17 +273,7 @@
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="audianceWarning" layoutX="639.0" layoutY="397.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                       <GridPane.margin>
-                                          <Insets left="300.0" />
-                                       </GridPane.margin>
-                                    </Label>
                                     <Label fx:id="pageNoWarning" layoutX="639.0" layoutY="456.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                       <GridPane.margin>
-                                          <Insets left="300.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label fx:id="languageWarning" layoutX="639.0" layoutY="517.0" text="!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <GridPane.margin>
                                           <Insets left="300.0" />
                                        </GridPane.margin>
@@ -313,7 +298,7 @@
                                           <Insets left="300.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <ComboBox fx:id="language" onMouseExited="#onMouseExitedLanguage" prefWidth="150.0" promptText="Sprog" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                    <ComboBox fx:id="language" prefWidth="150.0" promptText="Sprog" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>

@@ -18,6 +18,7 @@ public class AddLibrarianVM
   private StringProperty employeeNoProperty;
   private StringProperty passwordProperty;
   private StringProperty emailProperty;
+  private StringProperty errorLableProperty;
 
   public AddLibrarianVM()
   {
@@ -32,6 +33,7 @@ public class AddLibrarianVM
     employeeNoProperty = new SimpleStringProperty();
     passwordProperty = new SimpleStringProperty();
     emailProperty = new SimpleStringProperty();
+    errorLableProperty = new SimpleStringProperty();
   }
 
   public StringProperty lastNameProperty()
@@ -89,6 +91,11 @@ public class AddLibrarianVM
     return emailProperty;
   }
 
+  public StringProperty errorLableProperty()
+  {
+    return errorLableProperty;
+  }
+
   public void addLibrarian()
   {
     ModelFactoryClient.getInstance().getUserModelClient()
@@ -98,5 +105,42 @@ public class AddLibrarianVM
             new Address(cityProperty.get(), streetnameProperty.get(),
                 Integer.parseInt(zipCodeproperty.get()),
                 streetNoProperty.get()), passwordProperty.get());
+  }
+
+  public boolean employeeNoAlreadyExists()
+  {
+    errorLableProperty.setValue("Employee number already exists!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .employeeNumberAlreadyExists(
+            Integer.parseInt(employeeNoProperty.get()));
+  }
+
+  public boolean cprAlreadyExists()
+  {
+    errorLableProperty.setValue("Cpr number already exists!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .librarianCprNumberAlreadyExists(cprProperty.get());
+  }
+
+  public boolean emailAlreadyExists()
+  {
+    errorLableProperty.setValue("Email already exists!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .librarianEmailAlreadyExists(emailProperty.get());
+  }
+
+  public boolean phoneNoAlreadyExists()
+  {
+    errorLableProperty.setValue("phone number already exists!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .librarianPhoneNumberAlreadyExists(phoneProperty.get());
+  }
+
+  public boolean librarianAlreadyExists()
+  {
+    errorLableProperty.setValue("Librarian already exists!!");
+    return ModelFactoryClient.getInstance().getUserModelClient()
+        .librarianAlreadyExists(Integer.parseInt(employeeNoProperty.get()),
+            cprProperty.get(), emailProperty.get(), phoneProperty.get());
   }
 }

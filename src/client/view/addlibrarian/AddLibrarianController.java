@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
@@ -41,6 +42,7 @@ public class AddLibrarianController
   @FXML private Label phoneError;
   @FXML private Label emailError;
   @FXML private Label passwordError;
+  @FXML private Label errorLable;
 
   private ObservableList<TextField> fields = FXCollections
       .observableArrayList();
@@ -53,6 +55,9 @@ public class AddLibrarianController
    */
   public void init()
   {
+    errorLable.setVisible(false);
+    errorLable.setTextFill(Paint.valueOf("red"));
+
     fields.addAll(lastName, firstName, cprNumber, streetName, city, zipCode,
         streetNumber, phoneNumber, employeeNo, password, email);
 
@@ -74,20 +79,56 @@ public class AddLibrarianController
     phoneNumber.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddLibrarianVM().phoneProperty());
     email.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM()
-            .emailProperty());
+        ViewModelFactory.getInstance().getAddLibrarianVM().emailProperty());
     password.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddLibrarianVM().passwordProperty());
     employeeNo.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddLibrarianVM()
             .employeeNoProperty());
+    errorLable.textProperty().bind(
+        ViewModelFactory.getInstance().getAddLibrarianVM()
+            .errorLableProperty());
   }
 
   @FXML public void onButtonSignUp(ActionEvent actionEvent) throws IOException
   {
-    ViewModelFactory.getInstance().getAddLibrarianVM().addLibrarian();
-    ViewHandler.getInstance().openView("Administration");
-    clearFields();
+    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .employeeNoAlreadyExists();
+    boolean bol1 = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .emailAlreadyExists();
+    boolean bol2 = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .cprAlreadyExists();
+    boolean bol3 = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .phoneNoAlreadyExists();
+    boolean bol4 = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .librarianAlreadyExists();
+    if (bol)
+    {
+      errorLable.setVisible(true);
+    }
+    else if (bol1)
+    {
+      errorLable.setVisible(true);
+    }
+    else if (bol2)
+    {
+      errorLable.setVisible(true);
+    }
+    else if (bol3)
+    {
+      errorLable.setVisible(true);
+    }
+    else if (bol4)
+    {
+      errorLable.setVisible(true);
+    }
+    else
+    {
+      errorLable.setVisible(false);
+      ViewModelFactory.getInstance().getAddLibrarianVM().addLibrarian();
+      ViewHandler.getInstance().openView("Administration");
+      clearFields();
+    }
   }
 
   @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
@@ -104,13 +145,20 @@ public class AddLibrarianController
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .emailProperty().get();
+    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .emailAlreadyExists();
     if (arg.isEmpty() || !arg.contains("@"))
     {
       emailError.setVisible(true);
     }
+    else if (bol)
+    {
+      errorLable.setVisible(true);
+    }
     else
     {
       emailError.setVisible(false);
+      errorLable.setVisible(false);
     }
   }
 
@@ -132,13 +180,20 @@ public class AddLibrarianController
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .employeeNoProperty().get();
+    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .employeeNoAlreadyExists();
     if (arg.isEmpty() || !arg.matches(".*\\d.*"))
     {
       employeeNoError.setVisible(true);
     }
+    else if (bol)
+    {
+      errorLable.setVisible(true);
+    }
     else
     {
       employeeNoError.setVisible(false);
+      errorLable.setVisible(false);
     }
   }
 
@@ -146,14 +201,21 @@ public class AddLibrarianController
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .phoneProperty().get();
+    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .phoneNoAlreadyExists();
     if (arg.isEmpty() || !arg.contains("+45") || arg.length() != 11 || !arg
         .matches(".*\\d.*"))
     {
       phoneError.setVisible(true);
     }
+    else if (bol)
+    {
+      errorLable.setVisible(true);
+    }
     else
     {
       phoneError.setVisible(false);
+      errorLable.setVisible(false);
     }
   }
 
@@ -217,14 +279,21 @@ public class AddLibrarianController
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .cprProperty().get();
+    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
+        .cprAlreadyExists();
     if (arg.isEmpty() || !arg.matches(".*\\d.*") || !arg.contains("-")
         || arg.length() != 11)
     {
       cprError.setVisible(true);
     }
+    else if (bol)
+    {
+      errorLable.setVisible(true);
+    }
     else
     {
       cprError.setVisible(false);
+      errorLable.setVisible(false);
     }
   }
 

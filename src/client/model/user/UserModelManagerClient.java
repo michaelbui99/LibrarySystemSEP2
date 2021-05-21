@@ -24,7 +24,9 @@ public class UserModelManagerClient implements UserModelClient
       String l_name, String email, String tel_no, Address address,
       String password)
   {
-    Borrower borrower = client.registerBorrower(cpr_no, f_name, l_name, email, tel_no, address, password);
+    Borrower borrower = client
+        .registerBorrower(cpr_no, f_name, l_name, email, tel_no, address,
+            password);
     //support.firePropertyChange(EventTypes.BORROWERREGISTERED, null, borrower);
     return borrower;
   }
@@ -36,14 +38,16 @@ public class UserModelManagerClient implements UserModelClient
 
   @Override public Borrower getLoginUser()
   {
-   return client.getLoginUser();
+    return client.getLoginUser();
   }
 
   @Override public Librarian registerLibrarian(int employee_no,
       String firstName, String lastName, String cpr, String tlfNumber,
       String email, Address address, String password)
   {
-    Librarian librarian = client.registerLibrarian(employee_no, firstName, lastName, cpr, tlfNumber, email, address, password);
+    Librarian librarian = client
+        .registerLibrarian(employee_no, firstName, lastName, cpr, tlfNumber,
+            email, address, password);
     return librarian;
   }
 
@@ -60,6 +64,53 @@ public class UserModelManagerClient implements UserModelClient
   @Override public void setBorrowerCpr(String borrowerCpr)
   {
     //client.setBorrowerCpr(borrowerCpr);
+  }
+
+  @Override public boolean borrowerCprNumberAlreadyExists(String cpr)
+  {
+    return client.borrowerCprNumberAlreadyExists(cpr);
+  }
+
+  @Override public boolean borrowerEmailAlreadyExists(String email)
+  {
+    return client.borrowerEmailAlreadyExists(email);
+  }
+
+  @Override public boolean borrowerPhoneNumberAlreadyExists(String phone)
+  {
+    return client.borrowerPhoneNumberAlreadyExists(phone);
+  }
+
+  @Override public boolean borrowerAlreadyExists(String cpr, String email,
+      String phone)
+  {
+    return client.borrowerAlreadyExists(cpr, email, phone);
+  }
+
+  @Override public boolean employeeNumberAlreadyExists(int employeeNo)
+  {
+    return client.employeeNumberAlreadyExists(employeeNo);
+  }
+
+  @Override public boolean librarianCprNumberAlreadyExists(String cpr)
+  {
+    return client.librarianCprNumberAlreadyExists(cpr);
+  }
+
+  @Override public boolean librarianEmailAlreadyExists(String email)
+  {
+    return client.librarianEmailAlreadyExists(email);
+  }
+
+  @Override public boolean librarianPhoneNumberAlreadyExists(String phone)
+  {
+    return client.librarianPhoneNumberAlreadyExists(phone);
+  }
+
+  @Override public boolean librarianAlreadyExists(int employeeNo, String cpr,
+      String email, String phone)
+  {
+    return client.librarianAlreadyExists(employeeNo, cpr, email, phone);
   }
 
   @Override public void addPropertyChangeListener(String name,

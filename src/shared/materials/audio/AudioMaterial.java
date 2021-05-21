@@ -11,7 +11,8 @@ public abstract class AudioMaterial extends Material implements Serializable
       String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String url)
   {
-    super(materialID, title, publisher, releaseDate, description, targetAudience, language, url);
+    //TODO: Add
+    super(materialID,copyNumber, title, targetAudience, description,tags, publisher, releaseDate, language, url, null);
     this.playDuration = playDuration;
   }
 

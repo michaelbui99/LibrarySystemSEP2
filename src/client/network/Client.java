@@ -1,7 +1,6 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
-import shared.loan.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -153,15 +152,30 @@ public interface Client
    */
   Librarian getLoginLibrarian();
 
-  List<Reservation> getAllReservationsByCPR(String cpr);
-
   void endLoan(Loan loan);
 
   int numberOfAvailableCopies();
 
   void setBorrowerCpr(String borrowerCpr);
 
-  void endReservation( Reservation reservation);
+  boolean borrowerCprNumberAlreadyExists(String cpr);
+
+  boolean borrowerEmailAlreadyExists(String email);
+
+  boolean borrowerPhoneNumberAlreadyExists(String phone);
+
+  boolean borrowerAlreadyExists(String cpr, String email, String phone);
+
+  boolean employeeNumberAlreadyExists(int employeeNo);
+
+  boolean librarianCprNumberAlreadyExists(String cpr);
+
+  boolean librarianEmailAlreadyExists(String email);
+
+  boolean librarianPhoneNumberAlreadyExists(String phone);
+
+  boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
+      String phone);
 
 }
 

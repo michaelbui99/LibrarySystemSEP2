@@ -123,6 +123,139 @@ public class UserModelManagerServer implements UserModelServer
     this.borrowerCpr = borrowerCpr;
   }
 
+  @Override public boolean borrowerCprNumberAlreadyExists(String cpr)
+  {
+    boolean cprIn = false;
+    try
+    {
+      cprIn = BorrowerImpl.getInstance().borrowerCprNumberAlreadyExists(cpr);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return cprIn;
+  }
+
+  @Override public boolean borrowerEmailAlreadyExists(String email)
+  {
+    boolean emailIn = false;
+    try
+    {
+      emailIn = BorrowerImpl.getInstance().borrowerEmailAlreadyExists(email);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return emailIn;
+  }
+
+  @Override public boolean borrowerPhoneNumberAlreadyExists(String phone)
+  {
+    boolean phoneIn = false;
+    try
+    {
+      phoneIn = BorrowerImpl.getInstance()
+          .borrowerPhoneNumberAlreadyExists(phone);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return phoneIn;
+  }
+
+  @Override public boolean borrowerAlreadyExists(String cpr, String email,
+      String phone)
+  {
+    boolean borrowerIn = false;
+    try
+    {
+      borrowerIn = BorrowerImpl.getInstance()
+          .borrowerAlreadyExists(cpr, email, phone);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return borrowerIn;
+  }
+
+  @Override public boolean employeeNumberAlreadyExists(int employeeNo)
+  {
+    boolean employeeNoIn = false;
+    try
+    {
+      employeeNoIn = LibrarianImpl.getInstance()
+          .employeeNumberAlreadyExists(employeeNo);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return employeeNoIn;
+  }
+
+  @Override public boolean librarianCprNumberAlreadyExists(String cpr)
+  {
+    boolean cprIn = false;
+    try
+    {
+      cprIn = LibrarianImpl.getInstance().librarianCprNumberAlreadyExists(cpr);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return cprIn;
+  }
+
+  @Override public boolean librarianEmailAlreadyExists(String email)
+  {
+    boolean emailIn = false;
+    try
+    {
+      emailIn = LibrarianImpl.getInstance().librarianEmailAlreadyExists(email);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return emailIn;
+  }
+
+  @Override public boolean librarianPhoneNumberAlreadyExists(String phone)
+  {
+    boolean phoneIn = false;
+    try
+    {
+      phoneIn = LibrarianImpl.getInstance()
+          .librarianPhoneNumberAlreadyExists(phone);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return phoneIn;
+  }
+
+  @Override public boolean librarianAlreadyExists(int employeeNo, String cpr,
+      String email, String phone)
+  {
+    boolean librarianIn = false;
+    try
+    {
+      librarianIn = LibrarianImpl.getInstance()
+          .librarianAlreadyExists(employeeNo, cpr, email, phone);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return librarianIn;
+  }
+
   @Override public Librarian getLoginLibrarian()
   {
     return null;

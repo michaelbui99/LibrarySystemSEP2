@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 public class Book extends ReadingMaterial implements Serializable
 {
- private String isbn;
- private Place place;
- private MaterialCreator author;
+  private String isbn;
+  private Place place;
+  private MaterialCreator author;
 
   public Book(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
@@ -36,5 +36,23 @@ public class Book extends ReadingMaterial implements Serializable
   @Override public String getMaterialType()
   {
     return "Book";
+  }
+
+  @Override public String getMaterialDetails()
+  {
+    String a;
+      if (author.getfName() != null && author.getlName() != null)
+      {
+       a = author.getfName() + " " + author.getlName();
+      }
+      else
+        a = "";
+
+
+    return "Titlel: " + getTitle() + "\n" + "Forfatter: " + a + " \n" + "Forlag: " + getPublisher() + "\n"
+        + "Udgivelsesdato: " + getReleaseDate() + "\n" + "ISBN: " + isbn + "\n"
+        + "Sprog: " + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience()
+        + "\n" + "Sidetal: " + getPageCount() + "\n" + "Beskrivelse: "
+        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n";
   }
 }

@@ -39,16 +39,18 @@ public class MyMaterialVM
               }
             });
     ModelFactoryClient.getInstance().getLoanModelClient()
-        .addPropertyChangeListener(EventTypes.LOANENDED + cprProperty.get(),
+        .addPropertyChangeListener(EventTypes.LOANENDED,
             evt -> {
+
               if (((Loan) evt.getNewValue()).getBorrower().getCpr().equals(cprProperty.get()))
               {
                 activeLoans.removeIf(
                     activeLoan -> activeLoan.getLoanID() == ((Loan) evt
                         .getNewValue()).getLoanID());
-                System.out.println("LOAN ENDED EVT CAUGHT");
-                System.out.println(((Loan) evt.getNewValue()).getBorrower().getCpr());
               }
+              System.out.println("LOAN ENDED EVT CAUGHT");
+                System.out.println(((Loan) evt.getNewValue()).getBorrower().getCpr());
+
             });
     loanProperty = new SimpleObjectProperty<>();
   }
@@ -57,6 +59,9 @@ public class MyMaterialVM
   public void endLoan()
   {
     ModelFactoryClient.getInstance().getLoanModelClient().endLoan(loanProperty.get());
+    System.out.println(loanProperty.get().getLoanID());
+    System.out.println(loanProperty.get().getMaterial().getMaterialID());
+    System.out.println(loanProperty.get().getMaterial().getCopyNumber());
   };
 
   public ObservableList<Loan> getLoanList()

@@ -21,27 +21,29 @@ public interface RMIClient extends Remote
   /**
    * Registers a new Loan for the given material and loaner.
    *
-   * @param material  material is the Material the loaner wants to loan.
+   * @param material material is the Material the loaner wants to loan.
    * @param borrower borrower is the owner of the loan which the material is connected to.
-   * @throws IllegalStateException if the material is is not available for loan.
+   * @throws IllegalStateException  if the material is is not available for loan.
    * @throws NoSuchElementException if the material is not registered in the system.
    */
-  public void registerLoan(Material material, Borrower borrower) throws IllegalStateException, RemoteException;
+  public void registerLoan(Material material, Borrower borrower)
+      throws IllegalStateException, RemoteException;
 
   List<Loan> getAllLoansByCPR(String cpr) throws RemoteException;
   void deliverMaterial(int loanID) throws RemoteException;
   void extendLoan() throws RemoteException;
 
-  void registerBook(String title, String publisher,
-      String releaseDate, String description, String tags,
-      String targetAudience, String language, String isbn, int pageCount,
-      Place place, MaterialCreator author, String genre, String url) throws RemoteException;
+  void registerBook(String title, String publisher, String releaseDate,
+      String description, String tags, String targetAudience, String language,
+      String isbn, int pageCount, Place place, MaterialCreator author,
+      String genre, String url) throws RemoteException;
 
   void createBookCopy(int materialID) throws RemoteException;
 
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
-      int pageCount, MaterialCreator author, String genre) throws RemoteException;
+      int pageCount, MaterialCreator author, String genre)
+      throws RemoteException;
 
   void registerDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
@@ -79,7 +81,8 @@ public interface RMIClient extends Remote
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
-      int playDuration, String genre, MaterialCreator author, String url) throws RemoteException;
+      int playDuration, String genre, MaterialCreator author, String url)
+      throws RemoteException;
 
   void createAudioBookCopy(int materialID) throws RemoteException;
 
@@ -89,7 +92,8 @@ public interface RMIClient extends Remote
       throws RemoteException;
 
   List<Material> findMaterial(String title, String language, String keywords,
-      String genre, String targetAudience, SearchStrategy searchStrategy) throws RemoteException;
+      String genre, String targetAudience, SearchStrategy searchStrategy)
+      throws RemoteException;
   public Material getSelectMaterial() throws RemoteException;
   public void setSelectMaterial(Material material) throws RemoteException;
   /**
@@ -157,13 +161,38 @@ public interface RMIClient extends Remote
    */
   Librarian getLoginLibrarian() throws RemoteException;
 
-  void endLoan(Loan loan) throws  RemoteException;
+  void endLoan(Loan loan) throws RemoteException;
 
-  void addPropertyChangeListener(String name, PropertyChangeListener listener) throws RemoteException;
-  void addPropertyChangeListener(PropertyChangeListener listener) throws RemoteException;
-  void removePropertyChangeListener(String name, PropertyChangeListener listener) throws RemoteException;
-  void removePropertyChangeListener(PropertyChangeListener listener) throws RemoteException;
+  void addPropertyChangeListener(String name, PropertyChangeListener listener)
+      throws RemoteException;
+  void addPropertyChangeListener(PropertyChangeListener listener)
+      throws RemoteException;
+  void removePropertyChangeListener(String name,
+      PropertyChangeListener listener) throws RemoteException;
+  void removePropertyChangeListener(PropertyChangeListener listener)
+      throws RemoteException;
 
   void setBorrowerCpr(String borrowerCpr) throws RemoteException;
+
+  boolean borrowerCprNumberAlreadyExists(String cpr) throws RemoteException;
+
+  boolean borrowerEmailAlreadyExists(String email) throws RemoteException;
+
+  boolean borrowerPhoneNumberAlreadyExists(String phone) throws RemoteException;
+
+  boolean borrowerAlreadyExists(String cpr, String email, String phone)
+      throws RemoteException;
+
+  boolean employeeNumberAlreadyExists(int employeeNo) throws RemoteException;
+
+  boolean librarianCprNumberAlreadyExists(String cpr) throws RemoteException;
+
+  boolean librarianEmailAlreadyExists(String email) throws RemoteException;
+
+  boolean librarianPhoneNumberAlreadyExists(String phone)
+      throws RemoteException;
+
+  boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
+      String phone) throws RemoteException;
 
 }

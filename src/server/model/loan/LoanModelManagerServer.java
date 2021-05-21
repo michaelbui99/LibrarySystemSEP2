@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class LoanModelManagerServer implements LoanModelServer
 {
@@ -26,23 +27,36 @@ public class LoanModelManagerServer implements LoanModelServer
 
   @Override public void registerLoan(Material material, Borrower borrower)
   {
-    //TODO: CHANGE LOAN DAO CREATE METHOD SIGNATURE
-    Loan loan = LoanDAOImpl.getInstance()
-        .create(material, borrower,null, LocalDate.now().toString());
-    //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
-    support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
+    try
+    {
+      Loan loan = LoanDAOImpl.getInstance()
+          .create(material, borrower,null, LocalDate.now().toString());
+      //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
+      support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
+    }
+    catch (IllegalStateException e)
+    {
+      throw new IllegalStateException(e.getMessage());
+    }
   }
 
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
-    return LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
+    try
+    {
+      return LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
+    }
+    catch (NoSuchElementException e)
+    {
+      return null;
+    }
   }
 
   @Override public void endLoan(Loan loan)
   {
     LoanDAOImpl.getInstance().endLoan(loan);
-    support.firePropertyChange(EventTypes.LOANENDED + loan.getBorrower().getCpr(), null, loan);
+    support.firePropertyChange(EventTypes.LOANENDED, null, loan);
   }
 
 

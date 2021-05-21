@@ -13,7 +13,7 @@ public abstract class ReadingMaterial extends Material implements Serializable
       String targetAudience, String language, int pageCount)
   {
     //TODO: INSERT URL IN CONSTRUCTOR
-    super(materialID, title, publisher, releaseDate, description, targetAudience, language, null);
+    super(materialID,copyNumber, title, targetAudience, description,tags, publisher, releaseDate, language, null, null);
 
     this.pageCount = pageCount;
   }

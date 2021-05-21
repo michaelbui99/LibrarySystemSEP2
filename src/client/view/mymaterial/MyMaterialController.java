@@ -50,6 +50,8 @@ public class MyMaterialController
     ViewModelFactory.getInstance().getMyMaterialVM().loanProperty()
         .set(loanTableView.getSelectionModel().getSelectedItem());
     ViewModelFactory.getInstance().getMyMaterialVM().endLoan();
+
+
     loanTableView.refresh();
   }
 

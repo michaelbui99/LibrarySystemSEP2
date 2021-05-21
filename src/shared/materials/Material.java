@@ -5,11 +5,27 @@ import java.io.Serializable;
 public abstract class Material implements MaterialInterface, Serializable
 {
   private int materialID, copyNumber;
-  private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL;
+  private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL, materialDetails;
   private MaterialStatus materialStatus;
   private final static long serialVersionUID = -8460811401673477634L;
   public Material(int materialID, String title, String publisher, String releaseDate, String description,
       String targetAudience, String language, String imageURL)
+  {
+    this.materialID = materialID;
+    this.title = title;
+    this.targetAudience = targetAudience;
+    this.description = description;
+    this.publisher = publisher;
+    this.releaseDate = releaseDate;
+    this.language = language;
+    this.imageURL = imageURL;
+    materialStatus = MaterialStatus.Available;
+  }
+
+  public Material(int materialID, int copyNumber, String title,
+      String targetAudience, String description, String keywords,
+      String publisher, String releaseDate, String language, String imageURL,
+      MaterialStatus materialStatus)
   {
     this.materialID = materialID;
     this.copyNumber = copyNumber;
@@ -21,7 +37,7 @@ public abstract class Material implements MaterialInterface, Serializable
     this.releaseDate = releaseDate;
     this.language = language;
     this.imageURL = imageURL;
-    materialStatus = MaterialStatus.Available;
+    this.materialStatus = materialStatus;
   }
 
   public void setMaterialStatus(MaterialStatus materialStatus)
@@ -30,6 +46,8 @@ public abstract class Material implements MaterialInterface, Serializable
   }
 
 
+  public abstract String getMaterialType();
+  public abstract String getMaterialDetails();
 
   public int getMaterialID()
   {
@@ -81,7 +99,6 @@ public abstract class Material implements MaterialInterface, Serializable
     return materialStatus;
   }
 
-  public abstract String getMaterialType();
 
   public String getImageURL() {
     return imageURL;

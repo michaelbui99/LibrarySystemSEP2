@@ -35,4 +35,15 @@ public interface LibrarianDAO
    *                      or establish a connection.
    */
   boolean librarianLogin(int employee_no, String password) throws SQLException;
+
+  boolean employeeNumberAlreadyExists(int employeeNo) throws SQLException;
+
+  boolean librarianCprNumberAlreadyExists(String cpr) throws SQLException;
+
+  boolean librarianEmailAlreadyExists(String email) throws SQLException;
+
+  boolean librarianPhoneNumberAlreadyExists(String phone) throws SQLException;
+
+  boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
+      String phone) throws SQLException;
 }

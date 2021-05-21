@@ -77,9 +77,9 @@ public class SearchController
 
   }
 
-  @FXML public void onButtonCancel(ActionEvent actionEvent)
+  @FXML public void onButtonCancel(ActionEvent actionEvent) throws IOException
   {
-    System.exit(0);
+    ViewHandler.getInstance().openView("UserWindow");
   }
 
   @FXML public void onButtonContinue(ActionEvent actionEvent) throws IOException

@@ -5,30 +5,45 @@ import database.loan.LoanDAO;
 import database.loan.LoanDAOImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import shared.materials.reading.Book;
+import shared.person.borrower.Borrower;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 class LoanDAOTestTest
 {
-   LoanDAO loanDAO;
+  LoanDAO loanDAO;
+  DatabaseBuilder databaseBuilder;
 
-   @BeforeEach
-  void setup(){
+  @BeforeEach void setup() throws SQLException
+  {
+    loanDAO = new LoanDAOImpl();
+    databaseBuilder = new DatabaseBuilder();
+  }
 
-     loanDAO = new LoanDAOImpl();
-   }
+  @Test void getAllLoansByCprTest() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    List<Loan> loans = loanDAO.getAllLoansByCPR("111111-1111");
+    assertEquals(1, loans.size());
+    assertEquals("Title1", loans.get(0).getMaterial().getTitle());
+    assertEquals(1, loans.get(0).getLoanID());
+  }
 
-   @Test
-   void getAllLoansByCprTest()
-   {
-     List<Loan> loans = loanDAO.getAllLoansByCPR("111111-1111");
-     assertEquals(1, loans.size());
-     assertEquals("Title1", loans.get(0).getMaterial().getTitle());
-   }
+  @Test void createLoanMaterialNotRegisteredTest() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    Book book = new Book(10, 10, "Test", "TEST", "2020-12-12", "DESC",
+        "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
+    Borrower borrower = new Borrower("111111-1111", "Michael", "Bui",
+        "michael@gmail.com", "+4512345678", null, "password");
+    assertThrows(NoSuchElementException.class, () ->loanDAO.create(book, borrower, "2020-12-12", "2020-12-12"));
+  }
 
-//   @Test
-//  void testCreate() throws SQLException {
-//     Loan loan = loanDAO.create(1,2,"2222","bog","2021-04-22","2021-05-22");
-//     assertEquals(1,loan.getMaterialID());
-//   }
 }
