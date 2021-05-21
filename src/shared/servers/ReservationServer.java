@@ -1,10 +1,12 @@
 package shared.servers;
 
+import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface ReservationServer extends Remote
 {
@@ -27,4 +29,5 @@ public interface ReservationServer extends Remote
    * @see LoanServer
    */
   void registerClientCallBack(ClientCallback client) throws RemoteException;
+  List<Reservation> getAllReservationsByCPR(String cpr);
 }

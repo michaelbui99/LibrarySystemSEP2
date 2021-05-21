@@ -1,11 +1,13 @@
 package client.model.reservation;
 
 import client.network.Client;
+import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class ReservationModelManagerClient implements ReservationModelClient
 {
@@ -22,6 +24,16 @@ public class ReservationModelManagerClient implements ReservationModelClient
       Borrower borrower)
   {
     client.registerReservation(material, borrower);
+  }
+
+  @Override public List<Reservation> getAllReservationsByCPR(String cpr)
+  {
+    return client.getAllReservationsByCPR(cpr);
+  }
+
+  @Override public void endReservation(Reservation reservation)
+  {
+    client.endReservation(reservation);
   }
 
   @Override public void addPropertyChangeListener(String name,

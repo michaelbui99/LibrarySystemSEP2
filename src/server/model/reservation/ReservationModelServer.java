@@ -1,8 +1,11 @@
 package server.model.reservation;
 
+import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import shared.servers.PropertyChangeSubject;
+
+import java.util.List;
 
 public interface ReservationModelServer extends PropertyChangeSubject
 {
@@ -16,4 +19,5 @@ public interface ReservationModelServer extends PropertyChangeSubject
    * */
   public void registerReservation(Material material, Borrower borrower);
 
+  List<Reservation> getAllReservationsByCPR(String cpr);
 }

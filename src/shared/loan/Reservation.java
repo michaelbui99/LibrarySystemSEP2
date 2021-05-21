@@ -3,9 +3,10 @@ package shared.loan;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 //joda time library
+import java.io.Serializable;
 import java.time.*;
 
-public class Reservation
+public class Reservation implements Serializable
 {
   private Material material;
   private Borrower borrower;

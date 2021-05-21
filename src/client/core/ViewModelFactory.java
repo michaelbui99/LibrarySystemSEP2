@@ -6,6 +6,7 @@ import client.view.borrowreserve.BorrowReserveVM;
 import client.view.copies.CopiesVM;
 import client.view.main.MainVM;
 import client.view.mymaterial.MyMaterialVM;
+import client.view.myreservations.MyReservationsVM;
 import client.view.registermaterial.RegisterMaterialVM;
 import client.view.search.SearchVM;
 import client.view.stafflogin.StaffLogInVM;
@@ -32,6 +33,7 @@ public class ViewModelFactory
   private RegisterMaterialVM registerMaterialVM;
   private SearchVM searchVM;
   private StaffLogInVM staffLogInVM;
+  private MyReservationsVM myReservationsVM;
 
   public AddUserVM getAddUserVM()
   {
@@ -114,4 +116,12 @@ public class ViewModelFactory
     return staffLogInVM;
   }
 
+  public MyReservationsVM getMyReservationsVM()
+  {
+    if (myReservationsVM == null)
+    {
+      myReservationsVM = new MyReservationsVM();
+    }
+    return myReservationsVM;
+  }
 }

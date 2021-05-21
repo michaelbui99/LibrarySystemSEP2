@@ -73,5 +73,5 @@ public ObjectProperty<Loan> loanProperty()
 {
   return loanProperty;
 }
-  ;
+
 }
