@@ -1,6 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
+import shared.loan.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -463,6 +464,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public List<Reservation> getAllReservationsByCPR(String cpr)
+  {
+    try
+    {
+      return server.getReservationServer().getAllReservationsByCPR(cpr);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public void endLoan(Loan loan)
   {
     try
@@ -522,6 +535,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     {
       e.printStackTrace();
     }
+  }
+
+  @Override public void endReservation(Reservation reservation)
+  {
+
   }
 
   @Override public void loanRegistered(Loan loan)

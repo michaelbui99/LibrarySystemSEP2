@@ -7,6 +7,7 @@ import shared.person.borrower.Borrower;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
 {
@@ -53,4 +54,15 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     }
     return null;
   }
+
+  @Override public List<Reservation> getAllReservationsByCPR(String cpr)
+  {
+    return null;
+  }
+
+  @Override public void endReservation(Reservation reservation)
+  {
+
+  }
+
 }

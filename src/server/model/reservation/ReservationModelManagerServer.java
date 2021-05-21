@@ -11,6 +11,7 @@ import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class ReservationModelManagerServer implements ReservationModelServer
 {
@@ -33,6 +34,11 @@ public class ReservationModelManagerServer implements ReservationModelServer
     }
     else
       throw new IllegalStateException("Material has more than 1 available copies");
+  }
+
+  @Override public List<Reservation> getAllReservationsByCPR(String cpr)
+  {
+    return null;
   }
 
   @Override public void addPropertyChangeListener(String name,

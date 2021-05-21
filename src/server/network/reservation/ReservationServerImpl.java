@@ -3,6 +3,7 @@ package server.network.reservation;
 import client.core.ModelFactoryClient;
 import server.core.ModelFactoryServer;
 import shared.loan.Loan;
+import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import shared.servers.ClientCallback;
@@ -13,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class ReservationServerImpl implements ReservationServer
 {
@@ -41,6 +43,11 @@ public class ReservationServerImpl implements ReservationServer
       }
     };
     ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
+  }
+
+  @Override public List<Reservation> getAllReservationsByCPR(String cpr)
+  {
+    return ModelFactoryServer.getInstance().getReservationModelServer().getAllReservationsByCPR(cpr);
   }
 
   @Override public void registerReservation(Material material,

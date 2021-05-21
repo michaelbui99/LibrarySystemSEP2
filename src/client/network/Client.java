@@ -1,6 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
+import shared.loan.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -152,11 +153,15 @@ public interface Client
    */
   Librarian getLoginLibrarian();
 
+  List<Reservation> getAllReservationsByCPR(String cpr);
+
   void endLoan(Loan loan);
 
   int numberOfAvailableCopies();
 
   void setBorrowerCpr(String borrowerCpr);
+
+  void endReservation( Reservation reservation);
 
 }
 

@@ -1,9 +1,11 @@
 package client.model.reservation;
 
+import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import shared.servers.PropertyChangeSubject;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public interface ReservationModelClient extends PropertyChangeSubject
@@ -17,4 +19,7 @@ public interface ReservationModelClient extends PropertyChangeSubject
    * @throws  IllegalStateException if the Material has more than 1 available copies
    * */
   void registerReservation(Material material, Borrower borrower);
+
+  List<Reservation> getAllReservationsByCPR(String cpr);
+  void endReservation(Reservation reservation);
 }
