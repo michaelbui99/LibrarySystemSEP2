@@ -180,7 +180,6 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
       String sql = "SELECT * FROM material "
           + "join e_book  on material.material_id = e_book.material_id  "
           + "join material_copy mt on e_book.material_id = mt.material_id "
-          + "join place p on e_book.place_id = p.place_id "
           + "join material_creator mc on e_book.author = mc.person_id "
           + "join material_keywords mk on e_book.material_id = mk.material_id ";
 

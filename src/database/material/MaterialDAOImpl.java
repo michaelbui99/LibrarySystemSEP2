@@ -42,7 +42,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
   @Override public int create(String title, String publisher,
       String releaseDate, String description, String targetAudience,
-      String language, String genre, String url) throws SQLException
+      String language, String genre, String url, String keywords) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -61,6 +61,17 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       stm.executeUpdate();
       ResultSet keys = stm.getGeneratedKeys();
       keys.next();
+
+      String[] keywardsArray = keywords.split(", ");
+      for (int i = 0; i < keywardsArray.length; i++)
+      {
+      PreparedStatement stm2 = connection.prepareStatement(
+          "INSERT INTO material_keywords (material_id, keyword) VALUES (?,?)"
+      );
+      stm2.setInt(1, keys.getInt(1));
+      stm2.setString(2, keywardsArray[i]);
+      stm2.executeUpdate();
+      }
       connection.commit();
       return keys.getInt(1);
     }

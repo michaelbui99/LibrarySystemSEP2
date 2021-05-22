@@ -12,7 +12,7 @@ class MaterialDAOImplTest
   {
     assertDoesNotThrow(() -> MaterialDAOImpl.getInstance()
         .create("test", "test", "2002-12-12", "test", "Barn", "Dansk", "test",
-            null));
+            null, null));
   }
 
   @Test void materialIsIn() throws SQLException

@@ -216,7 +216,7 @@ public class RegisterMaterialVM
                 genreProperty.get()),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()),
-            genreProperty.get(), urlProperty.get());
+            genreProperty.get(), urlProperty.get(), keywordsProperty.get());
   }
 
   public boolean bookAlreadyExists()

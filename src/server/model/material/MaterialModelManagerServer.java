@@ -1,6 +1,5 @@
 package server.model.material;
 
-import server.core.ModelFactoryServer;
 import shared.materials.Material;
 import shared.materials.MaterialList;
 import shared.materials.Place;
@@ -30,14 +29,15 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      Place place, MaterialCreator author, String genre, String url)
+      Place place, MaterialCreator author, String genre, String url,
+      String keywards)
   {
     int materialID = 0;
     try
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url);
+              language, genre, url, keywards);
       BookDAOImpl.getInstance()
           .create(materialID, isbn, pageCount, author, place);
     }
@@ -81,7 +81,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url);
+              language, genre, url, null);
       DVDDAOImpl.getInstance()
           .create(materialID, subtitlesLanguage, playDuration, place);
     }
@@ -124,7 +124,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url);
+              language, genre, url, null);
       CDDAOImpl.getInstance().create(materialID, playDuration, place);
     }
     catch (SQLException throwables)
@@ -166,7 +166,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url);
+              language, genre, url, null);
       EbookDAOImpl.getInstance()
           .create(materialID, pageCount, author, licenseNr);
     }
@@ -210,7 +210,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url);
+              language, genre, url, null);
       AudioBookDAOImpl.getInstance().create(materialID, playDuration, author);
     }
     catch (SQLException throwables)
