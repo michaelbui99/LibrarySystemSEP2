@@ -6,7 +6,6 @@ import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
 import shared.servers.PropertyChangeSubject;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface MaterialModelServer extends PropertyChangeSubject
@@ -14,7 +13,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       String isbn, int pageCount, Place place, MaterialCreator author,
-      String genre, String url);
+      String genre, String url, String keywards);
 
   void createBookCopy(int materialID);
 

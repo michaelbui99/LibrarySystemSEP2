@@ -15,7 +15,7 @@ public interface MaterialDAO
    */
   int create(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String genre,
-      String url) throws SQLException;
+      String url, String keywords) throws SQLException;
 
   boolean materialExistInDB(int materialID) throws SQLException;
 

@@ -42,10 +42,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      Place place, MaterialCreator author, String genre, String url)
+      Place place, MaterialCreator author, String genre, String url,
+      String keywords)
   {
     client.registerBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, isbn, pageCount, place, author, genre, url);
+        targetAudience, language, isbn, pageCount, place, author, genre, url, keywords);
   }
 
   @Override public void createBookCopy(int materialID)

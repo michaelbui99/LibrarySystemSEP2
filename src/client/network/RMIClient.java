@@ -36,7 +36,7 @@ public interface RMIClient extends Remote
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       String isbn, int pageCount, Place place, MaterialCreator author,
-      String genre, String url) throws RemoteException;
+      String genre, String url, String keywords) throws RemoteException;
 
   void createBookCopy(int materialID) throws RemoteException;
 

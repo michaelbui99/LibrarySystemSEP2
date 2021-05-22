@@ -25,7 +25,7 @@ class MaterialDAOTest
   @Test
   void testCreate() throws SQLException
   {
-    materialDAO.create("Hello", "Test", "2020-09-14", "TEST DESC", "Voksen", "Dansk", "sdsd", null);
+    materialDAO.create("Hello", "Test", "2020-09-14", "TEST DESC", "Voksen", "Dansk", "sdsd", null, null);
   }
 
   @Test
