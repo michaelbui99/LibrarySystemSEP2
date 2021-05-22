@@ -28,7 +28,7 @@ public interface Client
   public void registerReservation(Material material, Borrower borrower)
       throws IllegalStateException;
 
-  List<Loan> getAllLoansByCPR(String cpr);
+  List<Loan> getAllLoansByCPR(String cpr) throws NoSuchElementException;
   void deliverMaterial(int loanID);
   void extendLoan();
 

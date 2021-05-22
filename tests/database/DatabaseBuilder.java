@@ -354,7 +354,26 @@ public class DatabaseBuilder extends BaseDAO
           + "\n"
           + "INSERT INTO borrower (cpr_no, f_name, l_name, email, tel_no, address_id, password)\n"
           + "VALUES ('222222-2222', 'B2', 'B2L', 'TEST@gmail.com', '+4587654321', 1, 'password');\n"
+          + "INSERT INTO material (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
+          + "VALUES ('eboktest', 'Barn', 'test', 'me', 'Dansk', '2005-01-01', 'love', NULL);\n"
           + "\n"
+          + "INSERT INTO e_book (material_id, page_no, license_no, author)\n"
+          + "VALUES (3, 500, 12345, 1);\n" + "\n"
+          + "INSERT INTO material_copy (material_id, available)\n"
+          + "VALUES (3, TRUE);\n" + "\n"
+          + "INSERT INTO material_keywords (material_id, keyword)\n"
+          + "VALUES (1, 'Magi');\n"
+          + "INSERT INTO material_keywords (material_id, keyword)\n"
+          + "VALUES (1, 'Fantasy');\n"
+          + "INSERT INTO material_keywords (material_id, keyword)\n"
+          + "VALUES (2, 'Troldmænd');\n"
+          + "INSERT INTO material_keywords (material_id, keyword)\n"
+          + "VALUES (2, 'Trold');\n"
+          + "INSERT INTO material_keywords (material_id, keyword)\n"
+          + "VALUES (3, 'Fred');\n"
+          + "INSERT INTO material_keywords (material_id, keyword)\n"
+          + "VALUES (3, 'Ro');"
+
       );
       sql.executeUpdate();
       connection.commit();

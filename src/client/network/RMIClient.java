@@ -29,7 +29,7 @@ public interface RMIClient extends Remote
   public void registerLoan(Material material, Borrower borrower)
       throws IllegalStateException, RemoteException;
 
-  List<Loan> getAllLoansByCPR(String cpr) throws RemoteException;
+  List<Loan> getAllLoansByCPR(String cpr) throws RemoteException, NoSuchElementException;
   void deliverMaterial(int loanID) throws RemoteException;
   void extendLoan() throws RemoteException;
 

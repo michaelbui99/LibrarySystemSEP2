@@ -1,6 +1,7 @@
 package database.loan;
 
 import database.material.MaterialCopyDAOImpl;
+import database.material.MaterialDAO;
 import database.material.MaterialDAOImpl;
 import shared.person.Address;
 import shared.loan.Loan;
@@ -51,7 +52,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       try (Connection connection = getConnection())
       {
 
-        if (!MaterialDAOImpl.getInstance().materialExistInDB(material.getMaterialID()))
+        if (!MaterialDAOImpl.getInstance().materialExistInDB(material.getMaterialID()) || MaterialDAOImpl.getInstance().getCopyNumberForMaterial(material.getMaterialID()) == 0)
         {
           throw new NoSuchElementException("Materialet eksisterer ikke");
         }
@@ -232,10 +233,10 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
                   cdLoans.getString("genre")), cdLoans.getString("url"));
 
           Loan loan = new Loan(cd, borrower,
-              String.valueOf(dvdLoans.getDate("deadline")),
-              String.valueOf(dvdLoans.getDate("loan_date")),
-              String.valueOf(dvdLoans.getDate("return_date")),
-              dvdLoans.getInt("loan_no"));
+              String.valueOf(cdLoans.getDate("deadline")),
+              String.valueOf(cdLoans.getDate("loan_date")),
+              String.valueOf(cdLoans.getDate("return_date")),
+              cdLoans.getInt("loan_no"));
           loans.add(loan);
         }
         //Get all loans where material is known to be Ebook.
@@ -253,10 +254,10 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               ebookLoans.getString("audience"), ebookLoans.getString("language_"),
               ebookLoans.getInt("page_no"), ebookLoans.getString("license_no"),
               ebookLoans.getString("genre"),
-              new MaterialCreator(audiobookLoans.getInt("person_id"),
-                  audiobookLoans.getString(26), audiobookLoans.getString(27),
-                  String.valueOf(audiobookLoans.getDate("dob")),
-                  audiobookLoans.getString("city")));
+              new MaterialCreator(ebookLoans.getInt("person_id"),
+                  ebookLoans.getString(26), ebookLoans.getString(27),
+                  String.valueOf(ebookLoans.getDate("dob")),
+                  ebookLoans.getString("city")));
           Loan loan = new Loan(eBook, borrower,
               String.valueOf(ebookLoans.getDate("deadline")),
               String.valueOf(ebookLoans.getDate("loan_date")),

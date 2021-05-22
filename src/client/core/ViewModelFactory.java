@@ -84,7 +84,7 @@ public class ViewModelFactory
   {
     if (myMaterialVM == null)
     {
-      myMaterialVM = new MyMaterialVM();
+      myMaterialVM = new MyMaterialVM(ModelFactoryClient.getInstance().getLoanModelClient(), ModelFactoryClient.getInstance().getUserModelClient());
     }
     return myMaterialVM;
   }
