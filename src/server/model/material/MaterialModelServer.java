@@ -17,6 +17,8 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createBookCopy(int materialID);
 
+  void deletBookCopy(int materialID);
+
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
       int pageCount, MaterialCreator author, String genre);
@@ -28,6 +30,8 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createDVDCopy(int materialID);
 
+  void deletDVDCopy(int materialID);
+
   boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
       String playDuration, String genre);
@@ -37,6 +41,8 @@ public interface MaterialModelServer extends PropertyChangeSubject
       int playDuration, Place place, String genre, String url);
 
   void createCDCopy(int materialID);
+
+  void deletCDCopy(int materialID);
 
   boolean cdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -49,15 +55,19 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createEBookCopy(int materialID);
 
+  void deletEBookCopy(int materialID);
+
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
-      String licenseNr, String genre, MaterialCreator author);
+      int licenseNr, String genre, MaterialCreator author);
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       int playDuration, String genre, MaterialCreator author, String url);
 
   void createAudioBookCopy(int materialID);
+
+  void deletAudiotBookCopy(int materialID);
 
   boolean audioBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
@@ -69,5 +79,9 @@ public interface MaterialModelServer extends PropertyChangeSubject
   int numberOfAvailableCopies();
   Material getSelectMaterial();
   void setSelectedMaterial(Material material);
+
+  int totalNumberOfCopies();
+
+  void deletMaterial(int materialID);
 
 }

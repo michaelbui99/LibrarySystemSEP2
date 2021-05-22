@@ -34,9 +34,19 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.setSelectMaterial(selectMaterial);
   }
 
+  @Override public void deletMaterial(int materialID)
+  {
+    client.deletMaterial(materialID);
+  }
+
   @Override public int numberOfAvailableCopies()
   {
     return client.numberOfAvailableCopies();
+  }
+
+  @Override public int totalNumberOfCopies()
+  {
+    return client.totalNumberOfCopies();
   }
 
   @Override public void registerBook(String title, String publisher,
@@ -52,6 +62,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void createBookCopy(int materialID)
   {
     client.createBookCopy(materialID);
+  }
+
+  @Override public void deletBookCopy(int materialID)
+  {
+    client.deletBookCopy(materialID);
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -78,6 +93,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createDVDCopy(materialID);
   }
 
+  @Override public void deletDVDCopy(int materialID)
+  {
+    client.deletDVDCopy(materialID);
+  }
+
   @Override public boolean dvdAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
       String language, String playDuration, String genre)
@@ -98,6 +118,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void createCDCopy(int materialID)
   {
     client.createCDCopy(materialID);
+  }
+
+  @Override public void deletCDCopy(int materialID)
+  {
+    client.deletCDCopy(materialID);
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -122,9 +147,14 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createEBookCopy(materialID);
   }
 
+  @Override public void deletEBookCopy(int materialID)
+  {
+    client.deletEBookCopy(materialID);
+  }
+
   @Override public boolean eBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
-      String language, int pageCount, String licenseNr, String genre,
+      String language, int pageCount, int licenseNr, String genre,
       MaterialCreator author)
   {
     return client.eBookAlreadyExists(title, publisher, releaseDate, description,
@@ -143,6 +173,11 @@ public class MaterialModelManagerClient implements MaterialModelClient
   @Override public void createAudioBookCopy(int materialID)
   {
     client.createAudioBookCopy(materialID);
+  }
+
+  @Override public void deletAudioBookCopy(int materialID)
+  {
+    client.deletAudioBookCopy(materialID);
   }
 
   @Override public boolean audioBookAlreadyExists(String title,

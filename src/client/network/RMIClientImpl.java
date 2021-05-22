@@ -141,6 +141,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public void deletBookCopy(int materialID)
+  {
+    try
+    {
+      server.getMaterialServer().deletBookCopy(materialID);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public boolean bookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
       String language, String isbn, int pageCount, MaterialCreator author,
@@ -188,6 +200,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public void deletDVDCopy(int materialID)
+  {
+    try
+    {
+      server.getMaterialServer().deletDVDCopy(materialID);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+  }
+
   @Override public boolean dvdAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
       String language, String playDuration, String genre)
@@ -230,6 +254,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     catch (RemoteException e)
     {
       throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public void deletCDCopy(int materialID)
+  {
+    try
+    {
+      server.getMaterialServer().deletCDCopy(materialID);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
     }
   }
 
@@ -279,9 +315,21 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
+  @Override public void deletEBookCopy(int materialID)
+  {
+    try
+    {
+      server.getMaterialServer().deletEBookCopy(materialID);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+  }
+
   @Override public boolean eBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
-      String language, int pageCount, String licenseNr, String genre,
+      String language, int pageCount, int licenseNr, String genre,
       MaterialCreator author)
   {
     try
@@ -322,6 +370,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     catch (RemoteException e)
     {
       throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
+  @Override public void deletAudioBookCopy(int materialID)
+  {
+    try
+    {
+      server.getMaterialServer().deletAudioBookCopy(materialID);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
     }
   }
 
@@ -642,6 +702,31 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
       remoteException.printStackTrace();
     }
     return false;
+  }
+
+  @Override public int totalNumberOfCopies()
+  {
+    try
+    {
+      return server.getMaterialServer().totalNumberOfCopies();
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
+    return 0;
+  }
+
+  @Override public void deletMaterial(int materialID)
+  {
+    try
+    {
+      server.getMaterialServer().deletMaterial(materialID);
+    }
+    catch (RemoteException remoteException)
+    {
+      remoteException.printStackTrace();
+    }
   }
 
   @Override public void loanRegistered(Loan loan)

@@ -40,6 +40,8 @@ public interface RMIClient extends Remote
 
   void createBookCopy(int materialID) throws RemoteException;
 
+  void deletBookCopy(int materialID) throws RemoteException;
+
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
       int pageCount, MaterialCreator author, String genre)
@@ -52,6 +54,8 @@ public interface RMIClient extends Remote
 
   void createDVDCopy(int materialID) throws RemoteException;
 
+  void deletDVDCopy(int materialID) throws RemoteException;
+
   boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
       String playDuration, String genre) throws RemoteException;
@@ -62,6 +66,8 @@ public interface RMIClient extends Remote
       throws RemoteException;
 
   void createCDCopy(int materialID) throws RemoteException;
+
+  void deletCDCopy(int materialID) throws RemoteException;
 
   boolean cdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -74,9 +80,11 @@ public interface RMIClient extends Remote
 
   void createEBookCopy(int materialID) throws RemoteException;
 
+  void deletEBookCopy(int materialID) throws RemoteException;
+
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
-      String licenseNr, String genre, MaterialCreator author)
+      int licenseNr, String genre, MaterialCreator author)
       throws RemoteException;
 
   void registerAudioBook(String title, String publisher, String releaseDate,
@@ -85,6 +93,8 @@ public interface RMIClient extends Remote
       throws RemoteException;
 
   void createAudioBookCopy(int materialID) throws RemoteException;
+
+  void deletAudioBookCopy(int materialID) throws RemoteException;
 
   boolean audioBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
@@ -195,4 +205,7 @@ public interface RMIClient extends Remote
   boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
       String phone) throws RemoteException;
 
+  int totalNumberOfCopies() throws RemoteException;
+
+  void deletMaterial(int materialID) throws RemoteException;
 }

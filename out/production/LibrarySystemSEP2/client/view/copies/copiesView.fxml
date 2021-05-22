@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.copies.CopiesController">
+<AnchorPane prefHeight="647.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.copies.CopiesController">
    <children>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="663.0" style="-fx-background-color: white;">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="855.0" style="-fx-background-color: white;">
          <children>
             <HBox alignment="CENTER" prefHeight="65.0" prefWidth="598.0">
                <children>
@@ -30,12 +18,13 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="112.0" prefWidth="599.0">
+            <HBox prefHeight="123.0" prefWidth="855.0">
                <children>
-                  <GridPane prefHeight="146.0" prefWidth="717.0">
+                  <GridPane prefHeight="107.0" prefWidth="866.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -43,164 +32,73 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Søg efter:">
+                        <Label text="Typen:">
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets left="40.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Titel" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="50.0" />
+                              <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField promptText="Titel:" GridPane.rowIndex="1">
+                        <TextField fx:id="title" prefHeight="24.0" prefWidth="117.0" promptText="Titel:" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="100.0" right="50.0" />
+                              <Insets left="50.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label layoutX="60.0" layoutY="72.0" text="ID" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#onButtonSearch" prefHeight="27.0" prefWidth="40.0" style="-fx-cursor: hand;" text="Søg" textFill="GREEN" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="50.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <TextField layoutX="110.0" layoutY="68.0" promptText="ID:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="100.0" right="50.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <Button mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Search" textFill="#0822eb" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="275.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Button>
+                        <ComboBox fx:id="typeComboBox" prefHeight="25.0" prefWidth="114.0" promptText="Vælg" style="-fx-background-color: white; -fx-cursor: hand;" GridPane.halignment="RIGHT" />
+                        <ComboBox fx:id="targetAudienceComboBox" layoutX="117.0" layoutY="17.0" prefHeight="25.0" prefWidth="114.0" promptText="Vælg" style="-fx-background-color: white; -fx-cursor: hand;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Label text="Målgruppe:" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="languageComboBox" layoutX="338.0" layoutY="17.0" prefHeight="25.0" prefWidth="114.0" promptText="Vælg" style="-fx-background-color: white; -fx-cursor: hand;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                        <Label layoutX="231.0" layoutY="21.0" text="Sprog:" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label layoutX="20.0" layoutY="58.0" text="Genre" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="genre" layoutX="60.0" layoutY="54.0" prefHeight="24.0" prefWidth="117.0" promptText="Genre" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="50.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label fx:id="keywords" layoutX="305.0" layoutY="58.0" text="Emneord" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="keywards" layoutX="345.0" layoutY="54.0" prefHeight="24.0" prefWidth="117.0" promptText="Emneord:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="70.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label fx:id="errorLable" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>
             </HBox>
-            <ScrollPane>
+            <ScrollPane prefHeight="266.0" prefWidth="855.0">
                <content>
-                  <TabPane prefHeight="262.0" prefWidth="1341.0" style="-fx-background-color: white;">
-                     <tabs>
-                        <Tab style="-fx-cursor: hand;" text="Bog">
-                           <content>
-                              <HBox prefHeight="249.0" prefWidth="1202.0">
-                                 <children>
-                                    <TableView prefHeight="259.0" prefWidth="1327.0">
-                                      <columns>
-                                        <TableColumn prefWidth="75.0" text="ID" />
-                                        <TableColumn prefWidth="114.0" text="Titel" />
-                                          <TableColumn prefWidth="91.0" text="Forlægger" />
-                                          <TableColumn prefWidth="106.0" text="Udgivelses dato" />
-                                          <TableColumn minWidth="0.0" prefWidth="249.0" text="Beskrivelse" />
-                                          <TableColumn prefWidth="117.0" text="Emneord" />
-                                          <TableColumn minWidth="0.0" prefWidth="88.0" text="Sidetal" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Målgruppe" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Sprog" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="ISBN" />
-                                          <TableColumn minWidth="0.0" prefWidth="118.0" text="Antal kopier" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab style="-fx-cursor: hand;" text="E-Bog">
-                           <content>
-                              <HBox prefHeight="251.0" prefWidth="599.0">
-                                 <children>
-                                    <TableView prefHeight="263.0" prefWidth="1353.0">
-                                       <columns>
-                                          <TableColumn prefWidth="75.0" text="ID" />
-                                          <TableColumn prefWidth="114.0" text="Titel" />
-                                          <TableColumn prefWidth="91.0" text="Forlægger" />
-                                          <TableColumn prefWidth="106.0" text="Udgivelses dato" />
-                                          <TableColumn minWidth="0.0" prefWidth="249.0" text="Beskrivelse" />
-                                          <TableColumn prefWidth="117.0" text="Emneord" />
-                                          <TableColumn minWidth="0.0" prefWidth="88.0" text="Sidetal" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Målgruppe" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Sprog" />
-                                          <TableColumn minWidth="0.0" prefWidth="115.0" text="Licens nummer" />
-                                          <TableColumn minWidth="0.0" prefWidth="115.0" text="Antal kopier" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab style="-fx-cursor: hand;" text="Lydbog">
-                           <content>
-                              <HBox prefHeight="246.0" prefWidth="766.0">
-                                 <children>
-                                    <TableView prefHeight="265.0" prefWidth="1355.0">
-                                       <columns>
-                                          <TableColumn prefWidth="75.0" text="ID" />
-                                          <TableColumn prefWidth="114.0" text="Titel" />
-                                          <TableColumn prefWidth="91.0" text="Forlægger" />
-                                          <TableColumn prefWidth="106.0" text="Udgivelses dato" />
-                                          <TableColumn minWidth="0.0" prefWidth="249.0" style="-fx-cursor: hand;" text="Beskrivelse" />
-                                          <TableColumn prefWidth="117.0" text="Emneord" />
-                                          <TableColumn minWidth="0.0" prefWidth="88.0" text="Sidenummer" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Målgruppe" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Sprog" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Længde" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Licens nummer" />
-                                          <TableColumn minWidth="0.0" prefWidth="118.0" text="Antal kopier" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab text="CD">
-                           <content>
-                              <HBox prefHeight="255.0" prefWidth="1323.0">
-                                 <children>
-                                    <TableView prefHeight="272.0" prefWidth="1326.0">
-                                       <columns>
-                                          <TableColumn prefWidth="75.0" text="ID" />
-                                          <TableColumn prefWidth="114.0" text="Titel" />
-                                          <TableColumn prefWidth="91.0" text="Forlægger" />
-                                          <TableColumn prefWidth="106.0" text="Udgivelses dato" />
-                                          <TableColumn minWidth="0.0" prefWidth="249.0" text="Beskrivelse" />
-                                          <TableColumn prefWidth="117.0" text="Emneord" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Målgruppe" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Sprog" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Længde" />
-                                          <TableColumn minWidth="0.0" prefWidth="121.0" text="Antal kopier" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                        <Tab style="-fx-cursor: hand;" text="DVD">
-                           <content>
-                              <HBox prefHeight="256.0" prefWidth="1211.0">
-                                 <children>
-                                    <TableView prefHeight="263.0" prefWidth="1349.0">
-                                       <columns>
-                                          <TableColumn prefWidth="75.0" text="ID" />
-                                          <TableColumn prefWidth="114.0" text="Titel" />
-                                          <TableColumn prefWidth="91.0" text="Forlægger" />
-                                          <TableColumn prefWidth="106.0" text="Udgivelses dato" />
-                                          <TableColumn minWidth="0.0" prefWidth="249.0" text="Beskrivelse" />
-                                          <TableColumn prefWidth="117.0" text="Emneord" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Målgruppe" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Sprog" />
-                                          <TableColumn minWidth="0.0" prefWidth="83.0" text="Længde" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Undertekstsprog" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Skaberen" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Type" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Licens nummer" />
-                                          <TableColumn minWidth="0.0" prefWidth="111.0" text="Antal kopier" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </HBox>
-                           </content>
-                        </Tab>
-                     </tabs>
-                  </TabPane>
+                  <TableView fx:id="searchTableView" prefHeight="264.0" prefWidth="855.0">
+                    <columns>
+                      <TableColumn fx:id="titleColumn" prefWidth="285.0" text="Title" />
+                      <TableColumn fx:id="publisherColumn" minWidth="0.0" prefWidth="148.0" text="Forlægger" />
+                        <TableColumn fx:id="releaseDateColumn" minWidth="0.0" prefWidth="148.0" text="Udgivelses dato" />
+                    </columns>
+                  </TableView>
                </content>
             </ScrollPane>
             <HBox prefHeight="143.0" prefWidth="663.0">
@@ -231,20 +129,20 @@
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Fjerne" textFill="RED" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#onButtonRemoveCopy" style="-fx-background-color: white; -fx-cursor: hand;" text="Fjerne" textFill="RED" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="342.0" layoutY="115.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Tilføje" textFill="GREEN" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button layoutX="442.0" layoutY="68.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Fjerne" textFill="RED" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button layoutX="342.0" layoutY="115.0" mnemonicParsing="false" onAction="#onButtonAddCopy" style="-fx-background-color: white; -fx-cursor: hand;" text="Tilføje" textFill="GREEN" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button layoutX="442.0" layoutY="68.0" mnemonicParsing="false" onAction="#onButtonRemoveMaterial" style="-fx-background-color: white; -fx-cursor: hand;" text="Fjerne" textFill="RED" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>
             </HBox>
             <HBox prefHeight="73.0" prefWidth="663.0">
                <children>
-                  <GridPane prefHeight="40.0" prefWidth="663.0">
+                  <GridPane prefHeight="77.0" prefWidth="855.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -253,12 +151,12 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-cursor: hand;" text="Annuller">
+                        <Button mnemonicParsing="false" onAction="#onButtonCancel" style="-fx-cursor: hand;" text="Annuller">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" style="-fx-cursor: hand;" text="Tilbag" GridPane.columnIndex="1">
+                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbag" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>

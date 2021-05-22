@@ -1,6 +1,5 @@
 package database.material;
 
-import client.model.material.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.materials.Place;
 import shared.materials.reading.Book;
@@ -43,4 +42,6 @@ public interface BookDAO
       throws SQLException, NoSuchElementException;
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience);
+
+  void deletBookCopy(int materialID, int copyNumber) throws SQLException;
 }

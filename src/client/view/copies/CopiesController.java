@@ -32,13 +32,13 @@ public class CopiesController
 
   public void init()
   {
-    titleColumn.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+    //TODO make the table view observer so when dellet or add copies it will update automatically.
+   //TODO add a label to display the total number of copies of a selected material.
+    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     publisherColumn
-        .setCellValueFactory(new PropertyValueFactory<>("Forlægger"));
+        .setCellValueFactory(new PropertyValueFactory<>("publisher"));
     releaseDateColumn
-        .setCellValueFactory(new PropertyValueFactory<>("Udgivelses dato"));
-    numberOfCopiesColumn
-        .setCellValueFactory(new PropertyValueFactory<>("Antal kopier"));
+        .setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
 
     typeComboBox.setItems(
         ViewModelFactory.getInstance().getCopiesVM().getMaterialTypeList());
@@ -63,14 +63,26 @@ public class CopiesController
 
   @FXML public void onButtonRemoveCopy(ActionEvent actionEvent)
   {
+    //TODO add a restrain so if there is only one copy, the user cant delet it
+    ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
+        searchTableView.getSelectionModel().getSelectedItem());
+      ViewModelFactory.getInstance().getCopiesVM().deletCopy();
+      errorLable.setVisible(false);
+
   }
 
   @FXML public void onButtonAddCopy(ActionEvent actionEvent)
   {
+      ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
+          searchTableView.getSelectionModel().getSelectedItem());
+      ViewModelFactory.getInstance().getCopiesVM().addCopy();
   }
 
   @FXML public void onButtonRemoveMaterial(ActionEvent actionEvent)
   {
+    ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
+        searchTableView.getSelectionModel().getSelectedItem());
+    ViewModelFactory.getInstance().getCopiesVM().deletMaterial();
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)

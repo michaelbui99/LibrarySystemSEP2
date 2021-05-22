@@ -39,6 +39,8 @@ public interface Client
 
   void createBookCopy(int materialID);
 
+  void deletBookCopy(int materialID);
+
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
       int pageCount, MaterialCreator author, String genre);
@@ -50,6 +52,8 @@ public interface Client
 
   void createDVDCopy(int materialID);
 
+  void deletDVDCopy(int materialID);
+
   boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
       String playDuration, String genre);
@@ -59,6 +63,8 @@ public interface Client
       int playDuration, Place place, String genre, String url);
 
   void createCDCopy(int materialID);
+
+  void deletCDCopy(int materialID);
 
   boolean cdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -71,15 +77,19 @@ public interface Client
 
   void createEBookCopy(int materialID);
 
+  void deletEBookCopy(int materialID);
+
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
-      String licenseNr, String genre, MaterialCreator author);
+      int licenseNr, String genre, MaterialCreator author);
 
   void registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       int playDuration, String genre, MaterialCreator author, String url);
 
   void createAudioBookCopy(int materialID);
+
+  void deletAudioBookCopy(int materialID);
 
   boolean audioBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
@@ -156,6 +166,8 @@ public interface Client
 
   int numberOfAvailableCopies();
 
+  int totalNumberOfCopies();
+
   void setBorrowerCpr(String borrowerCpr);
 
   boolean borrowerCprNumberAlreadyExists(String cpr);
@@ -177,5 +189,6 @@ public interface Client
   boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
       String phone);
 
+  void deletMaterial(int materialID);
 }
 

@@ -88,32 +88,28 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
+          PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the AudioBook object from DB.
-      ResultSet audioBookDetails = getAudioBookDetailsByID(materialID);
-      if (audioBookDetails.next())
+      //ResultSet audioBookDetails = getAudioBookDetailsByID(materialID);
+      if (keys.next())
       {
         //Creates and returns a AudioBook object if a AudioBook with given materialID exists.
-        return new AudioBook(audioBookDetails.getInt("material_id"),
-            audioBookDetails.getInt("copy_no"),
-            audioBookDetails.getString("title"),
-            audioBookDetails.getString("publisher"),
-            String.valueOf(audioBookDetails.getDate("release_date")),
-            audioBookDetails.getString("description_of_the_content"),
-            audioBookDetails.getString("keywords"),
-            audioBookDetails.getString("audience"),
-            audioBookDetails.getString("language_"),
-            audioBookDetails.getInt("length_"),
-            new MaterialCreator(audioBookDetails.getString("f_name"),
-                audioBookDetails.getString("l_name"),
-                String.valueOf(audioBookDetails.getDate("dob")),
-                audioBookDetails.getString("country")),
-            audioBookDetails.getString("url"));
+        return new AudioBook(keys.getInt("material_id"), keys.getInt("copy_no"),
+            keys.getString("title"), keys.getString("publisher"),
+            String.valueOf(keys.getDate("release_date")),
+            keys.getString("description_of_the_content"),
+            keys.getString("keywords"), keys.getString("audience"),
+            keys.getString("language_"), keys.getInt("length_"),
+            new MaterialCreator(keys.getString("f_name"),
+                keys.getString("l_name"), String.valueOf(keys.getDate("dob")),
+                keys.getString("country")), keys.getString("url"));
       }
       return null;
     }
@@ -197,9 +193,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
       String sql = "SELECT * FROM material "
           + "join audiobook  on material.material_id = audiobook.material_id  "
           + "join material_copy mt on audiobook.material_id = mt.material_id "
-          + "join place p on audiobook.place_id = p.place_id "
-          + "join material_creator mc on audiobook.author = mc.person_id "
-          + "join material_keywords mk on audiobook.material_id = mk.material_id ";
+          + "join material_creator mc on audiobook.author = mc.person_id ";
 
       if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty()
           || !targetAudience.isEmpty())
@@ -282,6 +276,23 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     }
     System.out.println("result size: " + ml.size());
     return ml;
+  }
+
+  @Override public void deletAudioBookCopy(int materialID, int copyNumber)
+      throws SQLException
+  {
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "DELETE FROM material_copy WHERE material_id = ? AND copy_no = ?",
+          PreparedStatement.RETURN_GENERATED_KEYS);
+      stm.setInt(1, materialID);
+      stm.setInt(2, copyNumber);
+      stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
+      connection.commit();
+      keys.next();
+    }
   }
 }
 

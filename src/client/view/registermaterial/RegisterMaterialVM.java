@@ -252,7 +252,7 @@ public class RegisterMaterialVM
             releaseDateProperty.get().toString(), descriptionProperty.get(),
             audianceProperty.get(), languageProperty.get(),
             Integer.parseInt(numberOfPagesProperty.get()),
-            licensNumberProperty.get(), genreProperty.get(),
+            Integer.parseInt(licensNumberProperty.get()), genreProperty.get(),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()));
   }

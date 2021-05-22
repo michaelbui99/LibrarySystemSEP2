@@ -97,7 +97,6 @@
                       <TableColumn fx:id="titleColumn" prefWidth="285.0" text="Title" />
                       <TableColumn fx:id="publisherColumn" minWidth="0.0" prefWidth="148.0" text="Forlægger" />
                         <TableColumn fx:id="releaseDateColumn" minWidth="0.0" prefWidth="148.0" text="Udgivelses dato" />
-                        <TableColumn fx:id="numberOfCopiesColumn" prefWidth="109.0" text="Antal kopier" />
                     </columns>
                   </TableView>
                </content>

@@ -39,11 +39,16 @@ public interface MaterialDAO
   // List<AudioBook> getAllAudioBooksByTitle(String title) throws SQLException;
   // List<EBook> getAllEBooksByTitle(String title) throws SQLException;
   boolean returnMaterial(int materialID, String cpr, int copy_no);
+
   public int getCopyNumberForMaterial(int materialid);
+
   public int getNumberOfAvailableCopies(int materialid);
+
   boolean checkIfCopyAvailable(int materialid);
+
   public List<String> getKeywordsForMaterial(int materialid);
 
+  public int totalNumberOfCopies(int materialID) throws SQLException;
 
-
+  public void deletMaterial(int materialID) throws SQLException;
 }

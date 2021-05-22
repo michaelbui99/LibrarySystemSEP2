@@ -51,7 +51,14 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createBookCopy(int materialID)
   {
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .createBookCopy(materialID);
+  }
 
+  @Override public void deletBookCopy(int materialID)
+  {
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .deletBookCopy(materialID);
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -77,7 +84,13 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createDVDCopy(int materialID)
   {
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .createDVDCopy(materialID);
+  }
 
+  @Override public void deletDVDCopy(int materialID)
+  {
+    ModelFactoryServer.getInstance().getMaterialModel().deletDVDCopy(materialID);
   }
 
   @Override public boolean dvdAlreadyExists(String title, String publisher,
@@ -101,7 +114,12 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createCDCopy(int materialID)
   {
+    ModelFactoryServer.getInstance().getMaterialModel().createCDCopy(materialID);
+  }
 
+  @Override public void deletCDCopy(int materialID)
+  {
+    ModelFactoryServer.getInstance().getMaterialModel().deletCDCopy(materialID);
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -125,12 +143,17 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createEBookCopy(int materialID)
   {
+    ModelFactoryServer.getInstance().getMaterialModel().createEBookCopy(materialID);
+  }
 
+  @Override public void deletEBookCopy(int materialID)
+  {
+    ModelFactoryServer.getInstance().getMaterialModel().deletEBookCopy(materialID);
   }
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
-      String language, int pageCount, String licenseNr, String genre,
+      String language, int pageCount, int licenseNr, String genre,
       MaterialCreator author)
   {
     return ModelFactoryServer.getInstance().getMaterialModel()
@@ -150,7 +173,12 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createAudioBookCopy(int materialID)
   {
+    ModelFactoryServer.getInstance().getMaterialModel().createAudioBookCopy(materialID);
+  }
 
+  @Override public void deletAudioBookCopy(int materialID)
+  {
+    ModelFactoryServer.getInstance().getMaterialModel().deletAudiotBookCopy(materialID);
   }
 
   @Override public boolean audioBookAlreadyExists(String title,
@@ -176,6 +204,16 @@ public class MaterialServerImpl implements MaterialServer
   {
     return ModelFactoryServer.getInstance().getMaterialModel()
         .numberOfAvailableCopies();
+  }
+
+  @Override public int totalNumberOfCopies() throws RemoteException
+  {
+    return ModelFactoryServer.getInstance().getMaterialModel().totalNumberOfCopies();
+  }
+
+  @Override public void deletMaterial(int materialID) throws RemoteException
+  {
+    ModelFactoryServer.getInstance().getMaterialModel().deletMaterial(materialID);
   }
 
 }
