@@ -44,7 +44,16 @@ public class LoanModelManagerClient implements LoanModelClient
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
-    return client.getAllLoansByCPR(cpr);
+
+    try
+    {
+      return client.getAllLoansByCPR(cpr);
+    }
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
+
   }
 
   @Override public void returnMaterial(int loanID)

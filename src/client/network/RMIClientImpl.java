@@ -21,6 +21,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class RMIClientImpl implements RMIClient, ClientCallback, Client
 {
@@ -93,10 +94,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
     catch (RemoteException e)
     {
-      //      throw new RuntimeException("Server Connection failed.");
-      e.printStackTrace();
+      throw new RuntimeException("Server Connection failed.");
     }
-    return null;
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
   }
 
   @Override public void deliverMaterial(int loanID)
@@ -635,7 +638,8 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      return server.getUserServer().librarianAlreadyExists(employeeNo, cpr, email, phone);
+      return server.getUserServer()
+          .librarianAlreadyExists(employeeNo, cpr, email, phone);
     }
     catch (RemoteException remoteException)
     {

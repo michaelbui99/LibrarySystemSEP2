@@ -26,9 +26,10 @@ public interface LoanModelClient extends PropertyChangeSubject
   /**
   * Returns a list of all Loans that are registered to the Borrower that has the given cpr.
    * @param cpr cpr is the cpr number of the Borrower for which the method must return all Loans for.
+   * @throws NoSuchElementException if the borrower has no active Loans registered in the system.
    * @return an List of all Loans registered to the cpr.
   * */
-  List<Loan> getAllLoansByCPR(String cpr);
+  List<Loan> getAllLoansByCPR(String cpr) throws NoSuchElementException;
 
   /**
   * Return material ends the Loan with the specific loanID by updating the Loan with the current date as returnDate.

@@ -93,7 +93,7 @@ public class ViewHandler extends Application
             getClass().getResource("mymaterial/" + id + "View.fxml"));
         root = loader.load();
         MyMaterialController myMaterialController = loader.getController();
-        myMaterialController.init();
+        myMaterialController.init(ViewModelFactory.getInstance().getMyMaterialVM());
         stage.setTitle("MyMaterial");
         break;
       case "RegisterMaterial":

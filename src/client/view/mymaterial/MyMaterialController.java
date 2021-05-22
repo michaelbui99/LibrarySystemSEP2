@@ -17,28 +17,28 @@ import java.io.IOException;
 
 public class MyMaterialController
 {
-
+  @FXML private Label warningLabel;
   @FXML private Label selectedLoanLabel;
+
   @FXML private TableView<Loan> loanTableView;
-
   @FXML private TableColumn<String, Material> materialColumn;
-
   @FXML private TableColumn<String, Material> typeColumn;
-
   @FXML private TableColumn<String, Loan> loanDateColumn;
-
   @FXML private TableColumn<String, Loan> deadlineColumn;
-  private ViewHandler viewHandler;
+
+
   private MyMaterialVM viewModel;
 
-  public void init()
+  public void init(MyMaterialVM viewModel)
   {
+    this.viewModel = viewModel;
     //TODO: implement toString for Material such that material can be displayed correctly in tableview.
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
     loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
     deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
     loanTableView.setItems(
-        ViewModelFactory.getInstance().getMyMaterialVM().getLoanList());
+       viewModel.getLoanList());
+    warningLabel.textProperty().bind(viewModel.warningProperty());
   }
 
   @FXML void onReturnButton(ActionEvent event)
@@ -47,9 +47,9 @@ public class MyMaterialController
     //Sets the binded textproperty to the loanId of the selected loan.
     //    selectedLoanLabel.textProperty().setValue(String.valueOf(
     //        loanTableView.getSelectionModel().getSelectedItem().getLoanID()));
-    ViewModelFactory.getInstance().getMyMaterialVM().loanProperty()
+    viewModel.loanProperty()
         .set(loanTableView.getSelectionModel().getSelectedItem());
-    ViewModelFactory.getInstance().getMyMaterialVM().endLoan();
+    viewModel.endLoan();
 
 
     loanTableView.refresh();

@@ -49,7 +49,7 @@ public class LoanModelManagerServer implements LoanModelServer
     }
     catch (NoSuchElementException e)
     {
-      return null;
+      throw new NoSuchElementException(e.getMessage());
     }
   }
 
