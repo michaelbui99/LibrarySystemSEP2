@@ -1,6 +1,7 @@
 package database.loan;
 
 import database.material.MaterialCopyDAOImpl;
+import database.material.MaterialDAO;
 import database.material.MaterialDAOImpl;
 import shared.person.Address;
 import shared.loan.Loan;
@@ -51,7 +52,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       try (Connection connection = getConnection())
       {
 
-        if (!MaterialDAOImpl.getInstance().materialExistInDB(material.getMaterialID()))
+        if (!MaterialDAOImpl.getInstance().materialExistInDB(material.getMaterialID()) || MaterialDAOImpl.getInstance().getCopyNumberForMaterial(material.getMaterialID()) == 0)
         {
           throw new NoSuchElementException("Materialet eksisterer ikke");
         }

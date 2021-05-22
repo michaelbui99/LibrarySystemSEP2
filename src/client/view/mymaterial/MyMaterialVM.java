@@ -1,6 +1,8 @@
 package client.view.mymaterial;
 
 import client.core.ModelFactoryClient;
+import client.model.loan.LoanModelClient;
+import client.model.user.UserModelClient;
 import shared.loan.Loan;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -12,18 +14,19 @@ public class MyMaterialVM
   private ObservableList<Loan> activeLoans;
   private ObjectProperty<Loan> loanProperty;
   private StringProperty cprProperty;
+  private LoanModelClient loanModel;
+  private UserModelClient userModel;
 
-  public MyMaterialVM()
+  public MyMaterialVM(LoanModelClient loanModel, UserModelClient userModel)
   {
-    //TODO: Find ud af hvordan vi holder styr på hvem der er logget på.
-
-
     activeLoans = FXCollections.observableArrayList();
-    cprProperty = new SimpleStringProperty(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr());
+    cprProperty = new SimpleStringProperty(userModel.getLoginUser().getCpr());
+
     if (ModelFactoryClient.getInstance().getLoanModelClient()
         .getAllLoansByCPR(cprProperty.get()) != null)
     {
-      activeLoans.addAll(ModelFactoryClient.getInstance().getLoanModelClient()
+      //Initialises with all active loans for the user.
+      activeLoans.addAll(loanModel
           .getAllLoansByCPR(cprProperty.get()));
     }
     ModelFactoryClient.getInstance().getLoanModelClient()
@@ -53,12 +56,14 @@ public class MyMaterialVM
 
             });
     loanProperty = new SimpleObjectProperty<>();
+    this.loanModel = loanModel;
+    this.userModel = userModel;
   }
 
 
   public void endLoan()
   {
-    ModelFactoryClient.getInstance().getLoanModelClient().endLoan(loanProperty.get());
+    loanModel.endLoan(loanProperty.get());
     System.out.println(loanProperty.get().getLoanID());
     System.out.println(loanProperty.get().getMaterial().getMaterialID());
     System.out.println(loanProperty.get().getMaterial().getCopyNumber());
