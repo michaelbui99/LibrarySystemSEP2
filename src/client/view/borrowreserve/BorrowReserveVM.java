@@ -28,7 +28,12 @@ public class BorrowReserveVM {
             EventTypes.LOANREGISTERED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
         ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
             EventTypes.LOANENDED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
+        ModelFactoryClient.getInstance().getMaterialModelClient().addPropertyChangeListener("materialSelected", evt -> {
 
+                materialProperty.set((Material) evt.getNewValue());
+                materialInfoProp.set(materialProperty.get().getMaterialDetails());
+            }
+        );
     }
 
 
