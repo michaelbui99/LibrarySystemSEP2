@@ -118,7 +118,7 @@ public class CopiesVM
       searchStrategy = new DVDStrategy();
     }
 
-    //materialList.clear();
+    materialList.clear();
 
     if (ModelFactoryClient.getInstance().getMaterialModelClient()
         .findMaterial(titleProperty.get(), languageProperty.get(),
@@ -134,17 +134,61 @@ public class CopiesVM
           .addPropertyChangeListener(EventTypes.MATERIALFOUND,
               evt -> materialList.add((Material) evt.getNewValue()));
     }
-      return materialList;
+    return materialList;
   }
 
-  public void getSelectedMaterial()
+  public int getSelectedMaterial()
+  {
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
+        .getSelectMaterial().getMaterialID();
+  }
+
+  public void setSelectMaterial(Material selectMaterial)
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
-        .getSelectMaterial();
+        .setSelectMaterial(selectMaterial);
   }
 
   public void addCopy()
   {
+    if (typeProperty.getValue().equals("Bog"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .createBookCopy(getSelectedMaterial());
+    }
+    else if (typeProperty.getValue().equals("Ebog"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().createEBookCopy(getSelectedMaterial());
+    }
+    else if (typeProperty.getValue().equals("Lydbog"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().createAudioBookCopy(getSelectedMaterial());
+    }
+    else if (typeProperty.getValue().equals("CD"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().createCDCopy(getSelectedMaterial());
+    }
+    else if (typeProperty.getValue().equals("DVD"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().createDVDCopy(getSelectedMaterial());
+    }
+  }
 
+  public void deletCopy()
+  {
+    if (typeProperty.getValue().equals("Bog"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().deletBookCopy(getSelectedMaterial());
+    }
+  }
+
+  public void deletMaterial()
+  {
+    ModelFactoryClient.getInstance().getMaterialModelClient().deletMaterial(getSelectedMaterial());
+  }
+
+  public int totalCopyNumber()
+  {
+    return ModelFactoryClient.getInstance().getMaterialModelClient().totalNumberOfCopies();
   }
 }

@@ -135,6 +135,9 @@ public class RegisterMaterialController
             .typePropertyProperty());
     url.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getRegisterMaterialVM().urlProperty());
+    licensNumber.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getRegisterMaterialVM()
+            .licensNumberProperty());
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)
@@ -170,19 +173,19 @@ public class RegisterMaterialController
     }
     else if (type.equals("EBook"))
     {
-      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+      /*if (ViewModelFactory.getInstance().getRegisterMaterialVM()
           .eBookAlreadyExists())
       {
         error.setText("EBook already exists");
         error.setTextFill(Paint.valueOf("red"));
         error.setVisible(true);
-      }
-      else
-      {
+      }*/
+      /*else
+      {*/
         ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
         setTestForLabelGreen("E-bogen");
         clearFields();
-      }
+      /*}*/
     }
     else if (type.equals("AudioBook"))
     {
@@ -478,7 +481,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .licensNumberProperty().get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*"))
+    if (arg.isEmpty() /*|| !arg.matches(".*\\d.*")*/)
     {
       licensNoWarning.setVisible(true);
     }

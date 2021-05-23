@@ -49,7 +49,26 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void createBookCopy(int materialID)
   {
+    try
+    {
+      BookDAOImpl.getInstance().createBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
+  @Override public void deletBookCopy(int materialID)
+  {
+    try
+    {
+      BookDAOImpl.getInstance().deletBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -81,7 +100,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url, null);
+              language, genre, url, tags);
       DVDDAOImpl.getInstance()
           .create(materialID, subtitlesLanguage, playDuration, place);
     }
@@ -93,7 +112,26 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void createDVDCopy(int materialID)
   {
+    try
+    {
+      DVDDAOImpl.getInstance().createDVDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
+  @Override public void deletDVDCopy(int materialID)
+  {
+    try
+    {
+      DVDDAOImpl.getInstance().deletDVDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public boolean dvdAlreadyExists(String title, String publisher,
@@ -124,7 +162,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url, null);
+              language, genre, url, tags);
       CDDAOImpl.getInstance().create(materialID, playDuration, place);
     }
     catch (SQLException throwables)
@@ -135,7 +173,26 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void createCDCopy(int materialID)
   {
+    try
+    {
+      CDDAOImpl.getInstance().createCDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
+  @Override public void deletCDCopy(int materialID)
+  {
+    try
+    {
+      CDDAOImpl.getInstance().deletCDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -166,7 +223,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url, null);
+              language, genre, url, tags);
       EbookDAOImpl.getInstance()
           .create(materialID, pageCount, author, licenseNr);
     }
@@ -178,12 +235,31 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void createEBookCopy(int materialID)
   {
+    try
+    {
+      EbookDAOImpl.getInstance().createEBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
+  @Override public void deletEBookCopy(int materialID)
+  {
+    try
+    {
+      EbookDAOImpl.getInstance().deletEBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
-      String language, int pageCount, String licenseNr, String genre,
+      String language, int pageCount, int licenseNr, String genre,
       MaterialCreator author)
   {
     boolean eBookIn = false;
@@ -210,7 +286,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url, null);
+              language, genre, url, tags);
       AudioBookDAOImpl.getInstance().create(materialID, playDuration, author);
     }
     catch (SQLException throwables)
@@ -221,7 +297,26 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public void createAudioBookCopy(int materialID)
   {
+    try
+    {
+      AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
 
+  @Override public void deletAudiotBookCopy(int materialID)
+  {
+    try
+    {
+      AudioBookDAOImpl.getInstance().deletAudioBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public boolean audioBookAlreadyExists(String title,
@@ -267,6 +362,32 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void setSelectedMaterial(Material material)
   {
     this.selectedMaterial = material;
+  }
+
+  @Override public int totalNumberOfCopies()
+  {
+    int copies = 0;
+    try
+    {
+      copies = MaterialDAOImpl.getInstance().totalNumberOfCopies(selectedMaterial.getMaterialID());
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return copies;
+  }
+
+  @Override public void deletMaterial(int materialID)
+  {
+    try
+    {
+      MaterialDAOImpl.getInstance().deletMaterial(materialID);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
   }
 
   @Override public void addPropertyChangeListener(String name,

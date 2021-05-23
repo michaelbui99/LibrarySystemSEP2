@@ -25,6 +25,8 @@ public interface DVDDAO
 
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience);
+
+  void deletDVDCopy(int materialID, int copyNumber) throws SQLException;
 }
 
 

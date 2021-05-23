@@ -89,28 +89,30 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
+          PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the CD object from DB.
-      ResultSet cdDetails = getCDDetailsByID(materialID);
-      if (cdDetails.next())
+      //ResultSet cdDetails = getCDDetailsByID(materialID);
+      if (keys.next())
       {
         //Creates and returns a CD object if a CD with given materialID exists.
-        return new CD(cdDetails.getInt("material_id"),
-            cdDetails.getInt("copy_no"), cdDetails.getString("title"),
-            cdDetails.getString("publisher"),
-            String.valueOf(cdDetails.getDate("release_date")),
-            cdDetails.getString("description_of_the_content"),
-            cdDetails.getString("keywords"), cdDetails.getString("audience"),
-            cdDetails.getString("language_"), cdDetails.getInt("length_"),
-            new Place(cdDetails.getInt("hall_no"),
-                cdDetails.getString("department"),
-                cdDetails.getString("creator_l_name"),
-                cdDetails.getString("genre")), cdDetails.getString("url"));
+        return new CD(keys.getInt("material_id"),
+            keys.getInt("copy_no"), keys.getString("title"),
+            keys.getString("publisher"),
+            String.valueOf(keys.getDate("release_date")),
+            keys.getString("description_of_the_content"),
+            keys.getString("keywords"), keys.getString("audience"),
+            keys.getString("language_"), keys.getInt("length_"),
+            new Place(keys.getInt("hall_no"),
+                keys.getString("department"),
+                keys.getString("creator_l_name"),
+                keys.getString("genre")), keys.getString("url"));
         // i added the place_id
       }
       return null;
@@ -168,8 +170,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
       String sql = "SELECT * FROM material "
           + "join cd  on material.material_id = cd.material_id  "
           + "join material_copy mt on cd.material_id = mt.material_id "
-          + "join place p on cd.place_id = p.place_id "
-          + "join material_keywords mk on cd.material_id = mk.material_id ";
+          + "join place p on cd.place_id = p.place_id ";
 
       if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty()
           || !targetAudience.isEmpty())
@@ -252,6 +253,23 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     }
     System.out.println("result size: " + ml.size());
     return ml;
+  }
+
+  @Override public void deletCDCopy(int materialID, int copyNumber)
+      throws SQLException
+  {
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "DELETE FROM material_copy WHERE material_id = ? AND copy_no = ?",
+          PreparedStatement.RETURN_GENERATED_KEYS);
+      stm.setInt(1, materialID);
+      stm.setInt(2, copyNumber);
+      stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
+      connection.commit();
+      keys.next();
+    }
   }
 
 }

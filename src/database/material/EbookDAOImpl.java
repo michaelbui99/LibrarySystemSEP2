@@ -2,8 +2,6 @@ package database.material;
 
 import shared.materials.Material;
 import shared.materials.MaterialStatus;
-import shared.materials.Place;
-import shared.materials.audio.CD;
 import shared.materials.reading.EBook;
 import shared.person.MaterialCreator;
 import database.BaseDAO;
@@ -91,32 +89,38 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
+          PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the EBook object from DB.
-      ResultSet eBookDetails = getEBookDetailsByID(materialID);
-      if (eBookDetails.next())
+     // ResultSet eBookDetails = getEBookDetailsByID(materialID);
+      if (keys.next())
       {
         //Creates and returns a EBook object if a EBook with given materialID exists.
-        return new EBook(eBookDetails.getInt("material_id"),
-            eBookDetails.getInt("copy_no"), eBookDetails.getString("title"),
-            eBookDetails.getString("publisher"),
-            String.valueOf(eBookDetails.getDate("release_date")),
-            eBookDetails.getString("description_of_the_content"),
-            eBookDetails.getString("keywords"),
-            eBookDetails.getString("audience"),
-            eBookDetails.getString("language_"),
-            eBookDetails.getInt("pageCount"),
-            eBookDetails.getString("licensNo"),
-            eBookDetails.getString("author"),
-            new MaterialCreator(eBookDetails.getString("f_name"),
-                eBookDetails.getString("l_name"),
-                String.valueOf(eBookDetails.getDate("dob")),
-                eBookDetails.getString("country")));
+        //TODO; this method can not creat a new EBook because the query only returns a material ID and copy number
+        //TODO; thus an exeption is beeing thrown "PSQLException: The column name title was not found in this ResultSet."
+        return new EBook(keys.getInt("material_id"),
+            keys.getInt("copy_no"),
+            keys.getString("title"),
+            keys.getString("publisher"),
+            String.valueOf(keys.getDate("release_date")),
+            keys.getString("description_of_the_content"),
+            keys.getString("keywords"),
+            keys.getString("audience"),
+            keys.getString("language_"),
+            keys.getInt("pageCount"),
+            keys.getString("licensNo"),
+            keys.getString("genre"),
+            //keys.getString("author"),
+            new MaterialCreator(keys.getString("f_name"),
+                keys.getString("l_name"),
+                String.valueOf(keys.getDate("dob")),
+                keys.getString("country")));
         // added author and genre
       }
       return null;
@@ -144,7 +148,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
-      String language, int pageCount, String licenseNr, String genre,
+      String language, int pageCount, int licenseNr, String genre,
       MaterialCreator author) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -159,7 +163,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
       stm.setDate(6, Date.valueOf(releaseDate));
       stm.setString(7, genre);
       stm.setInt(8, pageCount);
-      stm.setInt(9, Integer.parseInt(licenseNr));
+      stm.setInt(9, licenseNr);
       stm.setString(10, author.getfName());
       stm.setString(11, author.getlName());
       stm.setDate(12, Date.valueOf(author.getDob()));
@@ -264,6 +268,23 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
     }
     System.out.println("result size: " + ml.size());
     return ml;
+  }
+
+  @Override public void deletEBookCopy(int materialID, int copyNumber)
+      throws SQLException
+  {
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement(
+          "DELETE FROM material_copy WHERE material_id = ? AND copy_no = ?",
+          PreparedStatement.RETURN_GENERATED_KEYS);
+      stm.setInt(1, materialID);
+      stm.setInt(2, copyNumber);
+      stm.executeUpdate();
+      ResultSet keys = stm.getGeneratedKeys();
+      connection.commit();
+      keys.next();
+    }
   }
 
 }

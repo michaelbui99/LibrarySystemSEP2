@@ -25,6 +25,8 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createBookCopy(int materialID);
 
+  void deletBookCopy(int materialID);
+
   /**
    * Check if a material of type book already exists in the system
    * @return true
@@ -58,6 +60,8 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createDVDCopy(int materialID);
 
+  void deletDVDCopy(int materialID);
+
   /**
    * Check if a material of type DVD already exists in the system
    * @return true
@@ -87,6 +91,8 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * @param materialID is used to define the CD which a copy will be added to
    * */
   void createCDCopy(int materialID);
+
+  void deletCDCopy(int materialID);
 
   /**
    * Check if a material of type CD already exists in the system
@@ -119,9 +125,14 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createEBookCopy(int materialID);
 
+  void deletEBookCopy(int materialID);
+
   /**
    * Check if a material of type EBook already exists in the system
    * @return true
+   * @param licenseNr,
+   * @param author,
+ * matches those of an already existing material of type EBook in the system.
    * @param title ,
    * @param publisher ,
    * @param releaseDate ,
@@ -129,14 +140,11 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * @param targetAudience ,
    * @param language ,
    * @param pageCount ,
-   * @param licenseNr,
-   * @param genre
-   * @param author,
-   * matches those of an already existing material of type EBook in the system.
-   * */
+   * @param licenseNr
+   * @param genre           */
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
-      String licenseNr, String genre, MaterialCreator author);
+      int licenseNr, String genre, MaterialCreator author);
 
   /**
    * Creates a material of type AudioBook in the system
@@ -150,6 +158,8 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * @param materialID is used to define the AudioBook which a copy will be added to
    * */
   void createAudioBookCopy(int materialID);
+
+  void deletAudioBookCopy(int materialID);
 
   /**
    * Check if a material of type AudioBook already exists in the system
@@ -186,6 +196,10 @@ public interface MaterialModelClient extends PropertyChangeSubject
 
   public int numberOfAvailableCopies();
 
+  public int totalNumberOfCopies();
+
   public void setSelectMaterial(Material material);
+
+  void deletMaterial(int materialID);
 
 }

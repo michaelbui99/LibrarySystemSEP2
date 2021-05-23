@@ -20,9 +20,11 @@ public interface EbookDAO
 
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
-      String licenseNr, String genre, MaterialCreator author)
+      int licenseNr, String genre, MaterialCreator author)
       throws SQLException;
 
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience);
+
+  void deletEBookCopy(int materialID, int copyNumber) throws SQLException;
 }
