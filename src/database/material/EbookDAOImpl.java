@@ -102,8 +102,11 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
       if (keys.next())
       {
         //Creates and returns a EBook object if a EBook with given materialID exists.
+        //TODO; this method can not creat a new EBook because the query only returns a material ID and copy number
+        //TODO; thus an exeption is beeing thrown "PSQLException: The column name title was not found in this ResultSet."
         return new EBook(keys.getInt("material_id"),
-            keys.getInt("copy_no"), keys.getString("title"),
+            keys.getInt("copy_no"),
+            keys.getString("title"),
             keys.getString("publisher"),
             String.valueOf(keys.getDate("release_date")),
             keys.getString("description_of_the_content"),
@@ -112,7 +115,8 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
             keys.getString("language_"),
             keys.getInt("pageCount"),
             keys.getString("licensNo"),
-            keys.getString("author"),
+            keys.getString("genre"),
+            //keys.getString("author"),
             new MaterialCreator(keys.getString("f_name"),
                 keys.getString("l_name"),
                 String.valueOf(keys.getDate("dob")),
