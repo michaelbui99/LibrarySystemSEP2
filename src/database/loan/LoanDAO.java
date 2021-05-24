@@ -13,5 +13,6 @@ public interface LoanDAO
       String loanDate) throws IllegalStateException, NoSuchElementException;
   List<Loan> getAllLoansByCPR(String cpr) throws NoSuchElementException;
   void endLoan(Loan loan);
+  Loan extendLoan(Loan loan);
 
 }

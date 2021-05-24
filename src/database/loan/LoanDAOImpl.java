@@ -16,8 +16,10 @@ import shared.person.MaterialCreator;
 import shared.person.borrower.Borrower;
 import database.BaseDAO;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -302,6 +304,28 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     {
       throwables.printStackTrace();
     }
+  }
+
+  @Override public Loan extendLoan(Loan loan)
+  {
+    try (Connection connection = getConnection())
+    {
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+      LocalDate oldDeadline = LocalDate.parse(loan.getDeadline(), formatter);
+      LocalDate newDeadline = oldDeadline.plusMonths(1);
+
+      PreparedStatement stm = connection.prepareStatement("UPDATE loan SET deadline = ? where loan_no = ?");
+      stm.setDate(1, Date.valueOf(newDeadline));
+      stm.setInt(2, loan.getLoanID());
+      stm.executeUpdate();
+      connection.commit();
+      return new Loan(loan.getMaterial(), loan.getBorrower(), newDeadline.toString(), loan.getLoanDate(), null, loan.getLoanID());
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return null;
   }
 
 }
