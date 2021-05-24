@@ -51,7 +51,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      BookDAOImpl.getInstance().createBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      BookDAOImpl.getInstance().createBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -63,7 +64,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      BookDAOImpl.getInstance().deletBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      BookDAOImpl.getInstance().deletBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
     }
     catch (SQLException throwables)
     {
@@ -114,7 +116,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      DVDDAOImpl.getInstance().createDVDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      DVDDAOImpl.getInstance().createDVDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -126,7 +129,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      DVDDAOImpl.getInstance().deletDVDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      DVDDAOImpl.getInstance().deletDVDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
     }
     catch (SQLException throwables)
     {
@@ -175,7 +179,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      CDDAOImpl.getInstance().createCDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      CDDAOImpl.getInstance().createCDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -187,7 +192,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      CDDAOImpl.getInstance().deletCDCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      CDDAOImpl.getInstance().deletCDCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
     }
     catch (SQLException throwables)
     {
@@ -237,7 +243,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      EbookDAOImpl.getInstance().createEBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      EbookDAOImpl.getInstance().createEBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -249,7 +256,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      EbookDAOImpl.getInstance().deletEBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      EbookDAOImpl.getInstance().deletEBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
     }
     catch (SQLException throwables)
     {
@@ -299,7 +307,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -311,7 +320,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      AudioBookDAOImpl.getInstance().deletAudioBookCopy(materialID, MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      AudioBookDAOImpl.getInstance().deletAudioBookCopy(materialID,
+          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
     }
     catch (SQLException throwables)
     {
@@ -366,16 +376,16 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public int totalNumberOfCopies()
   {
-    int copies = 0;
     try
     {
-      copies = MaterialDAOImpl.getInstance().totalNumberOfCopies(selectedMaterial.getMaterialID());
+      return MaterialDAOImpl.getInstance()
+          .totalNumberOfCopies(selectedMaterial.getMaterialID());
     }
     catch (SQLException throwables)
     {
       throwables.printStackTrace();
     }
-    return copies;
+    return 0;
   }
 
   @Override public void deletMaterial(int materialID)
