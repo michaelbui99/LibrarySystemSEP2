@@ -124,7 +124,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
             bookDetails.getString("publisher"),
             String.valueOf(bookDetails.getDate("release_date")),
             bookDetails.getString("description_of_the_content"),
-            bookDetails.getString("keywords"),
+            materialKeywords,
             bookDetails.getString("audience"),
             bookDetails.getString( "language_"),
             bookDetails.getString("isbn"),
