@@ -231,7 +231,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
               resultSet.getString("title"), resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"),
-              resultSet.getString("keyword"), resultSet.getString("audience"),
+             materialKeywords, resultSet.getString("audience"),
               resultSet.getString("language_"),
               resultSet.getString("subtitle_lang"),
               resultSet.getString("length_"),
