@@ -1,5 +1,6 @@
 package database;
 
+import database.material.MaterialDAOImpl;
 import shared.loan.Loan;
 import database.loan.LoanDAO;
 import database.loan.LoanDAOImpl;
@@ -30,15 +31,30 @@ class LoanDAOTest
     databaseBuilder = new DatabaseBuilder();
     borrower = new Borrower("111111-1111", "Michael", "Bui",
         "michael@gmail.com", "+4512345678", null, "password");
-     book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
-         "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+    book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12", "HELLO DESC",
+        null, "Voksen", "Dansk", "321432432", 200, null, null);
   }
 
   @Test void createLoanTest() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    assertDoesNotThrow(()->{loanDAO.create(book,borrower, LocalDate.now().plusMonths(1).toString(), LocalDate.now().toString());});
+    assertDoesNotThrow(() -> {
+      loanDAO.create(book, borrower, LocalDate.now().plusMonths(1).toString(),
+          LocalDate.now().toString());
+    });
     assertEquals(1, loanDAO.getAllLoansByCPR(borrower.getCpr()).size());
+
+  }
+
+  @Test void createLoanUpdatesAvailableNumberOfCopiesTest() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    assertEquals(1, MaterialDAOImpl.getInstance()
+        .getNumberOfAvailableCopies(book.getMaterialID()));
+    loanDAO.create(book, borrower, LocalDate.now().plusMonths(1).toString(),
+        LocalDate.now().toString());
+    assertEquals(0, MaterialDAOImpl.getInstance()
+        .getNumberOfAvailableCopies(book.getMaterialID()));
   }
 
   @Test void getAllLoansByCPRReturnsAllLoansTest() throws SQLException
@@ -65,32 +81,39 @@ class LoanDAOTest
       throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    assertThrows(NoSuchElementException.class, ()->loanDAO.getAllLoansByCPR("111111-1111"));
+    assertThrows(NoSuchElementException.class,
+        () -> loanDAO.getAllLoansByCPR("111111-1111"));
   }
 
-
-  @Test void createLoanMaterialNotRegisteredThrowsNoSuchElementExceptionTest() throws SQLException
+  @Test void createLoanMaterialNotRegisteredThrowsNoSuchElementExceptionTest()
+      throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    Book notRegisteredBook = new Book(10, 10, "Test", "TEST", "2020-12-12", "DESC",
-        "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
-    assertThrows(NoSuchElementException.class,
-        () -> loanDAO.create(notRegisteredBook, borrower, "2020-12-12", "2020-12-12"));
+    Book notRegisteredBook = new Book(10, 10, "Test", "TEST", "2020-12-12",
+        "DESC", "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
+    assertThrows(NoSuchElementException.class, () -> loanDAO
+        .create(notRegisteredBook, borrower, "2020-12-12", "2020-12-12"));
   }
-
-
 
   @Test void endLoanTest() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    Book book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
-        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
-
-    Loan loan = new Loan(book, borrower,"2021-12-12", "2021-05-21", null, 1 );
+    Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
     assertDoesNotThrow(() -> loanDAO.endLoan(loan));
   }
 
+  @Test void endLoanUpdatesAvailableNumberOfCopies() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    Loan loan = loanDAO
+        .create(book, borrower, LocalDate.now().plusMonths(1).toString(),
+            LocalDate.now().toString());
 
-
+    assertEquals(0, MaterialDAOImpl.getInstance()
+        .getNumberOfAvailableCopies(book.getMaterialID()));
+    loanDAO.endLoan(loan);
+    assertEquals(1, MaterialDAOImpl.getInstance()
+        .getNumberOfAvailableCopies(book.getMaterialID()));
+  }
 
 }
