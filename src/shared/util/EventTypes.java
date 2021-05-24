@@ -11,4 +11,5 @@ public class EventTypes
   public static final String LIBRARIANREGISTERD = "LibrarianRegistered";
   public static final String MATERIALFOUND = "MaterialFound";
   public static final String RESERVATIONREGISTERED = "ReservationRegistered";
+  public static final String RESERVATIONCANCELLED = "ReservationCancelled";
 }

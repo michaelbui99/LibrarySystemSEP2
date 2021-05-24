@@ -50,9 +50,17 @@ public class ReservationServerImpl implements ReservationServer
     return ModelFactoryServer.getInstance().getReservationModelServer().getAllReservationsByCPR(cpr);
   }
 
-  @Override public void registerReservation(Material material,
+
+
+  @Override public void endReservation(Reservation reservation)
+      throws RemoteException
+  {
+    ModelFactoryServer.getInstance().getReservationModelServer().endReservation(reservation);
+  }
+
+  @Override public Reservation registerReservation(Material material,
       Borrower borrower) throws RemoteException
   {
-    ModelFactoryServer.getInstance().getReservationModelServer().registerReservation(material,borrower);
+    return ModelFactoryServer.getInstance().getReservationModelServer().registerReservation(material,borrower);
   }
 }

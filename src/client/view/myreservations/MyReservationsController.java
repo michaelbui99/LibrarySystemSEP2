@@ -3,6 +3,7 @@ package client.view.myreservations;
 import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import client.view.mymaterial.MyMaterialVM;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -20,10 +21,9 @@ public class MyReservationsController
 
   @FXML private Label selectedReservationLabel;
   @FXML private TableView<Reservation> reservationTableView;
-
   @FXML private TableColumn<String, Material> materialColumn;
-
   @FXML private TableColumn<String, Reservation> reservationDateColumn;
+  @FXML private TableColumn<String, Reservation> readyForPickupColumn;
 
   private ViewHandler viewHandler;
   private MyMaterialVM viewModel;
@@ -32,7 +32,8 @@ public class MyReservationsController
   {
     //TODO: implement toString for Material such that material can be displayed correctly in tableview.
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
-    reservationDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
+    reservationDateColumn.setCellValueFactory(new PropertyValueFactory<>("reservationDate"));
+    readyForPickupColumn.setCellValueFactory(new PropertyValueFactory<>("readyForPickup"));
     reservationTableView.setItems(
         ViewModelFactory.getInstance().getMyReservationsVM().getReservationList());
   }
@@ -45,10 +46,24 @@ public class MyReservationsController
     //        loanTableView.getSelectionModel().getSelectedItem().getLoanID()));
     ViewModelFactory.getInstance().getMyReservationsVM().reservationProperty()
         .set(reservationTableView.getSelectionModel().getSelectedItem());
-    ViewModelFactory.getInstance().getMyReservationsVM().endReservation();
     reservationTableView.refresh();
   }
 
+  @FXML void onEndReservationButton(ActionEvent event)
+  {
+    Reservation selectedReservation = this.reservationTableView.getSelectionModel().getSelectedItem();
+    if(selectedReservation != null){
+      ViewModelFactory.getInstance().getMyReservationsVM().endReservation(selectedReservation);
+      ObservableList<Reservation> reservations = reservationTableView.getItems();
+      for (int i = 0; i < reservations.size(); i++)
+      {
+        if(reservations.get(i).equals(selectedReservation)){
+          reservations.remove(i);
+        }
+      }
+      reservationTableView.setItems(reservations);
+    }
+  }
 
   @FXML
   void onBackButton(ActionEvent event) {

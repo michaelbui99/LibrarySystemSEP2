@@ -19,9 +19,9 @@ public interface ReservationServer extends Remote
    * @param borrower borrower is the owner of the Reservation.
    * @throws IllegalStateException if the Material has more than 1 available copies
    */
-  void registerReservation(Material material, Borrower borrower)
+  Reservation registerReservation(Material material, Borrower borrower)
       throws RemoteException;
-
+  void endReservation(Reservation reservation) throws RemoteException;
   /**
    * Registers a ClientCallback to the server to be used to notify the Client when a event regarding Reservation has occurred.
    * works the same way as the method in LoanServer

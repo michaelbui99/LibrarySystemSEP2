@@ -31,7 +31,7 @@ public class MyReservationsVM
           .getAllReservationsByCPR(cprProperty.get()));
     }
     ModelFactoryClient.getInstance().getReservationModelClient()
-        /*Listens to for the LOANREGISTERED and LOANENDED event that is specific to the borrowers cpr
+        /*Listens to for the RESERVATIONREGISTER and RESERVATION event that is specific to the borrowers cpr
         * To ensure that other users Loan events won't affect the specific users window. */
         .addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED,
             evt -> {
@@ -65,9 +65,9 @@ public ObjectProperty<Reservation> reservationProperty()
 {
   return reservationProperty;
 }
-  public void endReservation()
+  public void endReservation(Reservation reservation)
   {
-    ModelFactoryClient.getInstance().getReservationModelClient().endReservation(reservationProperty.get());
+    ModelFactoryClient.getInstance().getReservationModelClient().endReservation(reservation);
   };
 
 }
