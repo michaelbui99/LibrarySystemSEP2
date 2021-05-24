@@ -94,6 +94,8 @@
                         </Button>
                         <Button mnemonicParsing="false" onAction="#onReserveButton" style="-fx-cursor: hand;" text="Reserver" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="warningLabel" prefHeight="18.0" prefWidth="335.0" textFill="#f80404" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Label fx:id="reservationError" prefHeight="18.0" prefWidth="335.0" textFill="#f80404" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+
                      </children>
                   </GridPane>
                </children>
