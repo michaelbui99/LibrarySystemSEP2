@@ -25,7 +25,7 @@ public class ReservationModelManagerServer implements ReservationModelServer
   }
 
   @Override public void registerReservation(Material material,
-      Borrower borrower)
+      Borrower borrower) throws IllegalStateException
   {
     if (MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(material.getMaterialID()) == 0)
     {
@@ -33,10 +33,10 @@ public class ReservationModelManagerServer implements ReservationModelServer
           .getInstance().create(borrower, material);
       //Event is fired and caught in ReservationServer. ReservationSever redirects the event to the client using the Client Callback.
       support.firePropertyChange(EventTypes.RESERVATIONREGISTERED, null, reservation);
-
     }
-    else
-      throw new IllegalStateException("Flere tilgængelige kopier, materialet kan lån i stedet");
+    else{
+       throw new IllegalStateException("Flere tilgængelige kopier, materialet kan lån i stedet");
+    }
   }
 
   @Override public void endReservation(Reservation reservation)

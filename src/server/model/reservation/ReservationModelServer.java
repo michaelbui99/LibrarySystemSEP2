@@ -17,7 +17,7 @@ public interface ReservationModelServer extends PropertyChangeSubject
    * @param borrower borrower is the owner of the Reservation.
    * @throws  IllegalStateException if the Material has more than 1 available copies
    * */
-  public void registerReservation(Material material, Borrower borrower);
+  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException;
   public void endReservation(Reservation reservation);
   List<Reservation> getAllReservationsByCPR(String cpr);
 }
