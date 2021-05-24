@@ -91,29 +91,31 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the DVD object from DB.
-      //ResultSet dvdDetails = getDVDDetailsByID(materialID);
-      if (keys.next())
+      ResultSet dvdDetails = getDVDDetailsByID(materialID);
+      List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+          .getKeywordsForMaterial(dvdDetails.getInt("material_id"));
+      String materialKeywords = String.join(", ", materialKeywordList);
+
+      if (dvdDetails.next())
       {
         //Creates and returns a DVD object if a DVD with given materialID exists.
-        return new DVD(keys.getInt("material_id"), keys.getInt("copy_no"),
-            keys.getString("title"), keys.getString("publisher"),
-            String.valueOf(keys.getDate("release_date")),
-            keys.getString("description_of_the_content"),
-            keys.getString("keywords"), keys.getString("audience"),
-            keys.getString("language_"), keys.getString("subtitle_lang"),
-            keys.getString("length_"),
-            new Place(keys.getInt("hall_no"), keys.getString("department"),
-                keys.getString("creator_l_name"), keys.getString("genre")),
-            keys.getString("url"));
+        return new DVD(dvdDetails.getInt("material_id"), dvdDetails.getInt("copy_no"),
+            dvdDetails.getString("title"), dvdDetails.getString("publisher"),
+            String.valueOf(dvdDetails.getDate("release_date")),
+            dvdDetails.getString("description_of_the_content"),
+            dvdDetails.getString("keywords"), dvdDetails.getString("audience"),
+            dvdDetails.getString("language_"), dvdDetails.getString("subtitle_lang"),
+            dvdDetails.getString("length_"),
+            new Place(dvdDetails.getInt("hall_no"), dvdDetails.getString("department"),
+                dvdDetails.getString("creator_l_name"), dvdDetails.getString("genre")),
+            dvdDetails.getString("url"));
         // i removed the creator from here and i added place_id
       }
       return null;

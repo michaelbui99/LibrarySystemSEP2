@@ -113,6 +113,11 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
       if (bookDetails.next())
       {
         //Creates and returns a Book object if a book with given materialID exists.
+        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+            .getKeywordsForMaterial(bookDetails.getInt("material_id"));
+        String materialKeywords = String.join(", ", materialKeywordList);
+
+
         return new Book(bookDetails.getInt("material_id"),
             bookDetails.getInt("copy_no"),
             bookDetails.getString("title"),

@@ -89,30 +89,32 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the CD object from DB.
-      //ResultSet cdDetails = getCDDetailsByID(materialID);
-      if (keys.next())
+      ResultSet cdDetails = getCDDetailsByID(materialID);
+      if (cdDetails.next())
       {
         //Creates and returns a CD object if a CD with given materialID exists.
-        return new CD(keys.getInt("material_id"),
-            keys.getInt("copy_no"), keys.getString("title"),
-            keys.getString("publisher"),
-            String.valueOf(keys.getDate("release_date")),
-            keys.getString("description_of_the_content"),
-            keys.getString("keywords"), keys.getString("audience"),
-            keys.getString("language_"), keys.getInt("length_"),
-            new Place(keys.getInt("hall_no"),
-                keys.getString("department"),
-                keys.getString("creator_l_name"),
-                keys.getString("genre")), keys.getString("url"));
+        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+            .getKeywordsForMaterial(cdDetails.getInt("material_id"));
+        String materialKeywords = String.join(", ", materialKeywordList);
+
+        return new CD(cdDetails.getInt("material_id"),
+            cdDetails.getInt("copy_no"), cdDetails.getString("title"),
+            cdDetails.getString("publisher"),
+            String.valueOf(cdDetails.getDate("release_date")),
+            cdDetails.getString("description_of_the_content"),
+            materialKeywords, cdDetails.getString("audience"),
+            cdDetails.getString("language_"), cdDetails.getInt("length_"),
+            new Place(cdDetails.getInt("hall_no"),
+                cdDetails.getString("department"),
+                cdDetails.getString("creator_l_name"),
+                cdDetails.getString("genre")), cdDetails.getString("url"));
         // i added the place_id
       }
       return null;

@@ -88,28 +88,30 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the AudioBook object from DB.
-      //ResultSet audioBookDetails = getAudioBookDetailsByID(materialID);
-      if (keys.next())
+      ResultSet audioBookDetails = getAudioBookDetailsByID(materialID);
+      if (audioBookDetails.next())
       {
         //Creates and returns a AudioBook object if a AudioBook with given materialID exists.
-        return new AudioBook(keys.getInt("material_id"), keys.getInt("copy_no"),
-            keys.getString("title"), keys.getString("publisher"),
-            String.valueOf(keys.getDate("release_date")),
-            keys.getString("description_of_the_content"),
-            keys.getString("keywords"), keys.getString("audience"),
-            keys.getString("language_"), keys.getInt("length_"),
-            new MaterialCreator(keys.getString("f_name"),
-                keys.getString("l_name"), String.valueOf(keys.getDate("dob")),
-                keys.getString("country")), keys.getString("url"));
+        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+            .getKeywordsForMaterial(audioBookDetails.getInt("material_id"));
+        String materialKeywords = String.join(", ", materialKeywordList);
+
+        return new AudioBook(audioBookDetails.getInt("material_id"), audioBookDetails.getInt("copy_no"),
+            audioBookDetails.getString("title"), audioBookDetails.getString("publisher"),
+            String.valueOf(audioBookDetails.getDate("release_date")),
+            audioBookDetails.getString("description_of_the_content"),
+            materialKeywords, audioBookDetails.getString("audience"),
+            audioBookDetails.getString("language_"), audioBookDetails.getInt("length_"),
+            new MaterialCreator(audioBookDetails.getString("f_name"),
+                audioBookDetails.getString("l_name"), String.valueOf(audioBookDetails.getDate("dob")),
+                audioBookDetails.getString("country")), audioBookDetails.getString("url"));
       }
       return null;
     }
