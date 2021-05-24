@@ -64,11 +64,17 @@ public class CopiesController
 
   @FXML public void onButtonRemoveCopy(ActionEvent actionEvent)
   {
-    //TODO add a restrain so if there is only one copy, the user cant delet it
-    ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
-        searchTableView.getSelectionModel().getSelectedItem());
+    if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber() > 0)
+    {
+      ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
+          searchTableView.getSelectionModel().getSelectedItem());
       ViewModelFactory.getInstance().getCopiesVM().deletCopy();
       errorLable.setVisible(false);
+    }
+    else
+    {
+      errorLable.setVisible(true);
+    }
 
   }
 

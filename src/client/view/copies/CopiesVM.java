@@ -180,6 +180,22 @@ public class CopiesVM
     {
       ModelFactoryClient.getInstance().getMaterialModelClient().deletBookCopy(getSelectedMaterial());
     }
+    else if (typeProperty.getValue().equals("Ebog"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().deletEBookCopy(getSelectedMaterial());
+    }
+    else if (typeProperty.getValue().equals("Lydbog"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().deletAudioBookCopy(getSelectedMaterial());
+    }
+    else if (typeProperty.getValue().equals("CD"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().deletCDCopy(getSelectedMaterial());
+    }
+    else if (typeProperty.getValue().equals("DVD"))
+    {
+      ModelFactoryClient.getInstance().getMaterialModelClient().deletDVDCopy(getSelectedMaterial());
+    }
   }
 
   public void deletMaterial()
