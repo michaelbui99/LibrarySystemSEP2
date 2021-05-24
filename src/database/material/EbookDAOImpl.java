@@ -89,38 +89,39 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
+      //ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the EBook object from DB.
-     // ResultSet eBookDetails = getEBookDetailsByID(materialID);
-      if (keys.next())
+      ResultSet eBookDetails = getEBookDetailsByID(materialID);
+      if (eBookDetails.next())
       {
         //Creates and returns a EBook object if a EBook with given materialID exists.
-        //TODO; this method can not creat a new EBook because the query only returns a material ID and copy number
-        //TODO; thus an exeption is beeing thrown "PSQLException: The column name title was not found in this ResultSet."
-        return new EBook(keys.getInt("material_id"),
-            keys.getInt("copy_no"),
-            keys.getString("title"),
-            keys.getString("publisher"),
-            String.valueOf(keys.getDate("release_date")),
-            keys.getString("description_of_the_content"),
-            keys.getString("keywords"),
-            keys.getString("audience"),
-            keys.getString("language_"),
-            keys.getInt("pageCount"),
-            keys.getString("licensNo"),
-            keys.getString("genre"),
+        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+            .getKeywordsForMaterial(eBookDetails.getInt("material_id"));
+        String materialKeywords = String.join(", ", materialKeywordList);
+
+        return new EBook(eBookDetails.getInt("material_id"),
+            eBookDetails.getInt("copy_no"),
+            eBookDetails.getString("title"),
+            eBookDetails.getString("publisher"),
+            String.valueOf(eBookDetails.getDate("release_date")),
+            eBookDetails.getString("description_of_the_content"),
+            materialKeywords,
+            eBookDetails.getString("audience"),
+            eBookDetails.getString("language_"),
+            eBookDetails.getInt("page_no"),
+            eBookDetails.getString("license_no"),
+            eBookDetails.getString("genre"),
             //keys.getString("author"),
-            new MaterialCreator(keys.getString("f_name"),
-                keys.getString("l_name"),
-                String.valueOf(keys.getDate("dob")),
-                keys.getString("country")));
+            new MaterialCreator(eBookDetails.getString("f_name"),
+                eBookDetails.getString("l_name"),
+                String.valueOf(eBookDetails.getDate("dob")),
+                eBookDetails.getString("country")));
         // added author and genre
       }
       return null;
@@ -241,8 +242,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
         {
 
           EBook eBook = new EBook(resultSet.getInt("material_id"),
-              MaterialDAOImpl.getInstance()
-                  .getCopyNumberForMaterial(resultSet.getInt("material_id")),
+              resultSet.getInt("copy_no"),
               resultSet.getString("title"), resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"),

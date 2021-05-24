@@ -101,31 +101,37 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
+          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
       stm.setInt(1, materialID);
       stm.setInt(2, copyNo);
       stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
+      //ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
 
       //Finds the necessary details to create the Book object from DB.
-      //ResultSet bookDetails = getBookDetailsByID(materialID);
-      if (keys.next())
+      ResultSet bookDetails = getBookDetailsByID(materialID);
+      if (bookDetails.next())
       {
         //Creates and returns a Book object if a book with given materialID exists.
-        return new Book(keys.getInt("material_id"), keys.getInt("copy_no"),
-            keys.getString("title"), keys.getString("publisher"),
-            String.valueOf(keys.getDate("release_date")),
-            keys.getString("description_of_the_content"),
-            keys.getString("keywords"), keys.getString("audience"),
-            keys.getString( "language_"), keys.getString("isbn"),
-            keys.getInt("page_no"),
-            new Place(keys.getInt("hall_no"), keys.getString("department"),
-                keys.getString("creator_l_name"), keys.getString("genre")),
-            new MaterialCreator(keys.getString("f_name"),
-                keys.getString("l_name"), String.valueOf(keys.getDate("dob")),
-                keys.getString("country")));
+        return new Book(bookDetails.getInt("material_id"),
+            bookDetails.getInt("copy_no"),
+            bookDetails.getString("title"),
+            bookDetails.getString("publisher"),
+            String.valueOf(bookDetails.getDate("release_date")),
+            bookDetails.getString("description_of_the_content"),
+            bookDetails.getString("keywords"),
+            bookDetails.getString("audience"),
+            bookDetails.getString( "language_"),
+            bookDetails.getString("isbn"),
+            bookDetails.getInt("page_no"),
+            new Place(bookDetails.getInt("hall_no"),
+                bookDetails.getString("department"),
+                bookDetails.getString("creator_l_name"),
+                bookDetails.getString("genre")),
+            new MaterialCreator(bookDetails.getString("f_name"),
+                bookDetails.getString("l_name"), String.valueOf(
+                    bookDetails.getDate("dob")),
+                bookDetails.getString("country")));
       }
       return null;
     }

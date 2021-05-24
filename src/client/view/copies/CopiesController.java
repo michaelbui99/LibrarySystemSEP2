@@ -28,7 +28,7 @@ public class CopiesController
   @FXML private TableColumn<String, Material> titleColumn;
   @FXML private TableColumn<String, Material> publisherColumn;
   @FXML private TableColumn<String, Material> releaseDateColumn;
-  @FXML private TableColumn<String, Material> numberOfCopiesColumn;
+  @FXML private TableColumn<Integer, Material> copyNo;
 
   public void init()
   {
@@ -39,6 +39,7 @@ public class CopiesController
         .setCellValueFactory(new PropertyValueFactory<>("publisher"));
     releaseDateColumn
         .setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
+    copyNo.setCellValueFactory(new PropertyValueFactory<>("copyNumber"));
 
     typeComboBox.setItems(
         ViewModelFactory.getInstance().getCopiesVM().getMaterialTypeList());
