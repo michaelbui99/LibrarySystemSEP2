@@ -27,5 +27,5 @@ public interface CDDAO
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience);
 
-  void deletCDCopy(int materialID, int copyNumber) throws SQLException;
+  void deleteCDCopy(int materialID, int copyNumber) throws SQLException;
 }

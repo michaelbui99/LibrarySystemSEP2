@@ -60,12 +60,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deletBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID)
   {
     try
     {
-      BookDAOImpl.getInstance().deletBookCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      BookDAOImpl.getInstance().deleteBookCopy(materialID,
+          getSelectMaterial().getCopyNumber());
     }
     catch (SQLException throwables)
     {
@@ -125,12 +125,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deletDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID)
   {
     try
     {
-      DVDDAOImpl.getInstance().deletDVDCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      DVDDAOImpl.getInstance().deleteDVDCopy(materialID,
+          getSelectMaterial().getCopyNumber());
     }
     catch (SQLException throwables)
     {
@@ -188,12 +188,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deletCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID)
   {
     try
     {
-      CDDAOImpl.getInstance().deletCDCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      CDDAOImpl.getInstance().deleteCDCopy(materialID,
+          getSelectMaterial().getCopyNumber());
     }
     catch (SQLException throwables)
     {
@@ -252,12 +252,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deletEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID)
   {
     try
     {
-      EbookDAOImpl.getInstance().deletEBookCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      EbookDAOImpl.getInstance().deleteEBookCopy(materialID,
+          getSelectMaterial().getCopyNumber());
     }
     catch (SQLException throwables)
     {
@@ -316,12 +316,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deletAudiotBookCopy(int materialID)
+  @Override public void deleteAudiotBookCopy(int materialID)
   {
     try
     {
-      AudioBookDAOImpl.getInstance().deletAudioBookCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID));
+      AudioBookDAOImpl.getInstance().deleteAudioBookCopy(materialID,
+          getSelectMaterial().getCopyNumber());
     }
     catch (SQLException throwables)
     {
@@ -374,30 +374,14 @@ public class MaterialModelManagerServer implements MaterialModelServer
     this.selectedMaterial = material;
   }
 
-  @Override public int totalNumberOfCopies()
+  @Override public int totalNumberOfCopies(int materialID)
   {
-    try
-    {
-      return MaterialDAOImpl.getInstance()
-          .totalNumberOfCopies(selectedMaterial.getMaterialID());
-    }
-    catch (SQLException throwables)
-    {
-      throwables.printStackTrace();
-    }
-    return 0;
+    return MaterialDAOImpl.getInstance().totalNumberOfCopies(materialID);
   }
 
-  @Override public void deletMaterial(int materialID)
+  @Override public void deleteMaterial(int materialID)
   {
-    try
-    {
-      MaterialDAOImpl.getInstance().deletMaterial(materialID);
-    }
-    catch (SQLException throwables)
-    {
-      throwables.printStackTrace();
-    }
+    MaterialDAOImpl.getInstance().deleteMaterial(materialID);
   }
 
   @Override public void addPropertyChangeListener(String name,

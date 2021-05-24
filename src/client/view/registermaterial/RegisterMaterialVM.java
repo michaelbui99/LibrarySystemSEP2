@@ -44,7 +44,7 @@ public class RegisterMaterialVM
   public RegisterMaterialVM()
   {
     materialType = FXCollections.observableArrayList();
-    materialType.addAll("Book", "EBook", "AudioBook", "CD", "DVD");
+    materialType.addAll("Bog", "Ebog", "Lydbog", "CD", "DVD");
 
     targetAudiance = FXCollections.observableArrayList();
     targetAudiance

@@ -26,5 +26,5 @@ public interface EbookDAO
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience);
 
-  void deletEBookCopy(int materialID, int copyNumber) throws SQLException;
+  void deleteEBookCopy(int materialID, int copyNumber) throws SQLException;
 }

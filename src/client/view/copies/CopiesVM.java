@@ -174,37 +174,37 @@ public class CopiesVM
     }
   }
 
-  public void deletCopy()
+  public void deleteCopy()
   {
     if (typeProperty.getValue().equals("Bog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deletBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient().deleteBookCopy(getSelectedMaterial());
     }
     else if (typeProperty.getValue().equals("Ebog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deletEBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient().deleteEBookCopy(getSelectedMaterial());
     }
     else if (typeProperty.getValue().equals("Lydbog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deletAudioBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient().deleteAudioBookCopy(getSelectedMaterial());
     }
     else if (typeProperty.getValue().equals("CD"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deletCDCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient().deleteCDCopy(getSelectedMaterial());
     }
     else if (typeProperty.getValue().equals("DVD"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deletDVDCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient().deleteDVDCopy(getSelectedMaterial());
     }
   }
 
   public void deletMaterial()
   {
-    ModelFactoryClient.getInstance().getMaterialModelClient().deletMaterial(getSelectedMaterial());
+    ModelFactoryClient.getInstance().getMaterialModelClient().deleteMaterial(getSelectedMaterial());
   }
 
   public int totalCopyNumber()
   {
-    return ModelFactoryClient.getInstance().getMaterialModelClient().totalNumberOfCopies();
+    return ModelFactoryClient.getInstance().getMaterialModelClient().totalNumberOfCopies(getSelectedMaterial());
   }
 }

@@ -35,9 +35,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     support.firePropertyChange("materialSelected", null ,selectMaterial);
   }
 
-  @Override public void deletMaterial(int materialID)
+  @Override public void deleteMaterial(int materialID)
   {
-    client.deletMaterial(materialID);
+    client.deleteMaterial(materialID);
   }
 
   @Override public int numberOfAvailableCopies()
@@ -45,9 +45,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     return client.numberOfAvailableCopies();
   }
 
-  @Override public int totalNumberOfCopies()
+  @Override public int totalNumberOfCopies(int materialID)
   {
-    return client.totalNumberOfCopies();
+    return client.totalNumberOfCopies(materialID);
   }
 
   @Override public void registerBook(String title, String publisher,
@@ -65,9 +65,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createBookCopy(materialID);
   }
 
-  @Override public void deletBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID)
   {
-    client.deletBookCopy(materialID);
+    client.deleteBookCopy(materialID);
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -94,9 +94,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createDVDCopy(materialID);
   }
 
-  @Override public void deletDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID)
   {
-    client.deletDVDCopy(materialID);
+    client.deleteDVDCopy(materialID);
   }
 
   @Override public boolean dvdAlreadyExists(String title, String publisher,
@@ -121,9 +121,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createCDCopy(materialID);
   }
 
-  @Override public void deletCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID)
   {
-    client.deletCDCopy(materialID);
+    client.deleteCDCopy(materialID);
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -148,9 +148,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createEBookCopy(materialID);
   }
 
-  @Override public void deletEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID)
   {
-    client.deletEBookCopy(materialID);
+    client.deleteEBookCopy(materialID);
   }
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
@@ -176,9 +176,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createAudioBookCopy(materialID);
   }
 
-  @Override public void deletAudioBookCopy(int materialID)
+  @Override public void deleteAudioBookCopy(int materialID)
   {
-    client.deletAudioBookCopy(materialID);
+    client.deleteAudioBookCopy(materialID);
   }
 
   @Override public boolean audioBookAlreadyExists(String title,

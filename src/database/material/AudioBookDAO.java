@@ -27,5 +27,5 @@ public interface AudioBookDAO
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience);
 
-  void deletAudioBookCopy(int materialID, int copyNumber) throws SQLException;
+  void deleteAudioBookCopy(int materialID, int copyNumber) throws SQLException;
 }

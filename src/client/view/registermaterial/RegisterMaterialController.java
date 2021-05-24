@@ -154,12 +154,12 @@ public class RegisterMaterialController
       throws IOException
   {
     String type = materialTypeCompo.getValue();
-    if (type.equals("Book"))
+    if (type.equals("Bog"))
     {
       if (ViewModelFactory.getInstance().getRegisterMaterialVM()
           .bookAlreadyExists())
       {
-        error.setText("Book already exists");
+        error.setText("Bogen findes allerede i systemet");
         error.setTextFill(Paint.valueOf("red"));
         error.setVisible(true);
       }
@@ -171,28 +171,28 @@ public class RegisterMaterialController
         clearFields();
       }
     }
-    else if (type.equals("EBook"))
+    else if (type.equals("Ebog"))
     {
-      /*if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
           .eBookAlreadyExists())
       {
-        error.setText("EBook already exists");
+        error.setText("EBook findes allerede i systemet");
         error.setTextFill(Paint.valueOf("red"));
         error.setVisible(true);
-      }*/
-      /*else
-      {*/
+      }
+      else
+      {
         ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
         setTestForLabelGreen("E-bogen");
         clearFields();
-      /*}*/
+      }
     }
-    else if (type.equals("AudioBook"))
+    else if (type.equals("Lydbog"))
     {
       if (ViewModelFactory.getInstance().getRegisterMaterialVM()
           .audioBookAlreadyExists())
       {
-        error.setText("AudioBook already exists");
+        error.setText("Lydbog findes allerede i systemet");
         error.setTextFill(Paint.valueOf("red"));
         error.setVisible(true);
       }
@@ -208,7 +208,7 @@ public class RegisterMaterialController
       if (ViewModelFactory.getInstance().getRegisterMaterialVM()
           .cdAlreadyExists())
       {
-        error.setText("CD already exists");
+        error.setText("CD findes allerede i systemet");
         error.setTextFill(Paint.valueOf("red"));
         error.setVisible(true);
       }
@@ -225,7 +225,7 @@ public class RegisterMaterialController
       if (ViewModelFactory.getInstance().getRegisterMaterialVM()
           .dvdAlreadyExists())
       {
-        error.setText("DVD already exists");
+        error.setText("DVD findes allerede i systemet");
         error.setTextFill(Paint.valueOf("red"));
         error.setVisible(true);
       }
@@ -362,15 +362,15 @@ public class RegisterMaterialController
   private void releventFields()
   {
     String type = materialTypeCompo.getValue();
-    if (type.equals("Book"))
+    if (type.equals("Bog"))
     {
       bookSelectedfields();
     }
-    else if (type.equals("EBook"))
+    else if (type.equals("Ebog"))
     {
       eBookSelectedFields();
     }
-    else if (type.equals("AudioBook"))
+    else if (type.equals("Lydbog"))
     {
       audioBookSelectedFields();
     }

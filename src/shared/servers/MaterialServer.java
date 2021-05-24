@@ -26,7 +26,7 @@ public interface MaterialServer extends Remote
 
   void createBookCopy(int materialID) throws RemoteException;
 
-  void deletBookCopy(int materialID) throws RemoteException;
+  void deleteBookCopy(int materialID) throws RemoteException;
 
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
@@ -40,7 +40,7 @@ public interface MaterialServer extends Remote
 
   void createDVDCopy(int materialID) throws RemoteException;
 
-  void deletDVDCopy(int materialID) throws RemoteException;
+  void deleteDVDCopy(int materialID) throws RemoteException;
 
   boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -53,7 +53,7 @@ public interface MaterialServer extends Remote
 
   void createCDCopy(int materialID) throws RemoteException;
 
-  void deletCDCopy(int materialID) throws RemoteException;
+  void deleteCDCopy(int materialID) throws RemoteException;
 
   boolean cdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -66,7 +66,7 @@ public interface MaterialServer extends Remote
 
   void createEBookCopy(int materialID) throws RemoteException;
 
-  void deletEBookCopy(int materialID) throws RemoteException;
+  void deleteEBookCopy(int materialID) throws RemoteException;
 
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
@@ -80,7 +80,7 @@ public interface MaterialServer extends Remote
 
   void createAudioBookCopy(int materialID) throws RemoteException;
 
-  void deletAudioBookCopy(int materialID) throws RemoteException;
+  void deleteAudioBookCopy(int materialID) throws RemoteException;
 
   boolean audioBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
@@ -92,8 +92,8 @@ public interface MaterialServer extends Remote
       throws RemoteException;
   int numberOfAvailableCopies() throws RemoteException;
 
-  int totalNumberOfCopies() throws RemoteException;
+  int totalNumberOfCopies(int materialID) throws RemoteException;
 
-  void deletMaterial(int materialID) throws RemoteException;
+  void deleteMaterial(int materialID) throws RemoteException;
 
 }

@@ -43,5 +43,5 @@ public interface BookDAO
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience);
 
-  void deletBookCopy(int materialID, int copyNumber) throws SQLException;
+  void deleteBookCopy(int materialID, int copyNumber) throws SQLException;
 }

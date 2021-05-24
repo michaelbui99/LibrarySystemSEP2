@@ -280,7 +280,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     return ml;
   }
 
-  @Override public void deletAudioBookCopy(int materialID, int copyNumber)
+  @Override public void deleteAudioBookCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try(Connection connection = getConnection())

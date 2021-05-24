@@ -162,11 +162,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
-  @Override public void deletBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID)
   {
     try
     {
-      server.getMaterialServer().deletBookCopy(materialID);
+      server.getMaterialServer().deleteBookCopy(materialID);
     }
     catch (RemoteException e)
     {
@@ -221,11 +221,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
-  @Override public void deletDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID)
   {
     try
     {
-      server.getMaterialServer().deletDVDCopy(materialID);
+      server.getMaterialServer().deleteDVDCopy(materialID);
     }
     catch (RemoteException remoteException)
     {
@@ -278,11 +278,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
-  @Override public void deletCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID)
   {
     try
     {
-      server.getMaterialServer().deletCDCopy(materialID);
+      server.getMaterialServer().deleteCDCopy(materialID);
     }
     catch (RemoteException remoteException)
     {
@@ -336,11 +336,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
-  @Override public void deletEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID)
   {
     try
     {
-      server.getMaterialServer().deletEBookCopy(materialID);
+      server.getMaterialServer().deleteEBookCopy(materialID);
     }
     catch (RemoteException remoteException)
     {
@@ -394,11 +394,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     }
   }
 
-  @Override public void deletAudioBookCopy(int materialID)
+  @Override public void deleteAudioBookCopy(int materialID)
   {
     try
     {
-      server.getMaterialServer().deletAudioBookCopy(materialID);
+      server.getMaterialServer().deleteAudioBookCopy(materialID);
     }
     catch (RemoteException remoteException)
     {
@@ -726,24 +726,24 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     return false;
   }
 
-  @Override public int totalNumberOfCopies()
+  @Override public int totalNumberOfCopies(int materialID)
   {
     try
     {
-      return server.getMaterialServer().totalNumberOfCopies();
+      return server.getMaterialServer().totalNumberOfCopies(materialID);
     }
     catch (RemoteException remoteException)
     {
       remoteException.printStackTrace();
     }
-    return 0;
+    return -1;
   }
 
-  @Override public void deletMaterial(int materialID)
+  @Override public void deleteMaterial(int materialID)
   {
     try
     {
-      server.getMaterialServer().deletMaterial(materialID);
+      server.getMaterialServer().deleteMaterial(materialID);
     }
     catch (RemoteException remoteException)
     {

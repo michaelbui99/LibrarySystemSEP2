@@ -48,7 +48,7 @@ public interface MaterialDAO
 
   public List<String> getKeywordsForMaterial(int materialid);
 
-  public int totalNumberOfCopies(int materialID) throws SQLException;
+  public int totalNumberOfCopies(int materialID);
 
-  public void deletMaterial(int materialID) throws SQLException;
+  public void deleteMaterial(int materialID);
 }

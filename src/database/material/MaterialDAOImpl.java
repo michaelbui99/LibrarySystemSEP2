@@ -210,6 +210,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
           "SELECT count(*) FROM material_copy WHERE material_id = ?");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
+      result.next();
       return result.getInt(1);
     }
     catch (SQLException throwables)
@@ -219,7 +220,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return 0;
   }
 
-  @Override public void deletMaterial(int materialID) throws SQLException
+  @Override public void deleteMaterial(int materialID)
   {
     try(Connection connection = getConnection())
     {
@@ -231,6 +232,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       ResultSet keys = stm.getGeneratedKeys();
       connection.commit();
       keys.next();
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
     }
   }
 

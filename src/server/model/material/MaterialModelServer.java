@@ -17,7 +17,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createBookCopy(int materialID);
 
-  void deletBookCopy(int materialID);
+  void deleteBookCopy(int materialID);
 
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
@@ -30,7 +30,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createDVDCopy(int materialID);
 
-  void deletDVDCopy(int materialID);
+  void deleteDVDCopy(int materialID);
 
   boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -42,7 +42,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createCDCopy(int materialID);
 
-  void deletCDCopy(int materialID);
+  void deleteCDCopy(int materialID);
 
   boolean cdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -55,7 +55,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createEBookCopy(int materialID);
 
-  void deletEBookCopy(int materialID);
+  void deleteEBookCopy(int materialID);
 
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
@@ -67,7 +67,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
 
   void createAudioBookCopy(int materialID);
 
-  void deletAudiotBookCopy(int materialID);
+  void deleteAudiotBookCopy(int materialID);
 
   boolean audioBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
@@ -80,8 +80,8 @@ public interface MaterialModelServer extends PropertyChangeSubject
   Material getSelectMaterial();
   void setSelectedMaterial(Material material);
 
-  int totalNumberOfCopies();
+  int totalNumberOfCopies(int materialID);
 
-  void deletMaterial(int materialID);
+  void deleteMaterial(int materialID);
 
 }

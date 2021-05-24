@@ -64,18 +64,20 @@ public class CopiesController
 
   @FXML public void onButtonRemoveCopy(ActionEvent actionEvent)
   {
-    if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber() > 0)
-    {
       ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
           searchTableView.getSelectionModel().getSelectedItem());
-      ViewModelFactory.getInstance().getCopiesVM().deletCopy();
-      errorLable.setVisible(false);
+
+    if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber() == 1)
+    {
+      errorLable.setText("Kun én kopi tilbage, kan ikke fjernes!!");
+      errorLable.setTextFill(Paint.valueOf("red"));
+      errorLable.setVisible(true);
     }
     else
     {
-      errorLable.setVisible(true);
+      ViewModelFactory.getInstance().getCopiesVM().deleteCopy();
+      errorLable.setVisible(false);
     }
-
   }
 
   @FXML public void onButtonAddCopy(ActionEvent actionEvent)

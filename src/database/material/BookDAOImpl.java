@@ -263,7 +263,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return ml;
   }
 
-  @Override public void deletBookCopy(int materialID, int copyNumber) throws SQLException
+  @Override public void deleteBookCopy(int materialID, int copyNumber) throws SQLException
   {
     try(Connection connection = getConnection())
     {

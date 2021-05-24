@@ -55,10 +55,10 @@ public class MaterialServerImpl implements MaterialServer
         .createBookCopy(materialID);
   }
 
-  @Override public void deletBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID)
   {
     ModelFactoryServer.getInstance().getMaterialModel()
-        .deletBookCopy(materialID);
+        .deleteBookCopy(materialID);
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -88,9 +88,9 @@ public class MaterialServerImpl implements MaterialServer
         .createDVDCopy(materialID);
   }
 
-  @Override public void deletDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deletDVDCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel().deleteDVDCopy(materialID);
   }
 
   @Override public boolean dvdAlreadyExists(String title, String publisher,
@@ -117,9 +117,9 @@ public class MaterialServerImpl implements MaterialServer
     ModelFactoryServer.getInstance().getMaterialModel().createCDCopy(materialID);
   }
 
-  @Override public void deletCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deletCDCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel().deleteCDCopy(materialID);
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -146,9 +146,9 @@ public class MaterialServerImpl implements MaterialServer
     ModelFactoryServer.getInstance().getMaterialModel().createEBookCopy(materialID);
   }
 
-  @Override public void deletEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deletEBookCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel().deleteEBookCopy(materialID);
   }
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
@@ -176,9 +176,9 @@ public class MaterialServerImpl implements MaterialServer
     ModelFactoryServer.getInstance().getMaterialModel().createAudioBookCopy(materialID);
   }
 
-  @Override public void deletAudioBookCopy(int materialID)
+  @Override public void deleteAudioBookCopy(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deletAudiotBookCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel().deleteAudiotBookCopy(materialID);
   }
 
   @Override public boolean audioBookAlreadyExists(String title,
@@ -206,14 +206,14 @@ public class MaterialServerImpl implements MaterialServer
         .numberOfAvailableCopies();
   }
 
-  @Override public int totalNumberOfCopies() throws RemoteException
+  @Override public int totalNumberOfCopies(int materialID)
   {
-    return ModelFactoryServer.getInstance().getMaterialModel().totalNumberOfCopies();
+    return ModelFactoryServer.getInstance().getMaterialModel().totalNumberOfCopies(materialID);
   }
 
-  @Override public void deletMaterial(int materialID) throws RemoteException
+  @Override public void deleteMaterial(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deletMaterial(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel().deleteMaterial(materialID);
   }
 
 }

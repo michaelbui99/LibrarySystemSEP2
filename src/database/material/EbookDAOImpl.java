@@ -270,7 +270,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
     return ml;
   }
 
-  @Override public void deletEBookCopy(int materialID, int copyNumber)
+  @Override public void deleteEBookCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try(Connection connection = getConnection())

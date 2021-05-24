@@ -257,7 +257,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     return ml;
   }
 
-  @Override public void deletCDCopy(int materialID, int copyNumber)
+  @Override public void deleteCDCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try(Connection connection = getConnection())

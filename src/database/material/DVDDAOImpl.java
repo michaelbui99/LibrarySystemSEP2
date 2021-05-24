@@ -258,7 +258,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     return ml;
   }
 
-  @Override public void deletDVDCopy(int materialID, int copyNumber)
+  @Override public void deleteDVDCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try(Connection connection = getConnection())
