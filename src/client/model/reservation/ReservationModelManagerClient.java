@@ -8,6 +8,7 @@ import shared.person.borrower.Borrower;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ReservationModelManagerClient implements ReservationModelClient
 {
@@ -24,13 +25,19 @@ public class ReservationModelManagerClient implements ReservationModelClient
       Borrower borrower)
   {
     client.registerReservation(material, borrower);
+
   }
 
   @Override public List<Reservation> getAllReservationsByCPR(String cpr)
   {
-//    return client.getAllReservationsByCPR(cpr);
-   // return client.getAllReservationsByCPR(cpr);
-    return null;
+    try
+    {
+      return client.getAllReservationsByCPR(cpr);
+    }
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
   }
 
   @Override public void endReservation(Reservation reservation)

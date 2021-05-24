@@ -28,26 +28,32 @@
             <HBox prefHeight="110.0" prefWidth="600.0">
                <children>
                   <GridPane alignment="CENTER_RIGHT" prefHeight="124.0" prefWidth="610.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onButtonLoanReserve" style="-fx-background-color: white; -fx-cursor: hand;" text="Reservere/Lån" textFill="#0822eb" underline="true">
+                        <Button mnemonicParsing="false" onAction="#onButtonLoanReserve" style="-fx-background-color: white; -fx-cursor: hand;" text="Reservere/Lån" textFill="#0822eb" underline="true" GridPane.columnIndex="0">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="20.0" layoutY="52.0" mnemonicParsing="false" onAction="#OnButtonMyMaterial" style="-fx-background-color: white; -fx-cursor: hand;" text="Min Material" textFill="#0822eb" underline="true" GridPane.columnIndex="2">
+                        <Button mnemonicParsing="false" onAction="#onButtonViewReservations" style="-fx-background-color: white; -fx-cursor: hand;" text="Vis Reservationer" textFill="#0822eb" underline="true" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#OnButtonMyMaterial" style="-fx-background-color: white; -fx-cursor: hand;" text="Min Material" textFill="#0822eb" underline="true" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="542.0" layoutY="52.0" mnemonicParsing="false" onAction="#onButtonChatRoom" style="-fx-background-color: white; -fx-cursor: hand;" text="Chatrum" textFill="#0822eb" underline="true" GridPane.columnIndex="1" />
+                        <Button layoutX="542.0" layoutY="52.0" mnemonicParsing="false" onAction="#onButtonChatRoom" style="-fx-background-color: white; -fx-cursor: hand;" text="Chatrum" textFill="#0822eb" underline="true" GridPane.columnIndex="3" />
                      </children>
                   </GridPane>
                </children>

@@ -6,7 +6,6 @@ import shared.person.borrower.Borrower;
 import shared.servers.PropertyChangeSubject;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public interface ReservationModelClient extends PropertyChangeSubject
 {
@@ -17,9 +16,8 @@ public interface ReservationModelClient extends PropertyChangeSubject
    * @param material material is The Material which the Borrower intends to make a Reservation for.
    * @param borrower borrower is the owner of the Reservation.
    * @throws  IllegalStateException if the Material has more than 1 available copies
-   * */
+   * @return*/
   void registerReservation(Material material, Borrower borrower);
-
   List<Reservation> getAllReservationsByCPR(String cpr);
   void endReservation(Reservation reservation);
 }

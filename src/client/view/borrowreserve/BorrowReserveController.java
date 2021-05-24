@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import shared.loan.Reservation;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,12 +36,17 @@ public class BorrowReserveController {
     @FXML
     private Label warningLabel;
 
+    @FXML
+    private Label reservationError;
+
 
     public void init() throws FileNotFoundException {
         ViewModelFactory.getInstance().getBorrowReserveVM();
         availNumber.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getAvailNumberProp().asString());
         materialInfo.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialInfoProp());
         warningLabel.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().warningPropertyProperty());
+        reservationError.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM()
+            .reservationErrorProperty());
         try {
             if (ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL() != null)
             {
@@ -49,15 +55,13 @@ public class BorrowReserveController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
 
+    }
 
     @FXML
     void goBack(ActionEvent actionEvent) throws IOException {
         ViewHandler.getInstance().openView("Search");
     }
-
-
 
     @FXML
     void onLoanButton(ActionEvent event) {
@@ -67,6 +71,6 @@ public class BorrowReserveController {
     @FXML
     void onReserveButton(ActionEvent event)
     {
-        ViewModelFactory.getInstance().getBorrowReserveVM().reserveMaterial();
+         ViewModelFactory.getInstance().getBorrowReserveVM().reserveMaterial();
     }
 }

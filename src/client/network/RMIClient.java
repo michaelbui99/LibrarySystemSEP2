@@ -1,6 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
+import shared.loan.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -208,4 +209,5 @@ public interface RMIClient extends Remote
   int totalNumberOfCopies() throws RemoteException;
 
   void deletMaterial(int materialID) throws RemoteException;
+  List<Reservation> getAllReservationsByCPR(String cpr) throws RemoteException;
 }

@@ -35,6 +35,11 @@ public class UserController
     ViewHandler.getInstance().openView("Chat");
   }
 
+  public void onButtonViewReservations(ActionEvent actionEvent) throws IOException
+  {
+    ViewHandler.getInstance().openView("MyReservations");
+  }
+
   public void onButtonCancel(ActionEvent actionEvent)
   {
     System.exit(0);

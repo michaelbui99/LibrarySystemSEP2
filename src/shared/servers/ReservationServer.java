@@ -19,7 +19,7 @@ public interface ReservationServer extends Remote
    * @param borrower borrower is the owner of the Reservation.
    * @throws IllegalStateException if the Material has more than 1 available copies
    */
-  Reservation registerReservation(Material material, Borrower borrower)
+  void registerReservation(Material material, Borrower borrower)
       throws RemoteException;
   void endReservation(Reservation reservation) throws RemoteException;
   /**
@@ -29,5 +29,5 @@ public interface ReservationServer extends Remote
    * @see LoanServer
    */
   void registerClientCallBack(ClientCallback client) throws RemoteException;
-  List<Reservation> getAllReservationsByCPR(String cpr);
+  List<Reservation> getAllReservationsByCPR(String cpr) throws RemoteException;
 }

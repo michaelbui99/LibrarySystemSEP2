@@ -66,19 +66,19 @@
                               <Insets left="80.0" right="50.0" />
                            </GridPane.margin>
                         </TextField>
-                        <ComboBox fx:id="chooseType" layoutX="110.0" layoutY="26.0" prefWidth="150.0" promptText="Vælg typen" style="-fx-background-color: white; -fx-cursor: hand;">
+                        <ComboBox fx:id="chooseType" layoutX="110.0" layoutY="26.0" prefWidth="150.0" promptText="Vælg typen" style="-fx-cursor: hand;">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </ComboBox>
                         <Label layoutX="277.0" layoutY="86.0" text="Målgruppe" GridPane.columnIndex="1" />
                         <Label layoutX="544.0" layoutY="86.0" text="Sprog" GridPane.columnIndex="2" />
-                        <ComboBox fx:id="chooseLanguage" layoutX="110.0" layoutY="26.0" prefWidth="150.0" promptText="Vælg sprog" style="-fx-background-color: white; -fx-cursor: white;" GridPane.columnIndex="2">
+                        <ComboBox fx:id="chooseLanguage" layoutX="110.0" layoutY="26.0" prefWidth="150.0" promptText="Vælg sprog" style=" -fx-cursor: hand;" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="75.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <ComboBox fx:id="targetAudience" layoutX="619.0" layoutY="138.0" prefWidth="150.0" promptText="Vælg målgruppe" style="-fx-background-color: white; -fx-cursor: hand;" GridPane.columnIndex="1">
+                        <ComboBox fx:id="targetAudience" layoutX="619.0" layoutY="138.0" prefWidth="150.0" promptText="Vælg målgruppe" style="-fx-cursor: hand;" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="75.0" />
                            </GridPane.margin>

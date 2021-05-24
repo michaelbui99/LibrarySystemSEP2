@@ -8,6 +8,7 @@ import client.view.borrowreserve.BorrowReserveController;
 import client.view.copies.CopiesController;
 import client.view.main.MainController;
 import client.view.mymaterial.MyMaterialController;
+import client.view.myreservations.MyReservationsController;
 import client.view.registermaterial.RegisterMaterialController;
 import client.view.search.SearchController;
 import client.view.stafflogin.StaffLogInController;
@@ -95,6 +96,14 @@ public class ViewHandler extends Application
         MyMaterialController myMaterialController = loader.getController();
         myMaterialController.init(ViewModelFactory.getInstance().getMyMaterialVM());
         stage.setTitle("MyMaterial");
+        break;
+      case "MyReservations":
+        loader.setLocation(
+            getClass().getResource("myreservations/" + id + "View.fxml"));
+        root = loader.load();
+        MyReservationsController myReservationsController = loader.getController();
+        myReservationsController.init();
+        stage.setTitle("MyReservations");
         break;
       case "RegisterMaterial":
         loader.setLocation(

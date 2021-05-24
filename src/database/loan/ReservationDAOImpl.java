@@ -1,6 +1,7 @@
 package database.loan;
 
 import database.BaseDAO;
+import database.material.MaterialDAOImpl;
 import shared.loan.Reservation;
 import shared.materials.DVD;
 import shared.materials.Material;
@@ -74,6 +75,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     }
     return 0;
   }
+
   @Override public Reservation create(Borrower borrower, Material material)
 
   {
@@ -81,8 +83,8 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     {
       //todo: lige nu reserverer man en specific kopy. Evt. tilføje materiale + materiale kopi som java object, så man skelner mellem dem?
       //todo: lav et check på om der allerede findes en reservation borrower CPR og MaterialID
-      if (canReserve(borrower,material)){
-
+      if (!MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID()) && canReserve(borrower,material))
+      {
         LocalDate today = LocalDate.now();
         PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (material_id, cpr_no, reservation_date, copy_no) values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         stm.setInt(1, material.getMaterialID());
@@ -95,6 +97,8 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         keys.next();
         return new Reservation(material, borrower, today, keys.getInt("reservation_id"), false);
       }
+      else
+        throw new IllegalStateException("du har allered reserveret dette materiale");
     }
     catch (SQLException throwables)
     {

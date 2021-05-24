@@ -3,6 +3,7 @@ package client.view.borrowreserve;
 import client.core.ModelFactoryClient;
 import client.model.material.MaterialModelClient;
 import javafx.beans.property.*;
+import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.util.EventTypes;
 
@@ -13,6 +14,7 @@ public class BorrowReserveVM {
     private IntegerProperty availNumberProp;
     private ObjectProperty<Material> materialProperty;
     private StringProperty warningProperty;
+    private StringProperty reservationError;
 
     public BorrowReserveVM() {
         //TODO: Lav om til listener, så antallet af kopier opdateres dynamisk.
@@ -22,6 +24,7 @@ public class BorrowReserveVM {
         materialInfoProp = new SimpleStringProperty(materialProperty.get().getMaterialDetails());
         System.out.println(materialProperty.get().toString());
         warningProperty = new SimpleStringProperty();
+        reservationError = new SimpleStringProperty();
 
         //Checks number of copies everytime a loan is made and end in the system.
         ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
@@ -29,9 +32,9 @@ public class BorrowReserveVM {
         ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
             EventTypes.LOANENDED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
         ModelFactoryClient.getInstance().getMaterialModelClient().addPropertyChangeListener("materialSelected", evt -> {
-
                 materialProperty.set((Material) evt.getNewValue());
-                materialInfoProp.set(materialProperty.get().getMaterialDetails());
+            materialInfoProp.set(materialProperty.get().getMaterialDetails());
+            availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies());
             }
         );
     }
@@ -55,23 +58,32 @@ public class BorrowReserveVM {
         try
         {
             ModelFactoryClient.getInstance().getLoanModelClient().registerLoan(
-                    ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
-                    ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
+                ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
+                ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
             warningProperty.set("");
         }
         catch (IllegalStateException | NoSuchElementException e)
         {
-           warningProperty.set(e.getMessage());
+            warningProperty.set(e.getMessage());
         }
 
     }
 
     public void reserveMaterial() {
-
-        ModelFactoryClient.getInstance().getReservationModelClient().registerReservation(
+        try
+        {
+            ModelFactoryClient.getInstance().getReservationModelClient().registerReservation(
                 ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
                 ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
+            reservationError.set("");
+
+        }
+        catch (IllegalStateException | NoSuchElementException e)
+        {
+            reservationError.set(e.getMessage());
+        }
     }
+
 
 
     public String getMaterialImageURL() {
@@ -83,4 +95,9 @@ public class BorrowReserveVM {
     {
         return warningProperty;
     }
+    public StringProperty reservationErrorProperty()
+    {
+        return reservationError;
+    }
+
 }

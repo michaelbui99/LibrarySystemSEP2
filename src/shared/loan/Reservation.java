@@ -50,4 +50,8 @@ public class Reservation implements Serializable
   {
     return reservationID;
   }
+
+  public boolean getReadyForPickup(){
+    return this.readyForPickup;
+  }
 }

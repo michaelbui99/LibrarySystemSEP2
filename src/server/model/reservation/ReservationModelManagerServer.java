@@ -24,7 +24,7 @@ public class ReservationModelManagerServer implements ReservationModelServer
     support = new PropertyChangeSupport(this);
   }
 
-  @Override public Reservation registerReservation(Material material,
+  @Override public void registerReservation(Material material,
       Borrower borrower)
   {
     if (MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(material.getMaterialID()) == 0)
@@ -33,10 +33,10 @@ public class ReservationModelManagerServer implements ReservationModelServer
           .getInstance().create(borrower, material);
       //Event is fired and caught in ReservationServer. ReservationSever redirects the event to the client using the Client Callback.
       support.firePropertyChange(EventTypes.RESERVATIONREGISTERED, null, reservation);
-      return reservation;
+
     }
     else
-      throw new IllegalStateException("Material has more than 1 available copies");
+      throw new IllegalStateException("Flere tilgængelige kopier, materialet kan lån i stedet");
   }
 
   @Override public void endReservation(Reservation reservation)

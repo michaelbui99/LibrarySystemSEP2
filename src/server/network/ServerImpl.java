@@ -52,7 +52,6 @@ public class ServerImpl implements Server
   }
 
   @Override public ReservationServer getReservationServer()
-      throws RemoteException
   {
     return new ReservationServerImpl();
   }

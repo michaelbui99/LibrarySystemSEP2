@@ -1,8 +1,6 @@
 package server.network.reservation;
 
-import client.core.ModelFactoryClient;
 import server.core.ModelFactoryServer;
-import shared.loan.Loan;
 import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
@@ -58,9 +56,9 @@ public class ReservationServerImpl implements ReservationServer
     ModelFactoryServer.getInstance().getReservationModelServer().endReservation(reservation);
   }
 
-  @Override public Reservation registerReservation(Material material,
+  @Override public void registerReservation(Material material,
       Borrower borrower) throws RemoteException
   {
-    return ModelFactoryServer.getInstance().getReservationModelServer().registerReservation(material,borrower);
+    ModelFactoryServer.getInstance().getReservationModelServer().registerReservation(material,borrower);
   }
 }

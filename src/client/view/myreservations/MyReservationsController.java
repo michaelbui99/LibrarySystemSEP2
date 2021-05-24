@@ -40,10 +40,7 @@ public class MyReservationsController
 
   @FXML void onReturnButton(ActionEvent event)
   {
-    //TODO: implement this
-    //Sets the binded textproperty to the loanId of the selected loan.
-    //    selectedLoanLabel.textProperty().setValue(String.valueOf(
-    //        loanTableView.getSelectionModel().getSelectedItem().getLoanID()));
+
     ViewModelFactory.getInstance().getMyReservationsVM().reservationProperty()
         .set(reservationTableView.getSelectionModel().getSelectedItem());
     reservationTableView.refresh();

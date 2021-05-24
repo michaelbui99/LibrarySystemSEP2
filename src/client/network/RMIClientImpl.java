@@ -1,6 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
+import shared.loan.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -78,7 +79,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   {
     try
     {
-      server.getReservationServer().registerReservation(material, borrower);
+  server.getReservationServer().registerReservation(material, borrower);
     }
     catch (RemoteException e)
     {
@@ -91,6 +92,23 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     try
     {
       return server.getLoanServer().getAllLoansByCPR(cpr);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
+  }
+
+  @Override public List<Reservation> getAllReservationsByCPR(String cpr)
+
+  {
+    try
+    {
+      return server.getReservationServer().getAllReservationsByCPR(cpr);
     }
     catch (RemoteException e)
     {

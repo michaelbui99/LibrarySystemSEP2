@@ -19,9 +19,6 @@ public class MyReservationsVM
 
   public MyReservationsVM()
   {
-    //TODO: Find ud af hvordan vi holder styr på hvem der er logget på.
-
-
     activeReservations = FXCollections.observableArrayList();
     cprProperty = new SimpleStringProperty(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr());
     if (ModelFactoryClient.getInstance().getReservationModelClient()
@@ -41,20 +38,8 @@ public class MyReservationsVM
                 System.out.println("RESERVATION REGISTERED CAUGHT");
               }
             });
-//    ModelFactoryClient.getInstance().getReservationModelClient()
-//        .addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED + cprProperty.get(),
-//            evt -> {
-//              if (((Reservation) evt.getNewValue()).getBorrower().getCpr().equals(cprProperty.get()))
-//              {
-//                activeReservations.removeIf(
-//                    activeReservation -> activeReservation.getReservationID() == ((Reservation) evt
-//                        .getNewValue()).getReservationID());
-//              }
-//            });
     reservationProperty = new SimpleObjectProperty<>();
   }
-
-
 
   public ObservableList<Reservation> getReservationList()
   {
