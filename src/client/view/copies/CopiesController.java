@@ -76,6 +76,7 @@ public class CopiesController
     else
     {
       ViewModelFactory.getInstance().getCopiesVM().deleteCopy();
+      onButtonSearch(actionEvent);
       errorLable.setVisible(false);
     }
   }
@@ -85,6 +86,7 @@ public class CopiesController
       ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
           searchTableView.getSelectionModel().getSelectedItem());
       ViewModelFactory.getInstance().getCopiesVM().addCopy();
+      onButtonSearch(actionEvent);
   }
 
   @FXML public void onButtonRemoveMaterial(ActionEvent actionEvent)
@@ -92,6 +94,7 @@ public class CopiesController
     ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
         searchTableView.getSelectionModel().getSelectedItem());
     ViewModelFactory.getInstance().getCopiesVM().deletMaterial();
+    onButtonSearch(actionEvent);
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)
