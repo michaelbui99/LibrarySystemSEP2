@@ -50,13 +50,13 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       if ((title == null) || (publisher == null) || (releaseDate == null) || (
           description == null) || (keywords == null || keywords
           .matches(".*\\d.*")) || (language == null || !language
-          .equals("Engelsk") || !language.equals("Dansk") || !language
+          .equals("Engelsk") && !language.equals("Dansk") && !language
           .equals("Arabisk") || language.matches(".*\\d.*")) || (genre == null
           || genre.matches(".*\\d.*")) || (targetAudience == null
-          || !targetAudience.equals("Vokesn") || !targetAudience.equals("Barn")
-          || !targetAudience.equals("Teenager") || !targetAudience
-          .equals("Familie") || !targetAudience.equals("Ældre")
-          || !targetAudience.equals("Studerende") || targetAudience
+          || !targetAudience.equals("Voksen") && !targetAudience.equals("Barn")
+          && !targetAudience.equals("Teenager") && !targetAudience
+          .equals("Familie") && !targetAudience.equals("Ældre")
+          && !targetAudience.equals("Studerende") || targetAudience
           .matches(".*\\d.*")))
       {
         throw new IllegalArgumentException();
