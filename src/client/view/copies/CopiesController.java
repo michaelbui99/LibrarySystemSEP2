@@ -32,8 +32,6 @@ public class CopiesController
 
   public void init()
   {
-    //TODO make the table view observer so when dellet or add copies it will update automatically.
-   //TODO add a label to display the total number of copies of a selected material.
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     publisherColumn
         .setCellValueFactory(new PropertyValueFactory<>("publisher"));
@@ -85,16 +83,33 @@ public class CopiesController
   {
       ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
           searchTableView.getSelectionModel().getSelectedItem());
+      if (searchTableView.getSelectionModel().getSelectedItem() == null)
+      {
+        errorLable.setText("Vælg først et materiale");
+        errorLable.setVisible(true);
+      }
+      else
+      {
       ViewModelFactory.getInstance().getCopiesVM().addCopy();
       onButtonSearch(actionEvent);
+      errorLable.setVisible(false);
+      }
   }
 
   @FXML public void onButtonRemoveMaterial(ActionEvent actionEvent)
   {
     ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
         searchTableView.getSelectionModel().getSelectedItem());
+    if (searchTableView.getSelectionModel().getSelectedItem() == null)
+    {
+      errorLable.setText("Vælg først et materiale");
+      errorLable.setVisible(true);
+    }
+    else
+    {
     ViewModelFactory.getInstance().getCopiesVM().deletMaterial();
     onButtonSearch(actionEvent);
+    }
   }
 
   @FXML public void onButtonCancel(ActionEvent actionEvent)
