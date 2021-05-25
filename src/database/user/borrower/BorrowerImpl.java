@@ -36,53 +36,64 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      if (AddressImpl.getInstence()
-          .getAddressId(address.getCity(), address.getStreetName(),
-              address.getZipCode(), address.getStreetNr()) == -1)
+      if ((cpr == null || cpr.getBytes().length != 11 || !cpr.matches(".*\\d.*")
+          || !cpr.contains("-")) || (firstName == null) || (lastName == null)
+          || (email == null || !email.contains("@")) || tlfNumber == null
+          || tlfNumber.getBytes().length != 0 && !tlfNumber.contains("+45") || (
+          address == null) || (password == null))
       {
-        Address ad = AddressImpl.getInstence()
-            .create(address.getCity(), address.getStreetName(),
-                address.getZipCode(), address.getStreetNr());
-        PreparedStatement stm = connection.prepareStatement(
-            //the table structure needs to change to the values from the query so we can test it
-            "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
-            PreparedStatement.RETURN_GENERATED_KEYS);
-        stm.setString(1, cpr);
-        stm.setString(2, firstName);
-        stm.setString(3, lastName);
-        stm.setString(4, email);
-        stm.setString(5, tlfNumber);
-        stm.setInt(6, ad.getAddressId());
-        stm.setString(7, password);
-        stm.executeUpdate();
-        ResultSet keys = stm.getGeneratedKeys();
-        keys.next();
-        connection.commit();
-        return new Borrower(cpr, firstName, lastName, email, tlfNumber, address,
-            password);
+        throw new IllegalArgumentException();
       }
       else
       {
-        int adId = AddressImpl.getInstence()
+        if (AddressImpl.getInstence()
             .getAddressId(address.getCity(), address.getStreetName(),
-                address.getZipCode(), address.getStreetNr());
-        PreparedStatement stm = connection.prepareStatement(
-            //the table structure needs to change to the values from the query so we can test it
-            "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
-            PreparedStatement.RETURN_GENERATED_KEYS);
-        stm.setString(1, cpr);
-        stm.setString(2, firstName);
-        stm.setString(3, lastName);
-        stm.setString(4, email);
-        stm.setString(5, tlfNumber);
-        stm.setInt(6, adId);
-        stm.setString(7, password);
-        stm.executeUpdate();
-        ResultSet keys = stm.getGeneratedKeys();
-        keys.next();
-        connection.commit();
-        return new Borrower(cpr, firstName, lastName, email, tlfNumber, address,
-            password);
+                address.getZipCode(), address.getStreetNr()) == -1)
+        {
+          Address ad = AddressImpl.getInstence()
+              .create(address.getCity(), address.getStreetName(),
+                  address.getZipCode(), address.getStreetNr());
+          PreparedStatement stm = connection.prepareStatement(
+              //the table structure needs to change to the values from the query so we can test it
+              "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
+              PreparedStatement.RETURN_GENERATED_KEYS);
+          stm.setString(1, cpr);
+          stm.setString(2, firstName);
+          stm.setString(3, lastName);
+          stm.setString(4, email);
+          stm.setString(5, tlfNumber);
+          stm.setInt(6, ad.getAddressId());
+          stm.setString(7, password);
+          stm.executeUpdate();
+          ResultSet keys = stm.getGeneratedKeys();
+          keys.next();
+          connection.commit();
+          return new Borrower(cpr, firstName, lastName, email, tlfNumber,
+              address, password);
+        }
+        else
+        {
+          int adId = AddressImpl.getInstence()
+              .getAddressId(address.getCity(), address.getStreetName(),
+                  address.getZipCode(), address.getStreetNr());
+          PreparedStatement stm = connection.prepareStatement(
+              //the table structure needs to change to the values from the query so we can test it
+              "INSERT INTO Borrower(cpr_no,f_name,l_name, email, tel_no, address_id, password) values (?,?,?,?,?,?,?)",
+              PreparedStatement.RETURN_GENERATED_KEYS);
+          stm.setString(1, cpr);
+          stm.setString(2, firstName);
+          stm.setString(3, lastName);
+          stm.setString(4, email);
+          stm.setString(5, tlfNumber);
+          stm.setInt(6, adId);
+          stm.setString(7, password);
+          stm.executeUpdate();
+          ResultSet keys = stm.getGeneratedKeys();
+          keys.next();
+          connection.commit();
+          return new Borrower(cpr, firstName, lastName, email, tlfNumber,
+              address, password);
+        }
       }
     }
   }
@@ -92,6 +103,13 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
+      if ((cprNo == null || cprNo.getBytes().length != 11 || !cprNo.matches(".*\\d.*")
+          || !cprNo.contains("-")) || (password == null))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
       // writing the sql query
       PreparedStatement stm = connection.prepareStatement(
           "SELECT cpr_no, password FROM borrower WHERE cpr_no = ? AND password = ?;");
@@ -104,6 +122,7 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
       }
     }
     return false;
+      }
   }
 
   @Override public Borrower getBorrower(String sprNo) throws SQLException
@@ -138,7 +157,8 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
     }
   }
 
-  @Override public boolean borrowerEmailAlreadyExists(String email) throws SQLException
+  @Override public boolean borrowerEmailAlreadyExists(String email)
+      throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -168,8 +188,8 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM borrower WHERE cpr_no = ? AND email = ? AND tel_no = ?");
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT * FROM borrower WHERE cpr_no = ? AND email = ? AND tel_no = ?");
       stm.setString(1, cpr);
       stm.setString(2, email);
       stm.setString(3, phone);

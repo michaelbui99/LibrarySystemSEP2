@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class DatabaseBuilder extends BaseDAO
 {
 
-  public void createDunnyDataWithoutInfo() throws SQLException
+  public void createDummyDataWithoutInfo() throws SQLException
   {
     try (Connection connection = getConnection())
     {

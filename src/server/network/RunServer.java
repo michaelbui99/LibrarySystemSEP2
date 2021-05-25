@@ -14,7 +14,7 @@ public class RunServer
       throws RemoteException, AlreadyBoundException
   {
     Server server = new ServerImpl();
-    Registry registry = LocateRegistry.createRegistry(1090);
+    Registry registry = LocateRegistry.createRegistry(1099);
     registry.bind(Constants.RMISERVER, server);
     System.out.println("Server started...");
   }
