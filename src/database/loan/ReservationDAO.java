@@ -16,4 +16,5 @@ public interface ReservationDAO
       NoSuchElementException;
   List<Reservation> getAllReservationsByCPR(String cpr);
   void endReservation(Reservation reservation);
+  boolean hasReservations(int materialID);
 }

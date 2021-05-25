@@ -30,7 +30,7 @@ public class LoanModelManagerServer implements LoanModelServer
     try
     {
       Loan loan = LoanDAOImpl.getInstance()
-          .create(material, borrower,null, LocalDate.now().toString());
+          .create(material, borrower, null, LocalDate.now().toString());
       //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
       support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
     }
@@ -41,12 +41,21 @@ public class LoanModelManagerServer implements LoanModelServer
     }
   }
 
-
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
     try
     {
-      return LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
+      List<Loan> loans = LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
+      for (Loan loan : loans)
+      {
+        //Loops through the loan and checks if the material has a loan.
+        if (ReservationDAOImpl.getInstance()
+            .hasReservations(loan.getMaterial().getMaterialID()))
+        {
+          loan.setMaterialHasReservation(true);
+        }
+      }
+      return loans;
     }
     catch (NoSuchElementException e)
     {
@@ -60,6 +69,25 @@ public class LoanModelManagerServer implements LoanModelServer
     support.firePropertyChange(EventTypes.LOANENDED, null, loan);
   }
 
+  @Override public void extendLoan(Loan loan)
+  {
+    try
+    {
+      //Checks if the Material of the Loan has any reservations and updates it's field variable before trying to extend the loan.
+      loan.setMaterialHasReservation(ReservationDAOImpl.getInstance()
+          .hasReservations(loan.getMaterial().getMaterialID()));
+      loan.extendLoan();
+      Loan extendedLoan = LoanDAOImpl.getInstance().extendLoan(loan);
+      support.firePropertyChange(EventTypes.LOANEXTENDED, null, extendedLoan);
+    }
+    catch (IllegalStateException e)
+    {
+      /*Redirects the error message in event, if the Loan cannot be extended. Loan is passed as old
+      * value to be used for CPR check, such that the error is only shown to the specific user.
+      * */
+      support.firePropertyChange(EventTypes.LOANEXTENDERROR, loan, e.getMessage());
+    }
+  }
 
   @Override public void addPropertyChangeListener(String name,
       PropertyChangeListener listener)

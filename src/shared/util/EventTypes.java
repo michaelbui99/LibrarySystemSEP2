@@ -12,4 +12,6 @@ public class EventTypes
   public static final String MATERIALFOUND = "MaterialFound";
   public static final String RESERVATIONREGISTERED = "ReservationRegistered";
   public static final String RESERVATIONCANCELLED = "ReservationCancelled";
+  public static final String LOANEXTENDED = "LoanExtended";
+  public static final String LOANEXTENDERROR = "LoanExtendError";
 }

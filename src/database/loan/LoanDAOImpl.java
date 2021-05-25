@@ -1,5 +1,8 @@
 package database.loan;
 
+import client.model.loan.loanstates.ExtendedLoan1State;
+import client.model.loan.loanstates.ExtendedLoan2State;
+import client.model.loan.loanstates.NewLoanState;
 import database.material.MaterialCopyDAOImpl;
 import database.material.MaterialDAO;
 import database.material.MaterialDAOImpl;
@@ -54,13 +57,17 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       try (Connection connection = getConnection())
       {
 
-        if (!MaterialDAOImpl.getInstance().materialExistInDB(material.getMaterialID()) || MaterialDAOImpl.getInstance().getCopyNumberForMaterial(material.getMaterialID()) == 0)
+        if (!MaterialDAOImpl.getInstance()
+            .materialExistInDB(material.getMaterialID()) ||
+            MaterialDAOImpl.getInstance()
+                .getCopyNumberForMaterial(material.getMaterialID()) == 0)
         {
           throw new NoSuchElementException("Materialet eksisterer ikke");
         }
 
         //Create a new loan if an there exists an available copy of the material.
-        if (MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID()))
+        if (MaterialDAOImpl.getInstance()
+            .checkIfCopyAvailable(material.getMaterialID()))
         {
           LocalDate today = LocalDate.now();
           //Sets deadline to be one month after loan date.
@@ -87,11 +94,12 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
           stm2.executeUpdate();
 
           connection.commit();
-          return new Loan(material, borrower, loanDeadline.toString(), loanDate, null,
-              generatedKey);
+          return new Loan(material, borrower, loanDeadline.toString(), loanDate,
+              null, generatedKey);
         }
         else
-          throw new IllegalStateException("Ingen tilgængelige kopier, materialet kan reserveres i stedet");
+          throw new IllegalStateException(
+              "Ingen tilgængelige kopier, materialet kan reserveres i stedet");
       }
     }
     catch (SQLException throwables)
@@ -152,12 +160,24 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
                   bookLoans.getString(28), bookLoans.getString(29),
                   String.valueOf(bookLoans.getDate("dob")),
                   bookLoans.getString("country")));
-
           Loan loan = new Loan(book, borrower,
               String.valueOf(bookLoans.getDate("deadline")),
               String.valueOf(bookLoans.getDate("loan_date")),
               String.valueOf(bookLoans.getDate("return_date")),
               bookLoans.getInt("loan_no"));
+          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          switch (numberOfExtensions)
+          {
+            case 0:
+              loan.setLoanState(new NewLoanState());
+              break;
+            case 1:
+              loan.setLoanState(new ExtendedLoan1State());
+              break;
+            case 2:
+              loan.setLoanState(new ExtendedLoan2State());
+              break;
+          }
           loans.add(loan);
         }
         //Get all loans where material is known to be audiobook
@@ -187,6 +207,20 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(audiobookLoans.getDate("loan_date")),
               String.valueOf(audiobookLoans.getDate("return_date")),
               audiobookLoans.getInt("loan_no"));
+
+          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          switch (numberOfExtensions)
+          {
+            case 0:
+              loan.setLoanState(new NewLoanState());
+              break;
+            case 1:
+              loan.setLoanState(new ExtendedLoan1State());
+              break;
+            case 2:
+              loan.setLoanState(new ExtendedLoan2State());
+              break;
+          }
           loans.add(loan);
         }
         //Get all loans where material is known to be DVD
@@ -213,6 +247,20 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(dvdLoans.getDate("loan_date")),
               String.valueOf(dvdLoans.getDate("return_date")),
               dvdLoans.getInt("loan_no"));
+
+          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          switch (numberOfExtensions)
+          {
+            case 0:
+              loan.setLoanState(new NewLoanState());
+              break;
+            case 1:
+              loan.setLoanState(new ExtendedLoan1State());
+              break;
+            case 2:
+              loan.setLoanState(new ExtendedLoan2State());
+              break;
+          }
           loans.add(loan);
         }
         //Get all loans where Material is known to be CD
@@ -239,6 +287,20 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(cdLoans.getDate("loan_date")),
               String.valueOf(cdLoans.getDate("return_date")),
               cdLoans.getInt("loan_no"));
+
+          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          switch (numberOfExtensions)
+          {
+            case 0:
+              loan.setLoanState(new NewLoanState());
+              break;
+            case 1:
+              loan.setLoanState(new ExtendedLoan1State());
+              break;
+            case 2:
+              loan.setLoanState(new ExtendedLoan2State());
+              break;
+          }
           loans.add(loan);
         }
         //Get all loans where material is known to be Ebook.
@@ -253,9 +315,9 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               ebookLoans.getString("publisher"),
               String.valueOf(ebookLoans.getDate("release_date")),
               ebookLoans.getString("description_of_the_content"), null,
-              ebookLoans.getString("audience"), ebookLoans.getString("language_"),
-              ebookLoans.getInt("page_no"), ebookLoans.getString("license_no"),
-              ebookLoans.getString("genre"),
+              ebookLoans.getString("audience"),
+              ebookLoans.getString("language_"), ebookLoans.getInt("page_no"),
+              ebookLoans.getString("license_no"), ebookLoans.getString("genre"),
               new MaterialCreator(ebookLoans.getInt("person_id"),
                   ebookLoans.getString(26), ebookLoans.getString(27),
                   String.valueOf(ebookLoans.getDate("dob")),
@@ -265,6 +327,21 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(ebookLoans.getDate("loan_date")),
               String.valueOf(ebookLoans.getDate("return_date")),
               ebookLoans.getInt("loan_no"));
+
+          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          switch (numberOfExtensions)
+          {
+            case 0:
+              loan.setLoanState(new NewLoanState());
+              break;
+            case 1:
+              loan.setLoanState(new ExtendedLoan1State());
+              break;
+            case 2:
+              loan.setLoanState(new ExtendedLoan2State());
+              break;
+          }
+
           loans.add(loan);
         }
 
@@ -279,7 +356,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     catch (SQLException throwables)
     {
       throwables.printStackTrace();
-    } return null;
+    }
+    return null;
   }
 
   @Override public void endLoan(Loan loan)
@@ -293,7 +371,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
             "UPDATE loan set return_date = CURRENT_DATE where loan_no = ?");
         stm.setInt(1, loan.getLoanID());
         stm.executeUpdate();
-        PreparedStatement stm2 = connection.prepareStatement("UPDATE material_copy set available = true where material_id = ? and copy_no = ? ;");
+        PreparedStatement stm2 = connection.prepareStatement(
+            "UPDATE material_copy set available = true where material_id = ? and copy_no = ? ;");
         stm2.setInt(1, loan.getMaterial().getMaterialID());
         stm2.setInt(2, loan.getMaterial().getCopyNumber());
         stm2.executeUpdate();
@@ -314,12 +393,15 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       LocalDate oldDeadline = LocalDate.parse(loan.getDeadline(), formatter);
       LocalDate newDeadline = oldDeadline.plusMonths(1);
 
-      PreparedStatement stm = connection.prepareStatement("UPDATE loan SET deadline = ? where loan_no = ?");
+      PreparedStatement stm = connection.prepareStatement(
+          "UPDATE loan SET deadline = ? and numberofextension = numberofextension+1 where loan_no = ?");
       stm.setDate(1, Date.valueOf(newDeadline));
       stm.setInt(2, loan.getLoanID());
       stm.executeUpdate();
       connection.commit();
-      return new Loan(loan.getMaterial(), loan.getBorrower(), newDeadline.toString(), loan.getLoanDate(), null, loan.getLoanID());
+      return new Loan(loan.getMaterial(), loan.getBorrower(),
+          newDeadline.toString(), loan.getLoanDate(), null, loan.getLoanID(),
+          loan.getLoanState());
     }
     catch (SQLException throwables)
     {

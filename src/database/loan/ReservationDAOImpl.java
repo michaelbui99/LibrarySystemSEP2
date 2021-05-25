@@ -86,11 +86,11 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
       if (!MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID()) && canReserve(borrower,material))
       {
         LocalDate today = LocalDate.now();
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (material_id, cpr_no, reservation_date, copy_no) values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (material_id, cpr_no, reservation_date) values (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         stm.setInt(1, material.getMaterialID());
         stm.setString(2, borrower.getCpr());
         stm.setDate(3,Date.valueOf(today));
-        stm.setInt(4, getCopyNoForMaterial(material));
+//        stm.setInt(4, getCopyNoForMaterial(material));
         stm.executeUpdate();
         connection.commit();
         ResultSet keys = stm.getGeneratedKeys();
@@ -98,7 +98,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         return new Reservation(material, borrower, today, keys.getInt("reservation_id"), false);
       }
       else
-        throw new IllegalStateException("du har allered reserveret dette materiale");
+        throw new IllegalStateException("Du har allerede reserveret dette materiale");
     }
     catch (SQLException throwables)
     {
@@ -267,6 +267,23 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     {
       throwables.printStackTrace();
     }
+  }
+
+  @Override public boolean hasReservations(int materialID)
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("SELECT * from reservation where materialID = ? ");
+      stm.setInt(1, materialID);
+      ResultSet result = stm.executeQuery();
+
+      return result.next();
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return false;
   }
 
 }

@@ -37,4 +37,13 @@ public interface LoanModelServer extends PropertyChangeSubject
    * @param loan is the Loan which is to be ended.
    */
   void endLoan(Loan loan);
+
+  /**
+  * Extends the deadline of the loan by 1 month.
+   * The Loan can only be extended 2 times total and cannot be extended if the Material of the Loan has any reservations.
+   *
+   * @param loan is the Loan which is to be extended by one month.
+   * @throws IllegalStateException if the Loan has already been extended 2 times or the Material of the Loan has a reservation.
+  * */
+  void extendLoan(Loan loan) throws IllegalStateException;
 }

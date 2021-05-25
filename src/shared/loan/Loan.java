@@ -18,20 +18,15 @@ public class Loan implements Serializable
   private int loanID;
   private String materialType;
   private static final long serialVersionUID = -1663825955959143816L;
-//  public Loan(int loanID, int materialID, int copyNumber, String cpr, String loanDate, String deadline, String title, int numberOfExtensions)
-//  {
-//    this.loanID = loanID;
-//    this.materialID = materialID;
-//    this.copyNumber = copyNumber;
-//    this.cpr = cpr;
-//    this.title = title;
-//    this.loanDate = loanDate;
-//    this.deadline = deadline;
-//    this.numberOfExtensions = numberOfExtensions;
-//  }
+  private boolean materialHasReservation;
 
   public Loan(Material material, Borrower borrower, String deadline, String loanDate, String returnDate, int loanID)
   {
+    if (material == null || borrower == null || deadline == null || loanDate == null || loanID <= 0)
+    {
+      throw new IllegalArgumentException();
+    }
+
     this.material = material;
     this.borrower = borrower;
     this.deadline = deadline;
@@ -41,6 +36,25 @@ public class Loan implements Serializable
     setLoanState(new NewLoanState());
     materialType = material.getMaterialType();
   }
+
+  public Loan(Material material, Borrower borrower, String deadline, String loanDate, String returnDate, int loanID, LoanState loanstate)
+  {
+    if (material == null || borrower == null || deadline == null || loanDate == null || loanID <= 0)
+    {
+      throw new IllegalArgumentException();
+    }
+
+    this.material = material;
+    this.borrower = borrower;
+    this.deadline = deadline;
+    this.loanDate = loanDate;
+    this.returnDate = returnDate;
+    this.loanID = loanID;
+    setLoanState(new NewLoanState());
+    materialType = material.getMaterialType();
+    this.loanState = loanstate;
+  }
+
 
   public void setLoanState(LoanState loanState)
   {
@@ -82,6 +96,22 @@ public class Loan implements Serializable
   {
     return returnDate;
   }
+
+  public boolean materialHasReservation()
+  {
+    return materialHasReservation;
+  }
+
+  public void setMaterialHasReservation(boolean materialHasReservation)
+  {
+    this.materialHasReservation = materialHasReservation;
+  }
+
+  public LoanState getLoanState()
+  {
+    return loanState;
+  }
+
   //
 //  public void setReturnDate(String returnDate)
 //  {
