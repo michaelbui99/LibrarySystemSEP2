@@ -41,43 +41,50 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
   {
     try (Connection connection = getConnection())
     {
-      if (MaterialCreatorImpl.getInstance()
-          .getCreatorId(author.getfName(), author.getlName(), author.getDob(),
-              author.getCountry()) == -1)
+      if (page_no <= 0 || author == null || license_no <= 0)
       {
-        MaterialCreator mc = MaterialCreatorImpl.getInstance()
-            .create(author.getfName(), author.getlName(), author.getDob(),
-                author.getCountry());
-
-        PreparedStatement stm = connection.prepareStatement(
-            "INSERT INTO e_book (material_id, page_no, license_no, author) values (?,?,?,?)",
-            PreparedStatement.RETURN_GENERATED_KEYS);
-        stm.setInt(1, material_id);
-        stm.setInt(2, page_no);
-        stm.setInt(3, license_no);
-        stm.setInt(4, mc.getPersonId());
-        stm.executeUpdate();
-        ResultSet keys = stm.getGeneratedKeys();
-        keys.next();
-        connection.commit();
+        throw new IllegalArgumentException();
       }
       else
       {
-        int mcId = MaterialCreatorImpl.getInstance()
+        if (MaterialCreatorImpl.getInstance()
             .getCreatorId(author.getfName(), author.getlName(), author.getDob(),
-                author.getCountry());
+                author.getCountry()) == -1)
+        {
+          MaterialCreator mc = MaterialCreatorImpl.getInstance()
+              .create(author.getfName(), author.getlName(), author.getDob(),
+                  author.getCountry());
 
-        PreparedStatement stm = connection.prepareStatement(
-            "INSERT INTO e_book (material_id, page_no, license_no, author) values (?,?,?,?)",
-            PreparedStatement.RETURN_GENERATED_KEYS);
-        stm.setInt(1, material_id);
-        stm.setInt(2, page_no);
-        stm.setInt(3, license_no);
-        stm.setInt(4, mcId);
-        stm.executeUpdate();
-        ResultSet keys = stm.getGeneratedKeys();
-        keys.next();
-        connection.commit();
+          PreparedStatement stm = connection.prepareStatement(
+              "INSERT INTO e_book (material_id, page_no, license_no, author) values (?,?,?,?)",
+              PreparedStatement.RETURN_GENERATED_KEYS);
+          stm.setInt(1, material_id);
+          stm.setInt(2, page_no);
+          stm.setInt(3, license_no);
+          stm.setInt(4, mc.getPersonId());
+          stm.executeUpdate();
+          ResultSet keys = stm.getGeneratedKeys();
+          keys.next();
+          connection.commit();
+        }
+        else
+        {
+          int mcId = MaterialCreatorImpl.getInstance()
+              .getCreatorId(author.getfName(), author.getlName(),
+                  author.getDob(), author.getCountry());
+
+          PreparedStatement stm = connection.prepareStatement(
+              "INSERT INTO e_book (material_id, page_no, license_no, author) values (?,?,?,?)",
+              PreparedStatement.RETURN_GENERATED_KEYS);
+          stm.setInt(1, material_id);
+          stm.setInt(2, page_no);
+          stm.setInt(3, license_no);
+          stm.setInt(4, mcId);
+          stm.executeUpdate();
+          ResultSet keys = stm.getGeneratedKeys();
+          keys.next();
+          connection.commit();
+        }
       }
     }
   }
@@ -106,15 +113,12 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
         String materialKeywords = String.join(", ", materialKeywordList);
 
         return new EBook(eBookDetails.getInt("material_id"),
-            eBookDetails.getInt("copy_no"),
-            eBookDetails.getString("title"),
+            eBookDetails.getInt("copy_no"), eBookDetails.getString("title"),
             eBookDetails.getString("publisher"),
             String.valueOf(eBookDetails.getDate("release_date")),
             eBookDetails.getString("description_of_the_content"),
-            materialKeywords,
-            eBookDetails.getString("audience"),
-            eBookDetails.getString("language_"),
-            eBookDetails.getInt("page_no"),
+            materialKeywords, eBookDetails.getString("audience"),
+            eBookDetails.getString("language_"), eBookDetails.getInt("page_no"),
             eBookDetails.getString("license_no"),
             eBookDetails.getString("genre"),
             //keys.getString("author"),
@@ -242,8 +246,8 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
         {
 
           EBook eBook = new EBook(resultSet.getInt("material_id"),
-              resultSet.getInt("copy_no"),
-              resultSet.getString("title"), resultSet.getString("publisher"),
+              resultSet.getInt("copy_no"), resultSet.getString("title"),
+              resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"),
               resultSet.getString("keyword"), resultSet.getString("audience"),
@@ -273,7 +277,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
   @Override public void deleteEBookCopy(int materialID, int copyNumber)
       throws SQLException
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
           "DELETE FROM material_copy WHERE material_id = ? AND copy_no = ?",

@@ -46,7 +46,7 @@ public class MaterialServerImpl implements MaterialServer
     ModelFactoryServer.getInstance().getMaterialModel()
         .registerBook(title, publisher, releaseDate, description, tags,
             targetAudience, language, isbn, pageCount, place, author, genre,
-            url, keywards);
+            url);
   }
 
   @Override public void createBookCopy(int materialID)

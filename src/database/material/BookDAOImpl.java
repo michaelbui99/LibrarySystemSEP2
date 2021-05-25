@@ -44,52 +44,60 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
   {
     try (Connection connection = getConnection())
     {
-      if ((MaterialCreatorImpl.getInstance()
-          .getCreatorId(author.getfName(), author.getlName(), author.getDob(),
-              author.getCountry()) == -1) || (PlaceImpl.getInstance()
-          .getPlaceID(place.getHallNo(), place.getDepartment(),
-              place.getCreatorLName(), place.getGenre())) == -1)
+      if ((isbn == null || !isbn.matches(".*\\d.*")) || (pageCount <= 0) || (
+          author == null) || (place == null))
       {
-        MaterialCreator mc = MaterialCreatorImpl.getInstance()
-            .create(author.getfName(), author.getlName(), author.getDob(),
-                author.getCountry());
-        Place p = PlaceImpl.getInstance()
-            .create(place.getHallNo(), place.getDepartment(),
-                place.getCreatorLName(), place.getGenre());
-        PreparedStatement stm = connection.prepareStatement(
-            "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
-            PreparedStatement.RETURN_GENERATED_KEYS);
-        stm.setInt(1, materialID);
-        stm.setInt(2, pageCount);
-        stm.setInt(3, mc.getPersonId());
-        stm.setString(4, isbn);
-        stm.setInt(5, p.getPlaceId());
-        stm.executeUpdate();
-        ResultSet keys = stm.getGeneratedKeys();
-        keys.next();
-        connection.commit();
+        throw new IllegalArgumentException();
       }
       else
       {
-        int mcId = MaterialCreatorImpl.getInstance()
+        if ((MaterialCreatorImpl.getInstance()
             .getCreatorId(author.getfName(), author.getlName(), author.getDob(),
-                author.getCountry());
-        int pId = PlaceImpl.getInstance()
+                author.getCountry()) == -1) || (PlaceImpl.getInstance()
             .getPlaceID(place.getHallNo(), place.getDepartment(),
-                place.getCreatorLName(), place.getGenre());
+                place.getCreatorLName(), place.getGenre())) == -1)
+        {
+          MaterialCreator mc = MaterialCreatorImpl.getInstance()
+              .create(author.getfName(), author.getlName(), author.getDob(),
+                  author.getCountry());
+          Place p = PlaceImpl.getInstance()
+              .create(place.getHallNo(), place.getDepartment(),
+                  place.getCreatorLName(), place.getGenre());
+          PreparedStatement stm = connection.prepareStatement(
+              "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
+              PreparedStatement.RETURN_GENERATED_KEYS);
+          stm.setInt(1, materialID);
+          stm.setInt(2, pageCount);
+          stm.setInt(3, mc.getPersonId());
+          stm.setString(4, isbn);
+          stm.setInt(5, p.getPlaceId());
+          stm.executeUpdate();
+          ResultSet keys = stm.getGeneratedKeys();
+          keys.next();
+          connection.commit();
+        }
+        else
+        {
+          int mcId = MaterialCreatorImpl.getInstance()
+              .getCreatorId(author.getfName(), author.getlName(),
+                  author.getDob(), author.getCountry());
+          int pId = PlaceImpl.getInstance()
+              .getPlaceID(place.getHallNo(), place.getDepartment(),
+                  place.getCreatorLName(), place.getGenre());
 
-        PreparedStatement stm = connection.prepareStatement(
-            "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
-            PreparedStatement.RETURN_GENERATED_KEYS);
-        stm.setInt(1, materialID);
-        stm.setInt(2, pageCount);
-        stm.setInt(3, mcId);
-        stm.setString(4, isbn);
-        stm.setInt(5, pId);
-        stm.executeUpdate();
-        ResultSet keys = stm.getGeneratedKeys();
-        keys.next();
-        connection.commit();
+          PreparedStatement stm = connection.prepareStatement(
+              "INSERT INTO BOOK(material_id, page_no, author, isbn, place_id) values (?,?,?,?,?)",
+              PreparedStatement.RETURN_GENERATED_KEYS);
+          stm.setInt(1, materialID);
+          stm.setInt(2, pageCount);
+          stm.setInt(3, mcId);
+          stm.setString(4, isbn);
+          stm.setInt(5, pId);
+          stm.executeUpdate();
+          ResultSet keys = stm.getGeneratedKeys();
+          keys.next();
+          connection.commit();
+        }
       }
     }
   }
@@ -117,25 +125,21 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
             .getKeywordsForMaterial(bookDetails.getInt("material_id"));
         String materialKeywords = String.join(", ", materialKeywordList);
 
-
         return new Book(bookDetails.getInt("material_id"),
-            bookDetails.getInt("copy_no"),
-            bookDetails.getString("title"),
+            bookDetails.getInt("copy_no"), bookDetails.getString("title"),
             bookDetails.getString("publisher"),
             String.valueOf(bookDetails.getDate("release_date")),
             bookDetails.getString("description_of_the_content"),
-            materialKeywords,
-            bookDetails.getString("audience"),
-            bookDetails.getString( "language_"),
-            bookDetails.getString("isbn"),
+            materialKeywords, bookDetails.getString("audience"),
+            bookDetails.getString("language_"), bookDetails.getString("isbn"),
             bookDetails.getInt("page_no"),
             new Place(bookDetails.getInt("hall_no"),
                 bookDetails.getString("department"),
                 bookDetails.getString("creator_l_name"),
                 bookDetails.getString("genre")),
             new MaterialCreator(bookDetails.getString("f_name"),
-                bookDetails.getString("l_name"), String.valueOf(
-                    bookDetails.getDate("dob")),
+                bookDetails.getString("l_name"),
+                String.valueOf(bookDetails.getDate("dob")),
                 bookDetails.getString("country")));
       }
       return null;
@@ -263,13 +267,14 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return ml;
   }
 
-  @Override public void deleteBookCopy(int materialID, int copyNumber) throws SQLException
+  @Override public void deleteBookCopy(int materialID, int copyNumber)
+      throws SQLException
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
           "DELETE FROM material_copy WHERE material_id = ? AND copy_no = ?",
-      PreparedStatement.RETURN_GENERATED_KEYS);
+          PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, materialID);
       stm.setInt(2, copyNumber);
       stm.executeUpdate();

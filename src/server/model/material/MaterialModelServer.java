@@ -13,7 +13,7 @@ public interface MaterialModelServer extends PropertyChangeSubject
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       String isbn, int pageCount, Place place, MaterialCreator author,
-      String genre, String url, String keywards);
+      String genre, String url);
 
   void createBookCopy(int materialID);
 

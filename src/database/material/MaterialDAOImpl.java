@@ -47,45 +47,62 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO Material ( title, audience, description_of_the_content, publisher,  language_, release_date, genre, url) values (?,?,?,?,?,?,?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      stm.setString(1, title);
-      stm.setString(2, targetAudience);
-      stm.setString(3, description);
-      stm.setString(4, publisher);
-      stm.setString(5, language);
-      stm.setDate(6, Date.valueOf(releaseDate));
-      stm.setString(7, genre);
-      stm.setString(8, url);
-
-      stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
-      keys.next();
-
-      if (keywords.contains(", "))
+      if ((title == null) || (publisher == null) || (releaseDate == null) || (
+          description == null) || (keywords == null || keywords
+          .matches(".*\\d.*")) || (language == null || !language
+          .equals("Engelsk") || !language.equals("Dansk") || !language
+          .equals("Arabisk") || language.matches(".*\\d.*")) || (genre == null
+          || genre.matches(".*\\d.*")) || (targetAudience == null
+          || !targetAudience.equals("Vokesn") || !targetAudience.equals("Barn")
+          || !targetAudience.equals("Teenager") || !targetAudience
+          .equals("Familie") || !targetAudience.equals("Ældre")
+          || !targetAudience.equals("Studerende") || targetAudience
+          .matches(".*\\d.*")))
       {
-        String[] keywordsArray = keywords.split(", ");
-        for (int i = 0; i < keywordsArray.length; i++)
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO Material ( title, audience, description_of_the_content, publisher,  language_, release_date, genre, url) values (?,?,?,?,?,?,?,?)",
+            PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setString(1, title);
+        stm.setString(2, targetAudience);
+        stm.setString(3, description);
+        stm.setString(4, publisher);
+        stm.setString(5, language);
+        stm.setDate(6, Date.valueOf(releaseDate));
+        stm.setString(7, genre);
+        stm.setString(8, url);
+
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        keys.next();
+
+        if (keywords.contains(", "))
+        {
+          String[] keywordsArray = keywords.split(", ");
+          for (int i = 0; i < keywordsArray.length; i++)
+          {
+            PreparedStatement stm2 = connection.prepareStatement(
+                "INSERT INTO material_keywords (material_id, keyword) VALUES (?,?)");
+            stm2.setInt(1, keys.getInt(1));
+            stm2.setString(2, keywordsArray[i]);
+            stm2.executeUpdate();
+          }
+        }
+        else
         {
           PreparedStatement stm2 = connection.prepareStatement(
               "INSERT INTO material_keywords (material_id, keyword) VALUES (?,?)");
           stm2.setInt(1, keys.getInt(1));
-          stm2.setString(2, keywordsArray[i]);
+          stm2.setString(2, keywords);
           stm2.executeUpdate();
         }
+        connection.commit();
+        MaterialCopyDAOImpl.getInstance().create(keys.getInt(1), 1);
+        return keys.getInt(1);
       }
-      else
-      {
-        PreparedStatement stm2 = connection.prepareStatement(
-            "INSERT INTO material_keywords (material_id, keyword) VALUES (?,?)");
-        stm2.setInt(1, keys.getInt(1));
-        stm2.setString(2, keywords);
-        stm2.executeUpdate();
-      }
-      connection.commit();
-      MaterialCopyDAOImpl.getInstance().create(keys.getInt(1), 1);
-      return keys.getInt(1);
     }
   }
 
@@ -222,11 +239,11 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
   @Override public void deleteMaterial(int materialID)
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "DELETE FROM material WHERE material_id = ?",
-          PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement stm = connection
+          .prepareStatement("DELETE FROM material WHERE material_id = ?",
+              PreparedStatement.RETURN_GENERATED_KEYS);
       stm.setInt(1, materialID);
       stm.executeUpdate();
       ResultSet keys = stm.getGeneratedKeys();
