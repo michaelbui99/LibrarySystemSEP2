@@ -29,15 +29,14 @@ public class MaterialModelManagerServer implements MaterialModelServer
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
-      Place place, MaterialCreator author, String genre, String url,
-      String keywards)
+      Place place, MaterialCreator author, String genre, String url)
   {
     int materialID = 0;
     try
     {
       materialID = MaterialDAOImpl.getInstance()
           .create(title, publisher, releaseDate, description, targetAudience,
-              language, genre, url, keywards);
+              language, genre, url, tags);
       BookDAOImpl.getInstance()
           .create(materialID, isbn, pageCount, author, place);
     }
