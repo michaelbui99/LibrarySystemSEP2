@@ -49,4 +49,13 @@ public interface LoanServer extends Remote
    */
   void registerClientCallBack(ClientCallback client) throws RemoteException;
 
+  /**
+   * Extends the deadline of the loan by 1 month.
+   * The Loan can only be extended 2 times total and cannot be extended if the Material of the Loan has any reservations.
+   * Loans can at earliest be extended 7 days before deadline.
+   *
+   * @param loan is the Loan which is to be extended by one month.
+   * */
+  void extendLoan(Loan loan) throws RemoteException;
+
 }

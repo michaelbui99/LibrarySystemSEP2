@@ -1,6 +1,6 @@
 package shared.servers;
 
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 

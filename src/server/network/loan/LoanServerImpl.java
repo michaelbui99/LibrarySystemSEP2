@@ -41,6 +41,10 @@ public class LoanServerImpl implements LoanServer
     return ModelFactoryServer.getInstance().getLoanModel().getAllLoansByCPR(cpr);
   }
 
+  @Override public void extendLoan(Loan loan)
+  {
+    ModelFactoryServer.getInstance().getLoanModel().extendLoan(loan);
+  }
 
   @Override public void endLoan(Loan loan)
   {
@@ -93,12 +97,23 @@ public class LoanServerImpl implements LoanServer
     {
       @Override public void propertyChange(PropertyChangeEvent evt)
       {
-
+        try
+        {
+          client.loanUpdate(evt);
+        }
+        catch (RemoteException e)
+        {
+          e.printStackTrace();
+          ModelFactoryServer.getInstance().getLoanModel().removePropertyChangeListener(this);
+        }
       }
     };
     ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANREGISTERED, listenerLoanRegister);
     ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANENDED, listenerLoanEnd);
+    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANEXTENDED, listenerLoanExtened);
+    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANEXTENDERROR, listenerLoanExtened);
 //    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
 
   }
+
 }

@@ -2,7 +2,6 @@ package client.view.borrowreserve;
 
 import client.core.ViewModelFactory;
 import client.view.ViewHandler;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -10,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import shared.loan.Reservation;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

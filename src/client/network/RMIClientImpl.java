@@ -1,7 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -11,9 +11,11 @@ import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
 import shared.servers.ClientCallback;
 import shared.Server;
+import shared.servers.PropertyChangeSubject;
 import shared.util.Constants;
 import shared.util.EventTypes;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
@@ -24,7 +26,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class RMIClientImpl implements RMIClient, ClientCallback, Client
+public class RMIClientImpl implements RMIClient, ClientCallback, Client,
+    PropertyChangeSubject
 {
 
   private PropertyChangeSupport support;
@@ -125,9 +128,16 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
     //    server.getLoanServer().
   }
 
-  @Override public void extendLoan()
+  @Override public void extendLoan(Loan loan)
   {
-
+    try
+    {
+      server.getLoanServer().extendLoan(loan);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public void registerBook(String title, String publisher,
@@ -759,6 +769,12 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client
   @Override public void loanEnded(Loan loan)
   {
     support.firePropertyChange(EventTypes.LOANENDED, null, loan);
+  }
+
+  @Override public void loanUpdate(PropertyChangeEvent evt)
+      throws RemoteException
+  {
+    support.firePropertyChange(evt);
   }
 
 }

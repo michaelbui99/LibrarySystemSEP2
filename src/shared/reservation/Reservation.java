@@ -1,4 +1,4 @@
-package shared.loan;
+package shared.reservation;
 
 import shared.materials.Material;
 import shared.person.borrower.Borrower;

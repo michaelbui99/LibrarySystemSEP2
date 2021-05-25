@@ -116,4 +116,23 @@ class LoanDAOTest
         .getNumberOfAvailableCopies(book.getMaterialID()));
   }
 
+  @Test void extendLoanExtendsDeadlineBy1MonthTest() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
+    assertEquals("2022-01-12", LoanDAOImpl.getInstance().extendLoan(loan).getDeadline());
+  }
+
+  @Test void extendLoan3TimesThrowsIllegalStateException() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
+    assertThrows(IllegalStateException.class, () -> {
+      LoanDAOImpl.getInstance().extendLoan(loan);
+      LoanDAOImpl.getInstance().extendLoan(loan);
+      LoanDAOImpl.getInstance().extendLoan(loan);
+    });
+
+  }
+
 }

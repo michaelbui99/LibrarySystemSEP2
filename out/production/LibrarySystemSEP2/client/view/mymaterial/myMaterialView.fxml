@@ -56,7 +56,7 @@
                     </rowConstraints>
                      <children>
                         <Button mnemonicParsing="false" onAction="#onReturnButton" style="-fx-background-color: white; -fx-cursor: hand;" text="Aflevere" textFill="#0822eb" underline="true" GridPane.rowIndex="1" />
-                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-cursor: hand;" text="Forlæng fristen" textFill="#0822eb" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onExtendButton" style="-fx-background-color: white; -fx-cursor: hand;" text="Forlæng fristen" textFill="#0822eb" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="warningLabel" GridPane.columnSpan="2" />
                      </children>
                   </GridPane>

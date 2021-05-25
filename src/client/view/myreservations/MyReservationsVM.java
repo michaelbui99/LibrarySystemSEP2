@@ -7,8 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import shared.loan.Loan;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.util.EventTypes;
 
 public class MyReservationsVM

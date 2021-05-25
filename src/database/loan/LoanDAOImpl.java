@@ -1,10 +1,9 @@
 package database.loan;
 
-import client.model.loan.loanstates.ExtendedLoan1State;
-import client.model.loan.loanstates.ExtendedLoan2State;
-import client.model.loan.loanstates.NewLoanState;
+import shared.loan.ExtendedLoan1State;
+import shared.loan.ExtendedLoan2State;
+import shared.loan.NewLoanState;
 import database.material.MaterialCopyDAOImpl;
-import database.material.MaterialDAO;
 import database.material.MaterialDAOImpl;
 import shared.person.Address;
 import shared.loan.Loan;
@@ -19,7 +18,6 @@ import shared.person.MaterialCreator;
 import shared.person.borrower.Borrower;
 import database.BaseDAO;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -165,7 +163,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(bookLoans.getDate("loan_date")),
               String.valueOf(bookLoans.getDate("return_date")),
               bookLoans.getInt("loan_no"));
-          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -208,7 +206,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(audiobookLoans.getDate("return_date")),
               audiobookLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -248,7 +246,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(dvdLoans.getDate("return_date")),
               dvdLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -288,7 +286,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(cdLoans.getDate("return_date")),
               cdLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -328,7 +326,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(ebookLoans.getDate("return_date")),
               ebookLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("numberofextensions");
+          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -389,19 +387,34 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   {
     try (Connection connection = getConnection())
     {
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
       LocalDate oldDeadline = LocalDate.parse(loan.getDeadline(), formatter);
       LocalDate newDeadline = oldDeadline.plusMonths(1);
 
+      //Checks to see if the number of extension in DB is 2.
+      PreparedStatement stm2 = connection.prepareStatement("SELECT number_of_extensions from loan where loan_no = ?");
+      stm2.setInt(1, loan.getLoanID());
+      ResultSet result2 = stm2.executeQuery();
+      result2.next();
+      int numberOfExtensions = result2.getInt("number_of_extensions");
+      //Throws exception if numberofExtensions is 2, because the Loan cannot be extended further.
+      if (numberOfExtensions == 2)
+      {
+        throw new IllegalStateException();
+      }
+      else
+      {
       PreparedStatement stm = connection.prepareStatement(
-          "UPDATE loan SET deadline = ? and numberofextension = numberofextension+1 where loan_no = ?");
+          "UPDATE loan SET deadline = ?, number_of_extensions = number_of_extensions+1 where loan_no = ?");
       stm.setDate(1, Date.valueOf(newDeadline));
       stm.setInt(2, loan.getLoanID());
       stm.executeUpdate();
       connection.commit();
+
       return new Loan(loan.getMaterial(), loan.getBorrower(),
           newDeadline.toString(), loan.getLoanDate(), null, loan.getLoanID(),
           loan.getLoanState());
+      }
     }
     catch (SQLException throwables)
     {

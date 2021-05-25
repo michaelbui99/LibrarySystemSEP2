@@ -1,4 +1,4 @@
-package client.model.loan.loanstates;
+package shared.loan;
 
 import shared.loan.Loan;
 

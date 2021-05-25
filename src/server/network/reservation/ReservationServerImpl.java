@@ -1,7 +1,7 @@
 package server.network.reservation;
 
 import server.core.ModelFactoryServer;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import shared.servers.ClientCallback;

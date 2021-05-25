@@ -10,8 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import shared.loan.Loan;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.Material;
 
 import java.io.IOException;

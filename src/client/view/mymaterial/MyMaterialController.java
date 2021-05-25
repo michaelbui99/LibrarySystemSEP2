@@ -68,4 +68,12 @@ public class MyMaterialController
     }
   }
 
+  @FXML
+  void onExtendButton(ActionEvent event) {
+    viewModel.loanProperty().set(loanTableView.getSelectionModel().getSelectedItem());
+    viewModel.extendLoan();
+    loanTableView.refresh();
+  }
+
+
 }

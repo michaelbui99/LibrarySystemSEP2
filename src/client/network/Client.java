@@ -1,7 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -32,7 +32,7 @@ public interface Client
   List<Loan> getAllLoansByCPR(String cpr) throws NoSuchElementException;
   List<Reservation> getAllReservationsByCPR(String cpr) throws NoSuchElementException;
   void deliverMaterial(int loanID);
-  void extendLoan();
+  void extendLoan(Loan loan);
 
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,

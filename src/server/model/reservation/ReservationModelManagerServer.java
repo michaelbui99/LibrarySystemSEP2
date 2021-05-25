@@ -1,11 +1,8 @@
 package server.model.reservation;
 
-import database.loan.LoanDAOImpl;
-import database.loan.ReservationDAOImpl;
-import database.material.MaterialDAO;
+import database.reservation.ReservationDAOImpl;
 import database.material.MaterialDAOImpl;
-import server.core.ModelFactoryServer;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import shared.util.EventTypes;

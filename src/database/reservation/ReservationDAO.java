@@ -1,11 +1,9 @@
-package database.loan;
+package database.reservation;
 
-import shared.loan.Loan;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 

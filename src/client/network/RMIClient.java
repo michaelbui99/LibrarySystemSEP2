@@ -1,7 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.Material;
@@ -32,7 +32,7 @@ public interface RMIClient extends Remote
 
   List<Loan> getAllLoansByCPR(String cpr) throws RemoteException, NoSuchElementException;
   void deliverMaterial(int loanID) throws RemoteException;
-  void extendLoan() throws RemoteException;
+  void extendLoan(Loan loan) throws RemoteException;
 
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,

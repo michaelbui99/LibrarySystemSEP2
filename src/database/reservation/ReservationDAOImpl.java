@@ -1,8 +1,8 @@
-package database.loan;
+package database.reservation;
 
 import database.BaseDAO;
 import database.material.MaterialDAOImpl;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.DVD;
 import shared.materials.Material;
 import shared.materials.Place;
@@ -273,7 +273,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("SELECT * from reservation where materialID = ? ");
+      PreparedStatement stm = connection.prepareStatement("SELECT * from reservation where material_id = ? ");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
 

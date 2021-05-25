@@ -2,6 +2,7 @@ package shared.servers;
 
 import shared.loan.Loan;
 
+import java.beans.PropertyChangeEvent;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -13,4 +14,5 @@ public interface ClientCallback extends Remote
   * */
   void loanRegistered(Loan loan) throws RemoteException;
   void loanEnded(Loan loan) throws RemoteException;
+  void loanUpdate(PropertyChangeEvent evt) throws RemoteException;
 }

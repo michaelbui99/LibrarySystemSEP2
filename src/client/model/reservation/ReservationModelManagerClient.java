@@ -1,7 +1,7 @@
 package client.model.reservation;
 
 import client.network.Client;
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 

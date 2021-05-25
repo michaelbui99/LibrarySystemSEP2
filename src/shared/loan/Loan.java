@@ -1,11 +1,11 @@
 package shared.loan;
 
-import client.model.loan.loanstates.LoanState;
-import client.model.loan.loanstates.NewLoanState;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Loan implements Serializable
 {
@@ -63,7 +63,17 @@ public class Loan implements Serializable
 
   public void extendLoan()
   {
+    System.out.println(deadline);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate today = LocalDate.now();
+    LocalDate deadlineDate = LocalDate.parse(deadline, formatter);
+    //Loans can at earliest be extended when the current day is 7 days before deadline.
+    if (today.isBefore(deadlineDate) && today.isAfter(deadlineDate.minusDays(6)))
+    {
     loanState.extendLoan(this);
+    }
+    else
+      throw new IllegalStateException("Lånet kan tidligst blive forlænget 7 dage inden afleveringsfristen");
   }
 
   public Material getMaterial()

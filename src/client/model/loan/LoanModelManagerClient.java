@@ -5,6 +5,7 @@ import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import client.network.Client;
 import client.network.RMIClient;
+import shared.servers.PropertyChangeSubject;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
@@ -23,15 +24,11 @@ public class LoanModelManagerClient implements LoanModelClient
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
-    try
-    {
-      ((RMIClient) client).addPropertyChangeListener(EventTypes.LOANREGISTERED, evt -> support.firePropertyChange(evt));
-      ((RMIClient) client).addPropertyChangeListener(EventTypes.LOANENDED, evt -> support.firePropertyChange(evt));
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
+
+      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANREGISTERED, evt -> support.firePropertyChange(evt));
+      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANENDED, evt -> support.firePropertyChange(evt));
+      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANEXTENDED, evt -> support.firePropertyChange(evt));
+      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANEXTENDERROR, evt -> support.firePropertyChange(evt));
 
   }
 
@@ -66,9 +63,9 @@ public class LoanModelManagerClient implements LoanModelClient
     client.endLoan(loan);
   }
 
-  @Override public void extendLoan()
+  @Override public void extendLoan(Loan loan)
   {
-
+    client.extendLoan(loan);
   }
 
   @Override public void addPropertyChangeListener(String name,

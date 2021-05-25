@@ -1,6 +1,6 @@
 package server.model.reservation;
 
-import shared.loan.Reservation;
+import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import shared.servers.PropertyChangeSubject;

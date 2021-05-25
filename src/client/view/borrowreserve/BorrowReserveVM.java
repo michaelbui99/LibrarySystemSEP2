@@ -1,9 +1,7 @@
 package client.view.borrowreserve;
 
 import client.core.ModelFactoryClient;
-import client.model.material.MaterialModelClient;
 import javafx.beans.property.*;
-import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.util.EventTypes;
 

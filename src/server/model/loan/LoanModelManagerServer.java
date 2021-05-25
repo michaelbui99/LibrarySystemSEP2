@@ -1,8 +1,7 @@
 package server.model.loan;
 //Michael
-import database.loan.ReservationDAOImpl;
+import database.reservation.ReservationDAOImpl;
 import shared.loan.Loan;
-import shared.loan.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import database.loan.LoanDAOImpl;
@@ -10,9 +9,7 @@ import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
