@@ -20,7 +20,6 @@ public class BorrowReserveVM {
         materialProperty.set(ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial());
         availNumberProp = new SimpleIntegerProperty(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies());
         materialInfoProp = new SimpleStringProperty(materialProperty.get().getMaterialDetails());
-        System.out.println(materialProperty.get().toString());
         warningProperty = new SimpleStringProperty();
         reservationError = new SimpleStringProperty();
 
