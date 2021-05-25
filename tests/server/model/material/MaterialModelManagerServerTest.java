@@ -3,7 +3,6 @@ package server.model.material;
 import database.DatabaseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.postgresql.util.PSQLException;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
 import shared.person.librarian.Librarian;
@@ -34,7 +33,7 @@ class MaterialModelManagerServerTest
   //Register material of type book test section starts
   @Test void registerBookTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertDoesNotThrow(() -> materialModelServer
         .registerBook("titleTest", "publisherTest", "2001-12-12",
             "descriptionTest", "tagsTest", "Voksen", "Dansk", "1234", 11, place,
@@ -43,7 +42,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyTitleTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook(null, "publisherTest", "2004-01-01", "descriptionTest",
             "tageTest", "Voksen", "Dansk", "1234", 1234, place, materialCreator,
@@ -52,7 +51,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyPublisherTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", null, "2004-01-01", "descriptionTest",
             "tageTest", "Voksen", "Dansk", "1234", 1234, place, materialCreator,
@@ -61,7 +60,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyReleaseDateTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", null, "descriptionTest",
             "tageTest", "Voksen", "Dansk", "1234", 1234, place, materialCreator,
@@ -70,7 +69,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyDescriptionTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01", null,
             "tageTest", "Voksen", "Dansk", "1234", 1234, place, materialCreator,
@@ -79,7 +78,7 @@ class MaterialModelManagerServerTest
 
   @Test void registeBookWithEmptyKeywordsTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", null, "Voksen", "Dansk", "1234", 1234, place,
@@ -88,7 +87,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithKeywordsAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "11", "Voksen", "Dansk", "1234", 1234, place,
@@ -97,17 +96,17 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyTargetAudienceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", null, "Dansk", "1234", 1234, place,
             materialCreator, "genreTest", null));
   }
 
-  @Test void registerBookWithTargetAudienceAssAnIntegerTest()
+  @Test void registerBookWithTargetAudienceAsAnIntegerTest()
       throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "1", "Dansk", "1234", 1234, place,
@@ -116,7 +115,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithTargetAudienceOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "test", "Dansk", "1234", 1234, place,
@@ -125,16 +124,16 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyLanguageTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", null, "1234", 1234, place,
             materialCreator, "genreTest", null));
   }
 
-  @Test void registerBookWithLanguageAssAnIntegerTest() throws SQLException
+  @Test void registerBookWithLanguageAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "1", "1234", 1234, place,
@@ -143,7 +142,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithLanguageOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "test", "1234", 1234,
@@ -152,7 +151,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyISBNTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", null, 1234, place,
@@ -161,7 +160,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithISBNAsNotAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", "test", 1234,
@@ -170,7 +169,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyPageCountTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", "1234", 0, place,
@@ -179,7 +178,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithPageCountLeserThan0Test() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", "1234", -1, place,
@@ -188,7 +187,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyPlaceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", "1234", 1234,
@@ -197,7 +196,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyMaterialCreatorTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", "1234", 1234,
@@ -206,7 +205,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithEmptyGenreTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", "1234", 1234,
@@ -215,7 +214,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerBookWithGenreAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerBook("TitleTest", "publisherTest", "2004-01-01",
             "descriptionTest", "tageTest", "Voksen", "Dansk", "1234", 1234,
@@ -227,7 +226,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertDoesNotThrow(() -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", 900, 122,
@@ -236,7 +235,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyTitleTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook(null, "EbookPublisher", "2002-01-01", "descriptionEbook",
             "tagesEbook", "Voksen", "Dansk", 900, 122, materialCreator,
@@ -245,7 +244,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyPublisherTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", null, "2002-01-01", "descriptionEbook",
             "tagesEbook", "Voksen", "Dansk", 900, 122, materialCreator,
@@ -254,7 +253,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyReleaseDateTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", null, "descriptionEbook",
             "tagesEbook", "Voksen", "Dansk", 900, 122, materialCreator,
@@ -263,7 +262,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyDescriptionTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01", null,
             "tagesEbook", "Voksen", "Dansk", 900, 122, materialCreator,
@@ -272,7 +271,7 @@ class MaterialModelManagerServerTest
 
   @Test void registeEBookWithEmptyKeywordsTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", null, "Voksen", "Dansk", 900, 122,
@@ -281,7 +280,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithKeywordsAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "11", "Voksen", "Dansk", 900, 122,
@@ -290,17 +289,17 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyTargetAudienceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", null, "Dansk", 900, 122,
             materialCreator, "genreEbook", null));
   }
 
-  @Test void registerEBookWithTargetAudienceAssAnIntegerTest()
+  @Test void registerEBookWithTargetAudienceAsAnIntegerTest()
       throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "11", "Dansk", 900, 122,
@@ -309,7 +308,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithTargetAudienceOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "test", "Dansk", 900, 122,
@@ -318,16 +317,16 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyLanguageTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", null, 900, 122,
             materialCreator, "genreEbook", null));
   }
 
-  @Test void registerEBookWithLanguageAssAnIntegerTest() throws SQLException
+  @Test void registerEBookWithLanguageAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "11", 900, 122,
@@ -336,7 +335,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithLanguageOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "test", 900, 122,
@@ -345,7 +344,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyLicenseNumberTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", 900, 0,
@@ -354,7 +353,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithLicenseNumberLeserThan0Test() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", 900, -1,
@@ -363,7 +362,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyPageCountTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", 0, 122,
@@ -372,7 +371,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithPageCountLeserThan0Test() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", -1, 122,
@@ -381,7 +380,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyMaterialCreatorTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", 900, 122, null,
@@ -390,7 +389,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithEmptyGenreTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", 900, 122,
@@ -399,7 +398,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerEBookWithGenreAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerEBook("EbookTitle", "EbookPublisher", "2002-01-01",
             "descriptionEbook", "tagesEbook", "Voksen", "Dansk", 900, 122,
@@ -410,7 +409,7 @@ class MaterialModelManagerServerTest
   // Register a material of type audio book section starts
   @Test void registerAudioBookTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertDoesNotThrow(() -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 123,
@@ -419,7 +418,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyTitleTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook(null, "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 123,
@@ -428,7 +427,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyPublisherTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", null, "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 123,
@@ -437,7 +436,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyReleaseDateTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", null,
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 123,
@@ -446,7 +445,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyDescriptionTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             null, "audioBookTages", "Voksen", "Dansk", 123, "audioBookGenre",
@@ -455,7 +454,7 @@ class MaterialModelManagerServerTest
 
   @Test void registeAudioBookWithEmptyKeywordsTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", null, "Voksen", "Dansk", 123,
@@ -464,7 +463,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithKeywordsAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "11", "Voksen", "Dansk", 123,
@@ -473,17 +472,17 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyTargetAudienceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", null, "Dansk", 123,
             "audioBookGenre", materialCreator, null));
   }
 
-  @Test void registerAudioBookWithTargetAudienceAssAnIntegerTest()
+  @Test void registerAudioBookWithTargetAudienceAsAnIntegerTest()
       throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "11", "Dansk", 123,
@@ -493,7 +492,7 @@ class MaterialModelManagerServerTest
   @Test void registerAudioBookWithTargetAudienceOutOfCheckTest()
       throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "test", "Dansk", 123,
@@ -502,7 +501,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyPlayDurationTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 0,
@@ -512,7 +511,7 @@ class MaterialModelManagerServerTest
   @Test void registerAudioBookWithPlayDurationLeserThan0Test()
       throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", -1,
@@ -521,16 +520,16 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyLanguageTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", null, 123,
             "audioBookGenre", materialCreator, null));
   }
 
-  @Test void registerAudioBookWithLanguageAssAnIntegerTest() throws SQLException
+  @Test void registerAudioBookWithLanguageAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "11", 123,
@@ -539,7 +538,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithLanguageOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "test", 123,
@@ -548,7 +547,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyMaterialCreatorTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 123,
@@ -557,7 +556,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithEmptyGenreTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 123,
@@ -566,7 +565,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerAudioBookWithGenreAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerAudioBook("audioBookTitle", "audioBookPublisher", "2000-01-01",
             "audioBookDescription", "audioBookTages", "Voksen", "Dansk", 123,
@@ -577,7 +576,7 @@ class MaterialModelManagerServerTest
   // Register a material of type CD section starts
   @Test void registerCDTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertDoesNotThrow(() -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", 111, place, "cdGenre", null));
@@ -585,7 +584,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyTitleTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD(null, "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", 111, place, "cdGenre", null));
@@ -593,7 +592,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyPublisherTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", null, "2006-02-02", "cdDescription", "cdTages",
             "Voksen", "Dansk", 111, place, "cdGenre", null));
@@ -601,7 +600,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyReleaseDateTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", null, "cdDescription", "cdTages",
             "Voksen", "Dansk", 111, place, "cdGenre", null));
@@ -609,7 +608,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyDescriptionTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", null, "cdTages",
             "Voksen", "Dansk", 111, place, "cdGenre", null));
@@ -617,7 +616,7 @@ class MaterialModelManagerServerTest
 
   @Test void registeCDWithEmptyKeywordsTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             null, "Voksen", "Dansk", 111, place, "cdGenre", null));
@@ -625,7 +624,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithKeywordsAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "11", "Voksen", "Dansk", 111, place, "cdGenre", null));
@@ -633,15 +632,15 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyTargetAudienceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", null, "Dansk", 111, place, "cdGenre", null));
   }
 
-  @Test void registerCDWithTargetAudienceAssAnIntegerTest() throws SQLException
+  @Test void registerCDWithTargetAudienceAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "11", "Dansk", 111, place, "cdGenre", null));
@@ -649,7 +648,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithTargetAudienceOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "test", "Dansk", 111, place, "cdGenre", null));
@@ -657,7 +656,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyPlayDurationTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", 0, place, "cdGenre", null));
@@ -665,7 +664,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithPlayDurationLeserThan0Test() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", -1, place, "cdGenre", null));
@@ -673,15 +672,15 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyLanguageTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", null, 111, place, "cdGenre", null));
   }
 
-  @Test void registerCDWithLanguageAssAnIntegerTest() throws SQLException
+  @Test void registerCDWithLanguageAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "11", 111, place, "cdGenre", null));
@@ -689,7 +688,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithLanguageOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "test", 111, place, "cdGenre", null));
@@ -697,7 +696,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyPlaceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", 111, null, "cdGenre", null));
@@ -705,7 +704,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithEmptyGenreTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", 111, place, null, null));
@@ -713,7 +712,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerCDWithGenreAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", 111, place, "11", null));
@@ -723,7 +722,7 @@ class MaterialModelManagerServerTest
   // Register a material of type DVD section starts
   @Test void registerDVDTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertDoesNotThrow(() -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -732,7 +731,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyTitleTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD(null, "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -741,7 +740,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyPublisherTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", null, "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -750,7 +749,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyReleaseDateTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", null, "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -759,7 +758,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyDescriptionTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", null,
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -768,7 +767,7 @@ class MaterialModelManagerServerTest
 
   @Test void registeDVDWithEmptyKeywordsTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             null, "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -777,7 +776,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithKeywordsAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "11", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -786,16 +785,16 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyTargetAudienceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", null, "Dansk", "Dansk", 111, place, "dvdGenre",
             null));
   }
 
-  @Test void registerDVDWithTargetAudienceAssAnIntegerTest() throws SQLException
+  @Test void registerDVDWithTargetAudienceAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "11", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -804,7 +803,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithTargetAudienceOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "test", "Dansk", "Dansk", 111, place, "dvdGenre",
@@ -813,7 +812,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyPlayDurationTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 0, place, "dvdGenre",
@@ -822,7 +821,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithPlayDurationLeserThan0Test() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerCD("cdTitle", "cdpublisher", "2006-02-02", "cdDescription",
             "cdTages", "Voksen", "Dansk", -1, place, "cdGenre", null));
@@ -830,16 +829,16 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyLanguageTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", null, "Dansk", 111, place, "dvdGenre",
             null));
   }
 
-  @Test void registerDVDWithLanguageAssAnIntegerTest() throws SQLException
+  @Test void registerDVDWithLanguageAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "11", "Dansk", 111, place, "dvdGenre",
@@ -848,7 +847,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithLanguageOutOfCheckTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "test", "Dansk", 111, place, "dvdGenre",
@@ -857,7 +856,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptySubtitleLanguageTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", null, 111, place, "dvdGenre",
@@ -866,7 +865,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithSubtitleLanguageAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "11", 111, place, "dvdGenre",
@@ -875,7 +874,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyPlaceTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, null, "dvdGenre",
@@ -884,7 +883,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithEmptyGenreTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, null,
@@ -893,7 +892,7 @@ class MaterialModelManagerServerTest
 
   @Test void registerDVDWithGenreAsAnIntegerTest() throws SQLException
   {
-    databaseBuilder.createDunnyDataWithoutInfo();
+    databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
             "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "11",
