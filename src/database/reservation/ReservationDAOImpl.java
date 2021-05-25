@@ -143,7 +143,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         if(!materialTypes[i].equals("cd") && !materialTypes[i].equals("dvd")){
           query += " JOIN material_creator ON " + materialTypes[i] + ".author = material_creator.person_id ";
         }
-        query += " WHERE reservation.cpr_no = '" + cpr + "' AND reservation.copy_no = material_copy.copy_no";
+        query += " WHERE reservation.cpr_no = '" + cpr + "'" ;
         PreparedStatement selectReservations = connection.prepareStatement(query);
         ResultSet selectReservationsResult = selectReservations.executeQuery();
         while(selectReservationsResult.next()){

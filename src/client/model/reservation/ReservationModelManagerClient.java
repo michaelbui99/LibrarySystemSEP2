@@ -43,7 +43,7 @@ public class ReservationModelManagerClient implements ReservationModelClient
   @Override public void endReservation(Reservation reservation)
   {
 //    client.endReservation(reservation);
-   // client.endReservation(reservation);
+    client.endReservation(reservation);
   }
 
   @Override public void addPropertyChangeListener(String name,

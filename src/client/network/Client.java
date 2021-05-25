@@ -166,6 +166,8 @@ public interface Client
 
   void endLoan(Loan loan);
 
+  void endReservation(Reservation reservation);
+
   int numberOfAvailableCopies();
 
   int totalNumberOfCopies(int materialID);

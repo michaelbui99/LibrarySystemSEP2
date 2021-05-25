@@ -567,6 +567,18 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
+  @Override public void endReservation(Reservation reservation)
+  {
+    try
+    {
+      server.getReservationServer().endReservation(reservation);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+  }
+
   @Override public int numberOfAvailableCopies()
   {
     try

@@ -1,6 +1,9 @@
 package client.view.myreservations;
 
 import client.core.ModelFactoryClient;
+import client.model.loan.LoanModelClient;
+import client.model.reservation.ReservationModelClient;
+import client.model.user.UserModelClient;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,9 +18,13 @@ public class MyReservationsVM
   private ObservableList<Reservation> activeReservations;
   private ObjectProperty<Reservation> reservationProperty;
   private StringProperty cprProperty;
+  private ReservationModelClient reservationModel;
+  private UserModelClient userModel;
 
-  public MyReservationsVM()
+  public MyReservationsVM(ReservationModelClient reservationModel, UserModelClient userModel)
   {
+    this.reservationModel = reservationModel;
+    this.userModel = userModel;
     activeReservations = FXCollections.observableArrayList();
     cprProperty = new SimpleStringProperty(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr());
     if (ModelFactoryClient.getInstance().getReservationModelClient()

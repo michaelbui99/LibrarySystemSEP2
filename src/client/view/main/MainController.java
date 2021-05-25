@@ -70,14 +70,21 @@ public class MainController
 
   @FXML public void onTypedPasswordCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getMainVM().passwordProperty().get();
-    if (arg.isEmpty())
+    try
     {
-      passwordError.setVisible(true);
+      String arg = ViewModelFactory.getInstance().getMainVM().passwordProperty().get();
+      if (arg.isEmpty())
+      {
+        passwordError.setVisible(true);
+      }
+      else
+      {
+        passwordError.setVisible(false);
+      }
+
+    }catch (Exception e){
+
     }
-    else
-    {
-      passwordError.setVisible(false);
-    }
+
   }
 }

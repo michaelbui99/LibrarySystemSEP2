@@ -120,7 +120,8 @@ public class ViewModelFactory
   {
     if (myReservationsVM == null)
     {
-      myReservationsVM = new MyReservationsVM();
+      myReservationsVM = new MyReservationsVM(ModelFactoryClient.getInstance().getReservationModelClient(), ModelFactoryClient.getInstance()
+          .getUserModelClient());
     }
     return myReservationsVM;
   }
