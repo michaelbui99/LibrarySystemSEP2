@@ -165,9 +165,10 @@ public class RegisterMaterialController
       }
       else
       {
-        error.setVisible(false);
         ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
-        setTestForLabelGreen("Bogen");
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("Bog er tilføjet");
         clearFields();
       }
     }
@@ -183,7 +184,9 @@ public class RegisterMaterialController
       else
       {
         ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
-        setTestForLabelGreen("E-bogen");
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("E-bog er tilføjet");
         clearFields();
       }
     }
@@ -199,7 +202,9 @@ public class RegisterMaterialController
       else
       {
         ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
-        setTestForLabelGreen("Lydbogen");
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("Lydbog er tilføjet");
         clearFields();
       }
     }
@@ -216,7 +221,9 @@ public class RegisterMaterialController
       {
         cdSelectedFields();
         ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
-        setTestForLabelGreen("CD'en");
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("CD er tilføjet");
         clearFields();
       }
     }
@@ -232,13 +239,17 @@ public class RegisterMaterialController
       else
       {
         ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
-        setTestForLabelGreen("DVD'en");
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("DVD er tilføjet");
         clearFields();
       }
     }
     else if (type.equals(null))
     {
       error.setVisible(true);
+      error.setTextFill(Paint.valueOf("red"));
+      error.setText("Vælg et materiale");
     }
   }
 
@@ -252,19 +263,6 @@ public class RegisterMaterialController
     releaseDate.getEditor().clear();
     description.clear();
     keywords.clear();
-  }
-
-  private void setTestForLabelGreen(String type)
-  {
-    error.setText(type + " er tilføjet");
-    error.setTextFill(Paint.valueOf("green"));
-    clearFields();
-  }
-
-  private void setErrorMaterialInSystem()
-  {
-    error.setText("Materialet findes allerede i systemet!!!");
-    error.setTextFill(Paint.valueOf("red"));
   }
 
   private void bookSelectedfields()
@@ -439,7 +437,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .keywordsProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || arg.matches("[0-9]+"))
     {
       keywordsWarning.setVisible(true);
     }
@@ -453,7 +451,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .isbnProperty().get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || !arg.matches("[0-9]+"))
     {
       isbnWarning.setVisible(true);
     }
@@ -467,7 +465,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .numberOfPagesProperty().get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || !arg.matches("[0-9]+"))
     {
       pageNoWarning.setVisible(true);
     }
@@ -481,7 +479,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .licensNumberProperty().get();
-    if (arg.isEmpty() /*|| !arg.matches(".*\\d.*")*/)
+    if (arg.isEmpty() || !arg.matches("[0-9]+"))
     {
       licensNoWarning.setVisible(true);
     }
@@ -495,7 +493,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .hallNumberProperty().get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || !arg.matches("[0-9]+"))
     {
       hallNoWarning.setVisible(true);
     }
@@ -509,7 +507,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .genreProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || arg.matches("[0-9]+"))
     {
       genreWarning.setVisible(true);
     }
@@ -523,7 +521,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .firstNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || arg.matches("[0-9]+"))
     {
       firstNameWarning.setVisible(true);
     }
@@ -537,7 +535,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .descriptionProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*") || arg.length() != 1)
+    if (arg.isEmpty() || arg.matches("[0-9]+") || arg.length() != 1)
     {
       departmentWaning.setVisible(true);
     }
@@ -551,7 +549,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .subtitleLanguageProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || arg.matches("[0-9]+"))
     {
       subtitileWarning.setVisible(true);
     }
@@ -565,7 +563,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .lengthProperty().get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || !arg.matches("[0-9]+"))
     {
       lengthWarning.setVisible(true);
     }
@@ -579,7 +577,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .lastNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || arg.matches("[0-9]+"))
     {
       lastNameWarning.setVisible(true);
     }
@@ -593,7 +591,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .countryProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || arg.matches("[0-9]+"))
     {
       countryWarning.setVisible(true);
     }
@@ -607,7 +605,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .firstNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
+    if (arg.isEmpty() || arg.matches("[0-9]+"))
     {
       firstNameWarning.setVisible(true);
     }
