@@ -773,15 +773,6 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
-  @Override public void loanRegistered(Loan loan)
-  {
-    support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
-  }
-
-  @Override public void loanEnded(Loan loan)
-  {
-    support.firePropertyChange(EventTypes.LOANENDED, null, loan);
-  }
 
   @Override public void loanUpdate(PropertyChangeEvent evt)
       throws RemoteException
