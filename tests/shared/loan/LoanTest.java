@@ -81,12 +81,13 @@ class LoanTest
 
   @Test void ExtendLoanWithWithNewLoanStateNoReservationExtendsDeadlineBy1Month()
   {
-    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(),
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(4).toString(),
         LocalDate.now().toString(), null, 1);
     loan.setMaterialHasReservation(false);
     loan.setLoanState(new NewLoanState());
     loan.extendLoan();
-    assertEquals(LocalDate.now().plusDays(1).plusMonths(1).toString(), loan.getDeadline());
+    System.out.println(LocalDate.now().plusDays(4).plusMonths(1).toString());
+    assertEquals(LocalDate.now().plusDays(4).plusMonths(1).toString(), loan.getDeadline());
   }
   @Test void LoanWithExtendedLoan1StateCannotBeExtendedWithReservation()
   {

@@ -206,7 +206,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(audiobookLoans.getDate("return_date")),
               audiobookLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
+          int numberOfExtensions = audiobookLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -246,7 +246,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(dvdLoans.getDate("return_date")),
               dvdLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
+          int numberOfExtensions = dvdLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -286,7 +286,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(cdLoans.getDate("return_date")),
               cdLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
+          int numberOfExtensions = cdLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -326,7 +326,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(ebookLoans.getDate("return_date")),
               ebookLoans.getInt("loan_no"));
 
-          int numberOfExtensions = bookLoans.getInt("number_of_extensions");
+          int numberOfExtensions = ebookLoans.getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:

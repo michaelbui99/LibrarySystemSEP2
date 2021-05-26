@@ -8,6 +8,6 @@ public class ExtendedLoan2State implements LoanState, Serializable
 
   @Override public void extendLoan(Loan loan)
   {
-    throw new IllegalStateException("Lånet kan ikke forlænges");
+    throw new IllegalStateException("Lånet kan ikke forlænges, lånet er allerede blevet forlænget det maksimale antal gange");
   }
 }

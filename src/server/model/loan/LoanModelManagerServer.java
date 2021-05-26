@@ -73,8 +73,10 @@ public class LoanModelManagerServer implements LoanModelServer
       //Checks if the Material of the Loan has any reservations and updates it's field variable before trying to extend the loan.
       loan.setMaterialHasReservation(ReservationDAOImpl.getInstance()
           .hasReservations(loan.getMaterial().getMaterialID()));
+      Loan temp = new Loan(loan.getMaterial(), loan.getBorrower(),
+          loan.getDeadline(), loan.getLoanDate(), loan.getReturnDate(),loan.getLoanID());
       loan.extendLoan();
-      Loan extendedLoan = LoanDAOImpl.getInstance().extendLoan(loan);
+      Loan extendedLoan = LoanDAOImpl.getInstance().extendLoan(temp);
       support.firePropertyChange(EventTypes.LOANEXTENDED, null, extendedLoan);
     }
     catch (IllegalStateException e)

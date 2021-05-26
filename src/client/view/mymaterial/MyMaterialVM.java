@@ -87,7 +87,8 @@ public class MyMaterialVM
         }
         activeLoans.set(index, ((Loan)evt.getNewValue()));
         //Resets warning label
-        warningProperty.set("");
+        Platform.runLater(()->warningProperty.set(""));
+
       }
     });
 
