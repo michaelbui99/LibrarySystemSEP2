@@ -62,12 +62,18 @@ public class CopiesController
 
   @FXML public void onButtonRemoveCopy(ActionEvent actionEvent)
   {
-      ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
-          searchTableView.getSelectionModel().getSelectedItem());
+    ViewModelFactory.getInstance().getCopiesVM().selectedMaterialProperty()
+        .set(searchTableView.getSelectionModel().getSelectedItem());
 
     if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber() == 1)
     {
       errorLable.setText("Kun én kopi tilbage, kan ikke fjernes!!");
+      errorLable.setTextFill(Paint.valueOf("red"));
+      errorLable.setVisible(true);
+    }
+    else if (searchTableView.getSelectionModel().getSelectedItem() == null)
+    {
+      errorLable.setText("Vælg først et materiale");
       errorLable.setTextFill(Paint.valueOf("red"));
       errorLable.setVisible(true);
     }
@@ -81,34 +87,36 @@ public class CopiesController
 
   @FXML public void onButtonAddCopy(ActionEvent actionEvent)
   {
-      ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
-          searchTableView.getSelectionModel().getSelectedItem());
-      if (searchTableView.getSelectionModel().getSelectedItem() == null)
-      {
-        errorLable.setText("Vælg først et materiale");
-        errorLable.setVisible(true);
-      }
-      else
-      {
-      ViewModelFactory.getInstance().getCopiesVM().addCopy();
-      onButtonSearch(actionEvent);
-      errorLable.setVisible(false);
-      }
-  }
-
-  @FXML public void onButtonRemoveMaterial(ActionEvent actionEvent)
-  {
-    ViewModelFactory.getInstance().getCopiesVM().setSelectMaterial(
-        searchTableView.getSelectionModel().getSelectedItem());
+    ViewModelFactory.getInstance().getCopiesVM().selectedMaterialProperty()
+        .set(searchTableView.getSelectionModel().getSelectedItem());
     if (searchTableView.getSelectionModel().getSelectedItem() == null)
     {
       errorLable.setText("Vælg først et materiale");
+      errorLable.setTextFill(Paint.valueOf("red"));
       errorLable.setVisible(true);
     }
     else
     {
-    ViewModelFactory.getInstance().getCopiesVM().deletMaterial();
-    onButtonSearch(actionEvent);
+      ViewModelFactory.getInstance().getCopiesVM().addCopy();
+      onButtonSearch(actionEvent);
+      errorLable.setVisible(false);
+    }
+  }
+
+  @FXML public void onButtonRemoveMaterial(ActionEvent actionEvent)
+  {
+    ViewModelFactory.getInstance().getCopiesVM().selectedMaterialProperty()
+        .set(searchTableView.getSelectionModel().getSelectedItem());
+    if (searchTableView.getSelectionModel().getSelectedItem() == null)
+    {
+      errorLable.setText("Vælg først et materiale");
+      errorLable.setTextFill(Paint.valueOf("red"));
+      errorLable.setVisible(true);
+    }
+    else
+    {
+      ViewModelFactory.getInstance().getCopiesVM().deletMaterial();
+      onButtonSearch(actionEvent);
     }
   }
 

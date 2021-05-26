@@ -3,7 +3,9 @@ package server.model.material;
 import database.DatabaseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import shared.materials.Material;
 import shared.materials.Place;
+import shared.materials.reading.Book;
 import shared.person.MaterialCreator;
 import shared.person.librarian.Librarian;
 
@@ -11,7 +13,7 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MaterialModelManagerServerTest
+class RegisterRemoveMaterialsTest
 {
   private MaterialModelServer materialModelServer;
   private DatabaseBuilder databaseBuilder;
@@ -899,4 +901,20 @@ class MaterialModelManagerServerTest
             null));
   }
   // Register a material of type DVD section ends
+
+  // Remove material section starts
+  @Test void removeMaterialFromSystemTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = materialModelServer.registerMaterial("titleTestR", "publisherTestR", "2000-03-04",
+        "descriptionTestR", "Voksen", "Dansk", "genreTestR", null, "tagesTestR");
+    assertDoesNotThrow(()-> materialModelServer.deleteMaterial(materialID));
+  }
+
+  @Test void removeAnUnexistingMaterialFromSystemTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    assertThrows(IllegalArgumentException.class, ()-> materialModelServer.deleteMaterial(9000000));
+  }
+  // Remove material section ends
 }

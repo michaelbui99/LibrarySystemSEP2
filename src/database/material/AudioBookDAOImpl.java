@@ -2,9 +2,7 @@ package database.material;
 
 import shared.materials.Material;
 import shared.materials.MaterialStatus;
-import shared.materials.Place;
 import shared.materials.audio.AudioBook;
-import shared.materials.reading.Book;
 import shared.person.MaterialCreator;
 import database.BaseDAO;
 import database.materialcreator.MaterialCreatorImpl;
@@ -39,7 +37,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     return instance;
   }
 
-  @Override public void create(int material_id, int length_,
+  @Override public int create(int material_id, int length_,
       MaterialCreator author) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -67,6 +65,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
         else
         {
@@ -83,6 +82,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
       }
     }
@@ -263,9 +263,8 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
         {
 
           AudioBook audiobook = new AudioBook(resultSet.getInt("material_id"),
-              MaterialDAOImpl.getInstance()
-                  .getCopyNumberForMaterial(resultSet.getInt("material_id")),
-              resultSet.getString("title"), resultSet.getString("publisher"),
+              resultSet.getInt("copy_no"), resultSet.getString("title"),
+              resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"), "",
               resultSet.getString("audience"), resultSet.getString("language_"),

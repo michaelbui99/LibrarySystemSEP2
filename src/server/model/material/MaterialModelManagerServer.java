@@ -26,7 +26,25 @@ public class MaterialModelManagerServer implements MaterialModelServer
     materialList = new MaterialList();
   }
 
-  @Override public void registerBook(String title, String publisher,
+  @Override public int registerMaterial(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String genre, String url, String keywords)
+  {
+    int id = 0;
+    try
+    {
+      id = MaterialDAOImpl.getInstance()
+          .create(title, publisher, releaseDate, description, targetAudience,
+              language, genre, url, keywords);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return id;
+  }
+
+  @Override public int registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
       Place place, MaterialCreator author, String genre, String url)
@@ -44,6 +62,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       throwables.printStackTrace();
     }
+    return materialID;
   }
 
   @Override public void createBookCopy(int materialID)
@@ -59,12 +78,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deleteBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID, int copyNo)
   {
     try
     {
-      BookDAOImpl.getInstance().deleteBookCopy(materialID,
-          getSelectMaterial().getCopyNumber());
+      BookDAOImpl.getInstance()
+          .deleteBookCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
     {
@@ -91,7 +110,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     return bookIn;
   }
 
-  @Override public void registerDVD(String title, String publisher,
+  @Override public int registerDVD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String subtitlesLanguage,
       int playDuration, Place place, String genre, String url)
@@ -109,6 +128,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       throwables.printStackTrace();
     }
+    return materialID;
   }
 
   @Override public void createDVDCopy(int materialID)
@@ -124,12 +144,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deleteDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID, int copyNo)
   {
     try
     {
-      DVDDAOImpl.getInstance().deleteDVDCopy(materialID,
-          getSelectMaterial().getCopyNumber());
+      DVDDAOImpl.getInstance()
+          .deleteDVDCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
     {
@@ -155,7 +175,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     return dvdIn;
   }
 
-  @Override public void registerCD(String title, String publisher,
+  @Override public int registerCD(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, Place place,
       String genre, String url)
@@ -172,6 +192,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       throwables.printStackTrace();
     }
+    return materialID;
   }
 
   @Override public void createCDCopy(int materialID)
@@ -187,12 +208,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deleteCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID, int copyNo)
   {
     try
     {
-      CDDAOImpl.getInstance().deleteCDCopy(materialID,
-          getSelectMaterial().getCopyNumber());
+      CDDAOImpl.getInstance()
+          .deleteCDCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
     {
@@ -218,7 +239,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     return cdIn;
   }
 
-  @Override public void registerEBook(String title, String publisher,
+  @Override public int registerEBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int pageCount, int licenseNr,
       MaterialCreator author, String genre, String url)
@@ -236,6 +257,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       throwables.printStackTrace();
     }
+    return materialID;
   }
 
   @Override public void createEBookCopy(int materialID)
@@ -251,12 +273,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deleteEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID, int copyNo)
   {
     try
     {
-      EbookDAOImpl.getInstance().deleteEBookCopy(materialID,
-          getSelectMaterial().getCopyNumber());
+      EbookDAOImpl.getInstance()
+          .deleteEBookCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
     {
@@ -283,7 +305,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     return eBookIn;
   }
 
-  @Override public void registerAudioBook(String title, String publisher,
+  @Override public int registerAudioBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String genre,
       MaterialCreator author, String url)
@@ -300,6 +322,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     {
       throwables.printStackTrace();
     }
+    return materialID;
   }
 
   @Override public void createAudioBookCopy(int materialID)
@@ -315,12 +338,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     }
   }
 
-  @Override public void deleteAudiotBookCopy(int materialID)
+  @Override public void deleteAudiotBookCopy(int materialID, int copyNo)
   {
     try
     {
-      AudioBookDAOImpl.getInstance().deleteAudioBookCopy(materialID,
-          getSelectMaterial().getCopyNumber());
+      AudioBookDAOImpl.getInstance()
+          .deleteAudioBookCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
     {

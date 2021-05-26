@@ -49,10 +49,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     {
       if ((title == null) || (publisher == null) || (releaseDate == null) || (
           description == null) || (keywords == null || keywords
-          .matches(".*\\d.*")) || (language == null || !language
-          .equals("Engelsk") && !language.equals("Dansk") && !language
-          .equals("Arabisk") || language.matches(".*\\d.*")) || (genre == null
-          || genre.matches(".*\\d.*")) || (targetAudience == null
+          .matches(".*\\d.*")) || (language == null
+          || !language.equals("Engelsk") && !language.equals("Dansk")
+          && !language.equals("Arabisk") || language.matches(".*\\d.*")) || (
+          genre == null || genre.matches(".*\\d.*")) || (targetAudience == null
           || !targetAudience.equals("Voksen") && !targetAudience.equals("Barn")
           && !targetAudience.equals("Teenager") && !targetAudience
           .equals("Familie") && !targetAudience.equals("Ældre")
@@ -241,14 +241,21 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("DELETE FROM material WHERE material_id = ?",
-              PreparedStatement.RETURN_GENERATED_KEYS);
-      stm.setInt(1, materialID);
-      stm.executeUpdate();
-      ResultSet keys = stm.getGeneratedKeys();
-      connection.commit();
-      keys.next();
+      if (materialID == 0 || materialExistInDB(materialID) == false)
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("DELETE FROM material WHERE material_id = ?",
+                PreparedStatement.RETURN_GENERATED_KEYS);
+        stm.setInt(1, materialID);
+        stm.executeUpdate();
+        ResultSet keys = stm.getGeneratedKeys();
+        connection.commit();
+        keys.next();
+      }
     }
     catch (SQLException throwables)
     {

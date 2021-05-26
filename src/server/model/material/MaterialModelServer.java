@@ -10,64 +10,69 @@ import java.util.List;
 
 public interface MaterialModelServer extends PropertyChangeSubject
 {
-  void registerBook(String title, String publisher, String releaseDate,
+
+  int registerMaterial(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String genre, String url, String keywords);
+
+  int registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       String isbn, int pageCount, Place place, MaterialCreator author,
       String genre, String url);
 
   void createBookCopy(int materialID);
 
-  void deleteBookCopy(int materialID);
+  void deleteBookCopy(int materialID, int copyNo);
 
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
       int pageCount, MaterialCreator author, String genre);
 
-  void registerDVD(String title, String publisher, String releaseDate,
+  int registerDVD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       String subtitlesLanguage, int playDuration, Place place, String genre,
       String url);
 
   void createDVDCopy(int materialID);
 
-  void deleteDVDCopy(int materialID);
+  void deleteDVDCopy(int materialID, int copyNo);
 
   boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
       String playDuration, String genre);
 
-  void registerCD(String title, String publisher, String releaseDate,
+  int registerCD(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       int playDuration, Place place, String genre, String url);
 
   void createCDCopy(int materialID);
 
-  void deleteCDCopy(int materialID);
+  void deleteCDCopy(int materialID, int copyNo);
 
   boolean cdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
       int playDuration, String genre);
 
-  void registerEBook(String title, String publisher, String releaseDate,
+  int registerEBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       int pageCount, int licenseNr, MaterialCreator author, String genre,
       String url);
 
   void createEBookCopy(int materialID);
 
-  void deleteEBookCopy(int materialID);
+  void deleteEBookCopy(int materialID, int copyNo);
 
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
       int licenseNr, String genre, MaterialCreator author);
 
-  void registerAudioBook(String title, String publisher, String releaseDate,
+  int registerAudioBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       int playDuration, String genre, MaterialCreator author, String url);
 
   void createAudioBookCopy(int materialID);
 
-  void deleteAudiotBookCopy(int materialID);
+  void deleteAudiotBookCopy(int materialID, int copyNo);
 
   boolean audioBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
