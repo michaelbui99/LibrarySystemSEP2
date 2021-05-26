@@ -102,6 +102,8 @@ class LoanDAOTest
     assertDoesNotThrow(() -> loanDAO.endLoan(loan));
   }
 
+
+
   @Test void endLoanUpdatesAvailableNumberOfCopies() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
