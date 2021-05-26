@@ -3,11 +3,9 @@ package database.material;
 import shared.materials.Material;
 import shared.materials.MaterialStatus;
 import shared.materials.Place;
-import shared.materials.audio.AudioBook;
 import shared.materials.audio.CD;
 import database.BaseDAO;
 import database.place.PlaceImpl;
-import shared.person.MaterialCreator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     return instance;
   }
 
-  @Override public void create(int material_id, int length_, Place place)
+  @Override public int create(int material_id, int length_, Place place)
       throws SQLException
   {
     try (Connection connection = getConnection())
@@ -67,6 +65,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
         else
         {
@@ -84,6 +83,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
       }
     }
@@ -234,8 +234,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
         {
 
           CD cd = new CD(resultSet.getInt("material_id"),
-              MaterialDAOImpl.getInstance()
-                  .getCopyNumberForMaterial(resultSet.getInt("material_id")),
+              resultSet.getInt("copy_no"),
               resultSet.getString("title"), resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"), "",

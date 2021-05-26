@@ -25,6 +25,15 @@ public class MaterialServerImpl implements MaterialServer
     }
   }
 
+  @Override public int createMaterial(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String genre, String url, String keywords)
+  {
+    return ModelFactoryServer.getInstance().getMaterialModel()
+        .registerMaterial(title, publisher, releaseDate, description,
+            targetAudience, language, genre, url, keywords);
+  }
+
   @Override public void setSelectedMaterial(Material material)
   {
     ModelFactoryServer.getInstance().getMaterialModel()
@@ -55,10 +64,10 @@ public class MaterialServerImpl implements MaterialServer
         .createBookCopy(materialID);
   }
 
-  @Override public void deleteBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID, int copyNo)
   {
     ModelFactoryServer.getInstance().getMaterialModel()
-        .deleteBookCopy(materialID);
+        .deleteBookCopy(materialID, copyNo);
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -88,9 +97,10 @@ public class MaterialServerImpl implements MaterialServer
         .createDVDCopy(materialID);
   }
 
-  @Override public void deleteDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID, int copyNo)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deleteDVDCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .deleteDVDCopy(materialID, copyNo);
   }
 
   @Override public boolean dvdAlreadyExists(String title, String publisher,
@@ -114,12 +124,14 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createCDCopy(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().createCDCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .createCDCopy(materialID);
   }
 
-  @Override public void deleteCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID, int copyNo)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deleteCDCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .deleteCDCopy(materialID, copyNo);
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -143,12 +155,14 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createEBookCopy(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().createEBookCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .createEBookCopy(materialID);
   }
 
-  @Override public void deleteEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID, int copyNo)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deleteEBookCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .deleteEBookCopy(materialID, copyNo);
   }
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
@@ -173,12 +187,14 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createAudioBookCopy(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().createAudioBookCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .createAudioBookCopy(materialID);
   }
 
-  @Override public void deleteAudioBookCopy(int materialID)
+  @Override public void deleteAudioBookCopy(int materialID, int copyNo)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deleteAudiotBookCopy(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .deleteAudiotBookCopy(materialID, copyNo);
   }
 
   @Override public boolean audioBookAlreadyExists(String title,
@@ -208,12 +224,14 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public int totalNumberOfCopies(int materialID)
   {
-    return ModelFactoryServer.getInstance().getMaterialModel().totalNumberOfCopies(materialID);
+    return ModelFactoryServer.getInstance().getMaterialModel()
+        .totalNumberOfCopies(materialID);
   }
 
   @Override public void deleteMaterial(int materialID)
   {
-    ModelFactoryServer.getInstance().getMaterialModel().deleteMaterial(materialID);
+    ModelFactoryServer.getInstance().getMaterialModel()
+        .deleteMaterial(materialID);
   }
 
 }

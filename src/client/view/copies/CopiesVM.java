@@ -2,6 +2,8 @@ package client.view.copies;
 
 import client.core.ModelFactoryClient;
 import client.model.material.strategy.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +18,7 @@ public class CopiesVM
   private ObservableList<String> targetAudianceList;
   private ObservableList<String> languageList;
 
+  private ObjectProperty<Material> selectedMaterialProperty;
   private StringProperty titleProperty;
   private StringProperty genreProperty;
   private StringProperty keywordsProperty;
@@ -34,6 +37,8 @@ public class CopiesVM
     targetAudianceList
         .addAll("Voksen", "Barn", "Teenager", "Familie", "Ældre", "Studerende");
     languageList.addAll("Dansk", "Engelsk", "Arabisk");
+
+    selectedMaterialProperty = new SimpleObjectProperty<>();
 
     titleProperty = new SimpleStringProperty("");
     genreProperty = new SimpleStringProperty("");
@@ -93,6 +98,11 @@ public class CopiesVM
     return languageProperty;
   }
 
+  public ObjectProperty<Material> selectedMaterialProperty()
+  {
+    return selectedMaterialProperty;
+  }
+
   public ObservableList<Material> search()
   {
     SearchStrategy searchStrategy = null;
@@ -137,40 +147,32 @@ public class CopiesVM
     return materialList;
   }
 
-  public int getSelectedMaterial()
-  {
-    return ModelFactoryClient.getInstance().getMaterialModelClient()
-        .getSelectMaterial().getMaterialID();
-  }
-
-  public void setSelectMaterial(Material selectMaterial)
-  {
-    ModelFactoryClient.getInstance().getMaterialModelClient()
-        .setSelectMaterial(selectMaterial);
-  }
-
   public void addCopy()
   {
     if (typeProperty.getValue().equals("Bog"))
     {
       ModelFactoryClient.getInstance().getMaterialModelClient()
-          .createBookCopy(getSelectedMaterial());
+          .createBookCopy(selectedMaterialProperty.get().getMaterialID());
     }
     else if (typeProperty.getValue().equals("Ebog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().createEBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .createEBookCopy(selectedMaterialProperty.get().getMaterialID());
     }
     else if (typeProperty.getValue().equals("Lydbog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().createAudioBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .createAudioBookCopy(selectedMaterialProperty.get().getMaterialID());
     }
     else if (typeProperty.getValue().equals("CD"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().createCDCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .createCDCopy(selectedMaterialProperty.get().getMaterialID());
     }
     else if (typeProperty.getValue().equals("DVD"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().createDVDCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .createDVDCopy(selectedMaterialProperty.get().getMaterialID());
     }
   }
 
@@ -178,33 +180,45 @@ public class CopiesVM
   {
     if (typeProperty.getValue().equals("Bog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deleteBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .deleteBookCopy(selectedMaterialProperty.get().getMaterialID(),
+              selectedMaterialProperty.get().getCopyNumber());
     }
     else if (typeProperty.getValue().equals("Ebog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deleteEBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .deleteEBookCopy(selectedMaterialProperty.get().getMaterialID(),
+              selectedMaterialProperty.get().getCopyNumber());
     }
     else if (typeProperty.getValue().equals("Lydbog"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deleteAudioBookCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .deleteAudioBookCopy(selectedMaterialProperty.get().getMaterialID(),
+              selectedMaterialProperty.get().getCopyNumber());
     }
     else if (typeProperty.getValue().equals("CD"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deleteCDCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .deleteCDCopy(selectedMaterialProperty.get().getMaterialID(),
+              selectedMaterialProperty.get().getCopyNumber());
     }
     else if (typeProperty.getValue().equals("DVD"))
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient().deleteDVDCopy(getSelectedMaterial());
+      ModelFactoryClient.getInstance().getMaterialModelClient()
+          .deleteDVDCopy(selectedMaterialProperty.get().getMaterialID(),
+              selectedMaterialProperty.get().getCopyNumber());
     }
   }
 
   public void deletMaterial()
   {
-    ModelFactoryClient.getInstance().getMaterialModelClient().deleteMaterial(getSelectedMaterial());
+    ModelFactoryClient.getInstance().getMaterialModelClient()
+        .deleteMaterial(selectedMaterialProperty.get().getMaterialID());
   }
 
   public int totalCopyNumber()
   {
-    return ModelFactoryClient.getInstance().getMaterialModelClient().totalNumberOfCopies(getSelectedMaterial());
+    return ModelFactoryClient.getInstance().getMaterialModelClient()
+        .totalNumberOfCopies(selectedMaterialProperty.get().getMaterialID());
   }
 }

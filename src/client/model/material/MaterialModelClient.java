@@ -25,7 +25,7 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createBookCopy(int materialID);
 
-  void deleteBookCopy(int materialID);
+  void deleteBookCopy(int materialID, int copyNo);
 
   /**
    * Check if a material of type book already exists in the system
@@ -60,7 +60,7 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createDVDCopy(int materialID);
 
-  void deleteDVDCopy(int materialID);
+  void deleteDVDCopy(int materialID, int copyNo);
 
   /**
    * Check if a material of type DVD already exists in the system
@@ -92,7 +92,7 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createCDCopy(int materialID);
 
-  void deleteCDCopy(int materialID);
+  void deleteCDCopy(int materialID, int copyNo);
 
   /**
    * Check if a material of type CD already exists in the system
@@ -125,7 +125,7 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createEBookCopy(int materialID);
 
-  void deleteEBookCopy(int materialID);
+  void deleteEBookCopy(int materialID, int copyNo);
 
   /**
    * Check if a material of type EBook already exists in the system
@@ -159,7 +159,7 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createAudioBookCopy(int materialID);
 
-  void deleteAudioBookCopy(int materialID);
+  void deleteAudioBookCopy(int materialID, int copyNo);
 
   /**
    * Check if a material of type AudioBook already exists in the system

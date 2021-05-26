@@ -6,8 +6,6 @@ import shared.materials.MaterialStatus;
 import shared.materials.Place;
 import database.BaseDAO;
 import database.place.PlaceImpl;
-import shared.materials.audio.AudioBook;
-import shared.person.MaterialCreator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     return instance;
   }
 
-  @Override public void create(int material_id, String subtitle_lang,
+  @Override public int create(int material_id, String subtitle_lang,
       int length_, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -69,6 +67,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
         else
         {
@@ -87,6 +86,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
       }
     }
@@ -239,8 +239,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
         if (match)
         {
           DVD dvd = (new DVD(resultSet.getInt("material_id"),
-              MaterialDAOImpl.getInstance()
-                  .getCopyNumberForMaterial(resultSet.getInt("material_id")),
+              resultSet.getInt("copy_no"),
               resultSet.getString("title"), resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"),

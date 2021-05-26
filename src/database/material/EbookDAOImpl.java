@@ -36,7 +36,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
     return instance;
   }
 
-  @Override public void create(int material_id, int page_no,
+  @Override public int create(int material_id, int page_no,
       MaterialCreator author, int license_no) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -66,6 +66,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
         else
         {
@@ -84,6 +85,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
       }
     }

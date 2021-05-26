@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 public interface AudioBookDAO
 {
 
-  void create(int material_id, int length_, MaterialCreator author)
+  int create(int material_id, int length_, MaterialCreator author)
       throws SQLException;
   AudioBook createAudioBookCopy(int materialID, int copyNo) throws SQLException;
 
