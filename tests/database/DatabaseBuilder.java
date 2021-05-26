@@ -331,7 +331,7 @@ public class DatabaseBuilder extends BaseDAO
               + "VALUES ('222222-2222', 'B2', 'B2L', 'TEST@gmail.com', '+4587654321', 1, 'password');\n"
               + "\n"
               + "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no)\n"
-              + "VALUES (CURRENT_DATE, '2021-12-12', NULL, '111111-1111', 1, 1);");
+              + "VALUES ('2021-01-01', '2021-01-04', NULL, '111111-1111', 1, 1);");
       sql.executeUpdate();
       connection.commit();
     }

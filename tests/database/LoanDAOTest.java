@@ -123,16 +123,31 @@ class LoanDAOTest
     assertEquals("2022-01-12", LoanDAOImpl.getInstance().extendLoan(loan).getDeadline());
   }
 
+  @Test void extendLoan2TimesDoesNotThrowException() throws SQLException
+  {
+    //Boundary is 2 for the allowed number of extensions.
+    //Test for boundary value - 1
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
+    assertDoesNotThrow(() -> {
+      loanDAO.extendLoan(loan);
+      loanDAO.extendLoan(loan);
+    });
+  }
+
   @Test void extendLoan3TimesThrowsIllegalStateException() throws SQLException
   {
+    //Boundary is 2 for the allowed number of extensions.
+    //Test for boundary value
     databaseBuilder.createDummyDatabaseDataWithLoan();
     Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
     assertThrows(IllegalStateException.class, () -> {
-      LoanDAOImpl.getInstance().extendLoan(loan);
-      LoanDAOImpl.getInstance().extendLoan(loan);
-      LoanDAOImpl.getInstance().extendLoan(loan);
+      loanDAO.extendLoan(loan);
+      loanDAO.extendLoan(loan);
+      loanDAO.extendLoan(loan);
     });
 
   }
+
 
 }

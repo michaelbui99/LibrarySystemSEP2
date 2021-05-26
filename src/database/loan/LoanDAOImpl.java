@@ -339,9 +339,9 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               loan.setLoanState(new ExtendedLoan2State());
               break;
           }
-
           loans.add(loan);
         }
+
 
         if (!loans.isEmpty())
         {
@@ -349,6 +349,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
         }
         else
           throw new NoSuchElementException("Ingen aktive lån");
+
+
       }
     }
     catch (SQLException throwables)
