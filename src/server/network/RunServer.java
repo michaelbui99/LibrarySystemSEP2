@@ -1,12 +1,9 @@
 package server.network;
 
 import shared.Server;
-import shared.util.Constants;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 public class RunServer
 {
@@ -14,8 +11,8 @@ public class RunServer
       throws RemoteException, AlreadyBoundException
   {
     Server server = new ServerImpl();
-    Registry registry = LocateRegistry.createRegistry(1099);
-    registry.bind(Constants.RMISERVER, server);
-    System.out.println("Server started...");
+//    Registry registry = LocateRegistry.createRegistry(1099);
+//    registry.bind(Constants.RMISERVER, server);
+    server.start();
   }
 }

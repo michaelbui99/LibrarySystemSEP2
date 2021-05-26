@@ -7,9 +7,13 @@ import shared.loan.Loan;
 import database.BaseDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import shared.loan.NewLoanState;
 import shared.materials.reading.Book;
 import shared.person.borrower.Borrower;
+import shared.util.EventTypes;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -25,6 +29,7 @@ class LoanModelManagerServerTest extends DatabaseBuilder
   private DatabaseBuilder databaseBuilder;
   private Borrower borrower;
   private Book book;
+  public static Loan extendedLoan;
   @BeforeEach void setup()
   {
   loanModel = new LoanModelManagerServer();
@@ -33,6 +38,7 @@ class LoanModelManagerServerTest extends DatabaseBuilder
         "michael@gmail.com", "+4512345678", null, "password");
     book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
         "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+    extendedLoan = null;
   }
 
   @Test void getAllLoansByCPRReturnsAllLoansTest() throws SQLException
@@ -78,6 +84,21 @@ class LoanModelManagerServerTest extends DatabaseBuilder
 
     Loan loan = new Loan(book, borrower,"2021-12-12", "2021-05-21", null, 1 );
     assertDoesNotThrow(() -> loanModel.endLoan(loan));
+  }
+
+  @Test void endLoanUpdatesNumberOfActiveLoans() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Book book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
+        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+
+    Loan loan = new Loan(book, borrower,"2021-12-12", "2021-05-21", null, 1 );
+    //1 Loan is registered to the CPR in the Database
+    assertEquals(1, loanModel.getAllLoansByCPR(borrower.getCpr()).size());
+    loanModel.endLoan(loan);
+    //No loans left after ending
+    assertThrows(NoSuchElementException.class, ()->loanModel.getAllLoansByCPR(
+        borrower.getCpr()));
   }
 
 
