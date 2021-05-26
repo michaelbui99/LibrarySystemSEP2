@@ -180,8 +180,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
           + "join book  on material.material_id = book.material_id  "
           + "join material_copy mt on book.material_id = mt.material_id "
           + "join place p on book.place_id = p.place_id "
-          + "join material_creator mc on book.author = mc.person_id "
-          + "join material_keywords mk on book.material_id = mk.material_id ";
+          + "join material_creator mc on book.author = mc.person_id ";
       if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty()
           || !targetAudience.isEmpty())
       {
@@ -208,6 +207,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
       }
       sql += String.join(" and ", queryFragments);
       PreparedStatement stm = connection.prepareStatement(sql);
+      System.out.println(sql);
       ResultSet resultSet = stm.executeQuery();
       while (resultSet.next())
       {

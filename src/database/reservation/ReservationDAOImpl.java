@@ -57,6 +57,25 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     return false;
   }
 
+  private boolean canBeReserved(Material material){
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("select * from reservation where material_id = ?");
+      stm.setInt(1, material.getMaterialID());
+      ResultSet resultSet = stm.executeQuery();
+      if (!resultSet.next()){
+        return true;
+      }
+      else
+        return false;
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return false;
+  }
+
 
   @Override public Reservation create(Borrower borrower, Material material)
 
@@ -65,7 +84,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     {
       //todo: lige nu reserverer man en specific kopy. Evt. tilføje materiale + materiale kopi som java object, så man skelner mellem dem?
       //todo: lav et check på om der allerede findes en reservation borrower CPR og MaterialID
-      if (!MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID()) && canReserve(borrower,material))
+      if (!MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID()) && canReserve(borrower,material) && canBeReserved(material))
       {
         LocalDate today = LocalDate.now();
         PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (material_id, cpr_no, reservation_date) values (?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -79,8 +98,16 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         keys.next();
         return new Reservation(material, borrower, today, keys.getInt("reservation_id"), false);
       }
-      else
+      else if (!canReserve(borrower,material)){
+
         throw new IllegalStateException("Du har allerede reserveret dette materiale");
+      }
+      else if (!canBeReserved(material)){
+        throw new IllegalStateException("Materialet er allerede reserveret af anden låner");
+      }
+      else if (!hasReservations(material.getMaterialID())){
+        throw new IllegalStateException("Du har ingen reservationer!");
+      }
     }
     catch (SQLException throwables)
     {
