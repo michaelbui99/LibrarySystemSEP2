@@ -61,14 +61,23 @@ public class Loan implements Serializable
     this.loanState = loanState;
   }
 
-  public void extendLoan()
+
+  /**
+  * Extends the Loans deadline by 1 month.
+   * Loan can at earliest be extended 7 days before deadline.
+   *A Loan cannot be extended more than 2 times.
+   * A loan cannot be extended if the variable materialHasReservation is true.
+   *
+   * @throws IllegalStateException if Loan has already been extended 2 times, if materialHasReservation = true or Current date is not 7 days before deadline.
+  * */
+  public void extendLoan() throws IllegalStateException
   {
     System.out.println(deadline);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate today = LocalDate.now();
     LocalDate deadlineDate = LocalDate.parse(deadline, formatter);
     //Loans can at earliest be extended when the current day is 7 days before deadline.
-    if (today.isBefore(deadlineDate) && today.isAfter(deadlineDate.minusDays(6)))
+    if (today.isBefore(deadlineDate) && today.isAfter(deadlineDate.minusDays(8)))
     {
     loanState.extendLoan(this);
     }
@@ -120,6 +129,11 @@ public class Loan implements Serializable
   public LoanState getLoanState()
   {
     return loanState;
+  }
+
+  public void setDeadline(String deadline)
+  {
+    this.deadline = deadline;
   }
 
   //
