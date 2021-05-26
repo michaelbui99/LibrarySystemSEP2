@@ -9,10 +9,8 @@ import java.rmi.RemoteException;
 public interface ClientCallback extends Remote
 {
   /**
-  * Method used to notify the client, when the server have created the new Loan in the system.
-  * @param loan the created Loan object. To be used when displaying Loan details in the GUI layer.
+  * Method used to notify the client when a Loan event has occured on the server.
+  * @param evt the PropertyChangeEvent that is fired, when an Loan event has occured.
   * */
-  void loanRegistered(Loan loan) throws RemoteException;
-  void loanEnded(Loan loan) throws RemoteException;
   void loanUpdate(PropertyChangeEvent evt) throws RemoteException;
 }

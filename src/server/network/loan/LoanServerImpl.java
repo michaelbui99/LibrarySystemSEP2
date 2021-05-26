@@ -53,38 +53,7 @@ public class LoanServerImpl implements LoanServer
 
   public void registerClientCallBack(ClientCallback client)
   {
-    PropertyChangeListener listenerLoanRegister = new PropertyChangeListener()
-    {
-      @Override public void propertyChange(PropertyChangeEvent evt)
-      {
-        try
-        {
-          //TODO: let client/rmiclient implement ClientCallBack and implement the loanRegistered Method. The method should forward/fire the same event.
-          client.loanRegistered((Loan) evt.getNewValue());
-        }
-        catch (RemoteException e)
-        {
-          //Removes listener if connection failed
-          e.printStackTrace();
-          ModelFactoryServer.getInstance().getLoanModel().removePropertyChangeListener(EventTypes.LOANREGISTERED, this);
-        }
-      }
-    };
-    PropertyChangeListener listenerLoanEnd = new PropertyChangeListener()
-    {
-      @Override public void propertyChange(PropertyChangeEvent evt)
-      {
-        try
-        {
-          client.loanEnded((Loan) evt.getNewValue());
-        }
-        catch (RemoteException e)
-        {
-          e.printStackTrace();
-          ModelFactoryServer.getInstance().getLoanModel().removePropertyChangeListener(EventTypes.LOANENDED, this);
-        }
-      }
-    };
+
     PropertyChangeListener listener = new PropertyChangeListener()
     {
       @Override public void propertyChange(PropertyChangeEvent evt)
