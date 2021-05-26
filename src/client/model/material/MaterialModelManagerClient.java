@@ -65,9 +65,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createBookCopy(materialID);
   }
 
-  @Override public void deleteBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID, int copyNo)
   {
-    client.deleteBookCopy(materialID);
+    client.deleteBookCopy(materialID, copyNo);
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -94,9 +94,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createDVDCopy(materialID);
   }
 
-  @Override public void deleteDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID, int copyNo)
   {
-    client.deleteDVDCopy(materialID);
+    client.deleteDVDCopy(materialID, copyNo);
   }
 
   @Override public boolean dvdAlreadyExists(String title, String publisher,
@@ -121,9 +121,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createCDCopy(materialID);
   }
 
-  @Override public void deleteCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID, int copyNo)
   {
-    client.deleteCDCopy(materialID);
+    client.deleteCDCopy(materialID, copyNo);
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -148,9 +148,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createEBookCopy(materialID);
   }
 
-  @Override public void deleteEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID, int copyNo)
   {
-    client.deleteEBookCopy(materialID);
+    client.deleteEBookCopy(materialID, copyNo);
   }
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
@@ -176,9 +176,9 @@ public class MaterialModelManagerClient implements MaterialModelClient
     client.createAudioBookCopy(materialID);
   }
 
-  @Override public void deleteAudioBookCopy(int materialID)
+  @Override public void deleteAudioBookCopy(int materialID, int copyNo)
   {
-    client.deleteAudioBookCopy(materialID);
+    client.deleteAudioBookCopy(materialID, copyNo);
   }
 
   @Override public boolean audioBookAlreadyExists(String title,

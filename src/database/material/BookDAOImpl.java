@@ -39,7 +39,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return instance;
   }
 
-  @Override public void create(int materialID, String isbn, int pageCount,
+  @Override public int create(int materialID, String isbn, int pageCount,
       MaterialCreator author, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -75,6 +75,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
         else
         {
@@ -97,6 +98,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
           ResultSet keys = stm.getGeneratedKeys();
           keys.next();
           connection.commit();
+          return keys.getInt(1);
         }
       }
     }
@@ -178,7 +180,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
           + "join book  on material.material_id = book.material_id  "
           + "join material_copy mt on book.material_id = mt.material_id "
           + "join place p on book.place_id = p.place_id "
-          + "join material_creator mc on book.author = mc.person_id ";
+          + "join material_creator mc on book.author = mc.person_id "
+          + "join material_keywords mk on book.material_id = mk.material_id ";
       if (!title.isEmpty() || !language.isEmpty() || !genre.isEmpty()
           || !targetAudience.isEmpty())
       {
@@ -233,8 +236,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
         {
 
           Book book = new Book(resultSet.getInt("material_id"),
-              MaterialDAOImpl.getInstance()
-                  .getCopyNumberForMaterial(resultSet.getInt("material_id")),
+              resultSet.getInt("copy_no"),
               resultSet.getString("title"), resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"), "",

@@ -26,8 +26,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class RMIClientImpl implements RMIClient, ClientCallback, Client,
-    PropertyChangeSubject
+public class RMIClientImpl
+    implements RMIClient, ClientCallback, Client, PropertyChangeSubject
 {
 
   private PropertyChangeSupport support;
@@ -83,7 +83,7 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
   {
     try
     {
-  server.getReservationServer().registerReservation(material, borrower);
+      server.getReservationServer().registerReservation(material, borrower);
     }
     catch (RemoteException e)
     {
@@ -141,6 +141,22 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
+  @Override public int createMaterial(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String genre, String url, String keywords)
+  {
+    try
+    {
+      return server.getMaterialServer()
+          .createMaterial(title, publisher, releaseDate, description,
+              targetAudience, language, genre, url, keywords);
+    }
+    catch (RemoteException remoteException)
+    {
+      throw new RuntimeException("Server connection faild.");
+    }
+  }
+
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
@@ -173,11 +189,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
-  @Override public void deleteBookCopy(int materialID)
+  @Override public void deleteBookCopy(int materialID, int copyNo)
   {
     try
     {
-      server.getMaterialServer().deleteBookCopy(materialID);
+      server.getMaterialServer().deleteBookCopy(materialID, copyNo);
     }
     catch (RemoteException e)
     {
@@ -232,11 +248,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
-  @Override public void deleteDVDCopy(int materialID)
+  @Override public void deleteDVDCopy(int materialID, int copyNo)
   {
     try
     {
-      server.getMaterialServer().deleteDVDCopy(materialID);
+      server.getMaterialServer().deleteDVDCopy(materialID, copyNo);
     }
     catch (RemoteException remoteException)
     {
@@ -289,11 +305,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
-  @Override public void deleteCDCopy(int materialID)
+  @Override public void deleteCDCopy(int materialID, int copyNo)
   {
     try
     {
-      server.getMaterialServer().deleteCDCopy(materialID);
+      server.getMaterialServer().deleteCDCopy(materialID, copyNo);
     }
     catch (RemoteException remoteException)
     {
@@ -347,11 +363,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
-  @Override public void deleteEBookCopy(int materialID)
+  @Override public void deleteEBookCopy(int materialID, int copyNo)
   {
     try
     {
-      server.getMaterialServer().deleteEBookCopy(materialID);
+      server.getMaterialServer().deleteEBookCopy(materialID, copyNo);
     }
     catch (RemoteException remoteException)
     {
@@ -405,11 +421,11 @@ public class RMIClientImpl implements RMIClient, ClientCallback, Client,
     }
   }
 
-  @Override public void deleteAudioBookCopy(int materialID)
+  @Override public void deleteAudioBookCopy(int materialID, int copyNo)
   {
     try
     {
-      server.getMaterialServer().deleteAudioBookCopy(materialID);
+      server.getMaterialServer().deleteAudioBookCopy(materialID, copyNo);
     }
     catch (RemoteException remoteException)
     {

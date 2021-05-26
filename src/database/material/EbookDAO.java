@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 public interface EbookDAO
 {
-  void create(int material_id, int page_no, MaterialCreator author,
+  int create(int material_id, int page_no, MaterialCreator author,
       int license_no) throws SQLException;
   EBook createEBookCopy(int materialID, int copyNo) throws SQLException;
 

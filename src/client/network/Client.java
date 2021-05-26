@@ -34,6 +34,10 @@ public interface Client
   void deliverMaterial(int loanID);
   void extendLoan(Loan loan);
 
+  int createMaterial(String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String genre, String url, String keywords);
+
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,
       String isbn, int pageCount, Place place, MaterialCreator author,
@@ -41,7 +45,7 @@ public interface Client
 
   void createBookCopy(int materialID);
 
-  void deleteBookCopy(int materialID);
+  void deleteBookCopy(int materialID, int copyNo);
 
   boolean bookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, String isbn,
@@ -54,7 +58,7 @@ public interface Client
 
   void createDVDCopy(int materialID);
 
-  void deleteDVDCopy(int materialID);
+  void deleteDVDCopy(int materialID, int copyNo);
 
   boolean dvdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -66,7 +70,7 @@ public interface Client
 
   void createCDCopy(int materialID);
 
-  void deleteCDCopy(int materialID);
+  void deleteCDCopy(int materialID, int copyNo);
 
   boolean cdAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language,
@@ -79,7 +83,7 @@ public interface Client
 
   void createEBookCopy(int materialID);
 
-  void deleteEBookCopy(int materialID);
+  void deleteEBookCopy(int materialID, int copyNo);
 
   boolean eBookAlreadyExists(String title, String publisher, String releaseDate,
       String description, String targetAudience, String language, int pageCount,
@@ -91,7 +95,7 @@ public interface Client
 
   void createAudioBookCopy(int materialID);
 
-  void deleteAudioBookCopy(int materialID);
+  void deleteAudioBookCopy(int materialID, int copyNo);
 
   boolean audioBookAlreadyExists(String title, String publisher,
       String releaseDate, String description, String targetAudience,
