@@ -9,8 +9,12 @@ import server.network.reservation.ReservationServerImpl;
 import server.network.user.UserServerImpl;
 import shared.*;
 import shared.servers.*;
+import shared.util.Constants;
 
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ServerImpl implements Server
@@ -29,6 +33,14 @@ public class ServerImpl implements Server
     {
       e.printStackTrace();
     }
+  }
+
+  @Override public void start()
+      throws RemoteException, AlreadyBoundException
+  {
+    Registry registry = LocateRegistry.createRegistry(1099);
+    registry.bind(Constants.RMISERVER, this);
+    System.out.println("Server started...");
   }
 
   @Override public UserServer getUserServer()

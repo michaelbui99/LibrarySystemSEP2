@@ -152,8 +152,63 @@ public class DatabaseBuilder extends BaseDAO
               + "    FOREIGN KEY (material_id) REFERENCES material(material_id)  on delete CASCADE--?\n"
               + ");\n");
       ddl.executeUpdate();
+      connection.commit();
     }
   }
+
+  public void insertDummyReservationInfo() throws SQLException
+  {
+    createDummyDataWithoutInfo();
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement ddl = connection.prepareStatement(
+       " insert into material\n"
+           + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
+           + " values ('one','Voksen','cat live', 'catman','Dansk', '2000-10-10','Fantasy', 'null');\n"
+           + "\n" + "insert into place values (2, 1, 'p' ,'John','Fantasy');\n"
+           + "\n"
+           + "insert into material_creator values (2, 'John', 'Johnsen', '2000-10-10' , 'Denmark');\n"
+           + "insert into book values (1,200,2,'5444',2);\n"
+           + "insert into material_copy values (1,4,false);\n"
+           + "insert into address values (1,'horsens',8700,'doc',4);\n"
+           + "insert into borrower values ('111111-1122','Lilian', 'Bittar', 'bittarlily@gmail.com', '+4526700792', 1, 'password');\n"
+           + "insert into reservation values ('2000-10-10',1, '111111-1122',1,'true'); \n"
+           + "insert into material\n"
+           + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
+           + " values ('to','Voksen','cat ', 'cats','Dansk', '2000-11-10','Fantasy', 'null');\n"
+           + "\n" + "insert into place values (3, 2, 'p' ,'John','Fantasy');\n"
+           + "insert into material_creator values (5, 'Joh', 'John', '2000-10-10' , 'Denmark');\n"
+           + "insert into book values (2,200,5,'5444',3);\n"
+           + "insert into material_copy values (2,4,false);\n"
+           + "insert into reservation values ('2000-10-10',2, '111111-1122',2,'true'); \n"
+      );
+          ddl.executeUpdate();
+          connection.commit();
+    }
+  }
+
+  public void insertDummyWithOutReservationInfo() throws SQLException
+  {
+    createDummyDataWithoutInfo();
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement ddl = connection.prepareStatement(
+          " insert into material\n"
+              + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
+              + " values ('one','Voksen','cat live', 'catman','Dansk', '2000-10-10','Fantasy', 'null');\n"
+              + "\n" + "insert into place values (2, 1, 'p' ,'John','Fantasy');\n"
+              + "\n"
+              + "insert into material_creator values (2, 'John', 'Johnsen', '2000-10-10' , 'Denmark');\n"
+              + "insert into book values (1,200,2,'5444',2);\n"
+              + "insert into material_copy values (1,4,false);\n"
+              + "insert into address values (1,'horsens',8700,'doc',4);\n"
+              + "insert into borrower values ('111111-1122','Lilian', 'Bittar', 'bittarlily@gmail.com', '+4526700792', 1, 'password');\n"
+      );
+      ddl.executeUpdate();
+      connection.commit();
+    }
+  }
+
 
   public void createDummyDatabaseDataWithLoan() throws SQLException
   { //LoanQueries.sql
@@ -331,7 +386,7 @@ public class DatabaseBuilder extends BaseDAO
               + "VALUES ('222222-2222', 'B2', 'B2L', 'TEST@gmail.com', '+4587654321', 1, 'password');\n"
               + "\n"
               + "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no)\n"
-              + "VALUES (CURRENT_DATE, '2021-12-12', NULL, '111111-1111', 1, 1);");
+              + "VALUES ('2021-01-01', '2021-01-04', NULL, '111111-1111', 1, 1);");
       sql.executeUpdate();
       connection.commit();
     }

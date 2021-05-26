@@ -1,0 +1,243 @@
+Index: src/server/model/loan/LoanModelManagerServer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/server/model/loan/LoanModelManagerServer.java b/src/server/model/loan/LoanModelManagerServer.java
+--- a/src/server/model/loan/LoanModelManagerServer.java	(revision d71255cac29a8be177617a9b20913900e4f7926c)
++++ b/src/server/model/loan/LoanModelManagerServer.java	(date 1621880623037)
+@@ -36,6 +36,7 @@
+     }
+     catch (IllegalStateException e)
+     {
++      System.out.println("got here koi");
+       throw new IllegalStateException(e.getMessage());
+     }
+   }
+Index: src/database/loan/ReservationDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/database/loan/ReservationDAO.java b/src/database/loan/ReservationDAO.java
+--- a/src/database/loan/ReservationDAO.java	(revision d71255cac29a8be177617a9b20913900e4f7926c)
++++ b/src/database/loan/ReservationDAO.java	(date 1621880721250)
+@@ -7,11 +7,13 @@
+ 
+ import java.sql.SQLException;
+ import java.util.List;
++import java.util.NoSuchElementException;
+ 
+ public interface ReservationDAO
+ {
+ 
+-  Reservation create(Borrower borrower, Material material);
++  Reservation create(Borrower borrower, Material material) throws IllegalStateException,
++      NoSuchElementException;
+   List<Reservation> getAllReservationsByCPR(String cpr);
+   void endReservation(Reservation reservation);
+ }
+Index: src/server/model/reservation/ReservationModelServer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/server/model/reservation/ReservationModelServer.java b/src/server/model/reservation/ReservationModelServer.java
+--- a/src/server/model/reservation/ReservationModelServer.java	(revision d71255cac29a8be177617a9b20913900e4f7926c)
++++ b/src/server/model/reservation/ReservationModelServer.java	(date 1621880171729)
+@@ -17,7 +17,7 @@
+    * @param borrower borrower is the owner of the Reservation.
+    * @throws  IllegalStateException if the Material has more than 1 available copies
+    * */
+-  public void registerReservation(Material material, Borrower borrower);
++  public void registerReservation(Material material, Borrower borrower) throws IllegalStateException;
+   public void endReservation(Reservation reservation);
+   List<Reservation> getAllReservationsByCPR(String cpr);
+ }
+Index: out/production/LibrarySystemSEP2/client/view/borrowreserve/borrowReserveView.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/LibrarySystemSEP2/client/view/borrowreserve/borrowReserveView.fxml b/out/production/LibrarySystemSEP2/client/view/borrowreserve/borrowReserveView.fxml
+--- a/out/production/LibrarySystemSEP2/client/view/borrowreserve/borrowReserveView.fxml	(revision d71255cac29a8be177617a9b20913900e4f7926c)
++++ b/out/production/LibrarySystemSEP2/client/view/borrowreserve/borrowReserveView.fxml	(date 1621874770966)
+@@ -94,6 +94,8 @@
+                         </Button>
+                         <Button mnemonicParsing="false" onAction="#onReserveButton" style="-fx-cursor: hand;" text="Reserver" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <Label fx:id="warningLabel" prefHeight="18.0" prefWidth="335.0" textFill="#f80404" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
++                        <Label fx:id="reservationError" prefHeight="18.0" prefWidth="335.0" textFill="#f80404" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
++
+                      </children>
+                   </GridPane>
+                </children>
+Index: src/server/model/reservation/ReservationModelManagerServer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/server/model/reservation/ReservationModelManagerServer.java b/src/server/model/reservation/ReservationModelManagerServer.java
+--- a/src/server/model/reservation/ReservationModelManagerServer.java	(revision d71255cac29a8be177617a9b20913900e4f7926c)
++++ b/src/server/model/reservation/ReservationModelManagerServer.java	(date 1621880301858)
+@@ -25,7 +25,7 @@
+   }
+ 
+   @Override public void registerReservation(Material material,
+-      Borrower borrower)
++      Borrower borrower) throws IllegalStateException
+   {
+     if (MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(material.getMaterialID()) == 0)
+     {
+@@ -33,10 +33,10 @@
+           .getInstance().create(borrower, material);
+       //Event is fired and caught in ReservationServer. ReservationSever redirects the event to the client using the Client Callback.
+       support.firePropertyChange(EventTypes.RESERVATIONREGISTERED, null, reservation);
+-
+     }
+-    else
+-      throw new IllegalStateException("Flere tilgængelige kopier, materialet kan lån i stedet");
++    else{
++       throw new IllegalStateException("Flere tilgængelige kopier, materialet kan lån i stedet");
++    }
+   }
+ 
+   @Override public void endReservation(Reservation reservation)
+diff --git a/out/production/LibrarySystemSEP2/server/model/reservation/ReservationModelManagerServer.class b/out/production/LibrarySystemSEP2/server/model/reservation/ReservationModelManagerServer.class
+index aa34cd92787165a0f5aaa363689aaf39a5807808..b582b5c475d5070642855a8bf45e17084c7bf4b7
+GIT binary patch
+literal 2902
+zc$}S9TXz#x6#h;cJGoLQ6lf`sf?#@qC>1F7f^Awfm|ke0i1(A^kWM?9iIZuSpQ7*T
+zE3TylWG#K*%^&6RJCjS(+N51R<jk3K_Wr(a@3YUI{Qb`#e*(A-H-di58kmb9fOHsV
+zF(1JK?nUqsK8_-T`w@JCY!r)FGO!%NiZ*;;U^RqX1aUmnTaQ9m)6d5SKGpkA^zfM;
+zKG(w+2EH`#m4UAXjOtdU;<%o`rR;{>mZ`jwb~Ux)Iu+%5&(iDCE~#A2W>TPg%Ct>y
+zMxZM>ye1G#J4GeXlQnI%v{lY4_o2*NT<Og^1!=8G*VOOz#h|xtRs|-qRpo9gH&v#y
+zm2#DSm7eL?sny;2qTXDTwk#<(=i8J1q^nA1)l+VZp}^f_wz@7|RZNv7_e^P3Q;YT4
+zWMhlrRLPKcT-W)I<a71Oq>dx%w&L|Sd@M)q(L@EI28F=64y-h6FbNDDszD&0^JHOj
+zQC8}?iY$CzP!&zej2%;UaZkj9$+i-8IA==Ao3*T#<?7tC^vbHh+sWD~TRhfO&T~z>
+zG&x*b+VV^*m1TCRMyO^z_{&R9ZmY1qV5zdQy{0l6b`>hFKJEX23WRfJ$(G)htNar>
+zly<6ZNHaw1m&M}VqSQXh*7=<{0KI)NH~joe1#MZTzL3=fyL<#sfvd?Q5)8Vk>};!c
+z(jz%%%PpvTratpa9n1f^CXC@cE(jzJyQ<pmn;6bv&;XtCC>SWlpzzc{DTZ~J1~&Bi
+zrU5I4GFVin>-qOjWMP{p{qR{uvHbd4bgkAepdy-sionI))MqS9m88W=_EfV-cs%zk
+z+9!xwdh;_ST4qTlHl2#8+_6OC?kF#@DeZ*y<|jL0Cdg1!eh}Zra2+XuQ!N_O(k>`+
+zQNp`;uaS)og&M;I?&x7Uh8aDZ!L-1w|JQ~Dj_-!NoZnCdHqX?Nu^J$Ktwmdd@e5|C
+zC_R~%Rn=@O&8{*(yPPRk*m<J7-x<5=={(RQIh^h2q_0ogR>jssw8mRz-f!(0f%6?9
+z1qSF<Yx&DhXSbzk>AscLr^<>6CNml%(Ztw)r<<W9TE!n=MeT!~_W4OFxQfCA9w!g&
+zvmHA2aEGSf`_y#zU15PcZM#nEksf@=eFyc!H4O24-w)=Nzkt5H{7(?#oOhn%MZTpG
+z<P115@&aPyH3CmK>G~bPU%41Sg5xoCaXdrAvp7z;A-=_GPPl~2eDX7ZE40>tKhQ47
+z=lDy!HM)cDS1<zj5rZ!g8XJ9ua2J+FenYS~Dz5Dy_6y>#5r5Kq>;-!M(v)33<p8=l
+zUO*4Y21s#*1W8=Q4UU?AgcJjaa^)Rg+<0Axo+UBtiyNoaC`FBN9z-A+#x;M&`s9y2
+zpq_yTdY8{WDx|>U0r>h(2&#|m&%!l?>3E7lw2ad=$0m87FNj||-A3y9DDkO1<2Cr+
+z0G=<3=f1))A~;!(xCTGLl@A!#ln<ZaT9ocL7>g!~H;LkSA2*4iW9x>vZxH8}FZDK8
+z*_-OIWr?71BRZtfu^pV+4JhJcrm14S$);Bu99qduUuOi9R21-$r|ZbGeAoVAA9)9T
+x`++kowEHbt3O9knKAg_dOnafH_v0<oZ{^5BXW9xqvmf{og{~bU^sevo;lI?$)@1+y
+
+diff --git a/out/production/LibrarySystemSEP2/server/model/reservation/ReservationModelServer.class b/out/production/LibrarySystemSEP2/server/model/reservation/ReservationModelServer.class
+index 1ee7dfda2f7475b5e567fcc2a216727f50030b13..152b4d6e331b4685c1e26b77562490aa04275513
+GIT binary patch
+literal 565
+zc$|e%O-}+b5S;?Df{G|69yIad0WS9FVTneFCMFOGn|LoUSxQPv+Ahjp^WYEgM;V7@
+z1xz#^n$DXy^XBX0^X(k~uHhtrY5+$895bj{jHUBv`{>Zlg_lM%xUF~GSXdnKsUS`Y
+z<#;!<!f$GZ))~zQ##-}&mbWq^Y&<h4-@guVwp4Qg)EHDykA9RmUzbouXuidz`KK}Z
+zJEgYVuC-|Q`V21Xor#zWu7r+x<gL_k*jTv|FBR|5I3a^lBx5anVlf@(-<0N`?c9)B
+zIWmbI;)7HqcecfL%?MRQ2<_EUkO6lo;?pI=?Ix7}p2ncMY3^w-!J(%ivu0LWj`ysg
+zb^AqoOi>smS=hxU^HC{`g^E0#X}$X*0|q&Ic{+T)z@Pv-go=a;^ateGg%Sap5cbHk
+NPfQLD$f~5);TNX{tfv3~
+
+diff --git a/out/production/LibrarySystemSEP2/database/loan/ReservationDAO.class b/out/production/LibrarySystemSEP2/database/loan/ReservationDAO.class
+index 72899abe0493a74918753492b6251c4f28c24a07..776434e5a9bc1f87ffc55aa30c86620e50274816
+GIT binary patch
+literal 545
+zc$|%pO-}+b5Qe9KyMkXRCSFYR-~lf7=mDYu#l!@~u!)|_GFeJWOWH2#U-RG(@JAVE
+z315jJv8S15-oEqk{qy++09SAvLOFy(20?65cx3Qe?YN<^IN%es&S>5@)|xl8yfqK%
+z3&EH^SSgg_kMpQrThx>hn)lG5oeD3Ft}`gL-(#F)i3{N<gbIU`1btJfHJxjH+&=dh
+zTvR(FF%?`1o$$z8sS`4vq0~#oJJNabEJiZX!l#xdzxl_P#>V-s$!#C?V2v?2t!~uU
+zUTCApq&CKTsi=Krt$Nq&US^HSVIaKd3x|IkNW-AKnz-8^VeA>4t<Zx~m<SblI`8s$
+z49-_OJ((zthi!#p)P5-m7%<2|_VNV=c_>i6MOi>JfRNZW6p59H<zR>MUD%_TPB0?}
+EzejnZuK)l5
+
+diff --git a/out/test/LibrarySystemSEP2/database/LoanDAOTest.class b/out/test/LibrarySystemSEP2/database/LoanDAOTest.class
+index 0ec9f4e62db29464d712070cef8057ade755c8e0..faffe94a12812a28381a7a676872f85eace81829
+GIT binary patch
+literal 6452
+zc$~FY2Yl4l9sXpWk$e_lgad>IFyMqc8#ru(A%TQ=QJkK^!N$}{N|5hl`#>ihCmn=z
+zq%&RVp6PD7chd&5TAGfuX-3<md+)vXPWwGcH#nc|kT(9=Pft((@%`uf`<{nRp9Qd4
+zlEdi6VHw#ls&Kd#U2tT$Vbu69IT=S3993|Gf@2D9RPaOvPYOf9lf~z!$hb+tQx!Z-
+z!P6ByL%}l@JWIjNVJyJ21;ulOsOM_b^};Y-gcl3em(<~<cv&4@j#r4YSBCK_yjpPF
+zT8G!*wPCytuNTW3#PUW#{3apg&4S}L8E;YW)-YP|wlLm~cL)jZ6tC|RueXZj-Qx8<
+zGTy5}^3}dy!3Pw4P{HjAKBVBo8jU@!U{b*eL3>g|HBJjfXJmXt#z!T{rmb5&ox3G0
+zjwf|jAJrWrCeC7U|HD=Z^Yb6Naw#)uWF;&u()OJDjpWLxoz2=u1>MTHGofdVWGrK3
+z9ovfKzr?zN4aq~JwtYy#iacprca3aHH=S74(32@^oW%Aa63*F{vQq995~?H7Ve)m`
+zNrT|xDa+WEOOG1aA$`>3i59mLx;d;<2;YOlkUNobBrGZd59}K<9GAjt9K+3JB!qi!
+zNEjJ6Wn0XTvl1@cle64Z+89nbDGKVeEZfz+&k|O}?d*8$V2-G`W>Ul*(=(}9moa8%
+zjb1%5LBaD9G{ZH7Hla$wMbmHvK-L!N_htyza5|6ZDN|VCTe*9z+s>p6$CtKx+;BTh
+zQ;<7d$GQjh?4cc5%gLYlR5c=^L|h*~s2|Z|IX7j-;wewxqI11<ER*+GQyJ~He1Hns
+zvGoe_ubKuxHzRB$TyakCo8Cj4Dndegxqw}^k9>j|;_R{qbBT#w(?}bZTZoN>?L{~B
+z2MM#wcJ~<LL~2mQOx(Ut7Feb9U0xE_8CJ3wsf&ZRnd2a#!PL{ENxi9rxv5>k1(B)d
+zMu%m5Ov289<9{@wsg3@R%u+a_R<;HD9)YWyTG<+=!1c6mV7Uz1xopDNkrEkGUs6)*
+zMe?YKqn|ZYv9a`}Gp33j^h#JVT{ls&1CM2In5By_aIN0YI<c^+^`{aOx?!?aP!L0%
+z_TR4@Pcww;6Ly*$EgLtrwzY5E)UkOBdsaqwoTGL&DInjeVki0}ESu4>Y)C^X*EFav
+zJdhhTQ_h5u6)$ZY+BU3fZR0OrcJ{{OyBm9Y2fIl>Y#(wACT~p-olXI@?QN|a+uQgn
+z)P7vWRd}3=PY9pYQ-$leSv}KlxD$5LnLh`gtVjQR8J|*d7d|cHGb--JXI0#Tdu80G
+z;(mNi#^+Uh0S~Bn5MPw>B^6)BS5$lz56JkMim&4vGQO$eTllt$@8G*CzK45Nd>=nh
+z@k8{h_z`|g)#X{s`V|JN_z8Y0<7X;<F1Q}VFI4<e==zmdevRKqXe_pj%GpHtzg6)&
+z{GKxXA`1=m4i53*yGY)lTdwXLV?-F7wpRX<<qyK*Kl-k1Ex6Wu*|2F{TdVNipGfy-
+zLH8FGe+7fyP^r_?IuD|$Gm5)M53)nCP`xAPuo)Y?I$qLa78Xgp3i12m&5?NVe9+A@
+zAGZGAPR>pA&SWxcI8FsZQPlTG`uZM4D39o*Z)!6dF!h8{ZdtzFb&HN-XFYpX`R%1A
+zmrftc_W|+Tmtq0ryqhG9zv1s;j$8j=su(vIiJZ%bbVn-R>d|R#+OeFK5D|{`dJ;rf
+zc@H&KChl|`BO6@!n(n>y*an-W>*a)m^^x;XBkY{RF5I1A(`txBr+Sd-Sg~C)bIZFo
+z@8}A-7@c~@&pY>o)#jvbG`vBIZBF&A>OGuexY(SSRs!bA0*rht3sDQYH=8IS^;wRq
+zTM3F=Nqc5wB9yu0$e;A}u*c5Gz)6$z`TMqT0p~B?P^3>7;Mb{`(qi5)!=w?$St2@%
+z^FBWJGm(TdX3puiEq8*FmPD?aj!toH-?NOIpP>@m3YTskc6q8#op~QlAw?^VN-Jil
+z5Wi7Z(_Lcn=qt@Ezt3&;!<C0g*GHl=Six(1+K-&NOC*VzQNo(YRE<+lL}JyFSD+Q)
+z7wN!g9`i%&BP`zPtBVMyb*AVB|12c2KgmcKEJf38>Y|CBN0r7abbe3Mza)%K(`{xO
+z!_KQ29eLCftU~XO4hs|iEn)90CYH>z=Vg@~Ovo}GQt=<DT7@O1j<i?~fz#lGxVTpp
+zk)^C7_90^M#!n7H`k0>Jb;0qVE?s<+r5e^|oL(0H!Kr<gWn{gWiym=bX(j~n{E=#>
+zZY52_Y4RCocF{SEBH<s|M_=X4ywRy&yLHnXq;I#%(j5L<^04fYuzY4ZG&0!T07CrZ
+z7!L8naoc-x{`H<5NV(4AA18T8*u`CpPl?Z(<`a-^=cWp~xz6zpFTem-)hEE!*yD*A
+zBy+XL{5;fq-v*k`plaj<s*fYYZ4I|`jzi{F8PRIBuvVw3+FVJScLMW|qn_srMnWM?
+z(-vwC+69ufNL#EeS%AAG=>#r3j-^E$i>Mb^jykO1z7gxOiswxwxCR1TL!R+WcMJ#k
+z_jza^UqE|+Pr=dLd<W!7Jf`_HE&@(sS%?SXuYMBCPhmwBPN7lahm}Pfn&;REWJGE6
+zI<B!249(MG81XP%Q^0Ur;MsuyL+B({al3R9t52b+N+=D$EERxG;^OcmE}6s{?zo;p
+zqz3z{r!p0huBWenb|T$~`PhWTd@e-?HefT?4s62~Cdj2sfi0xJ>|uG*x8mA@6&dQP
+z5^?dZhziJBt>?OUsHN0<)g|8BPE1!~Av&>)$vWUg*OL<HT}b5D;R)2YKfvUlT+iKf
+zm<|*$-9=f|eD1A)sipc9nyYXpTKcuMYbUX866;SQ7UFgTfrk8}*5bB}TdkJ+cBTX=
+zi>6$HTCcKX*49E+)^gTXGb^i&wRJh2x|4v02uPUM=mRR4*A<wzoT1P$O29=!yJj&o
+zQ807|`9!!Hf)vs=GLbilMDEyEOoMrz?m^-lqV(aCFgMH+=43(B5hjobP)DFilx=;u
+zKCErlwy<z7)h_cYcWb_K<Al<3ni*Dx#Sj0r#Bv==Xg|RoC<%W@fG0xC2E91F55@|}
+zCZKq{ks#P-&@z&*8SQfI3Mq5~+v5Vvm0pFHV@VQ=!89Dh8jP1<i3C`dG4Vu%rpGc~
+zz;c$Sg7=zyTbZqX;}z;xFtKntt5BgM6w!BJF4sduZ!)TB;<T`u&nQc>6^B{Y8M;5q
+z9C3)vC1!_sb0rpD6Id7}{R|e?SBdMJ9J{>2^~=4kh_d{q7%NdxSGXz4op_L9IT{3F
+z2iV)If<z9rc%f_18vGVlp2+)Y`1Le-e~F%kf}V!5#1VQphXi^y2L&^?q$TVtH(+l`
+zh0HCh5FySgh#LtwR?pt3%hRrz$Xj^nH1if)TcU7vxkB1(d%PJ*SQ>`JTROz$Lf*MT
+YP6*E@%`JEV|NPzi3cEWByHmL3zm5Wm#{d8T
+
+diff --git a/out/production/LibrarySystemSEP2/server/model/loan/LoanModelManagerServer.class b/out/production/LibrarySystemSEP2/server/model/loan/LoanModelManagerServer.class
+index b8cfa16828f0a3755a05c817c222432fabe3651f..6e1ded86d1b387a091dab44734d09f8ab9e2f444
+GIT binary patch
+literal 2827
+zc$}qHYgZFj6x}x<lMLf45D_00)Y|aS)cP){<z)*^0FBbpr<3FwMkh0IW`ffGpnk2c
+z7PYQbzxPLVb>Epu3@>4=e&BNN$vJ!PbIv_C`RCui{swRjzv?)N84Y)IB=BVlC-9Yy
+zS<LD98hN!8x-pLh4U0+KRX+DL6jQj52T3gH_y*tVFtDta@092F8h+5xqbxm<<;Ns`
+zQh`6K<)K<kwUjiJHB>Z60nKmJ>#i3FoX$TsSIt~WnvS1a^xV4ig0-m?)2Yg0<TEDF
+zHEuapa7&;gJG3OwIptOeaxiZ>a=uY3N$<W{vS~@@-Lh#fnVzN2v9U8)v3!Byyf3{~
+z>E&t+wsW>?I=MWTf;tvV$E-@P7<!P<@MP8U1L-Lbf!o=<zhZi_lB=0CTBhyi3h{2N
+z`4N@-u9GXdp65Oz&t$wA3nkkjP`c^dq9>W4$ib)#HuKKS+P18kb}=Bs%=5CW2bQb+
+zl1*}f;~&sN$EF5_yPG<J{bVXXDVX)RV27$Qn6Pc7&YxVHTD&K4HruAJ7<iUb9UF>F
+zjli;Vc@}G|)y&W|?-m>7l^I*sq!YBK(NV5@suEiO1yV(;>X<>pql)W$pd8;?&Rc}h
+zq*I9+m&tDRQ0?e9E0v9xO~FY=m25lWoiAxKF6y#l)+jw`x4_QqAyVL6c8>%nJXv#B
+z<xbM|qTBGw@{Xn2czpZYeL*o97{qCTf!$_L`8_gl3IiId23BBccx>PaYy&ko8e9W)
+zJQX++mpN?B%qm-cf2}S#b_bM-d+{{MiUAL_p4#QMYan$4tDMBD8w{*4bl{0g@@EE~
+zW6i)XaFjOgF5z-Bkq_KE1D``(Fr{Y3sVE`ixT%&21Cweui3x%1Uf&2#$@>%*N{?lk
+zZ`t4nqMKov_S+Q&MmMrz24>0h<@>nliG|r(ozvdUft+>xz;w#&YkzhqzpXR#>j|*~
+zt0r^dQ#j3{a^f8KnLuAQ9-oaLtM?*sqkAsU+jQDEn3-(}`7oC~8BzrQ>xJBD;5N?w
+zHcw~zk>zcg27wzp4sd(Xw{JsRSBq=BvNcxEZLqhQ$lr1~D3%itR+_a|#W$My0@c;Y
+zb~g39nF@(?_Ou{<pI3_a_yoU`1wP_mLJb?gsFU1tM!BBhX$qa(0f&cQK@7h|Vwszc
+zKhgPu#stoCJ%A3bN9ov)LpX+yc`~9PoWm#l&+Cn$81N1D(G$4(8v8~@#cOn}Lwked
+zKFkmQfzGrp&ab2UHyoXRiT&vV>p1up#xiY(Ug7Y&7a{IR3N^^8*iTb1c<!R;G#O5k
+zX@D9A$vi~fD;N$HT_$fD-8_vjauB^3#raVA)mWw4T|h2mxQb74k@<bby@td?4Ms0N
+z;K<Xc(s;^H72K!Nc!P8TzZc%3XL)oTy|0jY7owz~ewuW&Rp}xvm#E@OsA+(<Ze}vd
+zb3%c&l=M--HDW0KE{HjeIM>69-=LK*N?gsmtfh*~L^6&f5EijdjIfBCTQo*N<4pW!
+zNPZ*=Y*A*y((p%tdY@wWe4M4OP)C^C(f62o7(YeK=~gnz+QidwD@;M{ZsQAjE98k7
+zd4gvZp9+!J(Z3mZmVKRT6PjuPr$RU-baH2*$2Q|FFm7?rLML|=dVDkR0}5T*Md(x*
+GGyNZL%cF(>
+

@@ -13,4 +13,5 @@ public interface ClientCallback extends Remote
   * @param evt the PropertyChangeEvent that is fired, when an Loan event has occured.
   * */
   void loanUpdate(PropertyChangeEvent evt) throws RemoteException;
+  void reservationUpdate(PropertyChangeEvent evt) throws RemoteException;
 }

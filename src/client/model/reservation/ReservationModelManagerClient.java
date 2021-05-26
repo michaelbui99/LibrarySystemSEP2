@@ -4,7 +4,10 @@ import client.network.Client;
 import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
+import shared.servers.PropertyChangeSubject;
+import shared.util.EventTypes;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
@@ -19,6 +22,7 @@ public class ReservationModelManagerClient implements ReservationModelClient
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
+    ((PropertyChangeSubject)client).addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, this::onUpdate);
   }
 
   @Override public void registerReservation(Material material,
@@ -68,5 +72,11 @@ public class ReservationModelManagerClient implements ReservationModelClient
       PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(listener);
+  }
+
+  private void onUpdate(PropertyChangeEvent evt)
+  {
+    support.firePropertyChange(evt);
+    System.out.println("Reservation event caught");
   }
 }

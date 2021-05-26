@@ -13,7 +13,7 @@ import shared.materials.reading.EBook;
 import shared.person.Address;
 import shared.person.MaterialCreator;
 import shared.person.borrower.Borrower;
-
+//import org.apache.commons.lang.StringEscapeUtils;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,25 +56,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     }
     return false;
   }
-  // call the method in materialDAo
-  private int getCopyNoForMaterial(Material material){
-    try(Connection connection = getConnection())
-    {
-      PreparedStatement stm = connection.prepareStatement("select * from material_copy where material_id = ? ");
-      stm.setInt(1, material.getMaterialID());
-      ResultSet resultSet = stm.executeQuery();
-      if (resultSet.next()){
-        return resultSet.getInt("copy_no");
-      }
-      else
-        return 0;
-    }
-    catch (SQLException throwables)
-    {
-      throwables.printStackTrace();
-    }
-    return 0;
-  }
+
 
   @Override public Reservation create(Borrower borrower, Material material)
 
@@ -144,6 +126,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
           query += " JOIN material_creator ON " + materialTypes[i] + ".author = material_creator.person_id ";
         }
         query += " WHERE reservation.cpr_no = '" + cpr + "'" ;
+//        String escapedSQL = StringEscapeUtils.escapeSql(unescapedSQL);
         PreparedStatement selectReservations = connection.prepareStatement(query);
         ResultSet selectReservationsResult = selectReservations.executeQuery();
         while(selectReservationsResult.next()){
@@ -238,7 +221,6 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         }
 
       }
-
 
       if (!reservations.isEmpty())
       {

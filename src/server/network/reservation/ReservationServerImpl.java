@@ -31,16 +31,24 @@ public class ReservationServerImpl implements ReservationServer
   @Override public void registerClientCallBack(ClientCallback client)
       throws RemoteException
   {
-
-
     PropertyChangeListener listenerReservationRegistered = new PropertyChangeListener()
     {
       @Override public void propertyChange(PropertyChangeEvent evt)
       {
+        try
+        {
+          client.reservationUpdate(evt);
+        }
+        catch (RemoteException e)
+        {
+          e.printStackTrace();
+          ModelFactoryServer.getInstance().getReservationModelServer().removePropertyChangeListener(this);
+        }
         //TODO: Implement reservationRegistered callback method on Client and call it here. Catch remoteexception and unsubscribe as listener
       }
     };
-    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
+    ModelFactoryServer.getInstance().getReservationModelServer().addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
+    ModelFactoryServer.getInstance().getReservationModelServer().addPropertyChangeListener(EventTypes.RESERVATIONCANCELLED, listenerReservationRegistered);
   }
 
   @Override public List<Reservation> getAllReservationsByCPR(String cpr)

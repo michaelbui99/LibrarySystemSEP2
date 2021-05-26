@@ -184,7 +184,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT *  FROM material_copy where material_id = (?) AND available = true");
+          "SELECT *  FROM material_copy where material_id = ? AND available = true");
       stm.setInt(1, materialid);
       ResultSet resultSet = stm.executeQuery();
       if (resultSet.next())

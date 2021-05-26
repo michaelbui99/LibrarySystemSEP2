@@ -28,6 +28,6 @@ public interface ReservationServer extends Remote
    * @param client the Client to be registered as listener/ClientCallback
    * @see LoanServer
    */
-  void registerClientCallBack(ClientCallback client) throws RemoteException;
+  public void registerClientCallBack(ClientCallback client) throws RemoteException;
   List<Reservation> getAllReservationsByCPR(String cpr) throws RemoteException;
 }

@@ -57,6 +57,7 @@ public class RMIClientImpl
       registry = LocateRegistry.getRegistry(1099);
       server = (Server) registry.lookup(Constants.RMISERVER);
       server.getLoanServer().registerClientCallBack(this);
+      server.getReservationServer().registerClientCallBack(this);
     }
     catch (RemoteException | NotBoundException e)
     {
@@ -794,6 +795,13 @@ public class RMIClientImpl
       throws RemoteException
   {
     support.firePropertyChange(evt);
+  }
+
+  @Override public void reservationUpdate(PropertyChangeEvent evt)
+      throws RemoteException
+  {
+    support.firePropertyChange(evt);
+    System.out.println("Reservation update");
   }
 
 }
