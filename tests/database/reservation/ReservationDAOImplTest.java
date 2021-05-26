@@ -21,6 +21,7 @@ class ReservationDAOImplTest
   DatabaseBuilder databaseBuilder;
   Borrower borrower;
   Book book;
+  private String miaw;
 
   @BeforeEach void setUP() throws SQLException
   {
