@@ -26,7 +26,7 @@ public class BorrowerWindowController
   public void OnButtonMyMaterial(ActionEvent actionEvent) throws IOException
   {
 //    ViewModelFactory.getInstance().getUserVM().setBorrowerCPR();
-    ViewHandler.getInstance().openView("MyMaterial");
+    ViewHandler.getInstance().openView("MyLoans");
   }
 
   public void onButtonChatRoom(ActionEvent actionEvent) throws IOException

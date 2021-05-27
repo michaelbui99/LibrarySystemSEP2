@@ -57,7 +57,7 @@ public class MyLoansController
   void onBackButton(ActionEvent event) {
     try
     {
-      ViewHandler.getInstance().openView("UserWindow");
+      ViewHandler.getInstance().openView("BorrowerWindow");
     }
     catch (IOException e)
     {

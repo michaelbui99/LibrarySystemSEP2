@@ -114,7 +114,7 @@ public class AddUserController
     {
       errorLable.setVisible(false);
       ViewModelFactory.getInstance().getAddUserVM().addUser();
-      ViewHandler.getInstance().openView("UserWindow");
+      ViewHandler.getInstance().openView("BorrowerWindow");
       clearFields();
     }
   }

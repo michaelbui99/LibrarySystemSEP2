@@ -42,7 +42,7 @@ public class MainController
   {
     if (ViewModelFactory.getInstance().getMainVM().login())
     {
-      ViewHandler.getInstance().openView("UserWindow");
+      ViewHandler.getInstance().openView("BorrowerWindow");
     }
     else
     {

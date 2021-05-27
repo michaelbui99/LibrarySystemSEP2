@@ -79,13 +79,13 @@ public class SearchController
 
   @FXML public void onButtonCancel(ActionEvent actionEvent) throws IOException
   {
-    ViewHandler.getInstance().openView("UserWindow");
+    ViewHandler.getInstance().openView("BorrowerWindow");
   }
 
   @FXML public void onButtonContinue(ActionEvent actionEvent) throws IOException
   {
     ViewModelFactory.getInstance().getSearchVM().setSelectMaterial(searchTableView.getSelectionModel().getSelectedItem());
-    ViewHandler.getInstance().openView("BorrowReserve");
+    ViewHandler.getInstance().openView("LoanReserve");
   }
 
 

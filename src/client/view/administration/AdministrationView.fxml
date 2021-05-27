@@ -29,7 +29,6 @@
                   <GridPane prefHeight="105.0" prefWidth="591.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -37,8 +36,7 @@
                     </rowConstraints>
                      <children>
                         <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Tilføj materiale" textFill="#3000ed" />
-                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonAddRemoveCopy" style="-fx-cursor: hand;" text="Tilføj/Fjern kopi" textFill="#0400ff" GridPane.columnIndex="2" />
-                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonRemoveMaterial" style="-fx-cursor: hand;" text="Fjern materiale" textFill="#1500ff" GridPane.columnIndex="1" />
+                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonAddRemoveCopy" style="-fx-cursor: hand;" text="Tilføj/Fjern kopi" textFill="#0400ff" GridPane.columnIndex="1" />
                         <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Tilføj materiale" textFill="#3000ed" />
                         <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Registrer materiale" textFill="#3000ed" />
                      </children>

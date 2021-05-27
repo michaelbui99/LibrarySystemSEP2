@@ -67,7 +67,7 @@ public class CopiesController
 
     if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber() == 1)
     {
-      errorLable.setText("Kun én kopi tilbage, kan ikke fjernes!!");
+      errorLable.setText("Kun én kopi tilbage, kan ikke fjernes!");
       errorLable.setTextFill(Paint.valueOf("red"));
       errorLable.setVisible(true);
     }
@@ -142,7 +142,7 @@ public class CopiesController
     }
     else
     {
-      errorLable.setText("Der er ikke noget sådant materiale i systemet !!!");
+      errorLable.setText("Materialet findes ikke i systemet!");
       errorLable.setTextFill(Paint.valueOf("red"));
       errorLable.setVisible(true);
     }
