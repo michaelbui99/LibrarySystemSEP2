@@ -41,7 +41,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
   {
     try (Connection connection = getConnection())
     {
-      if ((subtitle_lang == null || subtitle_lang.matches(".*\\d.*")) || (
+      if ((subtitle_lang == null || subtitle_lang.matches("[0-9]+")) || (
           length_ <= 0) || (place == null))
       {
         throw new IllegalArgumentException();
