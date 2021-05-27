@@ -214,4 +214,6 @@ public interface RMIClient extends Remote
 
   void deleteMaterial(int materialID) throws RemoteException;
   List<Reservation> getAllReservationsByCPR(String cpr) throws RemoteException;
+  Borrower getBorrowerByCPR(String cpr) throws NoSuchElementException, RemoteException;
+
 }

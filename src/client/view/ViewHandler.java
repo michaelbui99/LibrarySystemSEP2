@@ -4,6 +4,7 @@ import client.core.ViewModelFactory;
 import client.view.addlibrarian.AddLibrarianController;
 import client.view.adduser.AddUserController;
 import client.view.administration.AdministrationController;
+import client.view.borrowercontactinfo.BorrowerContactInfoController;
 import client.view.loanReserve.LoanReserveController;
 import client.view.copies.CopiesController;
 import client.view.main.MainController;
@@ -145,6 +146,14 @@ public class ViewHandler extends Application
             .getController();
         administrationController.init();
         stage.setTitle("Administration");
+        break;
+      case "BorrowerContactInfo":
+        loader.setLocation(
+            getClass().getResource("borrowercontactinfo/" + id + "View.fxml"));
+        root = loader.load();
+        BorrowerContactInfoController borrowerContactInfoController = loader.getController();
+        borrowerContactInfoController.init(ViewModelFactory.getInstance().getBorrowerContactInfoVM());
+        stage.setTitle("Vis Lånerkontaktoplysninger");
         break;
     }
     scene = new Scene(root);

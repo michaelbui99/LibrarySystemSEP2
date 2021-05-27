@@ -9,6 +9,7 @@ import shared.servers.UserServer;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.NoSuchElementException;
 
 public class UserServerImpl implements UserServer
 {
@@ -124,5 +125,17 @@ public class UserServerImpl implements UserServer
   {
     return ModelFactoryServer.getInstance().getUserModel()
         .librarianAlreadyExists(employeeNo, cpr, email, phone);
+  }
+
+  @Override public Borrower getBorrowerByCPR(String cpr)
+  {
+    try
+    {
+      return ModelFactoryServer.getInstance().getUserModel().getBorrowerByCPR(cpr);
+    }
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
   }
 }

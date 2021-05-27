@@ -198,5 +198,7 @@ public interface Client
       String phone);
 
   void deleteMaterial(int materialID);
+
+  Borrower getBorrowerByCPR(String cpr) throws NoSuchElementException;
 }
 

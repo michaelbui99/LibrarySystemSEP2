@@ -2,6 +2,7 @@ package client.core;
 
 import client.view.addlibrarian.AddLibrarianVM;
 import client.view.adduser.AddUserVM;
+import client.view.borrowercontactinfo.BorrowerContactInfoVM;
 import client.view.loanReserve.LoanReserveVM;
 import client.view.copies.CopiesVM;
 import client.view.main.MainVM;
@@ -34,6 +35,7 @@ public class ViewModelFactory
   private SearchVM searchVM;
   private StaffLogInVM staffLogInVM;
   private MyReservationsVM myReservationsVM;
+  private BorrowerContactInfoVM borrowerContactInfoVM;
 
   public AddUserVM getAddUserVM()
   {
@@ -124,5 +126,15 @@ public class ViewModelFactory
           .getUserModelClient());
     }
     return myReservationsVM;
+  }
+
+  public BorrowerContactInfoVM getBorrowerContactInfoVM()
+  {
+    if (borrowerContactInfoVM == null)
+    {
+      borrowerContactInfoVM = new BorrowerContactInfoVM(ModelFactoryClient.getInstance()
+          .getUserModelClient());
+    }
+    return borrowerContactInfoVM;
   }
 }

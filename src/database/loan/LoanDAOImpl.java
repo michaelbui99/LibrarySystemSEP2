@@ -32,6 +32,10 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   private static LoanDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private LoanDAOImpl()
+  {
+  }
+
   public static LoanDAO getInstance()
   {
     if (instance == null)

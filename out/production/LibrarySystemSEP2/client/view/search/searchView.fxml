@@ -141,7 +141,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onButtonCancel" style="-fx-cursor: hand;" text="Annuller">
+                        <Button mnemonicParsing="false" onAction="#onButtonCancel" style="-fx-cursor: hand;" text="Tilbage">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>

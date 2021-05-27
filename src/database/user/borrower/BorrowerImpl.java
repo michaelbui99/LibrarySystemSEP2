@@ -6,6 +6,7 @@ import database.BaseDAO;
 import database.address.AddressImpl;
 
 import java.sql.*;
+import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -133,14 +134,20 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
           "SELECT * FROM borrower JOIN address a on a.address_id = borrower.address_id WHERE cpr_no = ?");
       stm.setString(1, sprNo);
       ResultSet result = stm.executeQuery();
-      result.next();
-      return new Borrower(result.getString("cpr_no"),
-          result.getString("f_name"), result.getString("l_name"),
-          result.getString("email"), result.getString("tel_no"),
-          new Address(result.getInt("address_id"),
-              result.getString("street_name"), result.getString("street_no"),
-              result.getInt("zip_code"), result.getString("city")),
-          result.getString("password"));
+      if (result.next())
+      {
+        return new Borrower(result.getString("cpr_no"),
+            result.getString("f_name"), result.getString("l_name"),
+            result.getString("email"), result.getString("tel_no"),
+            new Address(result.getInt("address_id"),
+                result.getString("street_name"), result.getString("street_no"),
+                result.getInt("zip_code"), result.getString("city")),
+            result.getString("password"));
+      }
+      else
+      {
+        throw new NoSuchElementException("Ingen låner med CPR: " + sprNo + " er registreret i systemet");
+      }
     }
   }
 

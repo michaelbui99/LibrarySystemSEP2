@@ -5,6 +5,8 @@ import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
 import shared.servers.PropertyChangeSubject;
 
+import java.util.NoSuchElementException;
+
 public interface UserModelServer extends PropertyChangeSubject
 {
   /**
@@ -68,6 +70,8 @@ public interface UserModelServer extends PropertyChangeSubject
    * @return the currently logged in Librarian in the system.
    */
   Librarian getLoginLibrarian();
+
+  Borrower getBorrowerByCPR(String cpr) throws NoSuchElementException;
 
   void setBorrowerCpr(String borrowerCpr);
 

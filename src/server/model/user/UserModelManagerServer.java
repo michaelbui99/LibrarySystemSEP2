@@ -1,5 +1,6 @@
 package server.model.user;
 
+import database.user.borrower.BorrowerDAO;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.borrower.BorrowerList;
@@ -12,6 +13,7 @@ import shared.util.EventTypes;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 public class UserModelManagerServer implements UserModelServer
 {
@@ -258,6 +260,24 @@ public class UserModelManagerServer implements UserModelServer
 
   @Override public Librarian getLoginLibrarian()
   {
+    return null;
+  }
+
+  @Override public Borrower getBorrowerByCPR(String cpr)
+      throws NoSuchElementException
+  {
+    try
+    {
+      return BorrowerImpl.getInstance().getBorrower(cpr);
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
     return null;
   }
 

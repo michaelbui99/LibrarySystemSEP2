@@ -48,4 +48,10 @@ public class AdministrationController
   {
     ViewHandler.getInstance().openView("RegisterMaterial");
   }
+
+  @FXML
+  void onBorrowerContactButton(ActionEvent event) throws IOException
+  {
+    ViewHandler.getInstance().openView("BorrowerContactInfo");
+  }
 }
