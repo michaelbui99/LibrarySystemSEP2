@@ -36,7 +36,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     return instance;
   }
 
-  @Override public int create(int material_id, String subtitle_lang,
+  @Override public synchronized int create(int material_id, String subtitle_lang,
       int length_, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -92,7 +92,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     }
   }
 
-  @Override public DVD createDVDCopy(int materialID, int copyNo)
+  @Override public synchronized DVD createDVDCopy(int materialID, int copyNo)
       throws SQLException
   {
     try (Connection connection = getConnection())
@@ -268,7 +268,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     return ml;
   }
 
-  @Override public void deleteDVDCopy(int materialID, int copyNumber)
+  @Override public synchronized void deleteDVDCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try (Connection connection = getConnection())

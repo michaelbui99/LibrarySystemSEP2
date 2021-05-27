@@ -36,7 +36,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     return instance;
   }
 
-  @Override public int create(int material_id, int length_, Place place)
+  @Override public synchronized int create(int material_id, int length_, Place place)
       throws SQLException
   {
     try (Connection connection = getConnection())
@@ -89,7 +89,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     }
   }
 
-  @Override public CD createCDCopy(int materialID, int copyNo)
+  @Override public synchronized CD createCDCopy(int materialID, int copyNo)
       throws SQLException
   {
     try (Connection connection = getConnection())
@@ -262,7 +262,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     return ml;
   }
 
-  @Override public void deleteCDCopy(int materialID, int copyNumber)
+  @Override public synchronized void deleteCDCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try (Connection connection = getConnection())

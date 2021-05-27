@@ -19,6 +19,7 @@ public class MyReservationsController
 {
 
   @FXML private Label selectedReservationLabel;
+  @FXML private Label noReservationsLabel;
   @FXML private TableView<Reservation> reservationTableView;
   @FXML private TableColumn<String, Material> materialColumn;
   @FXML private TableColumn<String, Reservation> reservationDateColumn;
@@ -33,8 +34,14 @@ public class MyReservationsController
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
     reservationDateColumn.setCellValueFactory(new PropertyValueFactory<>("reservationDate"));
     readyForPickupColumn.setCellValueFactory(new PropertyValueFactory<>("readyForPickup"));
-    reservationTableView.setItems(
-        ViewModelFactory.getInstance().getMyReservationsVM().getReservationList());
+    ObservableList<Reservation> activeReservations = ViewModelFactory.getInstance().getMyReservationsVM().getReservationList();
+    reservationTableView.setItems(activeReservations);
+    if (activeReservations.size() == 0){
+      noReservationsLabel.setVisible(true);
+    }else{
+      noReservationsLabel.setVisible(false);
+    }
+
   }
 
   @FXML void onReturnButton(ActionEvent event)
