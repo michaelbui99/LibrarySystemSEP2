@@ -177,7 +177,7 @@ public class RegisterMaterialController
       if (ViewModelFactory.getInstance().getRegisterMaterialVM()
           .eBookAlreadyExists())
       {
-        error.setText("EBook findes allerede i systemet");
+        error.setText("EBog findes allerede i systemet");
         error.setTextFill(Paint.valueOf("red"));
         error.setVisible(true);
       }
@@ -186,7 +186,7 @@ public class RegisterMaterialController
         ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
         error.setVisible(true);
         error.setTextFill(Paint.valueOf("green"));
-        error.setText("E-bog er tilføjet");
+        error.setText("EBog er tilføjet");
         clearFields();
       }
     }

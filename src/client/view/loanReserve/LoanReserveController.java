@@ -1,4 +1,4 @@
-package client.view.borrowreserve;
+package client.view.loanReserve;
 
 import client.core.ViewModelFactory;
 import client.view.ViewHandler;
@@ -14,7 +14,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class BorrowReserveController {
+public class LoanReserveController
+{
 
     @FXML
     private TextArea materialInfo;

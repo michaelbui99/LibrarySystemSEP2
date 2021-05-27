@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="223.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.administration.AdministrationController">
    <children>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="577.0" style="-fx-background-color: white;">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="297.0" prefWidth="577.0" style="-fx-background-color: white;">
          <children>
             <HBox alignment="CENTER" prefHeight="57.0" prefWidth="531.0">
                <children>
@@ -23,20 +29,16 @@
                   <GridPane prefHeight="105.0" prefWidth="591.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-background-color: white; -fx-cursor: hand;" text="Add material" textFill="#0822eb" underline="true" />
-                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonAddRemoveCopy" style="-fx-background-color: white; -fx-cursor: hand;" text="Add/remove copy" textFill="#0822eb" underline="true" GridPane.columnIndex="2" />
-                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonRemoveMaterial" style="-fx-background-color: white; -fx-cursor: hand;" text="Remove material" textFill="#0822eb" underline="true" GridPane.columnIndex="1" />
-                        <Button layoutX="295.0" layoutY="47.0" mnemonicParsing="false" onAction="#onButtonLibraryLog" style="-fx-background-color: white; -fx-cursor: hand;" text="Library log" textFill="#0822eb" underline="true" GridPane.columnIndex="4" />
-                        <Button layoutX="244.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonChatRoom" style="-fx-background-color: white; -fx-cursor: hand;" text="Chatrum" textFill="#0822eb" underline="true" GridPane.columnIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Tilføj materiale" textFill="#3000ed" />
+                        <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonAddRemoveCopy" style="-fx-cursor: hand;" text="Tilføj/Fjern kopi" textFill="#0400ff" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Tilføj materiale" textFill="#3000ed" />
+                        <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Registrer materiale" textFill="#3000ed" />
                      </children>
                   </GridPane>
                </children>
@@ -61,6 +63,9 @@
                      </children>
                   </GridPane>
                </children>
+               <VBox.margin>
+                  <Insets top="70.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>

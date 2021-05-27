@@ -1,6 +1,5 @@
-package client.view.user;
+package client.view.borrower;
 
-import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,7 +7,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-public class UserController
+public class BorrowerWindowController
 {
   @FXML
   private Label cprLabel;
@@ -27,7 +26,7 @@ public class UserController
   public void OnButtonMyMaterial(ActionEvent actionEvent) throws IOException
   {
 //    ViewModelFactory.getInstance().getUserVM().setBorrowerCPR();
-    ViewHandler.getInstance().openView("MyMaterial");
+    ViewHandler.getInstance().openView("MyLoans");
   }
 
   public void onButtonChatRoom(ActionEvent actionEvent) throws IOException

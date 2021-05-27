@@ -2,7 +2,7 @@ package client.view.myreservations;
 
 import client.core.ViewModelFactory;
 import client.view.ViewHandler;
-import client.view.mymaterial.MyMaterialVM;
+import client.view.myLoans.MyLoansVM;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +26,7 @@ public class MyReservationsController
   @FXML private TableColumn<String, Reservation> readyForPickupColumn;
 
   private ViewHandler viewHandler;
-  private MyMaterialVM viewModel;
+  private MyLoansVM viewModel;
 
   public void init()
   {
@@ -72,7 +72,7 @@ public class MyReservationsController
   void onBackButton(ActionEvent event) {
     try
     {
-      ViewHandler.getInstance().openView("UserWindow");
+      ViewHandler.getInstance().openView("BorrowerWindow");
     }
     catch (IOException e)
     {

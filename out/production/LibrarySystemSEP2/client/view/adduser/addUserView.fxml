@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.adduser.AddUserController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.adduser.AddUserController">
    <children>
       <VBox prefHeight="499.0" prefWidth="600.0">
          <children>
@@ -289,12 +289,12 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="signupButton" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#onButtonSignup" style="-fx-cursor: hand;" text="Tilmelde" GridPane.columnIndex="2">
+                        <Button fx:id="signupButton" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#onButtonSignup" style="-fx-cursor: hand;" text="Tilmeld" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Back" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>

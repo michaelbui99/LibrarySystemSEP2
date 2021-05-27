@@ -1,8 +1,5 @@
-package client.view.mymaterial;
+package client.view.myLoans;
 
-import client.core.ViewModelFactory;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import shared.loan.Loan;
 import shared.materials.Material;
 import client.view.ViewHandler;
@@ -15,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 
-public class MyMaterialController
+public class MyLoansController
 {
   @FXML private Label warningLabel;
   @FXML private Label selectedLoanLabel;
@@ -27,9 +24,9 @@ public class MyMaterialController
   @FXML private TableColumn<String, Loan> deadlineColumn;
 
 
-  private MyMaterialVM viewModel;
+  private MyLoansVM viewModel;
 
-  public void init(MyMaterialVM viewModel)
+  public void init(MyLoansVM viewModel)
   {
     this.viewModel = viewModel;
     //TODO: implement toString for Material such that material can be displayed correctly in tableview.
@@ -60,7 +57,7 @@ public class MyMaterialController
   void onBackButton(ActionEvent event) {
     try
     {
-      ViewHandler.getInstance().openView("UserWindow");
+      ViewHandler.getInstance().openView("BorrowerWindow");
     }
     catch (IOException e)
     {

@@ -4,22 +4,21 @@ import client.core.ViewModelFactory;
 import client.view.addlibrarian.AddLibrarianController;
 import client.view.adduser.AddUserController;
 import client.view.administration.AdministrationController;
-import client.view.borrowreserve.BorrowReserveController;
+import client.view.loanReserve.LoanReserveController;
 import client.view.copies.CopiesController;
 import client.view.main.MainController;
-import client.view.mymaterial.MyMaterialController;
+import client.view.myLoans.MyLoansController;
 import client.view.myreservations.MyReservationsController;
 import client.view.registermaterial.RegisterMaterialController;
 import client.view.search.SearchController;
 import client.view.stafflogin.StaffLogInController;
-import client.view.user.UserController;
+import client.view.borrower.BorrowerWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javax.naming.directory.SearchControls;
 import java.io.IOException;
 
 public class ViewHandler extends Application
@@ -56,7 +55,7 @@ public class ViewHandler extends Application
         root = loader.load();
         AddUserController addUserController = loader.getController();
         addUserController.init();
-        stage.setTitle("AddUser");
+        stage.setTitle("Opret ny låner");
         break;
       case "AddLibrarian":
         loader.setLocation(
@@ -64,16 +63,16 @@ public class ViewHandler extends Application
         root = loader.load();
         AddLibrarianController addLibrarianController = loader.getController();
         addLibrarianController.init();
-        stage.setTitle("AddLibrarian");
+        stage.setTitle("Opret bibliotekar");
         break;
-      case "BorrowReserve":
+      case "LoanReserve":
         loader.setLocation(
-            getClass().getResource("borrowreserve/" + id + "View.fxml"));
+            getClass().getResource("loanreserve/" + id + "View.fxml"));
         root = loader.load();
-        BorrowReserveController borrowReserveController = loader
+        LoanReserveController loanReserveController = loader
             .getController();
-        borrowReserveController.init();
-        stage.setTitle("BorrowReserve");
+        loanReserveController.init();
+        stage.setTitle("Lån/reserver");
         break;
       case "Copies":
         loader
@@ -81,22 +80,22 @@ public class ViewHandler extends Application
         root = loader.load();
         CopiesController copiesController = loader.getController();
         copiesController.init();
-        stage.setTitle("Copies");
+        stage.setTitle("Tilføj/Fjern kopi");
         break;
       case "Main":
         loader.setLocation(getClass().getResource("main/" + id + "View.fxml"));
         root = loader.load();
         MainController mainController = loader.getController();
         mainController.init();
-        stage.setTitle("Main");
+        stage.setTitle("Login");
         break;
-      case "MyMaterial":
+      case "MyLoans":
         loader.setLocation(
-            getClass().getResource("mymaterial/" + id + "View.fxml"));
+            getClass().getResource("myloans/" + id + "View.fxml"));
         root = loader.load();
-        MyMaterialController myMaterialController = loader.getController();
-        myMaterialController.init(ViewModelFactory.getInstance().getMyMaterialVM());
-        stage.setTitle("MyMaterial");
+        MyLoansController myLoansController = loader.getController();
+        myLoansController.init(ViewModelFactory.getInstance().getMyMaterialVM());
+        stage.setTitle("Mine aktive lån");
         break;
       case "MyReservations":
         loader.setLocation(
@@ -104,7 +103,7 @@ public class ViewHandler extends Application
         root = loader.load();
         MyReservationsController myReservationsController = loader.getController();
         myReservationsController.init();
-        stage.setTitle("MyReservations");
+        stage.setTitle("Mine aktive reservationer");
         break;
       case "RegisterMaterial":
         loader.setLocation(
@@ -113,7 +112,7 @@ public class ViewHandler extends Application
         RegisterMaterialController registerMaterialController = loader
             .getController();
         registerMaterialController.init();
-        stage.setTitle("RegisterMaterial");
+        stage.setTitle("Register Materiale");
         break;
       case "Search":
         loader
@@ -121,7 +120,7 @@ public class ViewHandler extends Application
         root = loader.load();
         SearchController searchController = loader.getController();
         searchController.init();
-        stage.setTitle("Search");
+        stage.setTitle("Søg efter materiale");
         break;
       case "StaffLogin":
         loader.setLocation(
@@ -129,14 +128,14 @@ public class ViewHandler extends Application
         root = loader.load();
         StaffLogInController staffLogInController = loader.getController();
         staffLogInController.init();
-        stage.setTitle("StaffLogin");
+        stage.setTitle("Login for medarbejdere");
         break;
-      case "UserWindow":
-        loader.setLocation(getClass().getResource("user/" + id + "View.fxml"));
+      case "BorrowerWindow":
+        loader.setLocation(getClass().getResource("borrower/" + id + "View.fxml"));
         root = loader.load();
-        UserController userController = loader.getController();
-        userController.init();
-        stage.setTitle("User");
+        BorrowerWindowController borrowerWindowController = loader.getController();
+        borrowerWindowController.init();
+        stage.setTitle("Lånerside");
         break;
       case "Administration":
         loader.setLocation(

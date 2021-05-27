@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="647.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.copies.CopiesController">
    <children>
@@ -32,7 +43,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Typen:">
+                        <Label text="Type:">
                            <GridPane.margin>
                               <Insets left="40.0" />
                            </GridPane.margin>
@@ -47,7 +58,7 @@
                               <Insets left="50.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" onAction="#onButtonSearch" prefHeight="27.0" prefWidth="40.0" style="-fx-cursor: hand;" text="Søg" textFill="GREEN" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button mnemonicParsing="false" onAction="#onButtonSearch" prefHeight="27.0" prefWidth="40.0" style="-fx-cursor: hand;" text="Søg" textFill="GREEN" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -70,7 +81,7 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="genre" layoutX="60.0" layoutY="54.0" prefHeight="24.0" prefWidth="117.0" promptText="Genre" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="genre" layoutX="60.0" layoutY="54.0" prefHeight="24.0" prefWidth="117.0" promptText="Genre:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="50.0" right="10.0" />
                            </GridPane.margin>
@@ -96,7 +107,7 @@
                     <columns>
                       <TableColumn fx:id="titleColumn" prefWidth="285.0" text="Title" />
                       <TableColumn fx:id="publisherColumn" minWidth="0.0" prefWidth="148.0" text="Forlægger" />
-                        <TableColumn fx:id="releaseDateColumn" minWidth="0.0" prefWidth="148.0" text="Udgivelses dato" />
+                        <TableColumn fx:id="releaseDateColumn" minWidth="0.0" prefWidth="148.0" text="Udgivelsesdato" />
                         <TableColumn fx:id="copyNo" prefWidth="75.0" text="Kopi-no" />
                     </columns>
                   </TableView>
@@ -115,28 +126,28 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Modify selected material:">
+                        <Label text="Administrér valgt materiale">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label layoutX="20.0" layoutY="26.0" text="Add/remove a copy:" GridPane.rowIndex="1">
+                        <Label layoutX="20.0" layoutY="26.0" text="Tilføj/Fjern en kopi:" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label layoutX="110.0" layoutY="74.0" text="Remove material from system:" GridPane.rowIndex="2">
+                        <Label layoutX="110.0" layoutY="74.0" text="Fjern materiale fra system:" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#onButtonRemoveCopy" style="-fx-background-color: white; -fx-cursor: hand;" text="Fjerne" textFill="RED" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#onButtonRemoveCopy" style="-fx-cursor: hand;" text="Fjern" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="342.0" layoutY="115.0" mnemonicParsing="false" onAction="#onButtonAddCopy" style="-fx-background-color: white; -fx-cursor: hand;" text="Tilføje" textFill="GREEN" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button layoutX="442.0" layoutY="68.0" mnemonicParsing="false" onAction="#onButtonRemoveMaterial" style="-fx-background-color: white; -fx-cursor: hand;" text="Fjerne" textFill="RED" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button layoutX="342.0" layoutY="115.0" mnemonicParsing="false" onAction="#onButtonAddCopy" style="-fx-cursor: hand;" text="Tilføj" textFill="GREEN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button layoutX="442.0" layoutY="68.0" mnemonicParsing="false" onAction="#onButtonRemoveMaterial" style="-fx-cursor: hand;" text="Fjern" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>
@@ -157,7 +168,7 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbag" GridPane.columnIndex="1">
+                        <Button layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
