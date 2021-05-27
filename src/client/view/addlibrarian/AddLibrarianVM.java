@@ -1,6 +1,8 @@
 package client.view.addlibrarian;
 
 import client.core.ModelFactoryClient;
+import client.model.user.UserModelClient;
+import client.model.user.UserModelManagerClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.person.Address;
@@ -19,9 +21,11 @@ public class AddLibrarianVM
   private StringProperty passwordProperty;
   private StringProperty emailProperty;
   private StringProperty errorLableProperty;
+  private UserModelClient userModelClient;
 
-  public AddLibrarianVM()
+  public AddLibrarianVM(UserModelClient userModelClient)
   {
+    this.userModelClient = userModelClient;
     lastNameProperty = new SimpleStringProperty();
     firstNameProperty = new SimpleStringProperty();
     cprProperty = new SimpleStringProperty();

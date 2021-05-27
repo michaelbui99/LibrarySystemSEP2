@@ -25,12 +25,13 @@ public class SearchVM
   private StringProperty languageProperty;
   private StringProperty targetAudienceProperty;
   private StringProperty chooseTypeProperty;
+  private MaterialModelClient materialModelClient;
 
 
 
-  public SearchVM()
+  public SearchVM(MaterialModelClient materialModelClient)
   {
-
+    this.materialModelClient = materialModelClient;
     foundMaterials = FXCollections.observableArrayList();
     materialType = FXCollections.observableArrayList();
     materialType.addAll("bog",

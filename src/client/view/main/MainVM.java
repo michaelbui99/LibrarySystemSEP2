@@ -1,6 +1,7 @@
 package client.view.main;
 
 import client.core.ModelFactoryClient;
+import client.model.user.UserModelClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -9,11 +10,13 @@ public class MainVM
 
   private StringProperty passwordProperty;
   private StringProperty cprProperty;
+  private UserModelClient userModelClient;
 
-  public MainVM()
+  public MainVM(UserModelClient userModelClient)
   {
     passwordProperty = new SimpleStringProperty();
     cprProperty = new SimpleStringProperty();
+    this.userModelClient = userModelClient;
   }
 
   public StringProperty passwordProperty()

@@ -1,6 +1,7 @@
 package client.view.registermaterial;
 
 import client.core.ModelFactoryClient;
+import client.model.reservation.ReservationModelClient;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -40,9 +41,11 @@ public class RegisterMaterialVM
   private StringProperty audianceProperty;
   private StringProperty typeProperty;
   private StringProperty urlProperty;
+  private ReservationModelClient reservationModelClient;
 
-  public RegisterMaterialVM()
+  public RegisterMaterialVM(ReservationModelClient reservationModelClient)
   {
+    this.reservationModelClient = reservationModelClient;
     materialType = FXCollections.observableArrayList();
     materialType.addAll("Bog", "Ebog", "Lydbog", "CD", "DVD");
 

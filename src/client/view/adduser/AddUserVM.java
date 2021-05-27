@@ -1,6 +1,8 @@
 package client.view.adduser;
 
 import client.core.ModelFactoryClient;
+import client.model.user.UserModelClient;
+import client.model.user.UserModelManagerClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.person.Address;
@@ -18,9 +20,12 @@ public class AddUserVM
   private StringProperty cityproperty;
   private StringProperty phoneNoProperty;
   private StringProperty errorLabelProperty;
+  private UserModelClient userModelClient;
 
-  public AddUserVM()
+
+  public AddUserVM(UserModelClient userModelClient)
   {
+    this.userModelClient = userModelClient;
     emailProperty = new SimpleStringProperty();
     passwordProperty = new SimpleStringProperty();
     firstNameProperty = new SimpleStringProperty();

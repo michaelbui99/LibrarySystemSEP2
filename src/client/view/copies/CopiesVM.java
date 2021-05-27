@@ -1,6 +1,7 @@
 package client.view.copies;
 
 import client.core.ModelFactoryClient;
+import client.model.material.MaterialModelClient;
 import client.model.material.strategy.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -25,9 +26,11 @@ public class CopiesVM
   private StringProperty typeProperty;
   private StringProperty targetAudianceProperty;
   private StringProperty languageProperty;
+  private MaterialModelClient materialModelClient;
 
-  public CopiesVM()
+  public CopiesVM(MaterialModelClient materialModelClient)
   {
+    this.materialModelClient = materialModelClient;
     materialList = FXCollections.observableArrayList();
     materialTypeList = FXCollections.observableArrayList();
     targetAudianceList = FXCollections.observableArrayList();
