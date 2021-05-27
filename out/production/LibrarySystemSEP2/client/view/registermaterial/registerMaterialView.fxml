@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.registermaterial.RegisterMaterialController">
    <children>
@@ -12,7 +23,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: white;">
                <children>
-                  <Label text="Registrér materiale ">
+                  <Label text="Registrer materiale ">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -31,7 +42,7 @@
                   </Label>
                </children>
             </HBox>
-            <ScrollPane prefHeight="396.0" prefWidth="656.0">
+            <ScrollPane prefHeight="393.0" prefWidth="668.0">
                <content>
                   <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1461.0" prefWidth="657.0" style="-fx-background-color: white;">
                      <children>
@@ -68,13 +79,13 @@
                                        </GridPane.margin>
                                     </TextField>
                                     <Label layoutX="121.0" layoutY="114.0" text="Forlægger" GridPane.rowIndex="2" />
-                                    <Label layoutX="133.0" layoutY="159.0" text="Udgivelses dato" GridPane.rowIndex="3" />
+                                    <Label layoutX="133.0" layoutY="159.0" text="Udgivelsesdato" GridPane.rowIndex="3" />
                                     <TextField fx:id="publisher" layoutX="305.0" layoutY="155.0" onKeyTyped="#onTypedPublisher" promptText="Forlægger:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                    <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse" GridPane.rowIndex="4" />
+                                    <Label layoutX="146.0" layoutY="31.0" text="Beskrivelse af materiale" GridPane.rowIndex="4" />
                                     <TextArea fx:id="description" onKeyTyped="#onTypedDescribtion" prefHeight="200.0" prefWidth="200.0" promptText="Beskrivelse:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" right="50.0" />
@@ -102,20 +113,20 @@
                                           <Insets right="200.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                    <ComboBox fx:id="materialTypeCompo" onAction="#onChooseTypeCheck" prefWidth="150.0" promptText="Typen" style="-fx-background-color: white;" GridPane.columnIndex="1">
+                                    <ComboBox fx:id="materialTypeCompo" onAction="#onChooseTypeCheck" prefWidth="150.0" promptText="Type" style="-fx-background-color: white;" GridPane.columnIndex="1">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </ComboBox>
-                                    <Label layoutX="153.0" layoutY="127.0" text="Vælg typen" />
-                                    <Label layoutX="152.0" layoutY="697.0" text="Licens nummer" GridPane.rowIndex="10" />
+                                    <Label layoutX="153.0" layoutY="127.0" text="Vælg type" />
+                                    <Label layoutX="152.0" layoutY="697.0" text="Licensnummer" GridPane.rowIndex="10" />
                                     <TextField fx:id="licensNumber" disable="false" layoutX="319.0" layoutY="693.0" onKeyTyped="#onTypeLicensNumber" promptText="Licens nummer:" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                        <GridPane.margin>
                                           <Insets right="200.0" />
                                        </GridPane.margin>
                                     </TextField>
                                     <Label text="Forfatter" GridPane.rowIndex="11" />
-                                    <Label text="Placere" GridPane.rowIndex="12" />
+                                    <Label text="Placering" GridPane.rowIndex="12" />
                                     <HBox prefHeight="145.0" prefWidth="311.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
                                        <children>
                                           <GridPane prefHeight="137.0" prefWidth="312.0">
@@ -130,7 +141,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Hall nummer" />
+                                                <Label text="Haldnummer" />
                                                 <Label layoutX="10.0" layoutY="17.0" text="Genre" GridPane.rowIndex="3" />
                                                 <Label layoutX="10.0" layoutY="17.0" text="Skabernes efternavn" GridPane.rowIndex="2" />
                                                 <Label layoutX="10.0" layoutY="17.0" text="Afdeling" GridPane.rowIndex="1" />
@@ -334,12 +345,12 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="confirmButton" layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirm" style="-fx-cursor: hand;" text="Bekræfte" GridPane.columnIndex="2">
+                        <Button fx:id="confirmButton" layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirm" style="-fx-cursor: hand;" text="Bekræft oprettelse" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="549.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbag" GridPane.columnIndex="1" />
+                        <Button layoutX="549.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonBack" style="-fx-cursor: hand;" text="Tilbage" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>
