@@ -150,7 +150,7 @@ public class RegisterMaterialController
     ViewHandler.getInstance().openView("Administration");
   }
 
-  @FXML public void onButtonConfirmWindow(ActionEvent actionEvent)
+  @FXML public void onButtonConfirm(ActionEvent actionEvent)
       throws IOException
   {
     String type = materialTypeCompo.getValue();
@@ -384,11 +384,6 @@ public class RegisterMaterialController
     {
       disableAll();
     }
-  }
-
-  @FXML public void onButtonConfirm(ActionEvent actionEvent)
-  {
-
   }
 
   @FXML public void onTypedTitle(KeyEvent keyEvent)

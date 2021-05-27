@@ -44,7 +44,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
   {
     try (Connection connection = getConnection())
     {
-      if ((isbn == null || !isbn.matches(".*\\d.*")) || (pageCount <= 0) || (
+      if ((isbn == null || !isbn.matches("[0-9]+")) || (pageCount <= 0) || (
           author == null) || (place == null))
       {
         throw new IllegalArgumentException();

@@ -25,6 +25,7 @@ import java.io.IOException;
 public class ViewHandler extends Application
 {
   private Stage stage = new Stage();
+  private Stage stage2 = new Stage();
   private static ViewHandler viewHandler;
 
   //singelton
@@ -146,13 +147,6 @@ public class ViewHandler extends Application
         administrationController.init();
         stage.setTitle("Administration");
         break;
-      case "ConfirmationRegisterMaterial":
-        loader.setLocation(
-            getClass().getResource("registermaterial/" + id + "View.fxml"));
-        root = loader.load();
-        RegisterMaterialController registerMaterialController1 = loader.getController();
-        registerMaterialController1.init();
-        stage.setTitle("Confirmation");
     }
     scene = new Scene(root);
     stage.setScene(scene);

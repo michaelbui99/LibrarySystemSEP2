@@ -334,7 +334,7 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="confirmButton" layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirmWindow" style="-fx-cursor: hand;" text="Bekræfte" GridPane.columnIndex="2">
+                        <Button fx:id="confirmButton" layoutX="10.0" layoutY="28.0" mnemonicParsing="false" onAction="#onButtonConfirm" style="-fx-cursor: hand;" text="Bekræfte" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
