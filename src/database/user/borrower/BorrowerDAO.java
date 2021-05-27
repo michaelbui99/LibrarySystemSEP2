@@ -4,6 +4,7 @@ import shared.person.Address;
 import shared.person.borrower.Borrower;
 
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 public interface BorrowerDAO
 {
@@ -34,7 +35,8 @@ public interface BorrowerDAO
    */
   boolean loginBorrower(String cprNo, String password) throws SQLException;
 
-  Borrower getBorrower(String sprNo) throws SQLException;
+  Borrower getBorrower(String sprNo) throws SQLException,
+      NoSuchElementException;
 
   boolean borrowerCprNumberAlreadyExists(String cpr) throws SQLException;
 

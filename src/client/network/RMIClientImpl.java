@@ -124,6 +124,25 @@ public class RMIClientImpl
     }
   }
 
+  @Override public Borrower getBorrowerByCPR(String cpr)
+      throws NoSuchElementException
+  {
+    try
+    {
+      return server.getUserServer().getBorrowerByCPR(cpr);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Server Connection failed.");
+    }
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
+
+
+  }
+
   @Override public void deliverMaterial(int loanID)
   {
     //    server.getLoanServer().

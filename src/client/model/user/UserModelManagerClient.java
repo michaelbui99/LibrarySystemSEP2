@@ -7,6 +7,7 @@ import client.network.Client;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.NoSuchElementException;
 
 public class UserModelManagerClient implements UserModelClient
 {
@@ -111,6 +112,19 @@ public class UserModelManagerClient implements UserModelClient
       String email, String phone)
   {
     return client.librarianAlreadyExists(employeeNo, cpr, email, phone);
+  }
+
+  @Override public Borrower getBorrowerByCPR(String cpr)
+      throws NoSuchElementException
+  {
+    try
+    {
+      return client.getBorrowerByCPR(cpr);
+    }
+    catch (NoSuchElementException e)
+    {
+      throw new NoSuchElementException(e.getMessage());
+    }
   }
 
   @Override public void addPropertyChangeListener(String name,

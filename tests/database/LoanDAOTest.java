@@ -27,7 +27,7 @@ class LoanDAOTest
 
   @BeforeEach void setup() throws SQLException
   {
-    loanDAO = new LoanDAOImpl();
+    loanDAO = LoanDAOImpl.getInstance();
     databaseBuilder = new DatabaseBuilder();
     borrower = new Borrower("111111-1111", "Michael", "Bui",
         "michael@gmail.com", "+4512345678", null, "password");

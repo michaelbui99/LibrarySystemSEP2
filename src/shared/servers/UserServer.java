@@ -6,6 +6,7 @@ import shared.person.librarian.Librarian;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.NoSuchElementException;
 
 public interface UserServer extends Remote
 {
@@ -100,4 +101,6 @@ public interface UserServer extends Remote
 
   boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
       String phone) throws RemoteException;
+  Borrower getBorrowerByCPR(String cpr) throws RemoteException,
+      NoSuchElementException;
 }

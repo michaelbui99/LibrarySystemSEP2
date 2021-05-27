@@ -6,6 +6,7 @@ import shared.person.librarian.Librarian;
 import shared.servers.PropertyChangeSubject;
 
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 public interface UserModelClient extends PropertyChangeSubject
 {
@@ -155,4 +156,6 @@ public interface UserModelClient extends PropertyChangeSubject
    * */
   boolean librarianAlreadyExists(int employeeNo, String cpr, String email,
       String phone);
+
+  Borrower getBorrowerByCPR(String cpr) throws NoSuchElementException;
 }
