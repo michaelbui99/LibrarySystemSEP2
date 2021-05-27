@@ -1,4 +1,4 @@
-package client.view.mymaterial;
+package client.view.myLoans;
 
 import client.core.ModelFactoryClient;
 import client.model.loan.LoanModelClient;
@@ -12,7 +12,7 @@ import shared.util.EventTypes;
 
 import java.util.NoSuchElementException;
 
-public class MyMaterialVM
+public class MyLoansVM
 {
   private ObservableList<Loan> activeLoans;
   private ObjectProperty<Loan> loanProperty;
@@ -21,7 +21,7 @@ public class MyMaterialVM
   private UserModelClient userModel;
   private StringProperty warningProperty;
 
-  public MyMaterialVM(LoanModelClient loanModel, UserModelClient userModel)
+  public MyLoansVM(LoanModelClient loanModel, UserModelClient userModel)
   {
     this.loanModel = loanModel;
     this.userModel = userModel;

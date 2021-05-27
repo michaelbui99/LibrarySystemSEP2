@@ -3,10 +3,10 @@ package client.view.mymaterial;
 import client.core.ClientFactory;
 import client.core.ModelFactoryClient;
 import client.network.Client;
+import client.view.myLoans.MyLoansVM;
 import database.DatabaseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.core.ModelFactoryServer;
 import server.network.ServerImpl;
 import shared.Server;
 import shared.person.borrower.Borrower;
@@ -17,9 +17,9 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MyMaterialVMTest extends DatabaseBuilder
+class MyLoansVMTest extends DatabaseBuilder
 {
-   private MyMaterialVM viewModel;
+   private MyLoansVM viewModel;
   Borrower borrower;
   private Client client;
   private Server server;
@@ -51,7 +51,7 @@ class MyMaterialVMTest extends DatabaseBuilder
      databaseBuilder.createDummyDatabaseDataWithLoan();
      ModelFactoryClient.getInstance().getUserModelClient().setBorrowerCpr(borrower.getCpr());
 
-     viewModel = new MyMaterialVM(ModelFactoryClient.getInstance()
+     viewModel = new MyLoansVM(ModelFactoryClient.getInstance()
          .getLoanModelClient(), ModelFactoryClient.getInstance()
          .getUserModelClient());
      assertEquals(1, viewModel.getLoanList().size());

@@ -1,4 +1,4 @@
-package client.view.borrowreserve;
+package client.view.loanReserve;
 
 import client.core.ModelFactoryClient;
 import javafx.beans.property.*;
@@ -7,14 +7,15 @@ import shared.util.EventTypes;
 
 import java.util.NoSuchElementException;
 
-public class BorrowReserveVM {
+public class LoanReserveVM
+{
     private StringProperty materialInfoProp;
     private IntegerProperty availNumberProp;
     private ObjectProperty<Material> materialProperty;
     private StringProperty warningProperty;
     private StringProperty reservationError;
 
-    public BorrowReserveVM() {
+    public LoanReserveVM() {
         //TODO: Lav om til listener, så antallet af kopier opdateres dynamisk.
         this.materialProperty = new SimpleObjectProperty<>();
         materialProperty.set(ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial());

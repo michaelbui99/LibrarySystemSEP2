@@ -2,10 +2,10 @@ package client.core;
 
 import client.view.addlibrarian.AddLibrarianVM;
 import client.view.adduser.AddUserVM;
-import client.view.borrowreserve.BorrowReserveVM;
+import client.view.loanReserve.LoanReserveVM;
 import client.view.copies.CopiesVM;
 import client.view.main.MainVM;
-import client.view.mymaterial.MyMaterialVM;
+import client.view.myLoans.MyLoansVM;
 import client.view.myreservations.MyReservationsVM;
 import client.view.registermaterial.RegisterMaterialVM;
 import client.view.search.SearchVM;
@@ -26,10 +26,10 @@ public class ViewModelFactory
 
   private AddUserVM addUserVM;
   private AddLibrarianVM addLibrarianVM;
-  private BorrowReserveVM borrowReserveVM;
+  private LoanReserveVM loanReserveVM;
   private CopiesVM copiesVM;
   private MainVM mainVM;
-  private MyMaterialVM myMaterialVM;
+  private MyLoansVM myLoansVM;
   private RegisterMaterialVM registerMaterialVM;
   private SearchVM searchVM;
   private StaffLogInVM staffLogInVM;
@@ -53,13 +53,13 @@ public class ViewModelFactory
     return addLibrarianVM;
   }
 
-  public BorrowReserveVM getBorrowReserveVM()
+  public LoanReserveVM getBorrowReserveVM()
   {
-    if (borrowReserveVM == null)
+    if (loanReserveVM == null)
     {
-      borrowReserveVM = new BorrowReserveVM();
+      loanReserveVM = new LoanReserveVM();
     }
-    return borrowReserveVM;
+    return loanReserveVM;
   }
 
   public CopiesVM getCopiesVM()
@@ -80,13 +80,13 @@ public class ViewModelFactory
     return mainVM;
   }
 
-  public MyMaterialVM getMyMaterialVM()
+  public MyLoansVM getMyMaterialVM()
   {
-    if (myMaterialVM == null)
+    if (myLoansVM == null)
     {
-      myMaterialVM = new MyMaterialVM(ModelFactoryClient.getInstance().getLoanModelClient(), ModelFactoryClient.getInstance().getUserModelClient());
+      myLoansVM = new MyLoansVM(ModelFactoryClient.getInstance().getLoanModelClient(), ModelFactoryClient.getInstance().getUserModelClient());
     }
-    return myMaterialVM;
+    return myLoansVM;
   }
 
   public RegisterMaterialVM getRegisterMaterialVM()

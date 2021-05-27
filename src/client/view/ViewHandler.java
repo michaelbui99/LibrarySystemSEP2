@@ -4,22 +4,21 @@ import client.core.ViewModelFactory;
 import client.view.addlibrarian.AddLibrarianController;
 import client.view.adduser.AddUserController;
 import client.view.administration.AdministrationController;
-import client.view.borrowreserve.BorrowReserveController;
+import client.view.loanReserve.LoanReserveController;
 import client.view.copies.CopiesController;
 import client.view.main.MainController;
-import client.view.mymaterial.MyMaterialController;
+import client.view.myLoans.MyLoansController;
 import client.view.myreservations.MyReservationsController;
 import client.view.registermaterial.RegisterMaterialController;
 import client.view.search.SearchController;
 import client.view.stafflogin.StaffLogInController;
-import client.view.user.UserController;
+import client.view.borrower.BorrowerWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javax.naming.directory.SearchControls;
 import java.io.IOException;
 
 public class ViewHandler extends Application
@@ -70,9 +69,9 @@ public class ViewHandler extends Application
         loader.setLocation(
             getClass().getResource("borrowreserve/" + id + "View.fxml"));
         root = loader.load();
-        BorrowReserveController borrowReserveController = loader
+        LoanReserveController loanReserveController = loader
             .getController();
-        borrowReserveController.init();
+        loanReserveController.init();
         stage.setTitle("BorrowReserve");
         break;
       case "Copies":
@@ -94,8 +93,8 @@ public class ViewHandler extends Application
         loader.setLocation(
             getClass().getResource("mymaterial/" + id + "View.fxml"));
         root = loader.load();
-        MyMaterialController myMaterialController = loader.getController();
-        myMaterialController.init(ViewModelFactory.getInstance().getMyMaterialVM());
+        MyLoansController myLoansController = loader.getController();
+        myLoansController.init(ViewModelFactory.getInstance().getMyMaterialVM());
         stage.setTitle("MyMaterial");
         break;
       case "MyReservations":
@@ -134,8 +133,8 @@ public class ViewHandler extends Application
       case "UserWindow":
         loader.setLocation(getClass().getResource("user/" + id + "View.fxml"));
         root = loader.load();
-        UserController userController = loader.getController();
-        userController.init();
+        BorrowerWindowController borrowerWindowController = loader.getController();
+        borrowerWindowController.init();
         stage.setTitle("User");
         break;
       case "Administration":

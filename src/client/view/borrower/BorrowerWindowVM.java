@@ -1,15 +1,15 @@
-package client.view.user;
+package client.view.borrower;
 
 import client.core.ModelFactoryClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class UserVM
+public class BorrowerWindowVM
 {
 
   private StringProperty cprProperty;
 
-  public UserVM()
+  public BorrowerWindowVM()
   {
     //The StringProperty stores the users cpr such that we can differenatiate in the model which user is logged in from that specific client window.
     cprProperty = new SimpleStringProperty(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr());
