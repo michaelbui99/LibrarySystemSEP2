@@ -245,11 +245,11 @@ public class RegisterMaterialController
         clearFields();
       }
     }
-    else if (type.equals(null))
+    else
     {
       error.setVisible(true);
       error.setTextFill(Paint.valueOf("red"));
-      error.setText("Vælg et materiale");
+      error.setText("Nødvendige felter er tomme !!");
     }
   }
 
@@ -612,11 +612,11 @@ public class RegisterMaterialController
 
   @FXML public void onMouseExitedReleseDate(MouseDragEvent mouseDragEvent)
   {
-    LocalDate arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .releaseDateProperty().get();
+    /*LocalDate arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .releaseDateProperty().get();*/
     try
     {
-      if (arg.equals(null))
+      if (releaseDate.getValue() == null)
       {
         releseDateWarning.setVisible(true);
       }
