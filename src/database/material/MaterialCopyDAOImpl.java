@@ -28,7 +28,7 @@ public class MaterialCopyDAOImpl extends BaseDAO implements MaterialCopyDAO
     }
     return instance;
   }
-  @Override public void create(int materialID, int copyNr) throws SQLException
+  @Override public synchronized void create(int materialID, int copyNr) throws SQLException
   {
     try (Connection connection = getConnection())
     {

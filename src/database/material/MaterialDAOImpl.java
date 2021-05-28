@@ -40,7 +40,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return instance;
   }
 
-  @Override public int create(String title, String publisher,
+  @Override public synchronized int create(String title, String publisher,
       String releaseDate, String description, String targetAudience,
       String language, String genre, String url, String keywords)
       throws SQLException
@@ -179,7 +179,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return 0;
   }
 
-  @Override public boolean checkIfCopyAvailable(int materialid)
+  @Override public synchronized boolean checkIfCopyAvailable(int materialid)
   {
     try (Connection connection = getConnection())
     {
@@ -237,7 +237,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return 0;
   }
 
-  @Override public void deleteMaterial(int materialID)
+  @Override public synchronized void deleteMaterial(int materialID)
   {
     try (Connection connection = getConnection())
     {

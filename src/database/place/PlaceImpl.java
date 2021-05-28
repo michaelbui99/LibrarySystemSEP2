@@ -34,7 +34,7 @@ public class PlaceImpl extends BaseDAO implements PlaceDAO
     return place;
   }
 
-  @Override public Place create(int hallNo, String department,
+  @Override public synchronized Place create(int hallNo, String department,
       String creatorLName, String genre) throws SQLException
   {
     try (Connection connection = getConnection())

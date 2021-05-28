@@ -1,6 +1,7 @@
 package client.view.loanReserve;
 
 import client.core.ModelFactoryClient;
+import client.model.reservation.ReservationModelClient;
 import javafx.beans.property.*;
 import shared.materials.Material;
 import shared.util.EventTypes;
@@ -14,9 +15,11 @@ public class LoanReserveVM
     private ObjectProperty<Material> materialProperty;
     private StringProperty warningProperty;
     private StringProperty reservationError;
+    private ReservationModelClient reservationModelClient;
 
-    public LoanReserveVM() {
+    public LoanReserveVM(ReservationModelClient reservationModelClient) {
         //TODO: Lav om til listener, så antallet af kopier opdateres dynamisk.
+        this.reservationModelClient = reservationModelClient;
         this.materialProperty = new SimpleObjectProperty<>();
         materialProperty.set(ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial());
         availNumberProp = new SimpleIntegerProperty(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies());

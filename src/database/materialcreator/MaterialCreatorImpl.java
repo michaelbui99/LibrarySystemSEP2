@@ -31,7 +31,7 @@ public class MaterialCreatorImpl extends BaseDAO implements MaterialCreatorDAO
     return materialCreator;
   }
 
-  @Override public MaterialCreator create(String fName, String lName,
+  @Override public synchronized MaterialCreator create(String fName, String lName,
       String dob, String country) throws SQLException
   {
     try (Connection connection = getConnection())

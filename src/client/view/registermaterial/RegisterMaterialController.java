@@ -3,7 +3,6 @@ package client.view.registermaterial;
 import client.core.ViewModelFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.scene.input.*;
 import javafx.scene.paint.Paint;
 import client.view.ViewHandler;
@@ -42,7 +41,7 @@ public class RegisterMaterialController
 
   @FXML private Label error;
   @FXML private Label hallNoWarning;
-  @FXML private Label departmentWaning;
+  @FXML private Label departmentWarning;
   @FXML private Label creatorLNameWarning;
   @FXML private Label genreWarning;
   @FXML private Label firstNameWarning;
@@ -140,6 +139,18 @@ public class RegisterMaterialController
             .licensNumberProperty());
   }
 
+  private boolean containsOnlyLitters(String str)
+  {
+    for (int i = 0; i < str.length(); i++)
+    {
+      if (Character.isDigit(str.charAt(i)))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @FXML public void onButtonCancel(ActionEvent actionEvent)
   {
     System.exit(0);
@@ -150,106 +161,113 @@ public class RegisterMaterialController
     ViewHandler.getInstance().openView("Administration");
   }
 
-  @FXML public void onButtonConfirm(ActionEvent actionEvent)
-      throws IOException
+  @FXML public void onButtonConfirm(ActionEvent actionEvent) throws IOException
   {
     String type = materialTypeCompo.getValue();
-    if (type.equals("Bog"))
-    {
-      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-          .bookAlreadyExists())
-      {
-        error.setText("Bogen findes allerede i systemet");
-        error.setTextFill(Paint.valueOf("red"));
-        error.setVisible(true);
-      }
-      else
-      {
-        ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
-        error.setVisible(true);
-        error.setTextFill(Paint.valueOf("green"));
-        error.setText("Bog er tilføjet");
-        clearFields();
-      }
-    }
-    else if (type.equals("Ebog"))
-    {
-      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-          .eBookAlreadyExists())
-      {
-        error.setText("EBog findes allerede i systemet");
-        error.setTextFill(Paint.valueOf("red"));
-        error.setVisible(true);
-      }
-      else
-      {
-        ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
-        error.setVisible(true);
-        error.setTextFill(Paint.valueOf("green"));
-        error.setText("EBog er tilføjet");
-        clearFields();
-      }
-    }
-    else if (type.equals("Lydbog"))
-    {
-      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-          .audioBookAlreadyExists())
-      {
-        error.setText("Lydbog findes allerede i systemet");
-        error.setTextFill(Paint.valueOf("red"));
-        error.setVisible(true);
-      }
-      else
-      {
-        ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
-        error.setVisible(true);
-        error.setTextFill(Paint.valueOf("green"));
-        error.setText("Lydbog er tilføjet");
-        clearFields();
-      }
-    }
-    else if (type.equals("CD"))
-    {
-      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-          .cdAlreadyExists())
-      {
-        error.setText("CD findes allerede i systemet");
-        error.setTextFill(Paint.valueOf("red"));
-        error.setVisible(true);
-      }
-      else
-      {
-        cdSelectedFields();
-        ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
-        error.setVisible(true);
-        error.setTextFill(Paint.valueOf("green"));
-        error.setText("CD er tilføjet");
-        clearFields();
-      }
-    }
-    else if (type.equals("DVD"))
-    {
-      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-          .dvdAlreadyExists())
-      {
-        error.setText("DVD findes allerede i systemet");
-        error.setTextFill(Paint.valueOf("red"));
-        error.setVisible(true);
-      }
-      else
-      {
-        ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
-        error.setVisible(true);
-        error.setTextFill(Paint.valueOf("green"));
-        error.setText("DVD er tilføjet");
-        clearFields();
-      }
-    }
-    else if (type.equals(null))
+    if (bookFieldsAreEmpty())
     {
       error.setVisible(true);
-      error.setTextFill(Paint.valueOf("red"));
-      error.setText("Vælg et materiale");
+      error.setText("Nødvendige felter er tomme !!");
+    }
+    else
+    {
+      if (type.equals("Bog"))
+      {
+        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+            .bookAlreadyExists())
+        {
+          error.setText("Bogen findes allerede i systemet");
+          error.setTextFill(Paint.valueOf("red"));
+          error.setVisible(true);
+        }
+        else
+        {
+          ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
+          error.setVisible(true);
+          error.setTextFill(Paint.valueOf("green"));
+          error.setText("Bog er tilføjet");
+          clearFields();
+        }
+      }
+      else if (type.equals("Ebog"))
+      {
+        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+            .eBookAlreadyExists())
+        {
+          error.setText("EBog findes allerede i systemet");
+          error.setTextFill(Paint.valueOf("red"));
+          error.setVisible(true);
+        }
+        else
+        {
+          ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
+          error.setVisible(true);
+          error.setTextFill(Paint.valueOf("green"));
+          error.setText("EBog er tilføjet");
+          clearFields();
+        }
+      }
+      else if (type.equals("Lydbog"))
+      {
+        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+            .audioBookAlreadyExists())
+        {
+          error.setText("Lydbog findes allerede i systemet");
+          error.setTextFill(Paint.valueOf("red"));
+          error.setVisible(true);
+        }
+        else
+        {
+          ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
+          error.setVisible(true);
+          error.setTextFill(Paint.valueOf("green"));
+          error.setText("Lydbog er tilføjet");
+          clearFields();
+        }
+      }
+      else if (type.equals("CD"))
+      {
+        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+            .cdAlreadyExists())
+        {
+          error.setText("CD findes allerede i systemet");
+          error.setTextFill(Paint.valueOf("red"));
+          error.setVisible(true);
+        }
+        else
+        {
+          cdSelectedFields();
+          ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
+          error.setVisible(true);
+          error.setTextFill(Paint.valueOf("green"));
+          error.setText("CD er tilføjet");
+          clearFields();
+        }
+      }
+      else if (type.equals("DVD"))
+      {
+        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+            .dvdAlreadyExists())
+        {
+          error.setText("DVD findes allerede i systemet");
+          error.setTextFill(Paint.valueOf("red"));
+          error.setVisible(true);
+        }
+        else
+        {
+          ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
+          error.setVisible(true);
+          error.setTextFill(Paint.valueOf("green"));
+          error.setText("DVD er tilføjet");
+          clearFields();
+        }
+      }
+      else
+      {
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("red"));
+        error.setText("Vælg en type");
+      }
     }
   }
 
@@ -263,6 +281,51 @@ public class RegisterMaterialController
     releaseDate.getEditor().clear();
     description.clear();
     keywords.clear();
+  }
+
+  private boolean bookFieldsAreEmpty()
+  {
+    String title = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .titleProperty().get();
+    String publisher = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .publisherProperty().get();
+    boolean releseDate = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .releaseDateProperty().getValue() == null;
+    String description = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .descriptionProperty().get();
+    String keywords = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .keywordsProperty().get();
+    String pageNumber = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .numberOfPagesProperty().get();
+    String isbn = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .isbnProperty().get();
+    String fName = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .firstNameProperty().get();
+    String lName = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .lastNameProperty().get();
+    boolean dob = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .dateOfBirthPropertyProperty().getValue() == null;
+    String country = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .countryProperty().get();
+    String hallNumber = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .hallNumberProperty().get();
+    String department = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .departmentProperty().get();
+    String cLName = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .creatorLastNameProperty().get();
+    String genre = ViewModelFactory.getInstance().getRegisterMaterialVM()
+        .genreProperty().get();
+
+    if (title == null || publisher == null || releseDate || description == null
+        || keywords == null || publisher == null || isbn == null
+        || fName == null || lName == null || dob || country == null
+        || hallNumber == null || department == null || cLName == null
+        || genre == null)
+    {
+      return true;
+    }
+    else
+      return false;
   }
 
   private void bookSelectedfields()
@@ -294,7 +357,6 @@ public class RegisterMaterialController
     department.setDisable(false);
     creatorLastName.setDisable(false);
     subtitleLanguage.setDisable(true);
-    length.setDisable(false);
   }
 
   private void eBookSelectedFields()
@@ -432,7 +494,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .keywordsProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+"))
+    if (arg.isEmpty() || arg.matches("[0-9]"))
     {
       keywordsWarning.setVisible(true);
     }
@@ -502,7 +564,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .genreProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+"))
+    if (arg.isEmpty() && containsOnlyLitters(arg) == false)
     {
       genreWarning.setVisible(true);
     }
@@ -515,28 +577,28 @@ public class RegisterMaterialController
   @FXML public void onTypeCreatorLastName(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .firstNameProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+"))
+        .creatorLastNameProperty().get();
+    if (arg.isEmpty() || containsOnlyLitters(arg) == false)
     {
-      firstNameWarning.setVisible(true);
+      creatorLNameWarning.setVisible(true);
     }
     else
     {
-      firstNameWarning.setVisible(false);
+      creatorLNameWarning.setVisible(false);
     }
   }
 
   @FXML public void onTypeDepartment(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .descriptionProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+") || arg.length() != 1)
+        .departmentProperty().get();
+    if (arg.isEmpty() || containsOnlyLitters(arg) == false || arg.length() != 1)
     {
-      departmentWaning.setVisible(true);
+      departmentWarning.setVisible(true);
     }
     else
     {
-      departmentWaning.setVisible(false);
+      departmentWarning.setVisible(false);
     }
   }
 
@@ -544,7 +606,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .subtitleLanguageProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+"))
+    if (arg.isEmpty() || containsOnlyLitters(arg) == false)
     {
       subtitileWarning.setVisible(true);
     }
@@ -572,7 +634,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .lastNameProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+"))
+    if (arg.isEmpty() || containsOnlyLitters(arg) == false)
     {
       lastNameWarning.setVisible(true);
     }
@@ -586,7 +648,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .countryProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+"))
+    if (arg.isEmpty() || containsOnlyLitters(arg) == false)
     {
       countryWarning.setVisible(true);
     }
@@ -600,7 +662,7 @@ public class RegisterMaterialController
   {
     String arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .firstNameProperty().get();
-    if (arg.isEmpty() || arg.matches("[0-9]+"))
+    if (arg.isEmpty() || containsOnlyLitters(arg) == false)
     {
       firstNameWarning.setVisible(true);
     }
@@ -610,13 +672,18 @@ public class RegisterMaterialController
     }
   }
 
-  @FXML public void onMouseExitedReleseDate(MouseDragEvent mouseDragEvent)
+  public void onChooseTypeCheck(ActionEvent actionEvent)
+  {
+    releventFields();
+  }
+
+  @FXML public void omMouseExitedReleseDateCheck(MouseEvent mouseEvent)
   {
     LocalDate arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .releaseDateProperty().get();
     try
     {
-      if (arg.equals(null))
+      if (arg == null)
       {
         releseDateWarning.setVisible(true);
       }
@@ -631,13 +698,13 @@ public class RegisterMaterialController
     }
   }
 
-  @FXML public void birthDate(MouseEvent mouseEvent)
+  @FXML public void onMouseExitedDateOfBirthCheck(MouseEvent mouseEvent)
   {
     LocalDate arg = ViewModelFactory.getInstance().getRegisterMaterialVM()
         .dateOfBirthPropertyProperty().get();
     try
     {
-      if (arg.equals(null))
+      if (arg == null)
       {
         dobWarning.setVisible(true);
       }
@@ -650,10 +717,5 @@ public class RegisterMaterialController
     {
       System.out.println("");
     }
-  }
-
-  public void onChooseTypeCheck(ActionEvent actionEvent)
-  {
-    releventFields();
   }
 }

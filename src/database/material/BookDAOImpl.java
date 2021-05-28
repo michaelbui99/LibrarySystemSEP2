@@ -39,7 +39,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return instance;
   }
 
-  @Override public int create(int materialID, String isbn, int pageCount,
+  @Override public synchronized int create(int materialID, String isbn, int pageCount,
       MaterialCreator author, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -104,7 +104,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     }
   }
 
-  @Override public Book createBookCopy(int materialID, int copyNo)
+  @Override public synchronized Book createBookCopy(int materialID, int copyNo)
       throws SQLException
   {
     try (Connection connection = getConnection())
@@ -269,7 +269,7 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return ml;
   }
 
-  @Override public void deleteBookCopy(int materialID, int copyNumber)
+  @Override public synchronized void deleteBookCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try (Connection connection = getConnection())

@@ -59,6 +59,7 @@
                         </GridPane>
                     </children>
                 </HBox>
+                <Label text="Du har ingen reservationer" visible="false" fx:id="noReservationsLabel"></Label>
                 <HBox prefHeight="50.0" prefWidth="599.0">
                     <children>
                         <GridPane prefHeight="59.0" prefWidth="707.0">

@@ -35,7 +35,7 @@ public class AddressImpl extends BaseDAO implements AddressDAO
     return address;
   }
 
-  @Override public Address create(String city, String streetName, int zipCode,
+  @Override public synchronized Address create(String city, String streetName, int zipCode,
       String streetNr) throws SQLException
   {
     try (Connection connection = getConnection())

@@ -51,7 +51,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     return instance;
   }
 
-  @Override public Loan create(Material material, Borrower borrower,
+  @Override public synchronized Loan create(Material material, Borrower borrower,
       String deadline, String loanDate)
   {
     try

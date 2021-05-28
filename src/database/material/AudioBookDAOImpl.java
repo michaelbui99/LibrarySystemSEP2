@@ -37,7 +37,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     return instance;
   }
 
-  @Override public int create(int material_id, int length_,
+  @Override public synchronized int create(int material_id, int length_,
       MaterialCreator author) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -88,7 +88,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     }
   }
 
-  @Override public AudioBook createAudioBookCopy(int materialID, int copyNo)
+  @Override public synchronized AudioBook createAudioBookCopy(int materialID, int copyNo)
       throws SQLException
   {
     try (Connection connection = getConnection())
@@ -291,7 +291,7 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     return ml;
   }
 
-  @Override public void deleteAudioBookCopy(int materialID, int copyNumber)
+  @Override public synchronized void deleteAudioBookCopy(int materialID, int copyNumber)
       throws SQLException
   {
     try (Connection connection = getConnection())
