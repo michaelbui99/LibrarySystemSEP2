@@ -30,7 +30,7 @@ public class LoanReserveController
     private TextArea availNumber;
 
     @FXML
-    ImageView materialImage = new ImageView(imageTest);
+    ImageView materialImage;
 
     @FXML
     private Label warningLabel;
@@ -50,6 +50,8 @@ public class LoanReserveController
             if (ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL() != null)
             {
                 imageTest = new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL()));
+                materialImage.setImage(imageTest);
+                System.out.println("Image set");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

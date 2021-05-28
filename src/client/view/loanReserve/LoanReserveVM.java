@@ -88,7 +88,7 @@ public class LoanReserveVM
 
 
     public String getMaterialImageURL() {
-        return ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial().getImageURL();
+        return materialProperty.get().getImageURL();
     }
 
 

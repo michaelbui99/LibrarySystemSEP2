@@ -37,8 +37,7 @@ public class MyLoansVM
     }
     catch (NoSuchElementException e)
     {
-      //TODO: instead of throwing the exception through all layers, add a event type instead send the message through obeserver instead.
-      warningProperty.set(e.getMessage());
+      Platform.runLater(()->warningProperty.set(e.getMessage()));
     }
 
     /*Listens to for the LOANREGISTERED and LOANENDED event that is specific to the borrowers cpr
@@ -50,8 +49,8 @@ public class MyLoansVM
       {
         activeLoans.add((Loan) evt.getNewValue());
         //Resets warning label.
-        warningProperty.set("");
-        System.out.println("LOAN REGISTERED CAUGHT");
+        Platform.runLater(this::clearWarningProperty);
+        System.out.println("LOAN REGISTERED CAUGHT"); //Used for debugging
       }
     });
 
@@ -67,12 +66,13 @@ public class MyLoansVM
       if (activeLoans.size() == 0)
       {
         //Update warning label if no loans.
-        warningProperty.set("Ingen aktive lån");
+        Platform.runLater(()->warningProperty.set("Ingen aktive lån"));
       }
       }
     });
 
     loanModel.addPropertyChangeListener(EventTypes.LOANEXTENDED, evt->{
+      //Checks if the Loan is relevant for the specific user.
       if (((Loan)evt.getNewValue()).getBorrower().getCpr().equals(cprProperty.get()))
       {
         int index = 0;
@@ -133,4 +133,8 @@ public class MyLoansVM
     return warningProperty;
   }
 
+  public void clearWarningProperty()
+  {
+    warningProperty.set("");
+  }
 }

@@ -40,10 +40,6 @@ public class MyLoansController
 
   @FXML void onReturnButton(ActionEvent event)
   {
-    //TODO: implement this
-    //Sets the binded textproperty to the loanId of the selected loan.
-    //    selectedLoanLabel.textProperty().setValue(String.valueOf(
-    //        loanTableView.getSelectionModel().getSelectedItem().getLoanID()));
     viewModel.loanProperty()
         .set(loanTableView.getSelectionModel().getSelectedItem());
     viewModel.endLoan();
