@@ -1,5 +1,6 @@
 package server.network.loan;
 
+import server.model.loan.LoanModelServer;
 import shared.loan.Loan;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
@@ -16,13 +17,14 @@ import java.util.List;
 
 public class LoanServerImpl implements LoanServer
 {
+  private LoanModelServer loanModel;
 
-
-  public LoanServerImpl()
+  public LoanServerImpl(LoanModelServer loanModel)
   {
     try
     {
       UnicastRemoteObject.exportObject(this, 0);
+      this.loanModel = loanModel;
     }
     catch (RemoteException e)
     {
@@ -33,22 +35,22 @@ public class LoanServerImpl implements LoanServer
 
   @Override public void registerLoan(Material material, Borrower borrower) throws IllegalStateException
   {
-    ModelFactoryServer.getInstance().getLoanModel().registerLoan(material, borrower);
+    loanModel.registerLoan(material, borrower);
   }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
-    return ModelFactoryServer.getInstance().getLoanModel().getAllLoansByCPR(cpr);
+    return loanModel.getAllLoansByCPR(cpr);
   }
 
   @Override public void extendLoan(Loan loan)
   {
-    ModelFactoryServer.getInstance().getLoanModel().extendLoan(loan);
+    loanModel.extendLoan(loan);
   }
 
   @Override public void endLoan(Loan loan)
   {
-    ModelFactoryServer.getInstance().getLoanModel().endLoan(loan);
+   loanModel.endLoan(loan);
   }
 
   public void registerClientCallBack(ClientCallback client)
@@ -65,14 +67,14 @@ public class LoanServerImpl implements LoanServer
         catch (RemoteException e)
         {
           e.printStackTrace();
-          ModelFactoryServer.getInstance().getLoanModel().removePropertyChangeListener(this);
+          loanModel.removePropertyChangeListener(this);
         }
       }
     };
-    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANREGISTERED, listener);
-    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANENDED, listener);
-    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANEXTENDED, listener);
-    ModelFactoryServer.getInstance().getLoanModel().addPropertyChangeListener(EventTypes.LOANEXTENDERROR, listener);
+    loanModel.addPropertyChangeListener(EventTypes.LOANREGISTERED, listener);
+    loanModel.addPropertyChangeListener(EventTypes.LOANENDED, listener);
+    loanModel.addPropertyChangeListener(EventTypes.LOANEXTENDED, listener);
+    loanModel.addPropertyChangeListener(EventTypes.LOANEXTENDERROR, listener);
 
   }
 

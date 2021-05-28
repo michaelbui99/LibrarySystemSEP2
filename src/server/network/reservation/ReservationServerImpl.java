@@ -1,6 +1,7 @@
 package server.network.reservation;
 
 import server.core.ModelFactoryServer;
+import server.model.reservation.ReservationModelServer;
 import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
@@ -16,10 +17,12 @@ import java.util.List;
 
 public class ReservationServerImpl implements ReservationServer
 {
-  public ReservationServerImpl()
+  private ReservationModelServer reservationModel;
+  public ReservationServerImpl(ReservationModelServer reservationModel)
   {
     try
     {
+      this.reservationModel = reservationModel;
       UnicastRemoteObject.exportObject(this, 0);
     }
     catch (RemoteException e)
@@ -42,18 +45,18 @@ public class ReservationServerImpl implements ReservationServer
         catch (RemoteException e)
         {
           e.printStackTrace();
-          ModelFactoryServer.getInstance().getReservationModelServer().removePropertyChangeListener(this);
+          reservationModel.removePropertyChangeListener(this);
         }
         //TODO: Implement reservationRegistered callback method on Client and call it here. Catch remoteexception and unsubscribe as listener
       }
     };
-    ModelFactoryServer.getInstance().getReservationModelServer().addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
-    ModelFactoryServer.getInstance().getReservationModelServer().addPropertyChangeListener(EventTypes.RESERVATIONCANCELLED, listenerReservationRegistered);
+    reservationModel.addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
+    reservationModel.addPropertyChangeListener(EventTypes.RESERVATIONCANCELLED, listenerReservationRegistered);
   }
 
   @Override public List<Reservation> getAllReservationsByCPR(String cpr)
   {
-    return ModelFactoryServer.getInstance().getReservationModelServer().getAllReservationsByCPR(cpr);
+    return reservationModel.getAllReservationsByCPR(cpr);
   }
 
 
@@ -61,12 +64,12 @@ public class ReservationServerImpl implements ReservationServer
   @Override public void endReservation(Reservation reservation)
       throws RemoteException
   {
-    ModelFactoryServer.getInstance().getReservationModelServer().endReservation(reservation);
+    reservationModel.endReservation(reservation);
   }
 
   @Override public void registerReservation(Material material,
       Borrower borrower) throws RemoteException
   {
-    ModelFactoryServer.getInstance().getReservationModelServer().registerReservation(material,borrower);
+    reservationModel.registerReservation(material,borrower);
   }
 }

@@ -1,5 +1,6 @@
 package server.network;
 
+import server.core.ModelFactoryServer;
 import server.model.chat.ChatModelServer;
 import server.model.loan.LoanModelServer;
 import server.model.user.UserModelServer;
@@ -45,17 +46,18 @@ public class ServerImpl implements Server
 
   @Override public UserServer getUserServer()
   {
-    return new UserServerImpl();
+    return new UserServerImpl(ModelFactoryServer.getInstance().getUserModel());
   }
 
   @Override public MaterialServer getMaterialServer()
   {
-    return new MaterialServerImpl();
+    return new MaterialServerImpl(ModelFactoryServer.getInstance()
+        .getMaterialModel());
   }
 
   @Override public LoanServer getLoanServer()
   {
-    return new LoanServerImpl();
+    return new LoanServerImpl(ModelFactoryServer.getInstance().getLoanModel());
   }
 
   @Override public ChatServer getChatServer()
@@ -65,6 +67,6 @@ public class ServerImpl implements Server
 
   @Override public ReservationServer getReservationServer()
   {
-    return new ReservationServerImpl();
+    return new ReservationServerImpl(ModelFactoryServer.getInstance().getReservationModelServer());
   }
 }
