@@ -27,23 +27,33 @@ public class BorrowerContactInfoVM
 
   public void getBorrowerInfo()
   {
-    try
+    if (!cprProperty.get().contains("-") || cprProperty.get().length() != 11)
     {
-      Borrower borrower = userModel.getBorrowerByCPR(cprProperty.get());
-      Address address = borrower.getAddress();
-      String addressString =
-          address.getStreetName() + " " + address.getStreetNr() + " " + address
-              .getZipCode() + " " + address.getCity();
-      firstNameProperty.set(borrower.getFirstName());
-      lastNameProperty.set(borrower.getLastName());
-      emailProperty.set(borrower.getEmail());
-      addressProperty.set(addressString);
-      phoneNumberProperty.set(borrower.getTlfNumber());
-      warningProperty.set("");
+      warningProperty.set("Ugyldigt CPR");
     }
-    catch (NoSuchElementException e)
+    else if (cprProperty.get() == null || cprProperty.get().isEmpty())
     {
-      warningProperty.set(e.getMessage());
+      warningProperty.set("Indtast et CPR nummer.");
+    }
+    else
+    {
+      try
+      {
+        Borrower borrower = userModel.getBorrowerByCPR(cprProperty.get());
+        Address address = borrower.getAddress();
+        String addressString =
+            address.getStreetName() + " " + address.getStreetNr() + " " + address.getZipCode() + " " + address.getCity();
+        firstNameProperty.set(borrower.getFirstName());
+        lastNameProperty.set(borrower.getLastName());
+        emailProperty.set(borrower.getEmail());
+        addressProperty.set(addressString);
+        phoneNumberProperty.set(borrower.getTlfNumber());
+        warningProperty.set("");
+      }
+      catch (NoSuchElementException e)
+      {
+        warningProperty.set(e.getMessage());
+      }
     }
   }
 
