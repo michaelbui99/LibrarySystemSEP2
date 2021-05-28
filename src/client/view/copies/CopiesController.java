@@ -65,15 +65,16 @@ public class CopiesController
     ViewModelFactory.getInstance().getCopiesVM().selectedMaterialProperty()
         .set(searchTableView.getSelectionModel().getSelectedItem());
 
-    if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber() == 1)
+    if (searchTableView.getSelectionModel().getSelectedItem() == null)
     {
-      errorLable.setText("Kun én kopi tilbage, kan ikke fjernes!");
+      errorLable.setText("Vælg først et materiale");
       errorLable.setTextFill(Paint.valueOf("red"));
       errorLable.setVisible(true);
     }
-    else if (searchTableView.getSelectionModel().getSelectedItem() == null)
+    else if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber()
+        == 1)
     {
-      errorLable.setText("Vælg først et materiale");
+      errorLable.setText("Kun én kopi tilbage, kan ikke fjernes!");
       errorLable.setTextFill(Paint.valueOf("red"));
       errorLable.setVisible(true);
     }

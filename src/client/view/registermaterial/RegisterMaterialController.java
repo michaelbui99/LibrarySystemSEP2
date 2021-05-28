@@ -158,115 +158,144 @@ public class RegisterMaterialController
 
   @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
   {
+    clearFields();
     ViewHandler.getInstance().openView("Administration");
   }
 
   @FXML public void onButtonConfirm(ActionEvent actionEvent) throws IOException
   {
     String type = materialTypeCompo.getValue();
-    if (bookFieldsAreEmpty())
+
+    if (type.equals("Vælg en materiale"))
     {
       error.setVisible(true);
-      error.setText("Nødvendige felter er tomme !!");
+      error.setTextFill(Paint.valueOf("red"));
+      error.setText("Vælg en type");
     }
-    else
+    else if (type.equals("Bog"))
     {
-      if (type.equals("Bog"))
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .bookAlreadyExists())
       {
-        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-            .bookAlreadyExists())
-        {
-          error.setText("Bogen findes allerede i systemet");
-          error.setTextFill(Paint.valueOf("red"));
-          error.setVisible(true);
-        }
-        else
-        {
-          ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
-          error.setVisible(true);
-          error.setTextFill(Paint.valueOf("green"));
-          error.setText("Bog er tilføjet");
-          clearFields();
-        }
+        error.setText("Bogen findes allerede i systemet");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
       }
-      else if (type.equals("Ebog"))
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .bookFieldsAreEmpty() == false)
       {
-        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-            .eBookAlreadyExists())
-        {
-          error.setText("EBog findes allerede i systemet");
-          error.setTextFill(Paint.valueOf("red"));
-          error.setVisible(true);
-        }
-        else
-        {
-          ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
-          error.setVisible(true);
-          error.setTextFill(Paint.valueOf("green"));
-          error.setText("EBog er tilføjet");
-          clearFields();
-        }
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addBook();
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("Bog er tilføjet");
+        clearFields();
       }
-      else if (type.equals("Lydbog"))
-      {
-        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-            .audioBookAlreadyExists())
-        {
-          error.setText("Lydbog findes allerede i systemet");
-          error.setTextFill(Paint.valueOf("red"));
-          error.setVisible(true);
-        }
-        else
-        {
-          ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
-          error.setVisible(true);
-          error.setTextFill(Paint.valueOf("green"));
-          error.setText("Lydbog er tilføjet");
-          clearFields();
-        }
-      }
-      else if (type.equals("CD"))
-      {
-        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-            .cdAlreadyExists())
-        {
-          error.setText("CD findes allerede i systemet");
-          error.setTextFill(Paint.valueOf("red"));
-          error.setVisible(true);
-        }
-        else
-        {
-          cdSelectedFields();
-          ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
-          error.setVisible(true);
-          error.setTextFill(Paint.valueOf("green"));
-          error.setText("CD er tilføjet");
-          clearFields();
-        }
-      }
-      else if (type.equals("DVD"))
-      {
-        if (ViewModelFactory.getInstance().getRegisterMaterialVM()
-            .dvdAlreadyExists())
-        {
-          error.setText("DVD findes allerede i systemet");
-          error.setTextFill(Paint.valueOf("red"));
-          error.setVisible(true);
-        }
-        else
-        {
-          ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
-          error.setVisible(true);
-          error.setTextFill(Paint.valueOf("green"));
-          error.setText("DVD er tilføjet");
-          clearFields();
-        }
-      }
-      else
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .bookFieldsAreEmpty())
       {
         error.setVisible(true);
+        error.setText("Nødvendige bog felter er tomme !!");
+      }
+    }
+    else if (type.equals("Ebog"))
+    {
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .eBookAlreadyExists())
+      {
+        error.setText("EBog findes allerede i systemet");
         error.setTextFill(Paint.valueOf("red"));
-        error.setText("Vælg en type");
+        error.setVisible(true);
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .eBookFirldsAreEmpty() == false)
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addEBook();
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("EBog er tilføjet");
+        clearFields();
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .eBookFirldsAreEmpty())
+      {
+        error.setVisible(true);
+        error.setText("Nødvendige e-bog felter er tomme !!");
+      }
+    }
+    else if (type.equals("Lydbog"))
+    {
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .audioBookAlreadyExists())
+      {
+        error.setText("Lydbog findes allerede i systemet");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .audioBookFieldsAreEmpty() == false)
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addAudioBook();
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("Lydbog er tilføjet");
+        clearFields();
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .audioBookFieldsAreEmpty())
+      {
+        error.setVisible(true);
+        error.setText("Nødvendige lydbog felter er tomme !!");
+      }
+    }
+    else if (type.equals("CD"))
+    {
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .cdAlreadyExists())
+      {
+        error.setText("CD findes allerede i systemet");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .cdFieldsAreEmpty() == false)
+      {
+        cdSelectedFields();
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addCD();
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("CD er tilføjet");
+        clearFields();
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .cdFieldsAreEmpty())
+      {
+        error.setVisible(true);
+        error.setText("Nødvendige CD felter er tomme !!");
+      }
+    }
+    else if (type.equals("DVD"))
+    {
+      if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .dvdAlreadyExists())
+      {
+        error.setText("DVD findes allerede i systemet");
+        error.setTextFill(Paint.valueOf("red"));
+        error.setVisible(true);
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .dvdFieldsAreEmpty() == false)
+      {
+        ViewModelFactory.getInstance().getRegisterMaterialVM().addDVD();
+        error.setVisible(true);
+        error.setTextFill(Paint.valueOf("green"));
+        error.setText("DVD er tilføjet");
+        clearFields();
+      }
+      else if (ViewModelFactory.getInstance().getRegisterMaterialVM()
+          .dvdFieldsAreEmpty())
+      {
+        error.setVisible(true);
+        error.setText("Nødvendige DVD felter er tomme !!");
       }
     }
   }
@@ -281,51 +310,6 @@ public class RegisterMaterialController
     releaseDate.getEditor().clear();
     description.clear();
     keywords.clear();
-  }
-
-  private boolean bookFieldsAreEmpty()
-  {
-    String title = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .titleProperty().get();
-    String publisher = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .publisherProperty().get();
-    boolean releseDate = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .releaseDateProperty().getValue() == null;
-    String description = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .descriptionProperty().get();
-    String keywords = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .keywordsProperty().get();
-    String pageNumber = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .numberOfPagesProperty().get();
-    String isbn = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .isbnProperty().get();
-    String fName = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .firstNameProperty().get();
-    String lName = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .lastNameProperty().get();
-    boolean dob = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .dateOfBirthPropertyProperty().getValue() == null;
-    String country = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .countryProperty().get();
-    String hallNumber = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .hallNumberProperty().get();
-    String department = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .departmentProperty().get();
-    String cLName = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .creatorLastNameProperty().get();
-    String genre = ViewModelFactory.getInstance().getRegisterMaterialVM()
-        .genreProperty().get();
-
-    if (title == null || publisher == null || releseDate || description == null
-        || keywords == null || publisher == null || isbn == null
-        || fName == null || lName == null || dob || country == null
-        || hallNumber == null || department == null || cLName == null
-        || genre == null)
-    {
-      return true;
-    }
-    else
-      return false;
   }
 
   private void bookSelectedfields()
