@@ -51,6 +51,7 @@ public class BorrowerContactInfoController
   void onBackButton(ActionEvent event) throws IOException
   {
     viewModel.clearAllProperties();
+    viewModel.warningProperty().set("");
     ViewHandler.getInstance().openView("Administration");
   }
 

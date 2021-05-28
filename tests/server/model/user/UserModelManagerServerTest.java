@@ -8,6 +8,7 @@ import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
 
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -426,4 +427,25 @@ class UserModelManagerServerTest
             librarian.getEmail(), librarian.getTlfNumber()));
   }
   //User already in system test ends
+
+  @Test void getBorrowerByCPRBorrowerExists() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    Borrower borrower = userModelServer.getBorrowerByCPR("111111-1111");
+    assertEquals("111111-1111", borrower.getCpr());
+    assertEquals("Michael", borrower.getFirstName());
+    assertEquals("Bui", borrower.getLastName());
+    assertEquals("Axelborg", borrower.getAddress().getStreetName());
+    assertEquals("8", borrower.getAddress().getStreetNr());
+    assertEquals(8700, borrower.getAddress().getZipCode());
+    assertEquals("Horsens", borrower.getAddress().getCity());
+    assertEquals("+4512345678", borrower.getTlfNumber());
+    assertEquals("michael@gmail.com", borrower.getEmail());
+  }
+
+  @Test void getBorrowerByCPRThrowsNoSuchElementException() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    assertThrows(NoSuchElementException.class, ()->userModelServer.getBorrowerByCPR("111111-1122"));
+  }
 }

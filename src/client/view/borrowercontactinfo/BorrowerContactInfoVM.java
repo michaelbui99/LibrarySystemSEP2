@@ -30,10 +30,12 @@ public class BorrowerContactInfoVM
     if (cprProperty != null && (!cprProperty.get().contains("-") || cprProperty.get().length() != 11) && cprProperty.get().length() > 0)
     {
       warningProperty.set("Ugyldigt CPR");
+      clearAllProperties();
     }
     else if (cprProperty == null || cprProperty.get().isEmpty())
     {
       warningProperty.set("Indtast et CPR nummer.");
+      clearAllProperties();
     }
     else
     {
@@ -53,6 +55,7 @@ public class BorrowerContactInfoVM
       catch (NoSuchElementException e)
       {
         warningProperty.set(e.getMessage());
+        clearAllProperties();
       }
     }
   }
@@ -65,6 +68,7 @@ public class BorrowerContactInfoVM
     cprProperty.set("");
     addressProperty.set("");
     emailProperty.set("");
+
   }
 
   public StringProperty firstNameProperty()
