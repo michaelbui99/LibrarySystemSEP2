@@ -19,7 +19,7 @@ public class BorrowerContactInfoVM
     firstNameProperty = new SimpleStringProperty();
     lastNameProperty = new SimpleStringProperty();
     phoneNumberProperty = new SimpleStringProperty();
-    cprProperty = new SimpleStringProperty();
+    cprProperty = new SimpleStringProperty("");
     addressProperty = new SimpleStringProperty();
     emailProperty = new SimpleStringProperty();
     warningProperty = new SimpleStringProperty();
@@ -27,11 +27,11 @@ public class BorrowerContactInfoVM
 
   public void getBorrowerInfo()
   {
-    if (!cprProperty.get().contains("-") || cprProperty.get().length() != 11)
+    if (cprProperty != null && (!cprProperty.get().contains("-") || cprProperty.get().length() != 11) && cprProperty.get().length() > 0)
     {
       warningProperty.set("Ugyldigt CPR");
     }
-    else if (cprProperty.get() == null || cprProperty.get().isEmpty())
+    else if (cprProperty == null || cprProperty.get().isEmpty())
     {
       warningProperty.set("Indtast et CPR nummer.");
     }

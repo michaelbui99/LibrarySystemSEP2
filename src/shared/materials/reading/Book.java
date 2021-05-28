@@ -48,11 +48,17 @@ public class Book extends ReadingMaterial implements Serializable
       else
         a = "";
 
+    String placeString = " ";
+    if (place != null)
+    {
+      placeString = "Placering: " + place.getHallNo() + ">" +place.getDepartment()  + ">" + place.getGenre() + ">" + place.getCreatorLName();
+    }
+
 
     return "Titlel: " + getTitle() + "\n" + "Forfatter: " + a + " \n" + "Forlag: " + getPublisher() + "\n"
         + "Udgivelsesdato: " + getReleaseDate() + "\n" + "ISBN: " + isbn + "\n"
         + "Sprog: " + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience()
         + "\n" + "Sidetal: " + getPageCount() + "\n" + "Beskrivelse: "
-        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n";
+        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n" + placeString;
   }
 }
