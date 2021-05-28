@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.borrowercontactinfo.BorrowerContactInfoController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="38.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="228.0" layoutY="5.0" text="Lånerinformation">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.5999755859375" minWidth="10.0" prefWidth="194.39996337890625" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="518.4000244140625" minWidth="10.0" prefWidth="406.4000366210937" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Låners CPR " GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="cprField" prefHeight="26.0" prefWidth="142.0" promptText="Indtast låners CPR f.eks. &quot;111111-1111&quot;" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="20.0" right="130.0" top="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+            </GridPane>
+            <Pane prefHeight="277.0" prefWidth="600.0">
+               <children>
+                  <GridPane prefHeight="273.0" prefWidth="600.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Fornavn">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="fNameField" editable="false">
+                           <GridPane.margin>
+                              <Insets left="80.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label text="Efternavn" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="lNameField" editable="false" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="80.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label text="Telefon nr. " GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="phoneField" editable="false" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="80.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label text="Email" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="emailField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="80.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label text="Addresse" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="addressField" editable="false" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="80.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label fx:id="warningLabel" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+            <Pane prefHeight="59.0" prefWidth="600.0">
+               <children>
+                  <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#onBackButton" text="Tilbage" />
+                  <Button layoutX="549.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSearchButton" text="Søg" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
