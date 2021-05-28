@@ -27,7 +27,7 @@ public class BorrowerContactInfoVM
 
   public void getBorrowerInfo()
   {
-    if (cprProperty != null && (!cprProperty.get().contains("-") || cprProperty.get().length() != 11) && cprProperty.get().length() > 0)
+    if (cprProperty != null && (!cprProperty.get().contains("-") || cprProperty.get().length() != 11 || !cprContainsNoChars()) && cprProperty.get().length() > 0)
     {
       warningProperty.set("Ugyldigt CPR");
       clearAllProperties();
@@ -54,6 +54,7 @@ public class BorrowerContactInfoVM
       }
       catch (NoSuchElementException e)
       {
+        System.out.println(cprContainsNoChars());
         warningProperty.set(e.getMessage());
         clearAllProperties();
       }
@@ -104,5 +105,19 @@ public class BorrowerContactInfoVM
   public StringProperty warningProperty()
   {
     return warningProperty;
+  }
+  private boolean cprContainsNoChars()
+  {
+    String[] cprSplit = cprProperty.get().split("-");
+    try
+    {
+      Integer.parseInt(cprSplit[0]);
+      Integer.parseInt(cprSplit[1]);
+      return true;
+    }
+    catch(NumberFormatException e)
+    {
+      return false;
+    }
   }
 }

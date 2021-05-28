@@ -73,6 +73,13 @@ class BorrowerContactInfoVMTest
     assertEquals("Ugyldigt CPR", viewModel.warningProperty().get());
   }
 
+  @Test void WarningPropertyIsSetWhenCPRContainsAChar()
+  {
+    viewModel.cprProperty().set("111111-111a");
+    viewModel.getBorrowerInfo();
+    assertEquals("Ugyldigt CPR", viewModel.warningProperty().get());
+  }
+
   @Test void WarningPropertyIsSetWhenBorrowerDoesNotExist()
   {
     viewModel.cprProperty().set("111111-1122");
@@ -96,5 +103,6 @@ class BorrowerContactInfoVMTest
     assertEquals("",    viewModel.addressProperty().get());
     assertEquals("",    viewModel.emailProperty().get());
     assertEquals("",    viewModel.phoneNumberProperty().get());
+    assertEquals("", viewModel.cprProperty().get());
   }
 }
