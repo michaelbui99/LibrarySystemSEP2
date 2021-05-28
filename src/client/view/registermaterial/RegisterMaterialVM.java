@@ -77,7 +77,7 @@ public class RegisterMaterialVM
     subtitleLanguageProperty = new SimpleStringProperty();
     lengthProperty = new SimpleStringProperty();
     audianceProperty = new SimpleStringProperty("Voksen");
-    typeProperty = new SimpleStringProperty("Book");
+    typeProperty = new SimpleStringProperty("Bog");
     urlProperty = new SimpleStringProperty();
   }
 
@@ -215,7 +215,7 @@ public class RegisterMaterialVM
             languageProperty.get(), isbnProperty.get(),
             Integer.parseInt(numberOfPagesProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
-                departmentProperty.get(), creatorLastNameProperty.getName(),
+                departmentProperty.get(), creatorLastNameProperty.get(),
                 genreProperty.get()),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()),
@@ -294,7 +294,7 @@ public class RegisterMaterialVM
             languageProperty.get(), subtitleLanguageProperty.get(),
             Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
-                departmentProperty.get(), creatorLastNameProperty.getName(),
+                departmentProperty.get(), creatorLastNameProperty.get(),
                 genreProperty.get()), genreProperty.get(), urlProperty.get());
   }
 
@@ -315,7 +315,7 @@ public class RegisterMaterialVM
             keywordsProperty.get(), audianceProperty.get(),
             languageProperty.get(), Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
-                departmentProperty.get(), creatorLastNameProperty.getName(),
+                departmentProperty.get(), creatorLastNameProperty.get(),
                 countryProperty.get()), genreProperty.get(), urlProperty.get());
   }
 
