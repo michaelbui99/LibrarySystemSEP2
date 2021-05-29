@@ -85,15 +85,7 @@ class LoanDAOTest
         () -> loanDAO.getAllLoansByCPR("111111-1111"));
   }
 
-  @Test void createLoanMaterialNotRegisteredThrowsNoSuchElementExceptionTest()
-      throws SQLException
-  {
-    databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    Book notRegisteredBook = new Book(10, 10, "Test", "TEST", "2020-12-12",
-        "DESC", "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
-    assertThrows(NoSuchElementException.class, () -> loanDAO
-        .create(notRegisteredBook, borrower, "2020-12-12", "2020-12-12"));
-  }
+
 
   @Test void endLoanTest() throws SQLException
   {

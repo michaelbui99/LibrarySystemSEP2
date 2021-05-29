@@ -27,7 +27,7 @@ class LoanModelManagerServerTest extends DatabaseBuilder
 {
   private LoanModelServer loanModel;
   private DatabaseBuilder databaseBuilder;
-  private Borrower borrower;
+  private Borrower borrower, borrower2;
   private Book book;
   public static Loan extendedLoan;
   @BeforeEach void setup()
@@ -36,6 +36,7 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     databaseBuilder = new DatabaseBuilder();
     borrower = new Borrower("111111-1111", "Michael", "Bui",
         "michael@gmail.com", "+4512345678", null, "password");
+    borrower2 = new Borrower("111111-2222", "Mik", "Biu", "mik@gmail.com", "+4587654321", null, "password");
     book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
         "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
     extendedLoan = null;
@@ -49,14 +50,6 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     assertEquals(1, loans.size());
   }
 
-  @Test void registerLoanMaterialNotRegisteredThrowsNoSuchElementExceptionTest() throws SQLException
-  {
-    databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    Book notRegisteredBook = new Book(10, 10, "Test", "TEST", "2020-12-12", "DESC",
-        "Fantasy", "Voksen", "Dansk", "12321321", 200, null, null);
-    assertThrows(NoSuchElementException.class,
-        () -> loanModel.registerLoan(notRegisteredBook, borrower));
-  }
 
   @Test void getAllLoansByCPRReturnsCorrectLoan() throws SQLException
   {
@@ -70,11 +63,74 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     assertEquals("111111-1111", loan.getBorrower().getCpr());
   }
 
-  @Test void registerLoanTest()
+  @Test void registerLoanTest() throws SQLException
   {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
     assertDoesNotThrow(()->{loanModel.registerLoan(book,borrower);});
     assertEquals(1, loanModel.getAllLoansByCPR(borrower.getCpr()).size());
   }
+
+  @Test void registerLoanMaterialHasNoCopiesAvailableThrowsIllegalStateException()
+      throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    loanModel.registerLoan(book,borrower);
+    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book, borrower2));
+  }
+
+  @Test void registerLoanMaterialIsReservedThrowsIllegalStateException()
+      throws SQLException
+  {
+    //Test where material is reserved by other users and the borrower does not have a reservation on the material.
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    databaseBuilder.insertDummyReservation("111111-2222", false, 1);
+    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book,borrower));
+  }
+
+  @Test void registerLoanMaterialIsReservedBorrowerHasReservationThrowsIllegalStateException()
+      throws SQLException
+  {
+    /*Test where material is reserved by other users and the borrower does have a reservation,
+     but is not the next in the waiting list.  */
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    databaseBuilder.insertDummyReservation("111111-2222", false, 1);
+    databaseBuilder.insertDummyReservation("111111-1111", false, 1);
+    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book,borrower));
+  }
+
+  @Test void registerLoanMaterialIsReservedBorrowerHasReservationAndIsNextThrowsIllegalStateException()
+      throws SQLException
+  {
+    /*Test where material is reserved by other users and the borrower does have a reservation and is
+    * the next in waiting list, but reservation is marked as not ready*/
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    databaseBuilder.insertDummyReservation("111111-1111", false, 1);
+    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book,borrower));
+  }
+
+  @Test void registerLoanMaterialIsReservedBorrowerHasReservationAndIsNextDoesNotThrow()
+      throws SQLException
+  {
+    /*Test where material is reserved by other users and the borrower does have a reservation and is
+     * the next in waiting list and reservation is marked as ready*/
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    databaseBuilder.insertDummyReservation("111111-1111", true, 1);
+    databaseBuilder.insertDummyReservation("111111-2222", false, 1);
+    assertDoesNotThrow(()->loanModel.registerLoan(book,borrower));
+  }
+
+  @Test void registerLoanMaterialIsReservedBorrowerHasReservationAndIsNextCreatesANewLoan()
+      throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithoutLoan();
+    databaseBuilder.insertDummyReservation("111111-1111", true, 1);
+    databaseBuilder.insertDummyReservation("111111-2222", false, 1);
+    assertDoesNotThrow(()->loanModel.registerLoan(book,borrower));
+    assertEquals(1, loanModel.getAllLoansByCPR("111111-1111").size());
+    assertEquals("Title1", loanModel.getAllLoansByCPR("111111-1111").get(0).getMaterial().getTitle());
+    assertEquals("111111-1111", loanModel.getAllLoansByCPR("111111-1111").get(0).getBorrower().getCpr());
+  }
+
 
   @Test void endLoanTest() throws SQLException
   {

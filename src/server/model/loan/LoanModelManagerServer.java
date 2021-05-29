@@ -1,10 +1,14 @@
 package server.model.loan;
 //Michael
+import database.material.MaterialDAO;
+import database.material.MaterialDAOImpl;
+import database.reservation.ReservationDAO;
 import database.reservation.ReservationDAOImpl;
 import shared.loan.Loan;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import database.loan.LoanDAOImpl;
+import shared.reservation.Reservation;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
@@ -24,18 +28,79 @@ public class LoanModelManagerServer implements LoanModelServer
 
   @Override public void registerLoan(Material material, Borrower borrower)
   {
-    try
+       /*Checks if the material has any reservations and if the borrower
+        is the next person with the right to borrow the material.
+        * */
+    if (ReservationDAOImpl.getInstance()
+        .hasReservations(material.getMaterialID()) && !ReservationDAOImpl
+        .getInstance()
+        .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID())
+        .equals(borrower.getCpr()))
     {
-      Loan loan = LoanDAOImpl.getInstance()
-          .create(material, borrower, null, LocalDate.now().toString());
-      //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
-      support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
+      throw new IllegalStateException(
+          "Materialet er reserveret af andre lånere og kan derfor ikke lånes");
     }
-    catch (IllegalStateException e)
+    /*Ends the borrowers reservation if material has reservation and borrower is the next on waiting list
+    * */
+    if (ReservationDAOImpl.getInstance()
+        .hasReservations(material.getMaterialID())
+        &&
+        ReservationDAOImpl
+        .getInstance()
+        .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID())
+        .equals(borrower.getCpr())
+        &&
+        ReservationDAOImpl.getInstance().reservationIsReady(ReservationDAOImpl.getInstance()
+        .getReservationIDByBorrowerMaterial(borrower.getCpr(),
+            material.getMaterialID()))
+        &&
+        MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID())
+    )
     {
-      throw new IllegalStateException(e.getMessage());
+      Reservation reservation = new Reservation(null, null,null, ReservationDAOImpl.getInstance().getReservationIDByBorrowerMaterial(
+          borrower.getCpr() , material.getMaterialID()),true);
+      ReservationDAOImpl.getInstance().endReservation(reservation);
+      System.out.println("Ending reservation..."); //debugging
     }
-  }
+    /*Throw exception If the material has reservations and the borrower is next on waiting list, but
+    * the reservation is not marked as ready for pickup
+    * */
+    else if (
+        ReservationDAOImpl.getInstance()
+            .hasReservations(material.getMaterialID())
+            &&
+            ReservationDAOImpl
+                .getInstance()
+                .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID())
+                .equals(borrower.getCpr())
+            &&
+            !ReservationDAOImpl.getInstance().reservationIsReady(ReservationDAOImpl.getInstance()
+                .getReservationIDByBorrowerMaterial(borrower.getCpr(),
+                    material.getMaterialID()))
+            &&
+            MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID())
+    )
+    {
+      throw new IllegalStateException("Materialet er ikke klar endnu");
+    }
+
+      //Checks if an copy is available
+      if (MaterialDAOImpl.getInstance()
+          .checkIfCopyAvailable(material.getMaterialID()))
+      {
+        Loan loan = LoanDAOImpl.getInstance()
+            .create(material, borrower, null, LocalDate.now().toString());
+        System.out.println("Creating loan..."); //debugging
+        //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
+        support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);
+        //Ends borrowers reservation If the material has reservation by the borrower and the borrower trying to borrow the material is next in waiting queue
+      }
+      else
+        throw new IllegalStateException(
+            "Ingen tilgængelige kopier, materialet kan reserveres i stedet");
+    }
+
+
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
@@ -73,7 +138,8 @@ public class LoanModelManagerServer implements LoanModelServer
       loan.setMaterialHasReservation(ReservationDAOImpl.getInstance()
           .hasReservations(loan.getMaterial().getMaterialID()));
       Loan temp = new Loan(loan.getMaterial(), loan.getBorrower(),
-          loan.getDeadline(), loan.getLoanDate(), loan.getReturnDate(),loan.getLoanID());
+          loan.getDeadline(), loan.getLoanDate(), loan.getReturnDate(),
+          loan.getLoanID());
       loan.extendLoan();
       Loan extendedLoan = LoanDAOImpl.getInstance().extendLoan(temp);
       support.firePropertyChange(EventTypes.LOANEXTENDED, null, extendedLoan);
@@ -81,9 +147,10 @@ public class LoanModelManagerServer implements LoanModelServer
     catch (IllegalStateException e)
     {
       /*Redirects the error message in event, if the Loan cannot be extended. Loan is passed as old
-      * value to be used for CPR check, such that the error is only shown to the specific user.
-      * */
-      support.firePropertyChange(EventTypes.LOANEXTENDERROR, loan, e.getMessage());
+       * value to be used for CPR check, such that the error is only shown to the specific user.
+       * */
+      support
+          .firePropertyChange(EventTypes.LOANEXTENDERROR, loan, e.getMessage());
     }
   }
 

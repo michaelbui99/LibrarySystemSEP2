@@ -20,13 +20,15 @@ public interface RMIClient extends Remote
 {
   void startClient() throws RemoteException;
   /**
-   * Registers a new Loan for the given material and loaner.
+   * Registers a new Loan in the system for the given Material and Borrower.
+   * The Loan is bound to a specific copy of the Material unlike Reservations.
    *
-   * @param material material is the Material the loaner wants to loan.
-   * @param borrower borrower is the owner of the loan which the material is connected to.
-   * @throws IllegalStateException  if the material is is not available for loan because the number of available copies
-   *                                *                                or the material has reservations and the borrower is not the next person to loan the copy.
-   * @throws NoSuchElementException if the material is not registered in the system.
+   * @param material material is the Material with specific Copy Number the Borrower wants to loan.
+   * @param borrower borrower is the owner of the Loan which the Material is bound to.
+   * @throws IllegalStateException if the material is is not available for loan because the number of available copies
+   *                               or the material has reservations and the borrower is NOT the next person to loan the copy
+   *                               or the material has reservation and the borrower IS the next person to loan the copy,
+   *                               but the reservation is not ready.
    */
   public void registerLoan(Material material, Borrower borrower)
       throws IllegalStateException, RemoteException;

@@ -16,4 +16,6 @@ public interface ReservationDAO
   void endReservation(Reservation reservation);
   boolean hasReservations(int materialID);
   String getNextWaitingBorrowerCPRForMaterial(int materialID);
+  boolean reservationIsReady(int reservationID);
+  int getReservationIDByBorrowerMaterial(String cpr, int materialID);
 }

@@ -18,8 +18,9 @@ public interface LoanServer extends Remote
    * @param material material is the Material with specific Copy Number the Borrower wants to loan.
    * @param borrower borrower is the owner of the Loan which the Material is bound to.
    * @throws IllegalStateException  if the material is is not available for loan because the number of available copies
-   *                                or the material has reservations and the borrower is not the next person to loan the copy.
-   * @throws NoSuchElementException if the material is not registered in the system.
+   *                                or the material has reservations and the borrower is NOT the next person to loan the copy
+   *                                or the material has reservation and the borrower IS the next person to loan the copy,
+   *                                but the reservation is not ready.
    */
   void registerLoan(Material material, Borrower borrower)
       throws IllegalStateException, NoSuchElementException, RemoteException;
