@@ -96,6 +96,12 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
   {
     try (Connection connection = getConnection())
     {
+      if (copyNo <= 0)
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
           "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
@@ -131,6 +137,7 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
         // added author and genre
       }
       return null;
+      }
     }
   }
 
