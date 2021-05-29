@@ -193,27 +193,4 @@ class AudioBookDAOImplTest
     AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID, 3);
     assertDoesNotThrow(() -> audioBookDAO.deleteAudioBookCopy(materialID, 3));
   }
-
-  @Test void deleteAudioBookCopyOnUnExistingCopyNumberTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID, 3);
-    assertThrows(PSQLException.class, ()-> audioBookDAO.deleteAudioBookCopy(materialID, 500));
-  }
-
-  @Test void deleteAudioBookCopyOnUnExistingMaterialIDTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID, 3);
-    assertThrows(PSQLException.class, ()-> audioBookDAO.deleteAudioBookCopy(6000, 3));
-  }
-
 }

@@ -220,28 +220,4 @@ class DVDDAOImplTest
     dvddao.createDVDCopy(materialID, 2);
     assertDoesNotThrow(() -> dvddao.deleteDVDCopy(materialID, 2));
   }
-
-  @Test void deleteDVDCopyOnUnExistingCopyNumberTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    dvddao.create(materialID, "Dansk", 157, place);
-    dvddao.createDVDCopy(materialID, 2);
-    assertThrows(PSQLException.class,
-        () -> dvddao.deleteDVDCopy(materialID, 6000));
-  }
-
-  @Test void deleteDVDCopyOnUnExistingMaterialIDTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    dvddao.create(materialID, "Dansk", 157, place);
-    dvddao.createDVDCopy(materialID, 2);
-    assertThrows(PSQLException.class,
-        () -> dvddao.deleteDVDCopy(6000, 2));
-  }
 }

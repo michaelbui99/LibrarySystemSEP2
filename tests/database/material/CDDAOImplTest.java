@@ -186,26 +186,4 @@ class CDDAOImplTest
     cddao.createCDCopy(materialID, 2);
     assertDoesNotThrow(()-> cddao.deleteCDCopy(materialID, 2));
   }
-
-  @Test void deleteCDCopyOnUnExistingCopyNumberTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    cddao.createCDCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> cddao.deleteCDCopy(materialID, 6000));
-  }
-
-  @Test void deleteCDCopyOnUnExistingMaterialIDTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    cddao.createCDCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> cddao.deleteCDCopy(6000, 2));
-  }
 }

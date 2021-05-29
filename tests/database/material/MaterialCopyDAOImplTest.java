@@ -75,12 +75,4 @@ class MaterialCopyDAOImplTest
     assertDoesNotThrow(
         () -> materialCopyDAO.getFirstAvailableCopyNo(materialID));
   }
-
-  @Test void getFirstAvailableCopyNumberWhereMaterialIdDoesNotExistTest()
-      throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(PSQLException.class,
-        () -> materialCopyDAO.getFirstAvailableCopyNo(6000));
-  }
 }

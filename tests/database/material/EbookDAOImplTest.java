@@ -218,26 +218,4 @@ class EbookDAOImplTest
     ebookDAO.createEBookCopy(materialID, 2);
     assertDoesNotThrow(() -> ebookDAO.deleteEBookCopy(materialID, 2));
   }
-
-  @Test void deleteEbookCopyOnUnExistingCopyNumberTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    ebookDAO.create(materialID, 15, materialCreator, 546);
-    ebookDAO.createEBookCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> ebookDAO.deleteEBookCopy(materialID, 6000));
-  }
-
-  @Test void deleteEbookCopyOnUnExistingMaterialIDTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    ebookDAO.create(materialID, 15, materialCreator, 546);
-    ebookDAO.createEBookCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> ebookDAO.deleteEBookCopy(6000, 2));
-  }
 }

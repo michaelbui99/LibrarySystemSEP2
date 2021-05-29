@@ -249,24 +249,4 @@ class BookDAOImplTest
     bookDAO.createBookCopy(materialID, 2);
     assertDoesNotThrow(()-> bookDAO.deleteBookCopy(materialID, 2));
   }
-
-  @Test void deleteBookCopyOnUnExistingCopyNumberTest() throws SQLException
-  {
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    bookDAO.create(materialID, "234", 11, materialCreator, place);
-    bookDAO.createBookCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> bookDAO.deleteBookCopy(materialID, 500));
-  }
-
-  @Test void deleteBookCopyOnUnExistingMaterialIDTest() throws SQLException
-  {
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    bookDAO.create(materialID, "234", 11, materialCreator, place);
-    bookDAO.createBookCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> bookDAO.deleteBookCopy(6000, 3));
-  }
 }
