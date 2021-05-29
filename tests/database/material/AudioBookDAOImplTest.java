@@ -215,6 +215,4 @@ class AudioBookDAOImplTest
     assertThrows(PSQLException.class, ()-> audioBookDAO.deleteAudioBookCopy(6000, 3));
   }
 
-
-
 }
