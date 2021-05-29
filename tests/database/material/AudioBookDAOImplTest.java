@@ -4,6 +4,7 @@ import database.DatabaseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
+import shared.materials.audio.AudioBook;
 import shared.person.MaterialCreator;
 
 import java.sql.SQLException;

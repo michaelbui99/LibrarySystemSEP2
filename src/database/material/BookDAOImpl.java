@@ -39,8 +39,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return instance;
   }
 
-  @Override public synchronized int create(int materialID, String isbn, int pageCount,
-      MaterialCreator author, Place place) throws SQLException
+  @Override public synchronized int create(int materialID, String isbn,
+      int pageCount, MaterialCreator author, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -109,42 +109,49 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
   {
     try (Connection connection = getConnection())
     {
-      //Creates material_copy
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
-      stm.setInt(1, materialID);
-      stm.setInt(2, copyNo);
-      stm.executeUpdate();
-      //ResultSet keys = stm.getGeneratedKeys();
-      connection.commit();
-
-      //Finds the necessary details to create the Book object from DB.
-      ResultSet bookDetails = getBookDetailsByID(materialID);
-      if (bookDetails.next())
+      if (copyNo <= 0)
       {
-        //Creates and returns a Book object if a book with given materialID exists.
-        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
-            .getKeywordsForMaterial(bookDetails.getInt("material_id"));
-        String materialKeywords = String.join(", ", materialKeywordList);
-
-        return new Book(bookDetails.getInt("material_id"),
-            bookDetails.getInt("copy_no"), bookDetails.getString("title"),
-            bookDetails.getString("publisher"),
-            String.valueOf(bookDetails.getDate("release_date")),
-            bookDetails.getString("description_of_the_content"),
-            materialKeywords, bookDetails.getString("audience"),
-            bookDetails.getString("language_"), bookDetails.getString("isbn"),
-            bookDetails.getInt("page_no"),
-            new Place(bookDetails.getInt("hall_no"),
-                bookDetails.getString("department"),
-                bookDetails.getString("creator_l_name"),
-                bookDetails.getString("genre")),
-            new MaterialCreator(bookDetails.getString("f_name"),
-                bookDetails.getString("l_name"),
-                String.valueOf(bookDetails.getDate("dob")),
-                bookDetails.getString("country")));
+        throw new IllegalArgumentException();
       }
-      return null;
+      else
+      {
+        //Creates material_copy
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+        stm.setInt(1, materialID);
+        stm.setInt(2, copyNo);
+        stm.executeUpdate();
+        //ResultSet keys = stm.getGeneratedKeys();
+        connection.commit();
+
+        //Finds the necessary details to create the Book object from DB.
+        ResultSet bookDetails = getBookDetailsByID(materialID);
+        if (bookDetails.next())
+        {
+          //Creates and returns a Book object if a book with given materialID exists.
+          List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+              .getKeywordsForMaterial(bookDetails.getInt("material_id"));
+          String materialKeywords = String.join(", ", materialKeywordList);
+
+          return new Book(bookDetails.getInt("material_id"),
+              bookDetails.getInt("copy_no"), bookDetails.getString("title"),
+              bookDetails.getString("publisher"),
+              String.valueOf(bookDetails.getDate("release_date")),
+              bookDetails.getString("description_of_the_content"),
+              materialKeywords, bookDetails.getString("audience"),
+              bookDetails.getString("language_"), bookDetails.getString("isbn"),
+              bookDetails.getInt("page_no"),
+              new Place(bookDetails.getInt("hall_no"),
+                  bookDetails.getString("department"),
+                  bookDetails.getString("creator_l_name"),
+                  bookDetails.getString("genre")),
+              new MaterialCreator(bookDetails.getString("f_name"),
+                  bookDetails.getString("l_name"),
+                  String.valueOf(bookDetails.getDate("dob")),
+                  bookDetails.getString("country")));
+        }
+        return null;
+      }
     }
   }
 
@@ -236,8 +243,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
         {
 
           Book book = new Book(resultSet.getInt("material_id"),
-              resultSet.getInt("copy_no"),
-              resultSet.getString("title"), resultSet.getString("publisher"),
+              resultSet.getInt("copy_no"), resultSet.getString("title"),
+              resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"), "",
               resultSet.getString("audience"), resultSet.getString("language_"),
@@ -269,8 +276,8 @@ public class BookDAOImpl extends BaseDAO implements BookDAO
     return ml;
   }
 
-  @Override public synchronized void deleteBookCopy(int materialID, int copyNumber)
-      throws SQLException
+  @Override public synchronized void deleteBookCopy(int materialID,
+      int copyNumber) throws SQLException
   {
     try (Connection connection = getConnection())
     {
