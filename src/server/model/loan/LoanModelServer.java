@@ -16,7 +16,8 @@ public interface LoanModelServer extends PropertyChangeSubject
    *
    * @param material material is the Material with specific Copy Number the Borrower wants to loan.
    * @param borrower borrower is the owner of the Loan which the Material is bound to.
-   * @throws IllegalStateException  if the material is is not available for loan.
+   * @throws IllegalStateException  if the material is is not available for loan because the number of available copies
+   *                                or the material has reservations and the borrower is not the next person to loan the copy.
    * @throws NoSuchElementException if the material is not registered in the system.
    */
   void registerLoan(Material material, Borrower borrower)
@@ -39,12 +40,12 @@ public interface LoanModelServer extends PropertyChangeSubject
   void endLoan(Loan loan);
 
   /**
-  * Extends the deadline of the loan by 1 month.
+   * Extends the deadline of the loan by 1 month.
    * The Loan can only be extended 2 times total and cannot be extended if the Material of the Loan has any reservations.
    * Loans can at earliest be extended 7 days before deadline.
    *
    * @param loan is the Loan which is to be extended by one month.
    * @throws IllegalStateException if the Loan has already been extended 2 times, if the Material of the Loan has a reservation or the current date is more than 7 days before deadline.
-  * */
+   */
   void extendLoan(Loan loan) throws IllegalStateException;
 }

@@ -33,7 +33,6 @@ public class LoanModelManagerServer implements LoanModelServer
     }
     catch (IllegalStateException e)
     {
-      System.out.println("got here koi");
       throw new IllegalStateException(e.getMessage());
     }
   }

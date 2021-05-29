@@ -76,6 +76,10 @@ public class RMIClientImpl
     {
       throw new RuntimeException("Server Connection failed.");
     }
+    catch (IllegalStateException e)
+    {
+      throw new IllegalStateException(e.getMessage());
+    }
   }
 
   @Override public void registerReservation(Material material,

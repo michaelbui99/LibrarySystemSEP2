@@ -1,5 +1,7 @@
 package database.loan;
 
+import database.reservation.ReservationDAO;
+import database.reservation.ReservationDAOImpl;
 import shared.loan.ExtendedLoan1State;
 import shared.loan.ExtendedLoan2State;
 import shared.loan.NewLoanState;
@@ -51,8 +53,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     return instance;
   }
 
-  @Override public synchronized Loan create(Material material, Borrower borrower,
-      String deadline, String loanDate)
+  @Override public synchronized Loan create(Material material,
+      Borrower borrower, String deadline, String loanDate)
   {
     try
     {
@@ -65,6 +67,16 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
                 .getCopyNumberForMaterial(material.getMaterialID()) == 0)
         {
           throw new NoSuchElementException("Materialet eksisterer ikke");
+        }
+        /*Checks if the material has any reservations and if the borrower
+        is the next person with the right to borrow the material.
+        * */
+        if (ReservationDAOImpl.getInstance()
+            .hasReservations(material.getMaterialID()) && !ReservationDAOImpl
+            .getInstance()
+            .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID()).equals(borrower.getCpr()))
+        {
+          throw new IllegalStateException("Materialet er reserveret af andre lånere og kan derfor ikke lånes");
         }
 
         //Create a new loan if an there exists an available copy of the material.
@@ -210,7 +222,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
               String.valueOf(audiobookLoans.getDate("return_date")),
               audiobookLoans.getInt("loan_no"));
 
-          int numberOfExtensions = audiobookLoans.getInt("number_of_extensions");
+          int numberOfExtensions = audiobookLoans
+              .getInt("number_of_extensions");
           switch (numberOfExtensions)
           {
             case 0:
@@ -346,14 +359,12 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
           loans.add(loan);
         }
 
-
         if (!loans.isEmpty())
         {
           return loans;
         }
         else
           throw new NoSuchElementException("Ingen aktive lån");
-
 
       }
     }
@@ -398,7 +409,8 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       LocalDate newDeadline = oldDeadline.plusMonths(1);
 
       //Checks to see if the number of extension in DB is 2.
-      PreparedStatement stm2 = connection.prepareStatement("SELECT number_of_extensions from loan where loan_no = ?");
+      PreparedStatement stm2 = connection.prepareStatement(
+          "SELECT number_of_extensions from loan where loan_no = ?");
       stm2.setInt(1, loan.getLoanID());
       ResultSet result2 = stm2.executeQuery();
       result2.next();
@@ -410,16 +422,16 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
       }
       else
       {
-      PreparedStatement stm = connection.prepareStatement(
-          "UPDATE loan SET deadline = ?, number_of_extensions = number_of_extensions+1 where loan_no = ?");
-      stm.setDate(1, Date.valueOf(newDeadline));
-      stm.setInt(2, loan.getLoanID());
-      stm.executeUpdate();
-      connection.commit();
+        PreparedStatement stm = connection.prepareStatement(
+            "UPDATE loan SET deadline = ?, number_of_extensions = number_of_extensions+1 where loan_no = ?");
+        stm.setDate(1, Date.valueOf(newDeadline));
+        stm.setInt(2, loan.getLoanID());
+        stm.executeUpdate();
+        connection.commit();
 
-      return new Loan(loan.getMaterial(), loan.getBorrower(),
-          newDeadline.toString(), loan.getLoanDate(), null, loan.getLoanID(),
-          loan.getLoanState());
+        return new Loan(loan.getMaterial(), loan.getBorrower(),
+            newDeadline.toString(), loan.getLoanDate(), null, loan.getLoanID(),
+            loan.getLoanState());
       }
     }
     catch (SQLException throwables)

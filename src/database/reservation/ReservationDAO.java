@@ -15,4 +15,5 @@ public interface ReservationDAO
   List<Reservation> getAllReservationsByCPR(String cpr);
   void endReservation(Reservation reservation);
   boolean hasReservations(int materialID);
+  String getNextWaitingBorrowerCPRForMaterial(int materialID);
 }

@@ -29,7 +29,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="52.0" prefWidth="600.0">
                <children>
-                  <Label fx:id="errorLable" />
+                  <Label fx:id="errorLabel" />
                </children>
             </HBox>
             <VBox prefHeight="343.0" prefWidth="600.0">

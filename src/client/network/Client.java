@@ -21,7 +21,8 @@ public interface Client
    *
    * @param material material is the Material the loaner wants to loan.
    * @param borrower borrower is the owner of the loan which the material is connected to.
-   * @throws IllegalStateException  if the material is is not available for loan.
+   * @throws IllegalStateException  if the material is is not available for loan because the number of available copies
+   *                                or the material has reservations and the borrower is not the next person to loan the copy.
    * @throws NoSuchElementException if the material is not registered in the system.
    */
   public void registerLoan(Material material, Borrower borrower)
@@ -30,13 +31,14 @@ public interface Client
       throws IllegalStateException;
 
   List<Loan> getAllLoansByCPR(String cpr) throws NoSuchElementException;
-  List<Reservation> getAllReservationsByCPR(String cpr) throws NoSuchElementException;
+  List<Reservation> getAllReservationsByCPR(String cpr)
+      throws NoSuchElementException;
   void deliverMaterial(int loanID);
   void extendLoan(Loan loan);
 
-  int createMaterial(String title, String publisher,
-      String releaseDate, String description, String targetAudience,
-      String language, String genre, String url, String keywords);
+  int createMaterial(String title, String publisher, String releaseDate,
+      String description, String targetAudience, String language, String genre,
+      String url, String keywords);
 
   void registerBook(String title, String publisher, String releaseDate,
       String description, String tags, String targetAudience, String language,

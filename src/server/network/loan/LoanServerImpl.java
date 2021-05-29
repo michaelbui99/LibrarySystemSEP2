@@ -14,6 +14,7 @@ import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class LoanServerImpl implements LoanServer
 {
@@ -35,7 +36,14 @@ public class LoanServerImpl implements LoanServer
 
   @Override public void registerLoan(Material material, Borrower borrower) throws IllegalStateException
   {
-    loanModel.registerLoan(material, borrower);
+    try
+    {
+      loanModel.registerLoan(material, borrower);
+    }
+    catch (IllegalStateException e)
+    {
+      throw new IllegalStateException(e.getMessage());
+    }
   }
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)

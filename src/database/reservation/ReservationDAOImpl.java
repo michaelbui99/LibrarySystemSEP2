@@ -1,4 +1,5 @@
 package database.reservation;
+
 import database.BaseDAO;
 import database.material.MaterialDAOImpl;
 import shared.reservation.Reservation;
@@ -36,14 +37,18 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
   {
 
   }
-  private boolean canReserve(Borrower borrower, Material material){
-    try(Connection connection = getConnection())
+
+  private boolean canReserve(Borrower borrower, Material material)
+  {
+    try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("select * from reservation where material_id = ? and cpr_no = ? ");
+      PreparedStatement stm = connection.prepareStatement(
+          "select * from reservation where material_id = ? and cpr_no = ? ");
       stm.setInt(1, material.getMaterialID());
       stm.setString(2, borrower.getCpr());
       ResultSet resultSet = stm.executeQuery();
-      if (!resultSet.next()){
+      if (!resultSet.next())
+      {
         return true;
       }
       else
@@ -56,34 +61,41 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     return false;
   }
 
-
-
-  @Override public synchronized Reservation create(Borrower borrower, Material material)
+  @Override public synchronized Reservation create(Borrower borrower,
+      Material material)
 
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       //todo: lige nu reserverer man en specific kopy. Evt. tilføje materiale + materiale kopi som java object, så man skelner mellem dem?
       //todo: lav et check på om der allerede findes en reservation borrower CPR og MaterialID
-      if (!MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID()) && canReserve(borrower,material))
+      if (!MaterialDAOImpl.getInstance()
+          .checkIfCopyAvailable(material.getMaterialID()) && canReserve(
+          borrower, material))
       {
         LocalDate today = LocalDate.now();
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (material_id, cpr_no, reservation_date) values (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO reservation (material_id, cpr_no, reservation_date) values (?,?,?)",
+            Statement.RETURN_GENERATED_KEYS);
         stm.setInt(1, material.getMaterialID());
         stm.setString(2, borrower.getCpr());
-        stm.setDate(3,Date.valueOf(today));
-//        stm.setInt(4, getCopyNoForMaterial(material));
+        stm.setDate(3, Date.valueOf(today));
+        //        stm.setInt(4, getCopyNoForMaterial(material));
         stm.executeUpdate();
         connection.commit();
         ResultSet keys = stm.getGeneratedKeys();
         keys.next();
-        return new Reservation(material, borrower, today, keys.getInt("reservation_id"), false);
+        return new Reservation(material, borrower, today,
+            keys.getInt("reservation_id"), false);
       }
-      else if (!canReserve(borrower,material)){
+      else if (!canReserve(borrower, material))
+      {
 
-        throw new IllegalStateException("Du har allerede reserveret dette materiale");
+        throw new IllegalStateException(
+            "Du har allerede reserveret dette materiale");
       }
-      else if (!hasReservations(material.getMaterialID())){
+      else if (!hasReservations(material.getMaterialID()))
+      {
         throw new IllegalStateException("Du har ingen reservationer!");
       }
     }
@@ -96,7 +108,8 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
 
   @Override public List<Reservation> getAllReservationsByCPR(String cpr)
   {
-    String[] materialTypes = new String[]{"book", "audiobook", "e_book", "cd", "dvd"};
+    String[] materialTypes = new String[] {"book", "audiobook", "e_book", "cd",
+        "dvd"};
     try (Connection connection = getConnection())
     {
       PreparedStatement selectBorrowerAddress = connection.prepareStatement(
@@ -119,39 +132,56 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
           selectBorrowerAddressResult.getString("password"));
 
       List<Reservation> reservations = new ArrayList<>();
-      for(int i = 0; i < materialTypes.length; i++){
-        String query ="SELECT * FROM reservation "
+      for (int i = 0; i < materialTypes.length; i++)
+      {
+        String query = "SELECT * FROM reservation "
             + "JOIN material_copy ON reservation.material_id = material_copy.material_id "
-            + "JOIN " + materialTypes[i] + " ON reservation.material_id = " + materialTypes[i] + ".material_id "
+            + "JOIN " + materialTypes[i] + " ON reservation.material_id = "
+            + materialTypes[i] + ".material_id "
             + "JOIN material ON reservation.material_id = material.material_id ";
-        if(!materialTypes[i].equals("audiobook") && !materialTypes[i].equals("e_book")){
-          query += " JOIN place ON " + materialTypes[i] + ".place_id = place.place_id ";
+        if (!materialTypes[i].equals("audiobook") && !materialTypes[i]
+            .equals("e_book"))
+        {
+          query += " JOIN place ON " + materialTypes[i]
+              + ".place_id = place.place_id ";
         }
-        if(!materialTypes[i].equals("cd") && !materialTypes[i].equals("dvd")){
-          query += " JOIN material_creator ON " + materialTypes[i] + ".author = material_creator.person_id ";
+        if (!materialTypes[i].equals("cd") && !materialTypes[i].equals("dvd"))
+        {
+          query += " JOIN material_creator ON " + materialTypes[i]
+              + ".author = material_creator.person_id ";
         }
-        query += " WHERE reservation.cpr_no = '" + cpr + "'" ;
-//        String escapedSQL = StringEscapeUtils.escapeSql(unescapedSQL);
-        PreparedStatement selectReservations = connection.prepareStatement(query);
+        query += " WHERE reservation.cpr_no = '" + cpr + "'";
+        //        String escapedSQL = StringEscapeUtils.escapeSql(unescapedSQL);
+        PreparedStatement selectReservations = connection
+            .prepareStatement(query);
         ResultSet selectReservationsResult = selectReservations.executeQuery();
-        while(selectReservationsResult.next()){
+        while (selectReservationsResult.next())
+        {
           Material material = null;
-          switch (materialTypes[i]){
+          switch (materialTypes[i])
+          {
             case "book":
-              material = new Book(selectReservationsResult.getInt("material_id"),
-                  selectReservationsResult.getInt("copy_no"), selectReservationsResult.getString("title"),
-                  selectReservationsResult.getString("publisher"),
-                  String.valueOf(selectReservationsResult.getDate("release_date")),
-                  selectReservationsResult.getString("description_of_the_content"), null,
-                  selectReservationsResult.getString("audience"), selectReservationsResult.getString("language_"),
-                  selectReservationsResult.getString("isbn"), selectReservationsResult.getInt("page_no"),
+              material = new Book(
+                  selectReservationsResult.getInt("material_id"),
+                  selectReservationsResult.getInt("copy_no"),
+                  selectReservationsResult.getString("title"),
+                  selectReservationsResult.getString("publisher"), String
+                  .valueOf(selectReservationsResult.getDate("release_date")),
+                  selectReservationsResult
+                      .getString("description_of_the_content"), null,
+                  selectReservationsResult.getString("audience"),
+                  selectReservationsResult.getString("language_"),
+                  selectReservationsResult.getString("isbn"),
+                  selectReservationsResult.getInt("page_no"),
                   new Place(selectReservationsResult.getInt("place_id"),
                       selectReservationsResult.getInt("hall_no"),
                       selectReservationsResult.getString("department"),
                       selectReservationsResult.getString("creator_l_name"),
                       selectReservationsResult.getString("genre")),
-                  new MaterialCreator(selectReservationsResult.getInt("person_id"),
-                      selectReservationsResult.getString(28), selectReservationsResult.getString(29),
+                  new MaterialCreator(
+                      selectReservationsResult.getInt("person_id"),
+                      selectReservationsResult.getString(28),
+                      selectReservationsResult.getString(29),
                       String.valueOf(selectReservationsResult.getDate("dob")),
                       selectReservationsResult.getString("country")));
               break;
@@ -160,68 +190,86 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
                   selectReservationsResult.getInt("material_id"),
                   selectReservationsResult.getInt("copy_no"),
                   selectReservationsResult.getString("title"),
-                  selectReservationsResult.getString("publisher"),
-                  String.valueOf(selectReservationsResult.getDate("release_date")),
-                  selectReservationsResult.getString("description_of_the_content"), null,
+                  selectReservationsResult.getString("publisher"), String
+                  .valueOf(selectReservationsResult.getDate("release_date")),
+                  selectReservationsResult
+                      .getString("description_of_the_content"), null,
                   selectReservationsResult.getString("audience"),
                   selectReservationsResult.getString("language_"),
                   selectReservationsResult.getInt("length_"),
-                  new MaterialCreator(selectReservationsResult.getInt("person_id"),
-                      selectReservationsResult.getString(26), selectReservationsResult.getString(27),
+                  new MaterialCreator(
+                      selectReservationsResult.getInt("person_id"),
+                      selectReservationsResult.getString(26),
+                      selectReservationsResult.getString(27),
                       String.valueOf(selectReservationsResult.getDate("dob")),
                       selectReservationsResult.getString("city")),
                   selectReservationsResult.getString("url"));
               break;
             case "dvd":
               material = new DVD(selectReservationsResult.getInt("material_id"),
-                  selectReservationsResult.getInt("copy_no"), selectReservationsResult.getString("title"),
-                  selectReservationsResult.getString("publisher"),
-                  String.valueOf(selectReservationsResult.getDate("release_date")),
-                  selectReservationsResult.getString("description_of_the_content"), null,
-                  selectReservationsResult.getString("audience"), selectReservationsResult.getString("language_"),
+                  selectReservationsResult.getInt("copy_no"),
+                  selectReservationsResult.getString("title"),
+                  selectReservationsResult.getString("publisher"), String
+                  .valueOf(selectReservationsResult.getDate("release_date")),
+                  selectReservationsResult
+                      .getString("description_of_the_content"), null,
+                  selectReservationsResult.getString("audience"),
+                  selectReservationsResult.getString("language_"),
                   selectReservationsResult.getString("subtitle_lang"),
                   String.valueOf(selectReservationsResult.getInt("length_")),
-                  new Place(selectReservationsResult.getInt("place_id"), selectReservationsResult.getInt("hall_no"),
+                  new Place(selectReservationsResult.getInt("place_id"),
+                      selectReservationsResult.getInt("hall_no"),
                       selectReservationsResult.getString("department"),
                       selectReservationsResult.getString("creator_l_name"),
-                      selectReservationsResult.getString("genre")), selectReservationsResult.getString("URL"));
+                      selectReservationsResult.getString("genre")),
+                  selectReservationsResult.getString("URL"));
               break;
             case "cd":
               material = new CD(selectReservationsResult.getInt("material_id"),
-                  selectReservationsResult.getInt("copy_no"), selectReservationsResult.getString("title"),
-                  selectReservationsResult.getString("publisher"),
-                  String.valueOf(selectReservationsResult.getDate("release_date")),
-                  selectReservationsResult.getString("description_of_the_content"), null,
-                  selectReservationsResult.getString("audience"), selectReservationsResult.getString("language_"),
+                  selectReservationsResult.getInt("copy_no"),
+                  selectReservationsResult.getString("title"),
+                  selectReservationsResult.getString("publisher"), String
+                  .valueOf(selectReservationsResult.getDate("release_date")),
+                  selectReservationsResult
+                      .getString("description_of_the_content"), null,
+                  selectReservationsResult.getString("audience"),
+                  selectReservationsResult.getString("language_"),
                   selectReservationsResult.getInt("length_"),
-                  new Place(selectReservationsResult.getInt("place_id"), selectReservationsResult.getInt("hall_no"),
+                  new Place(selectReservationsResult.getInt("place_id"),
+                      selectReservationsResult.getInt("hall_no"),
                       selectReservationsResult.getString("department"),
                       selectReservationsResult.getString("creator_l_name"),
-                      selectReservationsResult.getString("genre")), selectReservationsResult.getString("url"));
+                      selectReservationsResult.getString("genre")),
+                  selectReservationsResult.getString("url"));
               break;
             case "e_book":
-              material = new EBook(selectReservationsResult.getInt("material_id"),
-                  selectReservationsResult.getInt("copy_no"), selectReservationsResult.getString("title"),
-                  selectReservationsResult.getString("publisher"),
-                  String.valueOf(selectReservationsResult.getDate("release_date")),
-                  selectReservationsResult.getString("description_of_the_content"), null,
-                  selectReservationsResult.getString("audience"), selectReservationsResult.getString("language_"),
-                  selectReservationsResult.getInt("page_no"), selectReservationsResult.getString("license_no"),
+              material = new EBook(
+                  selectReservationsResult.getInt("material_id"),
+                  selectReservationsResult.getInt("copy_no"),
+                  selectReservationsResult.getString("title"),
+                  selectReservationsResult.getString("publisher"), String
+                  .valueOf(selectReservationsResult.getDate("release_date")),
+                  selectReservationsResult
+                      .getString("description_of_the_content"), null,
+                  selectReservationsResult.getString("audience"),
+                  selectReservationsResult.getString("language_"),
+                  selectReservationsResult.getInt("page_no"),
+                  selectReservationsResult.getString("license_no"),
                   selectReservationsResult.getString("genre"),
-                  new MaterialCreator(selectReservationsResult.getInt("person_id"),
-                      selectReservationsResult.getString(26), selectReservationsResult.getString(27),
+                  new MaterialCreator(
+                      selectReservationsResult.getInt("person_id"),
+                      selectReservationsResult.getString(26),
+                      selectReservationsResult.getString(27),
                       String.valueOf(selectReservationsResult.getDate("dob")),
                       selectReservationsResult.getString("city")));
               break;
           }
 
-          Reservation reservation = new Reservation(
-              material,
-              borrower,
-              selectReservationsResult.getDate("reservation_date").toLocalDate(),
+          Reservation reservation = new Reservation(material, borrower,
+              selectReservationsResult.getDate("reservation_date")
+                  .toLocalDate(),
               selectReservationsResult.getInt("reservation_id"),
-              selectReservationsResult.getBoolean("available")
-          );
+              selectReservationsResult.getBoolean("available"));
           reservations.add(reservation);
         }
 
@@ -237,14 +285,17 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     catch (SQLException throwables)
     {
       throwables.printStackTrace();
-    } return null;
+    }
+    return null;
   }
 
   @Override public void endReservation(Reservation reservation)
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("DELETE FROM reservation WHERE reservation.reservation_id = ?", Statement.RETURN_GENERATED_KEYS);
+      PreparedStatement stm = connection.prepareStatement(
+          "DELETE FROM reservation WHERE reservation.reservation_id = ?",
+          Statement.RETURN_GENERATED_KEYS);
       stm.setInt(1, reservation.getReservationID());
       stm.executeUpdate();
       connection.commit();
@@ -260,7 +311,8 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("SELECT * from reservation where material_id = ? ");
+      PreparedStatement stm = connection
+          .prepareStatement("SELECT * from reservation where material_id = ? ");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
 
@@ -271,6 +323,27 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
       throwables.printStackTrace();
     }
     return false;
+  }
+
+  @Override public String getNextWaitingBorrowerCPRForMaterial(int materialID)
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("SELECT reservation_id, cpr_no from reservation where material_id = ? ORDER BY reservation_id ASC LIMIT 1;");
+      stm.setInt(1, materialID);
+      ResultSet result = stm.executeQuery();
+      if (result.next())
+      {
+        return result.getString("cpr_no");
+      }
+      else
+        throw new NoSuchElementException("Ingen lånere har reserveret dette materiale");
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return null;
   }
 
 }

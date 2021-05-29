@@ -18,7 +18,6 @@ public class LoanReserveVM
     private ReservationModelClient reservationModelClient;
 
     public LoanReserveVM(ReservationModelClient reservationModelClient) {
-        //TODO: Lav om til listener, så antallet af kopier opdateres dynamisk.
         this.reservationModelClient = reservationModelClient;
         this.materialProperty = new SimpleObjectProperty<>();
         materialProperty.set(ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial());
@@ -30,8 +29,10 @@ public class LoanReserveVM
         //Checks number of copies everytime a loan is made and end in the system.
         ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
             EventTypes.LOANREGISTERED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
+
         ModelFactoryClient.getInstance().getLoanModelClient().addPropertyChangeListener(
             EventTypes.LOANENDED,(evt) -> availNumberProp.set(ModelFactoryClient.getInstance().getMaterialModelClient().numberOfAvailableCopies()) );
+        //Listens for when a new material has been Selected and updates the information displayed.
         ModelFactoryClient.getInstance().getMaterialModelClient().addPropertyChangeListener("materialSelected", evt -> {
                 materialProperty.set((Material) evt.getNewValue());
             materialInfoProp.set(materialProperty.get().getMaterialDetails());

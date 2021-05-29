@@ -35,7 +35,14 @@ public class LoanModelManagerClient implements LoanModelClient
   @Override public void registerLoan(Material material, Borrower borrower)
       throws IllegalStateException
   {
-        client.registerLoan(material, borrower);
+    try
+    {
+      client.registerLoan(material, borrower);
+    }
+    catch (IllegalStateException e)
+    {
+      throw new IllegalStateException(e.getMessage());
+    }
   }
 
 
