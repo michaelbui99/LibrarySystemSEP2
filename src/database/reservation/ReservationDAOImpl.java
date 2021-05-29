@@ -269,7 +269,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
               selectReservationsResult.getDate("reservation_date")
                   .toLocalDate(),
               selectReservationsResult.getInt("reservation_id"),
-              selectReservationsResult.getBoolean("available"));
+              selectReservationsResult.getBoolean("ready"));
           reservations.add(reservation);
         }
 
@@ -346,4 +346,47 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
     return null;
   }
 
+  @Override public boolean reservationIsReady(int reservationID)
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("SELECT ready from reservation WHERE reservation_id = ?");
+      stm.setInt(1, reservationID);
+      ResultSet result = stm.executeQuery();
+      if (result.next())
+      {
+        return result.getBoolean("ready");
+      }
+      else
+        throw new NoSuchElementException();
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public int getReservationIDByBorrowerMaterial(String cpr,
+      int materialID)
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("SELECT reservation_id from reservation where material_id = ? and cpr_no = ? ORDER by reservation_id ASC  LIMIT 1");
+      stm.setInt(1, materialID);
+      stm.setString(2, cpr);
+      ResultSet result = stm.executeQuery();
+      if (result.next())
+      {
+        return result.getInt("reservation_id");
+      }
+      else
+        throw new NoSuchElementException("Låneren har ingen reservationer på materialet");
+    }
+    catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+    return -1;
+  }
 }

@@ -60,29 +60,6 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     {
       try (Connection connection = getConnection())
       {
-
-        if (!MaterialDAOImpl.getInstance()
-            .materialExistInDB(material.getMaterialID()) ||
-            MaterialDAOImpl.getInstance()
-                .getCopyNumberForMaterial(material.getMaterialID()) == 0)
-        {
-          throw new NoSuchElementException("Materialet eksisterer ikke");
-        }
-        /*Checks if the material has any reservations and if the borrower
-        is the next person with the right to borrow the material.
-        * */
-        if (ReservationDAOImpl.getInstance()
-            .hasReservations(material.getMaterialID()) && !ReservationDAOImpl
-            .getInstance()
-            .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID()).equals(borrower.getCpr()))
-        {
-          throw new IllegalStateException("Materialet er reserveret af andre lånere og kan derfor ikke lånes");
-        }
-
-        //Create a new loan if an there exists an available copy of the material.
-        if (MaterialDAOImpl.getInstance()
-            .checkIfCopyAvailable(material.getMaterialID()))
-        {
           LocalDate today = LocalDate.now();
           //Sets deadline to be one month after loan date.
           LocalDate loanDeadline = today.plusMonths(1);
@@ -107,14 +84,11 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
           stm2.setInt(2, copyNo);
           stm2.executeUpdate();
 
-          connection.commit();
+
+            connection.commit();
           return new Loan(material, borrower, loanDeadline.toString(), loanDate,
               null, generatedKey);
         }
-        else
-          throw new IllegalStateException(
-              "Ingen tilgængelige kopier, materialet kan reserveres i stedet");
-      }
     }
     catch (SQLException throwables)
     {
