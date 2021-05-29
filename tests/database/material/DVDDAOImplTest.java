@@ -11,201 +11,237 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CDDAOImplTest
+class DVDDAOImplTest
 {
-  private CDDAO cddao;
+  private DVDDAO dvddao;
   private DatabaseBuilder databaseBuilder;
   private Place place;
 
   @BeforeEach void setup()
   {
-    cddao = CDDAOImpl.getInstance();
+    dvddao = DVDDAOImpl.getInstance();
     databaseBuilder = new DatabaseBuilder();
     place = new Place(1, 1, "A", "lastNameTest", "genreTest");
   }
 
-  @Test void createCDTest() throws SQLException
+  @Test void createDVDTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    assertDoesNotThrow(() -> cddao.create(materialID, 123, place));
+    assertDoesNotThrow(() -> dvddao.create(materialID, "Dansk", 123, place));
   }
 
-  @Test void createCdWhereMaterialIDDoesNotExistTest() throws SQLException
+  @Test void createDVDWithMaterialIDThatDoesNotExistTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    assertThrows(PSQLException.class, () -> cddao.create(5000, 123, place));
+    assertThrows(PSQLException.class,
+        () -> dvddao.create(6000, "Dansk", 123, place));
   }
 
-  @Test void createCdWhereLengthIsLessThan0Test() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    assertThrows(IllegalArgumentException.class,
-        () -> cddao.create(materialID, -1, place));
-  }
-
-  @Test void createCdWhereLengthEqual0Test() throws SQLException
+  @Test void createDVDWithNullSubtitleLanguageTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
     assertThrows(IllegalArgumentException.class,
-        () -> cddao.create(materialID, 0, place));
+        () -> dvddao.create(materialID, null, 123, place));
   }
 
-  @Test void createCDWherePlaceIsNullTest() throws SQLException
+  @Test void createDVDWithSubtitleLanguageAsAnIntegerTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
     assertThrows(IllegalArgumentException.class,
-        () -> cddao.create(materialID, 55, null));
+        () -> dvddao.create(materialID, "125", 123, place));
   }
 
-  @Test void createCDCopyTest() throws SQLException
+  @Test void createDVDWithSubtitleLanguageAsACombinationOfIntegerAndLettersTest()
+      throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    assertDoesNotThrow(() -> cddao.createCDCopy(materialID, 2));
-  }
-
-  @Test void createCDCopyWhereCopyNumberEqual1Test() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    assertThrows(PSQLException.class, () -> cddao.createCDCopy(materialID, 1));
-  }
-
-  @Test void createCDCopyWhereCopyNumberEquals0Test() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
     assertThrows(IllegalArgumentException.class,
-        () -> cddao.createCDCopy(materialID, 0));
+        () -> dvddao.create(materialID, "12s", 123, place));
   }
 
-  @Test void createCDCopyWhereCopyNumberLessThan0Test() throws SQLException
+  @Test void createDVDWithLengthEquals0Test() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
     assertThrows(IllegalArgumentException.class,
-        () -> cddao.createCDCopy(materialID, -1));
+        () -> dvddao.create(materialID, "Dansk", 0, place));
   }
 
-  @Test void createCDCopyForUnExistingMaterialTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(PSQLException.class, () -> cddao.createCDCopy(6000, 2));
-  }
-
-  @Test void cdAlreadyExistsReturnTrueTest() throws SQLException
+  @Test void createDVDWithLengthLessThan0Test() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    assertTrue(cddao.cdAlreadyExists("titleTest", "publisherTest", "2000-02-02",
-        "descriptionTest", "Voksen", "Dansk", 55, "genreTest"));
+    assertThrows(IllegalArgumentException.class,
+        () -> dvddao.create(materialID, "Dansk", -1, place));
   }
 
-  @Test void cdAlreadyExistsReturnFalseTest() throws SQLException
+  @Test void createDVDWithNullPlaceTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    assertFalse(cddao
-        .cdAlreadyExists("titleTest1", "publisherTest1", "2000-02-06",
-            "descriptionTest1", "Barn", "Engelsk", 56, "genreTestt"));
+    assertThrows(IllegalArgumentException.class,
+        () -> dvddao.create(materialID, "Dansk", 125, null));
   }
 
-  @Test void getCDDetailsByIdTest() throws SQLException
+  @Test void createDVDCopyTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    assertDoesNotThrow(() -> cddao.getCDDetailsByID(materialID));
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertDoesNotThrow(() -> dvddao.createDVDCopy(materialID, 2));
   }
 
-  @Test void getCDDetailsByIDForUnExistingMaterialIDTest() throws SQLException
+  @Test void createDVDCopyWhereCopyNumberEqual1Test() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertThrows(PSQLException.class,
+        () -> dvddao.createDVDCopy(materialID, 1));
+  }
+
+  @Test void createDVDCopyWhereCopyNumberLessThan0Test() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertThrows(IllegalArgumentException.class,
+        () -> dvddao.createDVDCopy(materialID, -1));
+  }
+
+  @Test void createDVDCopyWhereCopyNumberEqual0Test() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertThrows(IllegalArgumentException.class,
+        () -> dvddao.createDVDCopy(materialID, 0));
+  }
+
+  @Test void createDVDCopyForUnExistingMaterialTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    assertThrows(PSQLException.class, () -> dvddao.createDVDCopy(6000, 2));
+  }
+
+  @Test void dvdAlreadyExistsReturnTrueTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertTrue(dvddao
+        .dvdAlreadyExists("titleTest", "publisherTest", "2000-02-02",
+            "descriptionTest", "Voksen", "Dansk", "157", "genreTest"));
+  }
+
+  @Test void dvdAlreadyExistsReturnFalseTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertFalse(dvddao
+        .dvdAlreadyExists("titleTest1", "publisherTes1", "2000-02-09",
+            "descriptionTest1", "Barn", "Engelsk", "159", "genreTestw"));
+  }
+
+  @Test void getDVDDetailsByID() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertDoesNotThrow(() -> dvddao.getDVDDetailsByID(materialID));
+  }
+
+  @Test void getDVDDetailsByIDForUnExistingMaterialIDTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    dvddao.create(materialID, "Dansk", 157, place);
     assertThrows(NoSuchElementException.class,
-        () -> cddao.getCDDetailsByID(6000));
+        () -> dvddao.getDVDDetailsByID(6000));
   }
 
-  @Test void findCDTest() throws SQLException
+  @Test void findDVDTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    assertDoesNotThrow(() -> cddao
+    dvddao.create(materialID, "Dansk", 157, place);
+    assertDoesNotThrow(() -> dvddao
         .findMaterial("titleTest", "Dansk", "keywordsTest", "genreTest",
             "Voksen"));
   }
 
-  @Test void deleteCDCopyTest() throws SQLException
+  @Test void deleteDVDCopyTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    cddao.createCDCopy(materialID, 2);
-    assertDoesNotThrow(()-> cddao.deleteCDCopy(materialID, 2));
+    dvddao.create(materialID, "Dansk", 157, place);
+    dvddao.createDVDCopy(materialID, 2);
+    assertDoesNotThrow(() -> dvddao.deleteDVDCopy(materialID, 2));
   }
 
-  @Test void deleteCDCopyOnUnExistingCopyNumberTest() throws SQLException
+  @Test void deleteDVDCopyOnUnExistingCopyNumberTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    cddao.createCDCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> cddao.deleteCDCopy(materialID, 6000));
+    dvddao.create(materialID, "Dansk", 157, place);
+    dvddao.createDVDCopy(materialID, 2);
+    assertThrows(PSQLException.class,
+        () -> dvddao.deleteDVDCopy(materialID, 6000));
   }
 
-  @Test void deleteCDCopyOnUnExistingMaterialIDTest() throws SQLException
+  @Test void deleteDVDCopyOnUnExistingMaterialIDTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    cddao.create(materialID, 55, place);
-    cddao.createCDCopy(materialID, 2);
-    assertThrows(PSQLException.class, ()-> cddao.deleteCDCopy(6000, 2));
+    dvddao.create(materialID, "Dansk", 157, place);
+    dvddao.createDVDCopy(materialID, 2);
+    assertThrows(PSQLException.class,
+        () -> dvddao.deleteDVDCopy(6000, 2));
   }
 }

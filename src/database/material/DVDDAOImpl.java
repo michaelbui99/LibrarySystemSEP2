@@ -36,13 +36,13 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     return instance;
   }
 
-  @Override public synchronized int create(int material_id, String subtitle_lang,
-      int length_, Place place) throws SQLException
+  @Override public synchronized int create(int material_id,
+      String subtitle_lang, int length_, Place place) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      if ((subtitle_lang == null || subtitle_lang.matches("[0-9]+")) || (
-          length_ <= 0) || (place == null))
+      if ((subtitle_lang == null || !subtitle_lang.matches("[a-zA-Z]+")) || (length_
+          <= 0) || (place == null))
       {
         throw new IllegalArgumentException();
       }
@@ -97,39 +97,46 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
   {
     try (Connection connection = getConnection())
     {
-      //Creates material_copy
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
-      stm.setInt(1, materialID);
-      stm.setInt(2, copyNo);
-      stm.executeUpdate();
-      connection.commit();
-
-      //Finds the necessary details to create the DVD object from DB.
-      ResultSet dvdDetails = getDVDDetailsByID(materialID);
-      List<String> materialKeywordList = MaterialDAOImpl.getInstance()
-          .getKeywordsForMaterial(dvdDetails.getInt("material_id"));
-      String materialKeywords = String.join(", ", materialKeywordList);
-
-      if (dvdDetails.next())
+      if (copyNo <= 0)
       {
-        //Creates and returns a DVD object if a DVD with given materialID exists.
-        return new DVD(dvdDetails.getInt("material_id"),
-            dvdDetails.getInt("copy_no"), dvdDetails.getString("title"),
-            dvdDetails.getString("publisher"),
-            String.valueOf(dvdDetails.getDate("release_date")),
-            dvdDetails.getString("description_of_the_content"),
-            materialKeywords, dvdDetails.getString("audience"),
-            dvdDetails.getString("language_"),
-            dvdDetails.getString("subtitle_lang"),
-            dvdDetails.getString("length_"),
-            new Place(dvdDetails.getInt("hall_no"),
-                dvdDetails.getString("department"),
-                dvdDetails.getString("creator_l_name"),
-                dvdDetails.getString("genre")), dvdDetails.getString("url"));
-        // i removed the creator from here and i added place_id
+        throw new IllegalArgumentException();
       }
-      return null;
+      else
+      {
+        //Creates material_copy
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+        stm.setInt(1, materialID);
+        stm.setInt(2, copyNo);
+        stm.executeUpdate();
+        connection.commit();
+
+        //Finds the necessary details to create the DVD object from DB.
+        ResultSet dvdDetails = getDVDDetailsByID(materialID);
+        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+            .getKeywordsForMaterial(dvdDetails.getInt("material_id"));
+        String materialKeywords = String.join(", ", materialKeywordList);
+
+        if (dvdDetails.next())
+        {
+          //Creates and returns a DVD object if a DVD with given materialID exists.
+          return new DVD(dvdDetails.getInt("material_id"),
+              dvdDetails.getInt("copy_no"), dvdDetails.getString("title"),
+              dvdDetails.getString("publisher"),
+              String.valueOf(dvdDetails.getDate("release_date")),
+              dvdDetails.getString("description_of_the_content"),
+              materialKeywords, dvdDetails.getString("audience"),
+              dvdDetails.getString("language_"),
+              dvdDetails.getString("subtitle_lang"),
+              dvdDetails.getString("length_"),
+              new Place(dvdDetails.getInt("hall_no"),
+                  dvdDetails.getString("department"),
+                  dvdDetails.getString("creator_l_name"),
+                  dvdDetails.getString("genre")), dvdDetails.getString("url"));
+          // i removed the creator from here and i added place_id
+        }
+        return null;
+      }
     }
   }
 
@@ -239,8 +246,8 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
         if (match)
         {
           DVD dvd = (new DVD(resultSet.getInt("material_id"),
-              resultSet.getInt("copy_no"),
-              resultSet.getString("title"), resultSet.getString("publisher"),
+              resultSet.getInt("copy_no"), resultSet.getString("title"),
+              resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"),
               materialKeywords, resultSet.getString("audience"),
@@ -268,8 +275,8 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
     return ml;
   }
 
-  @Override public synchronized void deleteDVDCopy(int materialID, int copyNumber)
-      throws SQLException
+  @Override public synchronized void deleteDVDCopy(int materialID,
+      int copyNumber) throws SQLException
   {
     try (Connection connection = getConnection())
     {
