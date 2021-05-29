@@ -39,15 +39,15 @@ public class AddLibrarianController
   @FXML private Label phoneError;
   @FXML private Label emailError;
   @FXML private Label passwordError;
-  @FXML private Label errorLable;
+  @FXML private Label errorLabel;
 
   private ObservableList<TextField> fields = FXCollections
       .observableArrayList();
 
   public void init()
   {
-    errorLable.setVisible(false);
-    errorLable.setTextFill(Paint.valueOf("red"));
+    errorLabel.setVisible(false);
+    errorLabel.setTextFill(Paint.valueOf("red"));
 
     fields.addAll(lastName, firstName, cprNumber, streetName, city, zipCode,
         streetNumber, phoneNumber, employeeNo, password, email);
@@ -76,7 +76,7 @@ public class AddLibrarianController
     employeeNo.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddLibrarianVM()
             .employeeNoProperty());
-    errorLable.textProperty().bind(
+    errorLabel.textProperty().bind(
         ViewModelFactory.getInstance().getAddLibrarianVM()
             .errorLabelProperty());
   }
@@ -100,7 +100,7 @@ public class AddLibrarianController
 
   @FXML public void onButtonSignUp(ActionEvent actionEvent) throws IOException
   {
-    errorLable.setVisible(true);
+    errorLabel.setVisible(true);
     ViewModelFactory.getInstance().getAddLibrarianVM().addLibrarian();
     clearFields();
   }

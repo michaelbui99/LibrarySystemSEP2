@@ -2,7 +2,6 @@ package client.view.addlibrarian;
 
 import client.core.ModelFactoryClient;
 import client.model.user.UserModelClient;
-import client.model.user.UserModelManagerClient;
 import client.view.ViewHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -15,9 +14,9 @@ public class AddLibrarianVM
   private StringProperty lastNameProperty;
   private StringProperty firstNameProperty;
   private StringProperty cprProperty;
-  private StringProperty streetnameProperty;
+  private StringProperty streetNameProperty;
   private StringProperty cityProperty;
-  private StringProperty zipCodeproperty;
+  private StringProperty zipCodeProperty;
   private StringProperty streetNoProperty;
   private StringProperty phoneProperty;
   private StringProperty employeeNoProperty;
@@ -32,10 +31,10 @@ public class AddLibrarianVM
     lastNameProperty = new SimpleStringProperty();
     firstNameProperty = new SimpleStringProperty();
     cprProperty = new SimpleStringProperty();
-    streetnameProperty = new SimpleStringProperty();
+    streetNameProperty = new SimpleStringProperty();
     streetNoProperty = new SimpleStringProperty();
     cityProperty = new SimpleStringProperty();
-    zipCodeproperty = new SimpleStringProperty();
+    zipCodeProperty = new SimpleStringProperty();
     phoneProperty = new SimpleStringProperty();
     employeeNoProperty = new SimpleStringProperty();
     passwordProperty = new SimpleStringProperty();
@@ -60,7 +59,7 @@ public class AddLibrarianVM
 
   public StringProperty streetNameProperty()
   {
-    return streetnameProperty;
+    return streetNameProperty;
   }
 
   public StringProperty cityProperty()
@@ -70,7 +69,7 @@ public class AddLibrarianVM
 
   public StringProperty zipCodeProperty()
   {
-    return zipCodeproperty;
+    return zipCodeProperty;
   }
 
   public StringProperty streetNoProperty()
@@ -146,8 +145,8 @@ public class AddLibrarianVM
         .registerLibrarian(Integer.parseInt(employeeNoProperty.get()),
             firstNameProperty.get(), lastNameProperty.get(), cprProperty.get(),
             phoneProperty.get(), emailProperty.get(),
-            new Address(cityProperty.get(), streetnameProperty.get(),
-                Integer.parseInt(zipCodeproperty.get()),
+            new Address(cityProperty.get(), streetNameProperty.get(),
+                Integer.parseInt(zipCodeProperty.get()),
                 streetNoProperty.get()), passwordProperty.get());
   }
 
@@ -189,7 +188,7 @@ public class AddLibrarianVM
         || passwordProperty.get() == null || firstNameProperty.get() == null
         || lastNameProperty.get() == null || cprProperty.get() == null
         || streetNoProperty.get() == null || streetNoProperty.get() == null
-        || zipCodeproperty.get() == null || cityProperty.get() == null
+        || zipCodeProperty.get() == null || cityProperty.get() == null
         || passwordProperty.get() == null;
   }
 }

@@ -26,7 +26,7 @@ public class AddUserController
   @FXML private Label passwordError;
   @FXML private Label cprError;
   @FXML private Label phoneError;
-  @FXML private Label errorLable;
+  @FXML private Label errorLabel;
 
   @FXML private TextField email;
   @FXML private PasswordField password;
@@ -49,8 +49,8 @@ public class AddUserController
    */
   public void init()
   {
-    errorLable.setVisible(false);
-    errorLable.setTextFill(Paint.valueOf("red"));
+    errorLabel.setVisible(false);
+    errorLabel.setTextFill(Paint.valueOf("red"));
 
     fields
         .addAll(email, firstName, lastName, cprNumber, streetName, streetNumber,
@@ -76,7 +76,7 @@ public class AddUserController
         ViewModelFactory.getInstance().getAddUserVM().cityProperty());
     phoneNumber.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddUserVM().phoneNoProperty());
-    errorLable.textProperty().bindBidirectional(
+    errorLabel.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddUserVM().errorProperty());
   }
 
@@ -99,7 +99,7 @@ public class AddUserController
 
   @FXML public void onButtonSignup(ActionEvent actionEvent) throws IOException
   {
-    errorLable.setVisible(true);
+    errorLabel.setVisible(true);
     ViewModelFactory.getInstance().getAddUserVM().addUser();
     ViewHandler.getInstance().openView("BorrowerWindow");
     clearFields();
