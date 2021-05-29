@@ -117,13 +117,9 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
       stm.setString(1, cprNo);
       stm.setString(2, password);
       ResultSet result = stm.executeQuery();
-      if (result.next())
-      {
-        return true;
-      }
+        return result.next();
     }
-    return false;
-      }
+    }
   }
 
   @Override public Borrower getBorrower(String sprNo) throws SQLException

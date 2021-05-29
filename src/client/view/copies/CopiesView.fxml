@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="647.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.copies.CopiesController">
    <children>
@@ -86,17 +75,17 @@
                               <Insets left="50.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label fx:id="keywords" layoutX="305.0" layoutY="58.0" text="Emneord" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Label layoutX="305.0" layoutY="58.0" text="Emneord" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="keywards" layoutX="345.0" layoutY="54.0" prefHeight="24.0" prefWidth="117.0" promptText="Emneord:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="keywords" layoutX="345.0" layoutY="54.0" prefHeight="24.0" prefWidth="117.0" promptText="Emneord:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="70.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label fx:id="errorLable" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="errorLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>

@@ -168,7 +168,7 @@
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <TextField fx:id="streetName" layoutX="10.0" layoutY="10.0" onKeyTyped="#onTypedStreetnameCheck" promptText="Vejnavn:">
+                                                      <TextField fx:id="streetName" layoutX="10.0" layoutY="10.0" onKeyTyped="#onTypedStreetNameCheck" promptText="Vejnavn:">
                                                          <GridPane.margin>
                                                             <Insets right="100.0" />
                                                          </GridPane.margin>

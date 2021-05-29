@@ -16,13 +16,13 @@ public class CopiesController
 {
   @FXML private TextField title;
   @FXML private TextField genre;
-  @FXML private TextField keywards;
+  @FXML private TextField keywords;
 
   @FXML private ComboBox<String> typeComboBox;
   @FXML private ComboBox<String> targetAudienceComboBox;
   @FXML private ComboBox<String> languageComboBox;
 
-  @FXML private Label errorLable;
+  @FXML private Label errorLabel;
 
   @FXML private TableView<Material> searchTableView;
   @FXML private TableColumn<String, Material> titleColumn;
@@ -42,7 +42,7 @@ public class CopiesController
     typeComboBox.setItems(
         ViewModelFactory.getInstance().getCopiesVM().getMaterialTypeList());
     targetAudienceComboBox.setItems(
-        ViewModelFactory.getInstance().getCopiesVM().getTargetAudianceList());
+        ViewModelFactory.getInstance().getCopiesVM().getTargetAudienceList());
     languageComboBox.setItems(
         ViewModelFactory.getInstance().getCopiesVM().getLanguageList());
 
@@ -50,12 +50,12 @@ public class CopiesController
         ViewModelFactory.getInstance().getCopiesVM().titleProperty());
     genre.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getCopiesVM().genreProperty());
-    keywards.textProperty().bindBidirectional(
+    keywords.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getCopiesVM().keywordsProperty());
     typeComboBox.valueProperty().bindBidirectional(
         ViewModelFactory.getInstance().getCopiesVM().typeProperty());
     targetAudienceComboBox.valueProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getCopiesVM().targetAudianceProperty());
+        ViewModelFactory.getInstance().getCopiesVM().targetAudienceProperty());
     languageComboBox.valueProperty().bindBidirectional(
         ViewModelFactory.getInstance().getCopiesVM().languageProperty());
   }
@@ -67,22 +67,22 @@ public class CopiesController
 
     if (searchTableView.getSelectionModel().getSelectedItem() == null)
     {
-      errorLable.setText("Vælg først et materiale");
-      errorLable.setTextFill(Paint.valueOf("red"));
-      errorLable.setVisible(true);
+      errorLabel.setText("Vælg først et materiale");
+      errorLabel.setTextFill(Paint.valueOf("red"));
+      errorLabel.setVisible(true);
     }
     else if (ViewModelFactory.getInstance().getCopiesVM().totalCopyNumber()
         == 1)
     {
-      errorLable.setText("Kun én kopi tilbage, kan ikke fjernes!");
-      errorLable.setTextFill(Paint.valueOf("red"));
-      errorLable.setVisible(true);
+      errorLabel.setText("Kun én kopi tilbage, kan ikke fjernes!");
+      errorLabel.setTextFill(Paint.valueOf("red"));
+      errorLabel.setVisible(true);
     }
     else
     {
       ViewModelFactory.getInstance().getCopiesVM().deleteCopy();
       onButtonSearch(actionEvent);
-      errorLable.setVisible(false);
+      errorLabel.setVisible(false);
     }
   }
 
@@ -92,15 +92,15 @@ public class CopiesController
         .set(searchTableView.getSelectionModel().getSelectedItem());
     if (searchTableView.getSelectionModel().getSelectedItem() == null)
     {
-      errorLable.setText("Vælg først et materiale");
-      errorLable.setTextFill(Paint.valueOf("red"));
-      errorLable.setVisible(true);
+      errorLabel.setText("Vælg først et materiale");
+      errorLabel.setTextFill(Paint.valueOf("red"));
+      errorLabel.setVisible(true);
     }
     else
     {
       ViewModelFactory.getInstance().getCopiesVM().addCopy();
       onButtonSearch(actionEvent);
-      errorLable.setVisible(false);
+      errorLabel.setVisible(false);
     }
   }
 
@@ -110,13 +110,13 @@ public class CopiesController
         .set(searchTableView.getSelectionModel().getSelectedItem());
     if (searchTableView.getSelectionModel().getSelectedItem() == null)
     {
-      errorLable.setText("Vælg først et materiale");
-      errorLable.setTextFill(Paint.valueOf("red"));
-      errorLable.setVisible(true);
+      errorLabel.setText("Vælg først et materiale");
+      errorLabel.setTextFill(Paint.valueOf("red"));
+      errorLabel.setVisible(true);
     }
     else
     {
-      ViewModelFactory.getInstance().getCopiesVM().deletMaterial();
+      ViewModelFactory.getInstance().getCopiesVM().deleteMaterial();
       onButtonSearch(actionEvent);
     }
   }
@@ -138,14 +138,14 @@ public class CopiesController
     searchTableView.setItems(materialList);
     if (materialList.size() > 0)
     {
-      errorLable.setText("");
-      errorLable.setVisible(false);
+      errorLabel.setText("");
+      errorLabel.setVisible(false);
     }
     else
     {
-      errorLable.setText("Materialet findes ikke i systemet!");
-      errorLable.setTextFill(Paint.valueOf("red"));
-      errorLable.setVisible(true);
+      errorLabel.setText("Materialet findes ikke i systemet!");
+      errorLabel.setTextFill(Paint.valueOf("red"));
+      errorLabel.setVisible(true);
     }
     searchTableView.refresh();
   }

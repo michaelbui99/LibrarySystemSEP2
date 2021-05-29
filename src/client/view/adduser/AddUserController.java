@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,8 +27,6 @@ public class AddUserController
   @FXML private Label cprError;
   @FXML private Label phoneError;
   @FXML private Label errorLable;
-
-  @FXML private Button signupButton;
 
   @FXML private TextField email;
   @FXML private PasswordField password;
@@ -79,44 +76,33 @@ public class AddUserController
         ViewModelFactory.getInstance().getAddUserVM().cityProperty());
     phoneNumber.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddUserVM().phoneNoProperty());
-    errorLable.textProperty().bind(
-        ViewModelFactory.getInstance().getAddUserVM().errorLabelProperty());
+    errorLable.textProperty().bindBidirectional(
+        ViewModelFactory.getInstance().getAddUserVM().errorProperty());
+  }
+
+  private boolean containsOnlyDigits(String str)
+  {
+    for (int i = 0; i < str.length(); i++)
+    {
+      try
+      {
+        Integer.parseInt(str);
+        return true;
+      }
+      catch (NumberFormatException e)
+      {
+        return false;
+      }
+    }
+    return false;
   }
 
   @FXML public void onButtonSignup(ActionEvent actionEvent) throws IOException
   {
-    boolean bol = ViewModelFactory.getInstance().getAddUserVM()
-        .cprAlreadyExists();
-    boolean bol1 = ViewModelFactory.getInstance().getAddUserVM()
-        .emailAlreadyExists();
-    boolean bol2 = ViewModelFactory.getInstance().getAddUserVM()
-        .phoneNumberAlreadyExists();
-    boolean bol3 = ViewModelFactory.getInstance().getAddUserVM()
-        .borrowerAlreadyExists();
-
-    if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else if (bol1)
-    {
-      errorLable.setVisible(true);
-    }
-    else if (bol2)
-    {
-      errorLable.setVisible(true);
-    }
-    else if (bol3)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      errorLable.setVisible(false);
-      ViewModelFactory.getInstance().getAddUserVM().addUser();
-      ViewHandler.getInstance().openView("BorrowerWindow");
-      clearFields();
-    }
+    errorLable.setVisible(true);
+    ViewModelFactory.getInstance().getAddUserVM().addUser();
+    ViewHandler.getInstance().openView("BorrowerWindow");
+    clearFields();
   }
 
   @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
@@ -133,168 +119,84 @@ public class AddUserController
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM()
         .lastNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      lastNameError.setVisible(true);
-    }
-    else
-      lastNameError.setVisible(false);
+    lastNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedFirstNameCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM()
         .firstNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      firstNameError.setVisible(true);
-    }
-    else
-    {
-      firstNameError.setVisible(false);
-    }
+    firstNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedCprCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM().cprProperty()
         .get();
-    boolean bol = ViewModelFactory.getInstance().getAddUserVM()
-        .cprAlreadyExists();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*") || !arg.contains("-")
-        || arg.length() != 11)
-    {
-      cprError.setVisible(true);
-    }
-    else if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      cprError.setVisible(false);
-      errorLable.setVisible(false);
-    }
+    String[] arr = arg.split("-");
+    cprError.setVisible(arg.length() != 11 || !(containsOnlyDigits(arr[0])
+        && containsOnlyDigits(arr[1])) || !arg.contains("-"));
+
   }
 
-  @FXML public void onTypedStreetnameCheck(KeyEvent keyEvent)
+  @FXML public void onTypedStreetNameCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM()
         .streetNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      streetNameError.setVisible(true);
-    }
-    else
-    {
-      streetNameError.setVisible(false);
-    }
+    streetNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedCityCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM().cityProperty()
         .get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      cityError.setVisible(true);
-    }
-    else
-    {
-      cityError.setVisible(false);
-    }
+    cityError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedZipCodeCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM().zipCodeProperty()
         .get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*") || arg.length() != 4)
-    {
-      zipCodeError.setVisible(true);
-    }
-    else
-    {
-      zipCodeError.setVisible(false);
-    }
+    zipCodeError.setVisible(
+        arg.isEmpty() || !containsOnlyDigits(arg) || arg.length() != 4);
   }
 
   @FXML public void onTypedStreetNoCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM()
         .streetNoProperty().get();
-    if (arg.isEmpty())
-    {
-      streetNoError.setVisible(true);
-    }
-    else
-    {
-      streetNoError.setVisible(false);
-    }
+    streetNoError.setVisible(arg.isEmpty());
   }
 
   @FXML public void onTypedPhoneNoCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM().phoneNoProperty()
         .get();
-    boolean bol = ViewModelFactory.getInstance().getAddUserVM()
-        .phoneNumberAlreadyExists();
-    if (arg.isEmpty() || !arg.contains("+45") || arg.length() != 11 || !arg
-        .matches(".*\\d.*"))
-    {
-      phoneError.setVisible(true);
-    }
-    else if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      phoneError.setVisible(false);
-      errorLable.setVisible(false);
-    }
+    //"^(\+\d{10}( )?)$" to check if the streng contains "+" and an 11 digit  number
+    phoneError.setVisible(
+        arg.isEmpty() || !arg.matches("^(\\+\\d{10}( )?)$") || !arg
+            .contains("+45"));
   }
 
   @FXML public void onTypedEmailCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM().emailProperty()
         .get();
-    boolean bol = ViewModelFactory.getInstance().getAddUserVM()
-        .emailAlreadyExists();
-    if (arg.isEmpty() || !arg.contains("@"))
-    {
-      emailError.setVisible(true);
-    }
-    else if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      emailError.setVisible(false);
-      errorLable.setVisible(false);
-    }
+    emailError.setVisible(arg.isEmpty() || !arg.contains("@"));
   }
 
   @FXML public void onTypedPasswordCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddUserVM()
         .passwordProperty().get();
-    if (arg.isEmpty())
-    {
-      passwordError.setVisible(true);
-    }
-    else
-    {
-      passwordError.setVisible(false);
-    }
+    passwordError.setVisible(arg.isEmpty());
   }
 
   private void clearFields()
   {
-    for (int i = 0; i < fields.size(); i++)
+    for (TextField field : fields)
     {
-      fields.get(i).clear();
+      field.clear();
     }
   }
 }

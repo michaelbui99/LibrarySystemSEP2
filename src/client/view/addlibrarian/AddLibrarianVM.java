@@ -3,9 +3,12 @@ package client.view.addlibrarian;
 import client.core.ModelFactoryClient;
 import client.model.user.UserModelClient;
 import client.model.user.UserModelManagerClient;
+import client.view.ViewHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.person.Address;
+
+import java.io.IOException;
 
 public class AddLibrarianVM
 {
@@ -55,7 +58,7 @@ public class AddLibrarianVM
     return cprProperty;
   }
 
-  public StringProperty streetnameProperty()
+  public StringProperty streetNameProperty()
   {
     return streetnameProperty;
   }
@@ -65,7 +68,7 @@ public class AddLibrarianVM
     return cityProperty;
   }
 
-  public StringProperty zipCodeproperty()
+  public StringProperty zipCodeProperty()
   {
     return zipCodeproperty;
   }
@@ -95,17 +98,54 @@ public class AddLibrarianVM
     return emailProperty;
   }
 
-  public StringProperty errorLableProperty()
+  public StringProperty errorLabelProperty()
   {
     return errorLableProperty;
   }
 
-  public void addLibrarian()
+  public void addLibrarian() throws IOException
+  {
+    if (userFieldsAreEmpty())
+    {
+      errorLableProperty.setValue("nødvendige felter er tomme");
+    }
+    else
+    {
+      if (employeeNoAlreadyExists())
+      {
+        errorLableProperty.setValue(
+            "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
+      }
+      else if (cprAlreadyExists())
+      {
+        errorLableProperty.setValue(
+            "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
+      }
+      else if (emailAlreadyExists())
+      {
+        errorLableProperty.setValue(
+            "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
+      }
+      else if (phoneNoAlreadyExists())
+      {
+        errorLableProperty.setValue(
+            "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
+      }
+      else
+      {
+        errorLableProperty.setValue("");
+        addNewUser();
+        ViewHandler.getInstance().openView("Administration");
+      }
+    }
+  }
+
+  public void addNewUser()
   {
     ModelFactoryClient.getInstance().getUserModelClient()
         .registerLibrarian(Integer.parseInt(employeeNoProperty.get()),
-            firstNameProperty.getName(), lastNameProperty.getName(),
-            cprProperty.get(), phoneProperty.get(), emailProperty.get(),
+            firstNameProperty.get(), lastNameProperty.get(), cprProperty.get(),
+            phoneProperty.get(), emailProperty.get(),
             new Address(cityProperty.get(), streetnameProperty.get(),
                 Integer.parseInt(zipCodeproperty.get()),
                 streetNoProperty.get()), passwordProperty.get());
@@ -113,7 +153,6 @@ public class AddLibrarianVM
 
   public boolean employeeNoAlreadyExists()
   {
-    errorLableProperty.setValue("Employee number already exists!!");
     return ModelFactoryClient.getInstance().getUserModelClient()
         .employeeNumberAlreadyExists(
             Integer.parseInt(employeeNoProperty.get()));
@@ -121,30 +160,36 @@ public class AddLibrarianVM
 
   public boolean cprAlreadyExists()
   {
-    errorLableProperty.setValue("Cpr number already exists!!");
     return ModelFactoryClient.getInstance().getUserModelClient()
         .librarianCprNumberAlreadyExists(cprProperty.get());
   }
 
   public boolean emailAlreadyExists()
   {
-    errorLableProperty.setValue("Email already exists!!");
     return ModelFactoryClient.getInstance().getUserModelClient()
         .librarianEmailAlreadyExists(emailProperty.get());
   }
 
   public boolean phoneNoAlreadyExists()
   {
-    errorLableProperty.setValue("phone number already exists!!");
     return ModelFactoryClient.getInstance().getUserModelClient()
         .librarianPhoneNumberAlreadyExists(phoneProperty.get());
   }
 
   public boolean librarianAlreadyExists()
   {
-    errorLableProperty.setValue("Librarian already exists!!");
     return ModelFactoryClient.getInstance().getUserModelClient()
         .librarianAlreadyExists(Integer.parseInt(employeeNoProperty.get()),
             cprProperty.get(), emailProperty.get(), phoneProperty.get());
+  }
+
+  public boolean userFieldsAreEmpty()
+  {
+    return emailProperty.get() == null || emailProperty.get() == null
+        || passwordProperty.get() == null || firstNameProperty.get() == null
+        || lastNameProperty.get() == null || cprProperty.get() == null
+        || streetNoProperty.get() == null || streetNoProperty.get() == null
+        || zipCodeproperty.get() == null || cityProperty.get() == null
+        || passwordProperty.get() == null;
   }
 }

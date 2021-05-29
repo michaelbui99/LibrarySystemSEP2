@@ -16,7 +16,7 @@ public class CopiesVM
 {
   private ObservableList<Material> materialList;
   private ObservableList<String> materialTypeList;
-  private ObservableList<String> targetAudianceList;
+  private ObservableList<String> targetAudienceList;
   private ObservableList<String> languageList;
 
   private ObjectProperty<Material> selectedMaterialProperty;
@@ -24,7 +24,7 @@ public class CopiesVM
   private StringProperty genreProperty;
   private StringProperty keywordsProperty;
   private StringProperty typeProperty;
-  private StringProperty targetAudianceProperty;
+  private StringProperty targetAudienceProperty;
   private StringProperty languageProperty;
   private MaterialModelClient materialModelClient;
 
@@ -33,11 +33,11 @@ public class CopiesVM
     this.materialModelClient = materialModelClient;
     materialList = FXCollections.observableArrayList();
     materialTypeList = FXCollections.observableArrayList();
-    targetAudianceList = FXCollections.observableArrayList();
+    targetAudienceList = FXCollections.observableArrayList();
     languageList = FXCollections.observableArrayList();
 
     materialTypeList.addAll("Bog", "Ebog", "Lydbog", "CD", "DVD");
-    targetAudianceList
+    targetAudienceList
         .addAll("Voksen", "Barn", "Teenager", "Familie", "Ældre", "Studerende");
     languageList.addAll("Dansk", "Engelsk", "Arabisk");
 
@@ -47,7 +47,7 @@ public class CopiesVM
     genreProperty = new SimpleStringProperty("");
     keywordsProperty = new SimpleStringProperty("");
     typeProperty = new SimpleStringProperty("Bog");
-    targetAudianceProperty = new SimpleStringProperty("Voksen");
+    targetAudienceProperty = new SimpleStringProperty("Voksen");
     languageProperty = new SimpleStringProperty("Dansk");
   }
 
@@ -61,9 +61,9 @@ public class CopiesVM
     return materialTypeList;
   }
 
-  public ObservableList<String> getTargetAudianceList()
+  public ObservableList<String> getTargetAudienceList()
   {
-    return targetAudianceList;
+    return targetAudienceList;
   }
 
   public ObservableList<String> getLanguageList()
@@ -91,9 +91,9 @@ public class CopiesVM
     return typeProperty;
   }
 
-  public StringProperty targetAudianceProperty()
+  public StringProperty targetAudienceProperty()
   {
-    return targetAudianceProperty;
+    return targetAudienceProperty;
   }
 
   public StringProperty languageProperty()
@@ -110,25 +110,23 @@ public class CopiesVM
   {
     SearchStrategy searchStrategy = null;
 
-    if (typeProperty.getValue().equals("Bog"))
+    switch (typeProperty.getValue())
     {
-      searchStrategy = new BookStrategy();
-    }
-    else if (typeProperty.getValue().equals("Ebog"))
-    {
-      searchStrategy = new EBookStrategy();
-    }
-    else if (typeProperty.getValue().equals("Lydbog"))
-    {
-      searchStrategy = new AudioBookStrategy();
-    }
-    else if (typeProperty.getValue().equals("CD"))
-    {
-      searchStrategy = new CDStrategy();
-    }
-    else if (typeProperty.getValue().equals("DVD"))
-    {
-      searchStrategy = new DVDStrategy();
+      case "Bog":
+        searchStrategy = new BookStrategy();
+        break;
+      case "Ebog":
+        searchStrategy = new EBookStrategy();
+        break;
+      case "Lydbog":
+        searchStrategy = new AudioBookStrategy();
+        break;
+      case "CD":
+        searchStrategy = new CDStrategy();
+        break;
+      case "DVD":
+        searchStrategy = new DVDStrategy();
+        break;
     }
 
     materialList.clear();
@@ -136,13 +134,13 @@ public class CopiesVM
     if (ModelFactoryClient.getInstance().getMaterialModelClient()
         .findMaterial(titleProperty.get(), languageProperty.get(),
             keywordsProperty.get(), genreProperty.get(),
-            targetAudianceProperty.get(), searchStrategy) != null)
+            targetAudienceProperty.get(), searchStrategy) != null)
     {
       materialList.addAll(
           ModelFactoryClient.getInstance().getMaterialModelClient()
               .findMaterial(titleProperty.get(), languageProperty.get(),
                   keywordsProperty.get(), genreProperty.get(),
-                  targetAudianceProperty.get(), searchStrategy));
+                  targetAudienceProperty.get(), searchStrategy));
       ModelFactoryClient.getInstance().getMaterialModelClient()
           .addPropertyChangeListener(EventTypes.MATERIALFOUND,
               evt -> materialList.add((Material) evt.getNewValue()));
@@ -152,68 +150,65 @@ public class CopiesVM
 
   public void addCopy()
   {
-    if (typeProperty.getValue().equals("Bog"))
+    switch (typeProperty.getValue())
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .createBookCopy(selectedMaterialProperty.get().getMaterialID());
-    }
-    else if (typeProperty.getValue().equals("Ebog"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .createEBookCopy(selectedMaterialProperty.get().getMaterialID());
-    }
-    else if (typeProperty.getValue().equals("Lydbog"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .createAudioBookCopy(selectedMaterialProperty.get().getMaterialID());
-    }
-    else if (typeProperty.getValue().equals("CD"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .createCDCopy(selectedMaterialProperty.get().getMaterialID());
-    }
-    else if (typeProperty.getValue().equals("DVD"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .createDVDCopy(selectedMaterialProperty.get().getMaterialID());
+      case "Bog":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .createBookCopy(selectedMaterialProperty.get().getMaterialID());
+        break;
+      case "Ebog":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .createEBookCopy(selectedMaterialProperty.get().getMaterialID());
+        break;
+      case "Lydbog":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .createAudioBookCopy(
+                selectedMaterialProperty.get().getMaterialID());
+        break;
+      case "CD":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .createCDCopy(selectedMaterialProperty.get().getMaterialID());
+        break;
+      case "DVD":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .createDVDCopy(selectedMaterialProperty.get().getMaterialID());
+        break;
     }
   }
 
   public void deleteCopy()
   {
-    if (typeProperty.getValue().equals("Bog"))
+    switch (typeProperty.getValue())
     {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .deleteBookCopy(selectedMaterialProperty.get().getMaterialID(),
-              selectedMaterialProperty.get().getCopyNumber());
-    }
-    else if (typeProperty.getValue().equals("Ebog"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .deleteEBookCopy(selectedMaterialProperty.get().getMaterialID(),
-              selectedMaterialProperty.get().getCopyNumber());
-    }
-    else if (typeProperty.getValue().equals("Lydbog"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .deleteAudioBookCopy(selectedMaterialProperty.get().getMaterialID(),
-              selectedMaterialProperty.get().getCopyNumber());
-    }
-    else if (typeProperty.getValue().equals("CD"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .deleteCDCopy(selectedMaterialProperty.get().getMaterialID(),
-              selectedMaterialProperty.get().getCopyNumber());
-    }
-    else if (typeProperty.getValue().equals("DVD"))
-    {
-      ModelFactoryClient.getInstance().getMaterialModelClient()
-          .deleteDVDCopy(selectedMaterialProperty.get().getMaterialID(),
-              selectedMaterialProperty.get().getCopyNumber());
+      case "Bog":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .deleteBookCopy(selectedMaterialProperty.get().getMaterialID(),
+                selectedMaterialProperty.get().getCopyNumber());
+        break;
+      case "Ebog":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .deleteEBookCopy(selectedMaterialProperty.get().getMaterialID(),
+                selectedMaterialProperty.get().getCopyNumber());
+        break;
+      case "Lydbog":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .deleteAudioBookCopy(selectedMaterialProperty.get().getMaterialID(),
+                selectedMaterialProperty.get().getCopyNumber());
+        break;
+      case "CD":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .deleteCDCopy(selectedMaterialProperty.get().getMaterialID(),
+                selectedMaterialProperty.get().getCopyNumber());
+        break;
+      case "DVD":
+        ModelFactoryClient.getInstance().getMaterialModelClient()
+            .deleteDVDCopy(selectedMaterialProperty.get().getMaterialID(),
+                selectedMaterialProperty.get().getCopyNumber());
+        break;
     }
   }
 
-  public void deletMaterial()
+  public void deleteMaterial()
   {
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .deleteMaterial(selectedMaterialProperty.get().getMaterialID());

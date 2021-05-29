@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class RegisterMaterialVM
 {
   private ObservableList<String> materialType;
-  private ObservableList<String> targetAudiance;
+  private ObservableList<String> targetAudience;
   private ObservableList<String> lang;
 
   private StringProperty titleProperty;
@@ -27,7 +27,7 @@ public class RegisterMaterialVM
   private StringProperty isbnProperty;
   private ObjectProperty<LocalDate> releaseDateProperty;
   private StringProperty numberOfPagesProperty;
-  private StringProperty licensNumberProperty;
+  private StringProperty licenseNumberProperty;
   private StringProperty firstNameProperty;
   private StringProperty lastNameProperty;
   private StringProperty countryProperty;
@@ -38,7 +38,7 @@ public class RegisterMaterialVM
   private StringProperty departmentProperty;
   private StringProperty subtitleLanguageProperty;
   private StringProperty lengthProperty;
-  private StringProperty audianceProperty;
+  private StringProperty audienceProperty;
   private StringProperty typeProperty;
   private StringProperty urlProperty;
   private ReservationModelClient reservationModelClient;
@@ -49,8 +49,8 @@ public class RegisterMaterialVM
     materialType = FXCollections.observableArrayList();
     materialType.addAll("Bog", "Ebog", "Lydbog", "CD", "DVD");
 
-    targetAudiance = FXCollections.observableArrayList();
-    targetAudiance
+    targetAudience = FXCollections.observableArrayList();
+    targetAudience
         .addAll("Voksen", "Barn", "Teenager", "Familie", "Ældre", "Studerende");
 
     lang = FXCollections.observableArrayList();
@@ -66,7 +66,7 @@ public class RegisterMaterialVM
     isbnProperty = new SimpleStringProperty();
     numberOfPagesProperty = new SimpleStringProperty();
     titleProperty = new SimpleStringProperty();
-    licensNumberProperty = new SimpleStringProperty();
+    licenseNumberProperty = new SimpleStringProperty();
     firstNameProperty = new SimpleStringProperty();
     lastNameProperty = new SimpleStringProperty();
     countryProperty = new SimpleStringProperty();
@@ -76,7 +76,7 @@ public class RegisterMaterialVM
     departmentProperty = new SimpleStringProperty();
     subtitleLanguageProperty = new SimpleStringProperty();
     lengthProperty = new SimpleStringProperty();
-    audianceProperty = new SimpleStringProperty("Voksen");
+    audienceProperty = new SimpleStringProperty("Voksen");
     typeProperty = new SimpleStringProperty("Vælg en materiale");
     urlProperty = new SimpleStringProperty();
   }
@@ -91,9 +91,9 @@ public class RegisterMaterialVM
     return materialType;
   }
 
-  public ObservableList<String> getTargetAudiance()
+  public ObservableList<String> getTargetAudience()
   {
-    return targetAudiance;
+    return targetAudience;
   }
 
   public ObservableList<String> getLang()
@@ -136,9 +136,9 @@ public class RegisterMaterialVM
     return numberOfPagesProperty;
   }
 
-  public StringProperty licensNumberProperty()
+  public StringProperty licenseNumberProperty()
   {
-    return licensNumberProperty;
+    return licenseNumberProperty;
   }
 
   public StringProperty firstNameProperty()
@@ -191,9 +191,9 @@ public class RegisterMaterialVM
     return lengthProperty;
   }
 
-  public StringProperty audiancePropertyProperty()
+  public StringProperty audiencePropertyProperty()
   {
-    return audianceProperty;
+    return audienceProperty;
   }
 
   public StringProperty typePropertyProperty()
@@ -211,7 +211,7 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(),
+            keywordsProperty.get(), audienceProperty.get(),
             languageProperty.get(), isbnProperty.get(),
             Integer.parseInt(numberOfPagesProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
@@ -226,7 +226,7 @@ public class RegisterMaterialVM
   {
     if (titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
-        || descriptionProperty.get() == null || audianceProperty.get() == null
+        || descriptionProperty.get() == null || audienceProperty.get() == null
         || languageProperty.get() == null || isbnProperty.get() == null
         || numberOfPagesProperty.get() == null
         || firstNameProperty.get() == null || lastNameProperty.get() == null
@@ -240,7 +240,7 @@ public class RegisterMaterialVM
       return ModelFactoryClient.getInstance().getMaterialModelClient()
           .bookAlreadyExists(titleProperty.get(), publisherProperty.get(),
               releaseDateProperty.get().toString(), descriptionProperty.get(),
-              audianceProperty.get(), languageProperty.get(),
+              audienceProperty.get(), languageProperty.get(),
               isbnProperty.get(), Integer.parseInt(numberOfPagesProperty.get()),
               new MaterialCreator(firstNameProperty.get(),
                   lastNameProperty.get(), dateOfBirthProperty.get().toString(),
@@ -253,10 +253,10 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerEBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(),
+            keywordsProperty.get(), audienceProperty.get(),
             languageProperty.get(),
             Integer.parseInt(numberOfPagesProperty.get()),
-            Integer.parseInt(licensNumberProperty.get()),
+            Integer.parseInt(licenseNumberProperty.get()),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
                 dateOfBirthProperty.get().toString(), countryProperty.get()),
             genreProperty.get(), urlProperty.get());
@@ -266,9 +266,9 @@ public class RegisterMaterialVM
   {
     if (titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
-        || descriptionProperty.get() == null || audianceProperty.get() == null
+        || descriptionProperty.get() == null || audienceProperty.get() == null
         || languageProperty.get() == null || numberOfPagesProperty.get() == null
-        || licensNumberProperty.get() == null || genreProperty.get() == null
+        || licenseNumberProperty.get() == null || genreProperty.get() == null
         || firstNameProperty.get() == null || lastNameProperty.get() == null
         || dateOfBirthProperty.get() == null || countryProperty.get() == null)
     {
@@ -279,9 +279,9 @@ public class RegisterMaterialVM
       return ModelFactoryClient.getInstance().getMaterialModelClient()
           .eBookAlreadyExists(titleProperty.get(), publisherProperty.get(),
               releaseDateProperty.get().toString(), descriptionProperty.get(),
-              audianceProperty.get(), languageProperty.get(),
+              audienceProperty.get(), languageProperty.get(),
               Integer.parseInt(numberOfPagesProperty.get()),
-              Integer.parseInt(licensNumberProperty.get()), genreProperty.get(),
+              Integer.parseInt(licenseNumberProperty.get()), genreProperty.get(),
               new MaterialCreator(firstNameProperty.get(),
                   lastNameProperty.get(), dateOfBirthProperty.get().toString(),
                   countryProperty.get()));
@@ -293,7 +293,7 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerAudioBook(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(),
+            keywordsProperty.get(), audienceProperty.get(),
             languageProperty.get(), Integer.parseInt(lengthProperty.get()),
             genreProperty.get(),
             new MaterialCreator(firstNameProperty.get(), lastNameProperty.get(),
@@ -305,7 +305,7 @@ public class RegisterMaterialVM
   {
     if (titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
-        || descriptionProperty.get() == null || audianceProperty.get() == null
+        || descriptionProperty.get() == null || audienceProperty.get() == null
         || languageProperty.get() == null || lengthProperty.get() == null
         || firstNameProperty.get() == null || lastNameProperty.get() == null
         || dateOfBirthProperty.get() == null || countryProperty.get() == null
@@ -318,7 +318,7 @@ public class RegisterMaterialVM
       return ModelFactoryClient.getInstance().getMaterialModelClient()
           .audioBookAlreadyExists(titleProperty.get(), publisherProperty.get(),
               releaseDateProperty.get().toString(), descriptionProperty.get(),
-              audianceProperty.get(), languageProperty.get(),
+              audienceProperty.get(), languageProperty.get(),
               Integer.parseInt(lengthProperty.get()),
               new MaterialCreator(firstNameProperty.get(),
                   lastNameProperty.get(), dateOfBirthProperty.get().toString(),
@@ -331,7 +331,7 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerDVD(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(),
+            keywordsProperty.get(), audienceProperty.get(),
             languageProperty.get(), subtitleLanguageProperty.get(),
             Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
@@ -343,7 +343,7 @@ public class RegisterMaterialVM
   {
     if (titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
-        || descriptionProperty.get() == null || audianceProperty.get() == null
+        || descriptionProperty.get() == null || audienceProperty.get() == null
         || languageProperty.get() == null || lengthProperty.get() == null
         || subtitleLanguageProperty.get() == null
         || genreProperty.get() == null)
@@ -355,7 +355,7 @@ public class RegisterMaterialVM
       return ModelFactoryClient.getInstance().getMaterialModelClient()
           .dvdAlreadyExists(titleProperty.get(), publisherProperty.get(),
               releaseDateProperty.get().toString(), descriptionProperty.get(),
-              audianceProperty.get(), languageProperty.get(),
+              audienceProperty.get(), languageProperty.get(),
               lengthProperty.get(), genreProperty.get());
     }
   }
@@ -365,7 +365,7 @@ public class RegisterMaterialVM
     ModelFactoryClient.getInstance().getMaterialModelClient()
         .registerCD(titleProperty.get(), publisherProperty.get(),
             releaseDateProperty.get().toString(), descriptionProperty.get(),
-            keywordsProperty.get(), audianceProperty.get(),
+            keywordsProperty.get(), audienceProperty.get(),
             languageProperty.get(), Integer.parseInt(lengthProperty.get()),
             new Place(Integer.parseInt(hallNumberProperty.get()),
                 departmentProperty.get(), creatorLastNameProperty.get(),
@@ -376,7 +376,7 @@ public class RegisterMaterialVM
   {
     if (titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
-        || descriptionProperty.get() == null || audianceProperty.get() == null
+        || descriptionProperty.get() == null || audienceProperty.get() == null
         || languageProperty.get() == null || lengthProperty.get() == null
         || genreProperty.get() == null)
     {
@@ -387,85 +387,60 @@ public class RegisterMaterialVM
       return ModelFactoryClient.getInstance().getMaterialModelClient()
           .cdAlreadyExists(titleProperty.get(), publisherProperty.get(),
               releaseDateProperty.get().toString(), descriptionProperty.get(),
-              audianceProperty.get(), languageProperty.get(),
+              audienceProperty.get(), languageProperty.get(),
               Integer.parseInt(lengthProperty.get()), genreProperty.get());
     }
   }
 
   public boolean bookFieldsAreEmpty()
   {
-    if (titleProperty.get() == null || publisherProperty.get() == null
+    return titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
         || descriptionProperty.get() == null || keywordsProperty.get() == null
         || publisherProperty.get() == null || isbnProperty.get() == null
         || firstNameProperty.get() == null || lastNameProperty.get() == null
         || dateOfBirthProperty.get() == null || countryProperty == null
         || hallNumberProperty == null || departmentProperty == null
-        || creatorLastNameProperty.get() == null || genreProperty == null)
-    {
-      return true;
-    }
-    else
-      return false;
+        || creatorLastNameProperty.get() == null || genreProperty == null;
   }
 
-  public boolean eBookFirldsAreEmpty()
+  public boolean eBookFieldsAreEmpty()
   {
-    if (titleProperty.get() == null || publisherProperty.get() == null
+    return titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null || descriptionProperty == null
         || keywordsProperty == null || publisherProperty.get() == null
-        || licensNumberProperty.get() == null || firstNameProperty.get() == null
+        || licenseNumberProperty.get() == null || firstNameProperty.get() == null
         || lastNameProperty.get() == null || dateOfBirthProperty.get() == null
-        || countryProperty.get() == null || genreProperty.get() == null)
-    {
-      return true;
-    }
-    else
-      return false;
+        || countryProperty.get() == null || genreProperty.get() == null;
   }
 
   public boolean audioBookFieldsAreEmpty()
   {
-    if (titleProperty.get() == null || publisherProperty.get() == null
+    return titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
         || descriptionProperty.get() == null || keywordsProperty.get() == null
         || publisherProperty.get() == null || lengthProperty.get() == null
         || firstNameProperty.get() == null || lastNameProperty.get() == null
         || dateOfBirthProperty.get() == null || countryProperty.get() == null
-        || genreProperty == null)
-    {
-      return true;
-    }
-    else
-      return false;
+        || genreProperty == null;
   }
 
   public boolean cdFieldsAreEmpty()
   {
-    if (titleProperty.get() == null || publisherProperty.get() == null
+    return titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
         || descriptionProperty().get() == null || keywordsProperty == null
         || publisherProperty.get() == null || lengthProperty.get() == null
-        || genreProperty == null)
-    {
-      return true;
-    }
-    else
-      return false;
+        || genreProperty == null;
   }
 
   public boolean dvdFieldsAreEmpty()
   {
-    if (titleProperty.get() == null || publisherProperty.get() == null
+    return titleProperty.get() == null || publisherProperty.get() == null
         || releaseDateProperty.get() == null
         || descriptionProperty.get() == null || keywordsProperty.get() == null
         || publisherProperty.get() == null || lengthProperty.get() == null
         || genreProperty.get() == null
-        || subtitleLanguageProperty.get() == null)
-    {
-      return true;
-    }
-    else
-      return false;
+        || subtitleLanguageProperty.get() == null;
   }
 }

@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -17,8 +16,6 @@ import java.io.IOException;
 
 public class AddLibrarianController
 {
-  @FXML private Button signUpButton;
-
   @FXML private TextField lastName;
   @FXML private TextField firstName;
   @FXML private TextField cprNumber;
@@ -46,13 +43,7 @@ public class AddLibrarianController
 
   private ObservableList<TextField> fields = FXCollections
       .observableArrayList();
-  ;
 
-  /**
-   * This pattern return true if String contains any thing other than 0-9 digit,
-   * which can be used to know if an String is number or not using regular expression.
-   * email.getText().matches(".*\\d.*)"
-   */
   public void init()
   {
     errorLable.setVisible(false);
@@ -69,11 +60,11 @@ public class AddLibrarianController
         ViewModelFactory.getInstance().getAddLibrarianVM().cprProperty());
     streetName.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddLibrarianVM()
-            .streetnameProperty());
+            .streetNameProperty());
     city.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddLibrarianVM().cityProperty());
     zipCode.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().zipCodeproperty());
+        ViewModelFactory.getInstance().getAddLibrarianVM().zipCodeProperty());
     streetNumber.textProperty().bindBidirectional(
         ViewModelFactory.getInstance().getAddLibrarianVM().streetNoProperty());
     phoneNumber.textProperty().bindBidirectional(
@@ -87,48 +78,31 @@ public class AddLibrarianController
             .employeeNoProperty());
     errorLable.textProperty().bind(
         ViewModelFactory.getInstance().getAddLibrarianVM()
-            .errorLableProperty());
+            .errorLabelProperty());
+  }
+
+  private boolean containsOnlyDigits(String str)
+  {
+    for (int i = 0; i < str.length(); i++)
+    {
+      try
+      {
+        Integer.parseInt(str);
+        return true;
+      }
+      catch (NumberFormatException e)
+      {
+        return false;
+      }
+    }
+    return false;
   }
 
   @FXML public void onButtonSignUp(ActionEvent actionEvent) throws IOException
   {
-    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .employeeNoAlreadyExists();
-    boolean bol1 = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .emailAlreadyExists();
-    boolean bol2 = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .cprAlreadyExists();
-    boolean bol3 = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .phoneNoAlreadyExists();
-    boolean bol4 = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .librarianAlreadyExists();
-    if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else if (bol1)
-    {
-      errorLable.setVisible(true);
-    }
-    else if (bol2)
-    {
-      errorLable.setVisible(true);
-    }
-    else if (bol3)
-    {
-      errorLable.setVisible(true);
-    }
-    else if (bol4)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      errorLable.setVisible(false);
-      ViewModelFactory.getInstance().getAddLibrarianVM().addLibrarian();
-      ViewHandler.getInstance().openView("Administration");
-      clearFields();
-    }
+    errorLable.setVisible(true);
+    ViewModelFactory.getInstance().getAddLibrarianVM().addLibrarian();
+    clearFields();
   }
 
   @FXML public void onButtonBack(ActionEvent actionEvent) throws IOException
@@ -145,191 +119,90 @@ public class AddLibrarianController
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .emailProperty().get();
-    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .emailAlreadyExists();
-    if (arg.isEmpty() || !arg.contains("@"))
-    {
-      emailError.setVisible(true);
-    }
-    else if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      emailError.setVisible(false);
-      errorLable.setVisible(false);
-    }
+    emailError.setVisible(arg.isEmpty() || !arg.contains("@"));
   }
 
   @FXML public void onTypedPasswordCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .passwordProperty().get();
-    if (arg.isEmpty())
-    {
-      passwordError.setVisible(true);
-    }
-    else
-    {
-      passwordError.setVisible(false);
-    }
+    passwordError.setVisible(arg.isEmpty());
   }
 
-  @FXML public void onTypedEmployyeNOCheck(KeyEvent keyEvent)
+  @FXML public void onTypedEmployeeNOCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .employeeNoProperty().get();
-    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .employeeNoAlreadyExists();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*"))
-    {
-      employeeNoError.setVisible(true);
-    }
-    else if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      employeeNoError.setVisible(false);
-      errorLable.setVisible(false);
-    }
+    employeeNoError.setVisible(arg.isEmpty() || !arg.matches("\\d+"));
   }
 
   @FXML public void onTypedPhoneNo(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .phoneProperty().get();
-    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .phoneNoAlreadyExists();
-    if (arg.isEmpty() || !arg.contains("+45") || arg.length() != 11 || !arg
-        .matches(".*\\d.*"))
-    {
-      phoneError.setVisible(true);
-    }
-    else if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      phoneError.setVisible(false);
-      errorLable.setVisible(false);
-    }
+    //"^(\+\d{10}( )?)$" to check if the streng contains "+" and an 11 digit  number
+    phoneError.setVisible(
+        arg.isEmpty() || !arg.matches("^(\\+\\d{10}( )?)$") || !arg
+            .contains("+45"));
   }
 
   @FXML public void onTypeStreetNoCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .streetNoProperty().get();
-    if (arg.isEmpty())
-    {
-      streetNoError.setVisible(true);
-    }
-    else
-    {
-      streetNoError.setVisible(false);
-    }
+    streetNoError.setVisible(arg.isEmpty());
   }
 
   @FXML public void onTypedZipCode(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .zipCodeproperty().get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*") || arg.length() != 4)
-    {
-      zipCodeError.setVisible(true);
-    }
-    else
-    {
-      zipCodeError.setVisible(false);
-    }
+        .zipCodeProperty().get();
+    zipCodeError
+        .setVisible(arg.isEmpty() || !arg.matches("\\d+") || arg.length() != 4);
   }
 
   @FXML public void onTypedCity(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .cityProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      cityError.setVisible(true);
-    }
-    else
-    {
-      cityError.setVisible(false);
-    }
+    cityError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypeStreetNameCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .streetnameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      streetNameError.setVisible(true);
-    }
-    else
-    {
-      streetNameError.setVisible(false);
-    }
+        .streetNameProperty().get();
+    streetNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypedCprCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .cprProperty().get();
-    boolean bol = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .cprAlreadyExists();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*") || !arg.contains("-")
-        || arg.length() != 11)
-    {
-      cprError.setVisible(true);
-    }
-    else if (bol)
-    {
-      errorLable.setVisible(true);
-    }
-    else
-    {
-      cprError.setVisible(false);
-      errorLable.setVisible(false);
-    }
+    String[] arr = arg.split("-");
+    cprError.setVisible(arg.length() != 11 || !(containsOnlyDigits(arr[0])
+        && containsOnlyDigits(arr[1])) || !arg.contains("-"));
   }
 
   @FXML public void onTypedFirstNameCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .firstNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      fNameError.setDisable(true);
-    }
-    else
-    {
-      fNameError.setVisible(false);
-    }
+    fNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypedLastNameCheck(KeyEvent keyEvent)
   {
     String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
         .lastNameProperty().get();
-    if (arg.isEmpty() || arg.matches(".*\\d.*"))
-    {
-      lNameError.setVisible(true);
-    }
-    else
-    {
-      lNameError.setVisible(false);
-    }
+    lNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   private void clearFields()
   {
-    for (int i = 0; i < fields.size(); i++)
+    for (TextField field : fields)
     {
-      fields.get(i).clear();
+      field.clear();
     }
   }
 }
