@@ -65,7 +65,6 @@ public class LoanModelManagerServer implements LoanModelServer
     /*Throw exception If the material has reservations and the borrower is next on waiting list, but
     * the reservation is not marked as ready for pickup
     * */
-
     else if (
         ReservationDAOImpl.getInstance()
             .hasReservations(material.getMaterialID())

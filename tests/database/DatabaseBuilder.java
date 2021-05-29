@@ -381,12 +381,14 @@ public class DatabaseBuilder extends BaseDAO
               + "VALUES (1, 'Horsens', 8700, 'Axelborg', '8');\n" + "\n"
               + "INSERT INTO borrower (cpr_no, f_name, l_name, email, tel_no, address_id, password)\n"
               + "VALUES ('111111-1111', 'Michael', 'Bui', 'michael@gmail.com', '+4512345678', 1, 'password');\n"
-              + "\n"
               + "INSERT INTO borrower (cpr_no, f_name, l_name, email, tel_no, address_id, password)\n"
-              + "VALUES ('222222-2222', 'B2', 'B2L', 'TEST@gmail.com', '+4587654321', 1, 'password');\n"
-              + "\n"
-              + "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no)\n"
-              + "VALUES ('2021-01-01', '2021-01-04', NULL, '111111-1111', 1, 1);");
+              + "VALUES ('111111-2222', 'Mik', 'Biu', 'mik@gmail.com', '+4587654321', 1, 'password');\n"
+              + "\n" + "INSERT INTO material_keywords (material_id, keyword)\n"
+              + "VALUES (1, 'Magic');\n"
+              + "INSERT INTO material_keywords (material_id, keyword)\n"
+              + "VALUES (1, 'Wizards');\n" + "\n"
+              + "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no, number_of_extensions)\n"
+              + "VALUES (CURRENT_DATE, '2021-06-2', NULL, '111111-1111', 1, 1, 0);");
       sql.executeUpdate();
       connection.commit();
     }
@@ -565,7 +567,7 @@ public class DatabaseBuilder extends BaseDAO
               + "VALUES ('111111-1111', 'Michael', 'Bui', 'michael@gmail.com', '+4512345678', 1, 'password');\n"
               + "\n"
               + "INSERT INTO borrower (cpr_no, f_name, l_name, email, tel_no, address_id, password)\n"
-              + "VALUES ('222222-2222', 'B2', 'B2L', 'TEST@gmail.com', '+4587654321', 1, 'password');\n"
+              + "VALUES ('111111-2222', 'Mik', 'Biu', 'mik@gmail.com', '+4587654321', 1, 'password');\n"
               + "INSERT INTO material (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
               + "VALUES ('eboktest', 'Barn', 'test', 'me', 'Dansk', '2005-01-01', 'love', NULL);\n"
               + "\n"
@@ -588,6 +590,20 @@ public class DatabaseBuilder extends BaseDAO
 
       );
       sql.executeUpdate();
+      connection.commit();
+    }
+  }
+
+  public void insertDummyReservation(String cpr, boolean ready, int materialID)
+      throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (reservation_date, cpr_no, material_id, ready) VALUES (CURRENT_DATE, ?, ?, ?);\n");
+      stm.setString(1, cpr);
+      stm.setInt(2, materialID);
+      stm.setBoolean(3, ready);
+      stm.executeUpdate();
       connection.commit();
     }
   }
