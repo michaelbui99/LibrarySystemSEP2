@@ -88,44 +88,51 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     }
   }
 
-  @Override public synchronized AudioBook createAudioBookCopy(int materialID, int copyNo)
-      throws SQLException
+  @Override public synchronized AudioBook createAudioBookCopy(int materialID,
+      int copyNo) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      //Creates material_copy
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
-      stm.setInt(1, materialID);
-      stm.setInt(2, copyNo);
-      stm.executeUpdate();
-      connection.commit();
-
-      //Finds the necessary details to create the AudioBook object from DB.
-      ResultSet audioBookDetails = getAudioBookDetailsByID(materialID);
-      if (audioBookDetails.next())
+      if (copyNo <= 0)
       {
-        //Creates and returns a AudioBook object if a AudioBook with given materialID exists.
-        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
-            .getKeywordsForMaterial(audioBookDetails.getInt("material_id"));
-        String materialKeywords = String.join(", ", materialKeywordList);
-
-        return new AudioBook(audioBookDetails.getInt("material_id"),
-            audioBookDetails.getInt("copy_no"),
-            audioBookDetails.getString("title"),
-            audioBookDetails.getString("publisher"),
-            String.valueOf(audioBookDetails.getDate("release_date")),
-            audioBookDetails.getString("description_of_the_content"),
-            materialKeywords, audioBookDetails.getString("audience"),
-            audioBookDetails.getString("language_"),
-            audioBookDetails.getInt("length_"),
-            new MaterialCreator(audioBookDetails.getString("f_name"),
-                audioBookDetails.getString("l_name"),
-                String.valueOf(audioBookDetails.getDate("dob")),
-                audioBookDetails.getString("country")),
-            audioBookDetails.getString("url"));
+        throw new IllegalArgumentException();
       }
-      return null;
+      else
+      {
+        //Creates material_copy
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+        stm.setInt(1, materialID);
+        stm.setInt(2, copyNo);
+        stm.executeUpdate();
+        connection.commit();
+
+        //Finds the necessary details to create the AudioBook object from DB.
+        ResultSet audioBookDetails = getAudioBookDetailsByID(materialID);
+        if (audioBookDetails.next())
+        {
+          //Creates and returns a AudioBook object if a AudioBook with given materialID exists.
+          List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+              .getKeywordsForMaterial(audioBookDetails.getInt("material_id"));
+          String materialKeywords = String.join(", ", materialKeywordList);
+
+          return new AudioBook(audioBookDetails.getInt("material_id"),
+              audioBookDetails.getInt("copy_no"),
+              audioBookDetails.getString("title"),
+              audioBookDetails.getString("publisher"),
+              String.valueOf(audioBookDetails.getDate("release_date")),
+              audioBookDetails.getString("description_of_the_content"),
+              materialKeywords, audioBookDetails.getString("audience"),
+              audioBookDetails.getString("language_"),
+              audioBookDetails.getInt("length_"),
+              new MaterialCreator(audioBookDetails.getString("f_name"),
+                  audioBookDetails.getString("l_name"),
+                  String.valueOf(audioBookDetails.getDate("dob")),
+                  audioBookDetails.getString("country")),
+              audioBookDetails.getString("url"));
+        }
+        return null;
+      }
     }
   }
 
@@ -291,8 +298,8 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
     return ml;
   }
 
-  @Override public synchronized void deleteAudioBookCopy(int materialID, int copyNumber)
-      throws SQLException
+  @Override public synchronized void deleteAudioBookCopy(int materialID,
+      int copyNumber) throws SQLException
   {
     try (Connection connection = getConnection())
     {
