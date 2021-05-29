@@ -240,7 +240,7 @@ class BookDAOImplTest
             "Voksen"));
   }
 
-  @Test void deleteBookTest() throws SQLException
+  @Test void deleteBookCopyTest() throws SQLException
   {
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
