@@ -2,7 +2,6 @@ package server.model.loan;
 //Michael
 import database.loan.LoanDAO;
 import database.material.MaterialDAO;
-import database.material.MaterialDAOImpl;
 import database.reservation.ReservationDAO;
 import database.reservation.ReservationDAOImpl;
 import shared.loan.Loan;
@@ -40,7 +39,7 @@ public class LoanModelManagerServer implements LoanModelServer
        /*Checks if the material has any reservations and if the borrower
         is the next person with the right to borrow the material.
         * */
-    if (ReservationDAOImpl.getInstance()
+    if (reservationDAO
         .hasReservations(material.getMaterialID()) && !ReservationDAOImpl
         .getInstance()
         .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID())
@@ -51,53 +50,51 @@ public class LoanModelManagerServer implements LoanModelServer
     }
     /*Ends the borrowers reservation if material has reservation and borrower is the next on waiting list
     * */
-    if (ReservationDAOImpl.getInstance()
+    if (reservationDAO
         .hasReservations(material.getMaterialID())
         &&
-        ReservationDAOImpl
-        .getInstance()
+        reservationDAO
         .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID())
         .equals(borrower.getCpr())
         &&
-        ReservationDAOImpl.getInstance().reservationIsReady(ReservationDAOImpl.getInstance()
+        reservationDAO.reservationIsReady(reservationDAO
         .getReservationIDByBorrowerMaterial(borrower.getCpr(),
             material.getMaterialID()))
         &&
-        MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID())
+        materialDAO.checkIfCopyAvailable(material.getMaterialID())
     )
     {
-      Reservation reservation = new Reservation(null, null,null, ReservationDAOImpl.getInstance().getReservationIDByBorrowerMaterial(
+      Reservation reservation = new Reservation(null, null,null, reservationDAO.getReservationIDByBorrowerMaterial(
           borrower.getCpr() , material.getMaterialID()),true);
-      ReservationDAOImpl.getInstance().endReservation(reservation);
+      reservationDAO.endReservation(reservation);
       System.out.println("Ending reservation..."); //debugging
     }
     /*Throws exception If the material has reservations and the borrower is next on waiting list, but
     * the reservation is not marked as ready for pickup
     * */
     else if (
-        ReservationDAOImpl.getInstance()
+        reservationDAO
             .hasReservations(material.getMaterialID())
             &&
-            ReservationDAOImpl
-                .getInstance()
+            reservationDAO
                 .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID())
                 .equals(borrower.getCpr())
             &&
-            !ReservationDAOImpl.getInstance().reservationIsReady(ReservationDAOImpl.getInstance()
+            reservationDAO.reservationIsReady(reservationDAO
                 .getReservationIDByBorrowerMaterial(borrower.getCpr(),
                     material.getMaterialID()))
             &&
-            MaterialDAOImpl.getInstance().checkIfCopyAvailable(material.getMaterialID())
+           materialDAO.checkIfCopyAvailable(material.getMaterialID())
     )
     {
       throw new IllegalStateException("Materialet er ikke klar endnu");
     }
 
       //Checks if an copy is available
-      if (MaterialDAOImpl.getInstance()
+      if (materialDAO
           .checkIfCopyAvailable(material.getMaterialID()))
       {
-        Loan loan = LoanDAOImpl.getInstance()
+        Loan loan = loanDAO
             .create(material, borrower, null, LocalDate.now().toString());
         System.out.println("Creating loan..."); //debugging
         //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
@@ -115,11 +112,11 @@ public class LoanModelManagerServer implements LoanModelServer
   {
     try
     {
-      List<Loan> loans = LoanDAOImpl.getInstance().getAllLoansByCPR(cpr);
+      List<Loan> loans = loanDAO.getAllLoansByCPR(cpr);
       for (Loan loan : loans)
       {
         //Loops through the loan and checks if the material has a loan.
-        if (ReservationDAOImpl.getInstance()
+        if (reservationDAO
             .hasReservations(loan.getMaterial().getMaterialID()))
         {
           loan.setMaterialHasReservation(true);
@@ -135,7 +132,7 @@ public class LoanModelManagerServer implements LoanModelServer
 
   @Override public void endLoan(Loan loan)
   {
-    LoanDAOImpl.getInstance().endLoan(loan);
+    loanDAO.endLoan(loan);
     support.firePropertyChange(EventTypes.LOANENDED, null, loan);
   }
 
@@ -144,7 +141,7 @@ public class LoanModelManagerServer implements LoanModelServer
     try
     {
       //Checks if the Material of the Loan has any reservations and updates it's field variable before trying to extend the loan.
-      loan.setMaterialHasReservation(ReservationDAOImpl.getInstance()
+      loan.setMaterialHasReservation(reservationDAO
           .hasReservations(loan.getMaterial().getMaterialID()));
       //Stores a copy of the original state of the Loan to be used in DAO call.
       Loan temp = new Loan(loan.getMaterial(), loan.getBorrower(),
@@ -152,7 +149,7 @@ public class LoanModelManagerServer implements LoanModelServer
           loan.getLoanID());
       //Extends the loan on the object, if no exceptions are thrown, the loan is eligible for extension and will be updated in in DAO.
       loan.extendLoan();
-      Loan extendedLoan = LoanDAOImpl.getInstance().extendLoan(temp);
+      Loan extendedLoan = loanDAO.extendLoan(temp);
       support.firePropertyChange(EventTypes.LOANEXTENDED, null, extendedLoan);
       return extendedLoan;
     }
