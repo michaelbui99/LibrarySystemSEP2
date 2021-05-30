@@ -34,15 +34,15 @@ class UserModelManagerServerTest
             "+4511111111", address, "1234"));
   }
 
-  @Test void rgisterBorrowerWithEmptyCprNumberTest() throws SQLException
+  @Test void registerBorrowerWithEmptyCprNumberTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(IllegalArgumentException.class, () -> userModelServer
+    assertThrows(NullPointerException.class, () -> userModelServer
         .create(null, "fNameTest", "lNameTest", "email@test2", "+4511111112",
             address, "1234"));
   }
 
-  @Test void rgisterBorrowerWithCprNumberLengthLargerThan11Test()
+  @Test void registerBorrowerWithCprNumberLengthLargerThan11Test()
       throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
@@ -51,7 +51,7 @@ class UserModelManagerServerTest
             "+4511111113", address, "1234"));
   }
 
-  @Test void rgisterBorrowerWithCprNumberLengthLeserThan11Test()
+  @Test void registerBorrowerWithCprNumberLengthLesserThan11Test()
       throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
@@ -60,7 +60,7 @@ class UserModelManagerServerTest
             "+4511111114", address, "1234"));
   }
 
-  @Test void rgisterBorrowerWithCprNumberWithLettersTest() throws SQLException
+  @Test void registerBorrowerWithCprNumberWithLettersTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> userModelServer
@@ -68,11 +68,11 @@ class UserModelManagerServerTest
             "+4511111115", address, "1234"));
   }
 
-  @Test void rgisterBorrowerWithCprNumberWithoutDashTest() throws SQLException
+  @Test void registerBorrowerWithCprNumberWithoutDashTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> userModelServer
-        .create("11111111111", "fNameTest", "lNameTest", "email@test6",
+        .create("1111111111", "fNameTest", "lNameTest", "email@test6",
             "+4511111116", address, "1234"));
   }
 
@@ -88,7 +88,7 @@ class UserModelManagerServerTest
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> userModelServer
-        .create("111111-1113", "fNameTist", null, "email@test8", "+4511111118",
+        .create("111111-1113", "fNameTest", null, "email@test8", "+4511111118",
             address, "1234"));
   }
 
@@ -125,7 +125,7 @@ class UserModelManagerServerTest
             "11111111131", address, "1234"));
   }
 
-  @Test void registerBorrwerWithEmptyPasswordTest() throws SQLException
+  @Test void registerBorrowerWithEmptyPasswordTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> userModelServer
@@ -151,7 +151,7 @@ class UserModelManagerServerTest
             "+4511111112", "email@test1", address, "1234"));
   }
 
-  @Test void registerLibrarianWithEmployeeNumberLeserThan0Test()
+  @Test void registerLibrarianWithEmployeeNumberLesserThan0Test()
       throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
@@ -189,7 +189,7 @@ class UserModelManagerServerTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> userModelServer
         .registerLibrarian(5, "fNameTest", "lNameTest", "111111-1116",
-            "+4511111116", "emailtest4", address, "1234"));
+            "+4511111116", "emailTest4", address, "1234"));
   }
 
   @Test void registerLibrarianWithEmptyPhoneNumberTest() throws SQLException
@@ -217,15 +217,15 @@ class UserModelManagerServerTest
             "+4511111118", "email@test7", address, null));
   }
 
-  @Test void rgisterLibrarianWithEmptyCprNumberTest() throws SQLException
+  @Test void registerLibrarianWithEmptyCprNumberTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(IllegalArgumentException.class, () -> userModelServer
+    assertThrows(NullPointerException.class, () -> userModelServer
         .registerLibrarian(9, "fNameTest", "lNameTest", null, "+4511111119",
             "email@test8", address, "1234"));
   }
 
-  @Test void rgisterLibrarianWithCprNumberLengthLargerThan11Test()
+  @Test void registerLibrarianWithCprNumberLengthLargerThan11Test()
       throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
@@ -234,7 +234,7 @@ class UserModelManagerServerTest
             "+4511111119", "email@test8", address, "1234"));
   }
 
-  @Test void rgisterLibrarianWithCprNumberLengthLeserThan11Test()
+  @Test void registerLibrarianWithCprNumberLengthLesserThan11Test()
       throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
@@ -243,7 +243,7 @@ class UserModelManagerServerTest
             "+4511111121", "email@test9", address, "1234"));
   }
 
-  @Test void rgisterLibrarianWithCprNumberWithLettersTest() throws SQLException
+  @Test void registerLibrarianWithCprNumberWithLettersTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> userModelServer
@@ -251,11 +251,11 @@ class UserModelManagerServerTest
             "+4511111131", "email@test10", address, "1234"));
   }
 
-  @Test void rgisterLibrarianWithCprNumberWithoutDashTest() throws SQLException
+  @Test void registerLibrarianWithCprNumberWithoutDashTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> userModelServer
-        .registerLibrarian(13, "fNameTest", "lNameTest", "11111111119",
+        .registerLibrarian(13, "fNameTest", "lNameTest", "1111111119",
             "+4511111141", "email@test11", address, "1234"));
   }
   //Register a user of type librarian section ends
@@ -343,7 +343,7 @@ class UserModelManagerServerTest
   //Login test ends
 
   //User already in system test starts
-  @Test void borrowerCprNumperAlreadyExistInSystemTest() throws SQLException
+  @Test void borrowerCprNumberAlreadyExistInSystemTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     Borrower borrower = userModelServer

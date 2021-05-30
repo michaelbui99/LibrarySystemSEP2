@@ -16,6 +16,10 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   private static BorrowerDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private BorrowerImpl()
+  {
+  }
+
   public static BorrowerDAO getInstance()
   {
     if (instance == null)

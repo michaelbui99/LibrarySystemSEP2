@@ -20,6 +20,10 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
   private static EbookDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private EbookDAOImpl()
+  {
+  }
+
   public static EbookDAO getInstance()
   {
     //Double lock check for Thread safety

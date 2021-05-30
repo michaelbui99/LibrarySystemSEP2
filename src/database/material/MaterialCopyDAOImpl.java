@@ -14,6 +14,11 @@ public class MaterialCopyDAOImpl extends BaseDAO implements MaterialCopyDAO
   private static MaterialCopyDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private MaterialCopyDAOImpl()
+  {
+
+  }
+
   public static MaterialCopyDAO getInstance()
   {
     if (instance == null)
@@ -27,11 +32,6 @@ public class MaterialCopyDAOImpl extends BaseDAO implements MaterialCopyDAO
       }
     }
     return instance;
-  }
-
-  private MaterialCopyDAOImpl()
-  {
-
   }
 
   @Override public synchronized void create(int materialID, int copyNr)

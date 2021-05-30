@@ -20,6 +20,10 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
   private static DVDDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private DVDDAOImpl()
+  {
+  }
+
   public static DVDDAO getInstance()
   {
     //Double lock check for Thread safety
@@ -41,8 +45,8 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
   {
     try (Connection connection = getConnection())
     {
-      if ((subtitle_lang == null || !subtitle_lang.matches("[a-zA-Z]+")) || (length_
-          <= 0) || (place == null))
+      if ((subtitle_lang == null || !subtitle_lang.matches("[a-zA-Z]+")) || (
+          length_ <= 0) || (place == null))
       {
         throw new IllegalArgumentException();
       }

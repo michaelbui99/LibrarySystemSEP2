@@ -18,6 +18,10 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   private static LibrarianDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private LibrarianImpl()
+  {
+  }
+
   public static LibrarianDAO getInstance()
   {
     if (instance == null)

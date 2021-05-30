@@ -24,6 +24,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   private static MaterialDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private MaterialDAOImpl()
+  {
+  }
+
   public static MaterialDAO getInstance()
   {
     //Double lock check for Thread safety

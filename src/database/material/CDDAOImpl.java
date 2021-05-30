@@ -20,6 +20,10 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
   private static CDDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private CDDAOImpl()
+  {
+  }
+
   public static CDDAO getInstance()
   {
     //Double lock check for Thread safety
