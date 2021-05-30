@@ -3,7 +3,7 @@ package server.model.user;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 
 import java.util.NoSuchElementException;
 

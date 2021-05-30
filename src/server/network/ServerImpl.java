@@ -9,7 +9,7 @@ import server.network.material.MaterialServerImpl;
 import server.network.reservation.ReservationServerImpl;
 import server.network.user.UserServerImpl;
 import shared.*;
-import shared.servers.*;
+import shared.network.*;
 import shared.util.Constants;
 
 import java.rmi.AlreadyBoundException;

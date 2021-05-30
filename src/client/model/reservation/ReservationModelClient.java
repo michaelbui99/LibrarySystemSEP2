@@ -3,7 +3,7 @@ package client.model.reservation;
 import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 
 import java.util.List;
 

@@ -1,12 +1,10 @@
 package server.network.user;
 
-import client.core.ModelFactoryClient;
 import server.model.user.UserModelServer;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
-import server.core.ModelFactoryServer;
-import shared.servers.UserServer;
+import shared.network.UserServer;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

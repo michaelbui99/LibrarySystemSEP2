@@ -1,6 +1,4 @@
-package shared.servers;
-
-import shared.loan.Loan;
+package shared.network;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.Remote;

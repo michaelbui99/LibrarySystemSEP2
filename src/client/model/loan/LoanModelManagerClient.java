@@ -4,13 +4,11 @@ import shared.loan.Loan;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
 import client.network.Client;
-import client.network.RMIClient;
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.NoSuchElementException;
 

@@ -4,9 +4,8 @@ import server.model.loan.LoanModelServer;
 import shared.loan.Loan;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
-import server.core.ModelFactoryServer;
-import shared.servers.ClientCallback;
-import shared.servers.LoanServer;
+import shared.network.ClientCallback;
+import shared.network.LoanServer;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeEvent;
@@ -14,7 +13,6 @@ import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class LoanServerImpl implements LoanServer
 {

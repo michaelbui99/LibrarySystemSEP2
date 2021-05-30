@@ -3,9 +3,8 @@ package client.model.user;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 
-import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
 public interface UserModelClient extends PropertyChangeSubject

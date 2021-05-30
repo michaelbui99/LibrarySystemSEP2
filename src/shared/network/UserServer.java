@@ -1,4 +1,4 @@
-package shared.servers;
+package shared.network;
 
 import shared.person.Address;
 import shared.person.borrower.Borrower;

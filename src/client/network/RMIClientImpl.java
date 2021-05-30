@@ -1,6 +1,7 @@
 package client.network;
 
 import client.model.material.strategy.SearchStrategy;
+import shared.network.ServerConnectionException;
 import shared.reservation.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
@@ -9,15 +10,15 @@ import shared.materials.Place;
 import shared.person.MaterialCreator;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
-import shared.servers.ClientCallback;
+import shared.network.ClientCallback;
 import shared.Server;
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 import shared.util.Constants;
-import shared.util.EventTypes;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -61,7 +62,8 @@ public class RMIClientImpl
     }
     catch (RemoteException | NotBoundException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -74,7 +76,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
     catch (IllegalStateException e)
     {
@@ -91,7 +94,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -103,7 +107,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
     catch (NoSuchElementException e)
     {
@@ -120,7 +125,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
     catch (NoSuchElementException e)
     {
@@ -137,7 +143,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
     catch (NoSuchElementException e)
     {
@@ -161,6 +168,7 @@ public class RMIClientImpl
     catch (RemoteException e)
     {
       e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -174,9 +182,10 @@ public class RMIClientImpl
           .createMaterial(title, publisher, releaseDate, description,
               targetAudience, language, genre, url, keywords);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      throw new RuntimeException("Server connection faild.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -195,8 +204,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      //throw new RuntimeException("Server Connection failed.");
       e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -208,7 +217,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -220,7 +230,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -235,9 +246,10 @@ public class RMIClientImpl
           .bookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, isbn, pageCount, author, genre);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      throw new RuntimeException("server connection failed");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -255,7 +267,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -267,7 +280,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -277,9 +291,10 @@ public class RMIClientImpl
     {
       server.getMaterialServer().deleteDVDCopy(materialID, copyNo);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -293,9 +308,10 @@ public class RMIClientImpl
           .dvdAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, genre);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -312,7 +328,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -324,7 +341,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -334,9 +352,10 @@ public class RMIClientImpl
     {
       server.getMaterialServer().deleteCDCopy(materialID, copyNo);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -350,9 +369,10 @@ public class RMIClientImpl
           .cdAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, genre);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -370,7 +390,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -382,7 +403,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -392,9 +414,10 @@ public class RMIClientImpl
     {
       server.getMaterialServer().deleteEBookCopy(materialID, copyNo);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -409,9 +432,10 @@ public class RMIClientImpl
           .eBookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, pageCount, licenseNr, genre, author);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -428,7 +452,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -440,7 +465,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -450,9 +476,10 @@ public class RMIClientImpl
     {
       server.getMaterialServer().deleteAudioBookCopy(materialID, copyNo);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -467,9 +494,10 @@ public class RMIClientImpl
           .audioBookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, author, genre);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -486,8 +514,8 @@ public class RMIClientImpl
     catch (RemoteException e)
     {
       e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return null;
   }
 
   @Override public Material getSelectMaterial()
@@ -499,8 +527,8 @@ public class RMIClientImpl
     catch (RemoteException e)
     {
       e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return null;
   }
 
   @Override public void setSelectMaterial(Material material)
@@ -512,6 +540,7 @@ public class RMIClientImpl
     catch (RemoteException e)
     {
       e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -527,7 +556,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -539,7 +569,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -551,7 +582,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -567,7 +599,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -579,7 +612,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -591,7 +625,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -603,7 +638,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -615,7 +651,8 @@ public class RMIClientImpl
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Server Connection failed.");
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -628,8 +665,8 @@ public class RMIClientImpl
     catch (RemoteException e)
     {
       e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return -1;
   }
 
   @Override public void addPropertyChangeListener(String name,
@@ -665,6 +702,7 @@ public class RMIClientImpl
     catch (RemoteException e)
     {
       e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 
@@ -674,9 +712,10 @@ public class RMIClientImpl
     {
       server.getUserServer().borrowerCprNumberAlreadyExists(cpr);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
     return false;
   }
@@ -687,11 +726,11 @@ public class RMIClientImpl
     {
       return server.getUserServer().borrowerEmailAlreadyExists(email);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return false;
   }
 
   @Override public boolean borrowerPhoneNumberAlreadyExists(String phone)
@@ -700,11 +739,11 @@ public class RMIClientImpl
     {
       return server.getUserServer().borrowerPhoneNumberAlreadyExists(phone);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return false;
   }
 
   @Override public boolean borrowerAlreadyExists(String cpr, String email,
@@ -714,11 +753,11 @@ public class RMIClientImpl
     {
       return server.getUserServer().borrowerAlreadyExists(cpr, email, phone);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return false;
   }
 
   @Override public boolean employeeNumberAlreadyExists(int employeeNo)
@@ -727,11 +766,11 @@ public class RMIClientImpl
     {
       return server.getUserServer().employeeNumberAlreadyExists(employeeNo);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return false;
   }
 
   @Override public boolean librarianCprNumberAlreadyExists(String cpr)
@@ -740,11 +779,12 @@ public class RMIClientImpl
     {
       return server.getUserServer().librarianCprNumberAlreadyExists(cpr);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return false;
+
   }
 
   @Override public boolean librarianEmailAlreadyExists(String email)
@@ -753,11 +793,11 @@ public class RMIClientImpl
     {
       return server.getUserServer().librarianEmailAlreadyExists(email);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return false;
   }
 
   @Override public boolean librarianPhoneNumberAlreadyExists(String phone)
@@ -781,11 +821,12 @@ public class RMIClientImpl
       return server.getUserServer()
           .librarianAlreadyExists(employeeNo, cpr, email, phone);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return false;
+
   }
 
   @Override public int totalNumberOfCopies(int materialID)
@@ -794,11 +835,11 @@ public class RMIClientImpl
     {
       return server.getMaterialServer().totalNumberOfCopies(materialID);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
-    return -1;
   }
 
   @Override public void deleteMaterial(int materialID)
@@ -807,9 +848,10 @@ public class RMIClientImpl
     {
       server.getMaterialServer().deleteMaterial(materialID);
     }
-    catch (RemoteException remoteException)
+    catch (RemoteException e)
     {
-      remoteException.printStackTrace();
+      e.printStackTrace();
+      throw new ServerConnectionException("Server Connection failed.");
     }
   }
 

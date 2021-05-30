@@ -1,12 +1,11 @@
 package server.network.reservation;
 
-import server.core.ModelFactoryServer;
 import server.model.reservation.ReservationModelServer;
 import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
-import shared.servers.ClientCallback;
-import shared.servers.ReservationServer;
+import shared.network.ClientCallback;
+import shared.network.ReservationServer;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeEvent;

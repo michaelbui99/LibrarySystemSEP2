@@ -4,7 +4,7 @@ import shared.materials.Material;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
 import client.model.material.strategy.SearchStrategy;
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 
 import java.util.List;
 

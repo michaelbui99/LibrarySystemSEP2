@@ -1,6 +1,6 @@
 package shared;
 
-import shared.servers.*;
+import shared.network.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;

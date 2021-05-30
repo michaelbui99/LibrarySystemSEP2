@@ -1,6 +1,6 @@
 package server.model.chat;
 
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 
 import java.util.List;
 

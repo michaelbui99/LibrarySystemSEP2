@@ -1,4 +1,4 @@
-package shared.servers;
+package shared.network;
 
 import shared.reservation.Reservation;
 import shared.materials.Material;

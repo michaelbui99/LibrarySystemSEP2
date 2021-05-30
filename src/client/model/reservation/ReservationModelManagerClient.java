@@ -4,7 +4,7 @@ import client.network.Client;
 import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
-import shared.servers.PropertyChangeSubject;
+import shared.network.PropertyChangeSubject;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeEvent;

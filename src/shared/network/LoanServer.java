@@ -1,4 +1,4 @@
-package shared.servers;
+package shared.network;
 
 import shared.loan.Loan;
 import shared.materials.Material;
