@@ -31,17 +31,38 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
     return instance;
   }
 
+  private boolean containsOnlyDigits(String str)
+  {
+    for (int i = 0; i < str.length(); i++)
+    {
+      try
+      {
+        Integer.parseInt(str);
+        return true;
+      }
+      catch (NumberFormatException e)
+      {
+        return false;
+      }
+    }
+    return false;
+  }
+
   @Override public Borrower create(String cpr, String firstName,
       String lastName, String email, String tlfNumber, Address address,
       String password) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      if ((cpr == null || cpr.getBytes().length != 11 || !cpr.matches(".*\\d.*")
-          || !cpr.contains("-")) || (firstName == null) || (lastName == null)
-          || (email == null || !email.contains("@")) || tlfNumber == null
-          || tlfNumber.getBytes().length != 0 && !tlfNumber.contains("+45") || (
-          address == null) || (password == null))
+      String[] arr = cpr.split("-");
+      if ((cpr == null || cpr.getBytes().length != 11 || (
+          !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1])) || !cpr
+          .contains("-")) || (firstName == null || !firstName
+          .matches("[a-zA-Z]+")) || (lastName == null || !lastName
+          .matches("[a-zA-Z]+")) || (email == null || !email.contains("@")) || (
+          tlfNumber == null || !tlfNumber.contains("+45") || !tlfNumber
+              .matches("^(\\+\\d{10}( )?)$")) || (address == null) || (password
+          == null))
       {
         throw new IllegalArgumentException();
       }
@@ -104,45 +125,58 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      if ((cprNo == null || cprNo.getBytes().length != 11 || !cprNo.matches(".*\\d.*")
-          || !cprNo.contains("-")) || (password == null))
+      String[] arr = cprNo.split("-");
+      if ((cprNo == null || cprNo.getBytes().length != 11 || (
+          !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1])) || !cprNo
+          .contains("-")) || (password == null))
       {
         throw new IllegalArgumentException();
       }
       else
       {
-      // writing the sql query
-      PreparedStatement stm = connection.prepareStatement(
-          "SELECT cpr_no, password FROM borrower WHERE cpr_no = ? AND password = ?;");
-      stm.setString(1, cprNo);
-      stm.setString(2, password);
-      ResultSet result = stm.executeQuery();
+        // writing the sql query
+        PreparedStatement stm = connection.prepareStatement(
+            "SELECT cpr_no, password FROM borrower WHERE cpr_no = ? AND password = ?;");
+        stm.setString(1, cprNo);
+        stm.setString(2, password);
+        ResultSet result = stm.executeQuery();
         return result.next();
-    }
+      }
     }
   }
 
-  @Override public Borrower getBorrower(String sprNo) throws SQLException
+  @Override public Borrower getBorrower(String cprNo) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM borrower JOIN address a on a.address_id = borrower.address_id WHERE cpr_no = ?");
-      stm.setString(1, sprNo);
-      ResultSet result = stm.executeQuery();
-      if (result.next())
+      String[] arr = cprNo.split("-");
+      if (cprNo.getBytes().length != 11
+          || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1])
+          || !cprNo.contains("-"))
       {
-        return new Borrower(result.getString("cpr_no"),
-            result.getString("f_name"), result.getString("l_name"),
-            result.getString("email"), result.getString("tel_no"),
-            new Address(result.getInt("address_id"),
-                result.getString("street_name"), result.getString("street_no"),
-                result.getInt("zip_code"), result.getString("city")),
-            result.getString("password"));
+        throw new IllegalArgumentException();
       }
       else
       {
-        throw new NoSuchElementException("Ingen låner med CPR: " + sprNo + " er registreret i systemet");
+        PreparedStatement stm = connection.prepareStatement(
+            "SELECT * FROM borrower JOIN address a on a.address_id = borrower.address_id WHERE cpr_no = ?");
+        stm.setString(1, cprNo);
+        ResultSet result = stm.executeQuery();
+        if (result.next())
+        {
+          return new Borrower(result.getString("cpr_no"),
+              result.getString("f_name"), result.getString("l_name"),
+              result.getString("email"), result.getString("tel_no"),
+              new Address(result.getInt("address_id"),
+                  result.getString("street_name"),
+                  result.getString("street_no"), result.getInt("zip_code"),
+                  result.getString("city")), result.getString("password"));
+        }
+        else
+        {
+          throw new NoSuchElementException(
+              "Ingen låner med CPR: " + cprNo + " er registreret i systemet");
+        }
       }
     }
   }
@@ -152,11 +186,21 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM borrower WHERE cpr_no = ?");
-      stm.setString(1, cpr);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      String[] arr = cpr.split("-");
+      if (cpr.getBytes().length != 11
+          || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1]) || !cpr
+          .contains("-"))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("SELECT * FROM borrower WHERE cpr_no = ?");
+        stm.setString(1, cpr);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 
@@ -165,11 +209,18 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM borrower WHERE email = ?");
-      stm.setString(1, email);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      if (email == null || !email.contains("@"))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("SELECT * FROM borrower WHERE email = ?");
+        stm.setString(1, email);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 
@@ -178,11 +229,19 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM borrower WHERE tel_no = ?");
-      stm.setString(1, phone);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      if (phone == null || !phone.contains("+45") || !phone
+          .matches("^(\\+\\d{10}( )?)$"))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("SELECT * FROM borrower WHERE tel_no = ?");
+        stm.setString(1, phone);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 
@@ -191,13 +250,25 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM borrower WHERE cpr_no = ? AND email = ? AND tel_no = ?");
-      stm.setString(1, cpr);
-      stm.setString(2, email);
-      stm.setString(3, phone);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      String[] arr = cpr.split("-");
+      if ((cpr.getBytes().length != 11
+          || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1]) || !cpr
+          .contains("-")) || (phone == null || !phone.contains("+45") || !phone
+          .matches("^(\\+\\d{10}( )?)$")) || (email == null || !email
+          .contains("@")))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection.prepareStatement(
+            "SELECT * FROM borrower WHERE cpr_no = ? AND email = ? AND tel_no = ?");
+        stm.setString(1, cpr);
+        stm.setString(2, email);
+        stm.setString(3, phone);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 }

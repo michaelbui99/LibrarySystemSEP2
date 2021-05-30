@@ -35,7 +35,7 @@ public interface BorrowerDAO
    */
   boolean loginBorrower(String cprNo, String password) throws SQLException;
 
-  Borrower getBorrower(String sprNo) throws SQLException,
+  Borrower getBorrower(String cprNo) throws SQLException,
       NoSuchElementException;
 
   boolean borrowerCprNumberAlreadyExists(String cpr) throws SQLException;
