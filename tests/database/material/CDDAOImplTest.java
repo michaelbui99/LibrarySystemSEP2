@@ -4,193 +4,186 @@ import database.DatabaseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
-import shared.materials.audio.AudioBook;
-import shared.person.MaterialCreator;
+import shared.materials.Place;
 
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AudioBookDAOImplTest
+class CDDAOImplTest
 {
-  private AudioBookDAO audioBookDAO;
+  private CDDAO cddao;
   private DatabaseBuilder databaseBuilder;
-  private MaterialCreator materialCreator;
+  private Place place;
 
   @BeforeEach void setup()
   {
-    audioBookDAO = AudioBookDAOImpl.getInstance();
+    cddao = CDDAOImpl.getInstance();
     databaseBuilder = new DatabaseBuilder();
-    materialCreator = new MaterialCreator(1, "fNameTest", "lNameTest",
-        "1990-01-01", "countryTest");
+    place = new Place(1, 1, "A", "lastNameTest", "genreTest");
   }
 
-  @Test void createAudioBookTest() throws SQLException
+  @Test void createCDTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    assertDoesNotThrow(
-        () -> audioBookDAO.create(materialID, 100, materialCreator));
+    assertDoesNotThrow(() -> cddao.create(materialID, 123, place));
   }
 
-  @Test void createAudioBookWithAUnExistedMaterialIDTest() throws SQLException
+  @Test void createCdWhereMaterialIDDoesNotExistTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(PSQLException.class,
-        () -> audioBookDAO.create(1000, 200, materialCreator));
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    assertThrows(PSQLException.class, () -> cddao.create(5000, 123, place));
   }
 
-  @Test void createAudioBookWithAnEmptyMaterialIDTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(PSQLException.class,
-        () -> audioBookDAO.create(0, 300, materialCreator));
-  }
-
-  @Test void createAudioBookWithAnEmptyLengthTest() throws SQLException
+  @Test void createCdWhereLengthIsLessThan0Test() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
     assertThrows(IllegalArgumentException.class,
-        () -> audioBookDAO.create(materialID, 0, materialCreator));
+        () -> cddao.create(materialID, -1, place));
   }
 
-  @Test void createAudioBookWithANullMaterialCreatorTest() throws SQLException
+  @Test void createCdWhereLengthEqual0Test() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
     assertThrows(IllegalArgumentException.class,
-        () -> audioBookDAO.create(materialID, 800, null));
+        () -> cddao.create(materialID, 0, place));
   }
 
-  @Test void createAudioBookCopyTest() throws SQLException
+  @Test void createCDWherePlaceIsNullTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    assertDoesNotThrow(() -> audioBookDAO.createAudioBookCopy(materialID, 2));
-  }
-
-  @Test void createAudioBookCopyWhereCopyNumberIs1Test() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    assertThrows(PSQLException.class,
-        () -> audioBookDAO.createAudioBookCopy(materialID, 1));
-  }
-
-  @Test void createAudioBookCopyWhereCopyNumberIs0Test() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
     assertThrows(IllegalArgumentException.class,
-        () -> audioBookDAO.createAudioBookCopy(materialID, 0));
+        () -> cddao.create(materialID, 55, null));
   }
 
-  @Test void createAudioBookCopyWhereCopyNumberIsLessThan0Test()
-      throws SQLException
+  @Test void createCDCopyTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
+    cddao.create(materialID, 55, place);
+    assertDoesNotThrow(() -> cddao.createCDCopy(materialID, 2));
+  }
+
+  @Test void createCDCopyWhereCopyNumberEqual1Test() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    cddao.create(materialID, 55, place);
+    assertThrows(PSQLException.class, () -> cddao.createCDCopy(materialID, 1));
+  }
+
+  @Test void createCDCopyWhereCopyNumberEquals0Test() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    cddao.create(materialID, 55, place);
     assertThrows(IllegalArgumentException.class,
-        () -> audioBookDAO.createAudioBookCopy(materialID, -1));
+        () -> cddao.createCDCopy(materialID, 0));
   }
 
-  @Test void createAudioBookCopyForUnExistingMaterialTest() throws SQLException
-  {
-    databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(PSQLException.class,
-        () -> audioBookDAO.createAudioBookCopy(6000, 2));
-  }
-
-  @Test void audioBookAlreadyExistsReturnTrueTest() throws SQLException
+  @Test void createCDCopyWhereCopyNumberLessThan0Test() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    assertTrue(audioBookDAO
-        .audioBookAlreadyExists("titleTest", "publisherTest", "2000-02-02",
-            "descriptionTest", "Voksen", "Dansk", 123, materialCreator,
-            "genreTest"));
+    cddao.create(materialID, 55, place);
+    assertThrows(IllegalArgumentException.class,
+        () -> cddao.createCDCopy(materialID, -1));
   }
 
-  @Test void audioBookAlreadyExistsReturnFalseTest() throws SQLException
+  @Test void createCDCopyForUnExistingMaterialTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
-    MaterialCreator materialCreator2 = new MaterialCreator(2, "f", "l",
-        "2005-05-05", "c");
-    int materialID = MaterialDAOImpl.getInstance()
-        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
-            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    assertFalse(audioBookDAO
-        .audioBookAlreadyExists("titleTest1", "publisherTest1", "2000-02-03",
-            "descriptionTest1", "Barn", "Engelsk", 124, materialCreator2,
-            "genreTest"));
+    assertThrows(PSQLException.class, () -> cddao.createCDCopy(6000, 2));
   }
 
-  @Test void getAudioBookDetailsByIDTest() throws SQLException
+  @Test void cdAlreadyExistsReturnTrueTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    assertDoesNotThrow(() -> audioBookDAO.getAudioBookDetailsByID(materialID));
+    cddao.create(materialID, 55, place);
+    assertTrue(cddao.cdAlreadyExists("titleTest", "publisherTest", "2000-02-02",
+        "descriptionTest", "Voksen", "Dansk", 55, "genreTest"));
   }
 
-  @Test void getAudioBookDetailsByIDForUnExistingMaterialIDTest()
-      throws SQLException
+  @Test void cdAlreadyExistsReturnFalseTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
+    cddao.create(materialID, 55, place);
+    assertFalse(cddao
+        .cdAlreadyExists("titleTest1", "publisherTest1", "2000-02-06",
+            "descriptionTest1", "Barn", "Engelsk", 56, "genreTestt"));
+  }
+
+  @Test void getCDDetailsByIdTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    cddao.create(materialID, 55, place);
+    assertDoesNotThrow(() -> cddao.getCDDetailsByID(materialID));
+  }
+
+  @Test void getCDDetailsByIDForUnExistingMaterialIDTest() throws SQLException
+  {
+    databaseBuilder.createDummyDataWithoutInfo();
+    int materialID = MaterialDAOImpl.getInstance()
+        .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
+            "Voksen", "Dansk", "genreTest", null, "keywordsTest");
+    cddao.create(materialID, 55, place);
     assertThrows(NoSuchElementException.class,
-        () -> audioBookDAO.getAudioBookDetailsByID(6000));
+        () -> cddao.getCDDetailsByID(6000));
   }
 
-  @Test void findAudioBookTest() throws SQLException
+  @Test void findCDTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    assertDoesNotThrow(() -> audioBookDAO
+    cddao.create(materialID, 55, place);
+    assertDoesNotThrow(() -> cddao
         .findMaterial("titleTest", "Dansk", "keywordsTest", "genreTest",
             "Voksen"));
   }
 
-  @Test void deleteAudioBookCopyTest() throws SQLException
+  @Test void deleteCDCopyTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     int materialID = MaterialDAOImpl.getInstance()
         .create("titleTest", "publisherTest", "2000-02-02", "descriptionTest",
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
-    AudioBookDAOImpl.getInstance().create(materialID, 123, materialCreator);
-    AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID, 3);
-    assertDoesNotThrow(() -> audioBookDAO.deleteAudioBookCopy(materialID, 3));
+    cddao.create(materialID, 55, place);
+    cddao.createCDCopy(materialID, 2);
+    assertDoesNotThrow(()-> cddao.deleteCDCopy(materialID, 2));
   }
 }

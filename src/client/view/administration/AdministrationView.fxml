@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="223.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.administration.AdministrationController">
+<AnchorPane prefHeight="223.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.administration.AdministrationController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="297.0" prefWidth="577.0" style="-fx-background-color: white;">
          <children>
@@ -36,11 +36,9 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Tilføj materiale" textFill="#3000ed" />
                         <Button layoutX="10.0" layoutY="48.0" mnemonicParsing="false" onAction="#onButtonAddRemoveCopy" style="-fx-cursor: hand;" text="Tilføj/Fjern kopi" textFill="#0400ff" GridPane.columnIndex="1" />
-                        <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Tilføj materiale" textFill="#3000ed" />
                         <Button mnemonicParsing="false" onAction="#onButtonAddMaterial" style="-fx-cursor: hand;" text="Registrer materiale" textFill="#3000ed" />
-                        <Button mnemonicParsing="false" onAction="#onBorrowerContactButton" text="Vis Låners kontaktoplysninger" GridPane.columnIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#onBorrowerContactButton" text="Vis Låners kontaktoplysninger" textFill="#3b03ff" GridPane.columnIndex="2" />
                      </children>
                   </GridPane>
                </children>

@@ -20,6 +20,10 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
   private static CDDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private CDDAOImpl()
+  {
+  }
+
   public static CDDAO getInstance()
   {
     //Double lock check for Thread safety
@@ -94,6 +98,12 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
   {
     try (Connection connection = getConnection())
     {
+      if (copyNo <= 0)
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
       //Creates material_copy
       PreparedStatement stm = connection.prepareStatement(
           "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
@@ -124,6 +134,7 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
         // i added the place_id
       }
       return null;
+      }
     }
   }
 

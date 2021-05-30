@@ -21,6 +21,10 @@ public class AudioBookDAOImpl extends BaseDAO implements AudioBookDAO
   private static AudioBookDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private AudioBookDAOImpl()
+  {
+  }
+
   public static AudioBookDAO getInstance()
   {
     //Double lock check for Thread safety

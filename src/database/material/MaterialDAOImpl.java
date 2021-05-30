@@ -24,6 +24,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   private static MaterialDAO instance;
   private static final Lock lock = new ReentrantLock();
 
+  private MaterialDAOImpl()
+  {
+  }
+
   public static MaterialDAO getInstance()
   {
     //Double lock check for Thread safety
@@ -48,16 +52,16 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     try (Connection connection = getConnection())
     {
       if ((title == null) || (publisher == null) || (releaseDate == null) || (
-          description == null) || (keywords == null || keywords
-          .matches("[0-9]+")) || (language == null
+          description == null) || (keywords == null || !keywords
+          .matches("[a-zA-Z]+")) || (language == null
           || !language.equals("Engelsk") && !language.equals("Dansk")
-          && !language.equals("Arabisk") || language.matches("[0-9]+")) || (
+          && !language.equals("Arabisk") || !language.matches("[a-zA-Z]+")) || (
           genre == null || genre.matches(".*\\d.*")) || (targetAudience == null
           || !targetAudience.equals("Voksen") && !targetAudience.equals("Barn")
           && !targetAudience.equals("Teenager") && !targetAudience
           .equals("Familie") && !targetAudience.equals("Ældre")
-          && !targetAudience.equals("Studerende") || targetAudience
-          .matches("[0-9]+")))
+          && !targetAudience.equals("Studerende") || !targetAudience
+          .matches("[a-zA-Z]+")))
       {
         throw new IllegalArgumentException();
       }
@@ -241,7 +245,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   {
     try (Connection connection = getConnection())
     {
-      if (materialID == 0 || materialExistInDB(materialID) == false)
+      if (materialID == 0 || !materialExistInDB(materialID))
       {
         throw new IllegalArgumentException();
       }
@@ -272,11 +276,7 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
           "update loan set return_date = now() where material_id = ? and copy_no = ? and cpr_no = ?");
       int res = stm.executeUpdate();
       connection.commit();
-      if (res > 0)
-      {
-        return true;
-      }
-      return false;
+      return res > 0;
     }
     catch (SQLException throwables)
     {
@@ -284,10 +284,6 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     }
     return false;
   }
-  //  @Override public Material findByID(int id)
-  //  {
-  //    return null;
-  //  }
 
   @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience, String type)
