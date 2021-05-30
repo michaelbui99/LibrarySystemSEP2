@@ -2,6 +2,11 @@ package server.model.loan;
 
 import database.DatabaseBuilder;
 import database.loan.LoanDAOImpl;
+import database.material.MaterialDAOImpl;
+import database.reservation.ReservationDAO;
+import database.reservation.ReservationDAOImpl;
+import shared.loan.ExtendedLoan1State;
+import shared.loan.ExtendedLoan2State;
 import shared.loan.Loan;
 
 import database.BaseDAO;
@@ -32,7 +37,8 @@ class LoanModelManagerServerTest extends DatabaseBuilder
   public static Loan extendedLoan;
   @BeforeEach void setup()
   {
-  loanModel = new LoanModelManagerServer();
+  loanModel = new LoanModelManagerServer(LoanDAOImpl.getInstance(),
+      ReservationDAOImpl.getInstance(), MaterialDAOImpl.getInstance());
     databaseBuilder = new DatabaseBuilder();
     borrower = new Borrower("111111-1111", "Michael", "Bui",
         "michael@gmail.com", "+4512345678", null, "password");
@@ -157,6 +163,49 @@ class LoanModelManagerServerTest extends DatabaseBuilder
         borrower.getCpr()));
   }
 
+  @Test void extendLoanExtendsDeadlineBy1Month() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(), LocalDate.now().toString(), null, 1, new NewLoanState());
+    Loan extendedLoan = loanModel.extendLoan(loan);
+    assertEquals(LocalDate.now().plusDays(1).plusMonths(1).toString(), extendedLoan.getDeadline());
+  }
 
+  @Test void extendLoanOnExtendedLoan2StateThrowsIllegalStateException()
+      throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan2State());
+    assertThrows(IllegalStateException.class, ()->loanModel.extendLoan(loan));
+  }
+
+  @Test void extendLoanOnExtendedLoan1StateDoesNotThrow() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertDoesNotThrow(()->loanModel.extendLoan(loan));
+  }
+
+  @Test void ExtendLoan7DaysFromDeadlineDoesNotThrow() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(7).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertDoesNotThrow(()->loanModel.extendLoan(loan));
+  }
+
+  @Test void ExtendLoan8DaysFromDeadlineThrowsIllegalStateException()
+      throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(8).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertThrows(IllegalStateException.class, ()->loanModel.extendLoan(loan));
+  }
+
+  @Test void ExtendLoan6DaysFromDeadlineDoesNotThrow() throws SQLException
+  {
+    databaseBuilder.createDummyDatabaseDataWithLoan();
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(6).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertDoesNotThrow(()->loanModel.extendLoan(loan));
+  }
 
 }

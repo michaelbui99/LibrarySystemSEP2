@@ -1,5 +1,8 @@
 package server.core;
 
+import database.loan.LoanDAOImpl;
+import database.material.MaterialDAOImpl;
+import database.reservation.ReservationDAOImpl;
 import server.model.chat.ChatModelManagerServer;
 import server.model.chat.ChatModelServer;
 import server.model.loan.LoanModelManagerServer;
@@ -44,7 +47,8 @@ public class ModelFactoryServer
 
   public LoanModelServer getLoanModel(){
     if (loanModelServer == null){
-      loanModelServer = new LoanModelManagerServer();
+      loanModelServer = new LoanModelManagerServer(LoanDAOImpl.getInstance(),
+          ReservationDAOImpl.getInstance(), MaterialDAOImpl.getInstance());
     }
     return loanModelServer;
   }

@@ -1,5 +1,6 @@
 package server.model.loan;
 //Michael
+import database.loan.LoanDAO;
 import database.material.MaterialDAO;
 import database.material.MaterialDAOImpl;
 import database.reservation.ReservationDAO;
@@ -20,9 +21,17 @@ import java.util.NoSuchElementException;
 public class LoanModelManagerServer implements LoanModelServer
 {
   private PropertyChangeSupport support;
+  private ReservationDAO reservationDAO;
+  private LoanDAO loanDAO;
+  private MaterialDAO materialDAO;
 
-  public LoanModelManagerServer()
+
+  public LoanModelManagerServer(LoanDAO loanDAO, ReservationDAO reservationDAO,
+      MaterialDAO materialDAO)
   {
+    this.reservationDAO = reservationDAO;
+    this.loanDAO = loanDAO;
+    this.materialDAO = materialDAO;
     support = new PropertyChangeSupport(this);
   }
 
@@ -62,7 +71,7 @@ public class LoanModelManagerServer implements LoanModelServer
       ReservationDAOImpl.getInstance().endReservation(reservation);
       System.out.println("Ending reservation..."); //debugging
     }
-    /*Throw exception If the material has reservations and the borrower is next on waiting list, but
+    /*Throws exception If the material has reservations and the borrower is next on waiting list, but
     * the reservation is not marked as ready for pickup
     * */
     else if (
@@ -130,19 +139,22 @@ public class LoanModelManagerServer implements LoanModelServer
     support.firePropertyChange(EventTypes.LOANENDED, null, loan);
   }
 
-  @Override public void extendLoan(Loan loan)
+  @Override public Loan extendLoan(Loan loan)
   {
     try
     {
       //Checks if the Material of the Loan has any reservations and updates it's field variable before trying to extend the loan.
       loan.setMaterialHasReservation(ReservationDAOImpl.getInstance()
           .hasReservations(loan.getMaterial().getMaterialID()));
+      //Stores a copy of the original state of the Loan to be used in DAO call.
       Loan temp = new Loan(loan.getMaterial(), loan.getBorrower(),
           loan.getDeadline(), loan.getLoanDate(), loan.getReturnDate(),
           loan.getLoanID());
+      //Extends the loan on the object, if no exceptions are thrown, the loan is eligible for extension and will be updated in in DAO.
       loan.extendLoan();
       Loan extendedLoan = LoanDAOImpl.getInstance().extendLoan(temp);
       support.firePropertyChange(EventTypes.LOANEXTENDED, null, extendedLoan);
+      return extendedLoan;
     }
     catch (IllegalStateException e)
     {
@@ -151,6 +163,7 @@ public class LoanModelManagerServer implements LoanModelServer
        * */
       support
           .firePropertyChange(EventTypes.LOANEXTENDERROR, loan, e.getMessage());
+      throw new IllegalStateException(e.getMessage());
     }
   }
 

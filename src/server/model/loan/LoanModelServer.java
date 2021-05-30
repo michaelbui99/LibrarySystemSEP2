@@ -46,7 +46,8 @@ public interface LoanModelServer extends PropertyChangeSubject
    * Loans can at earliest be extended 7 days before deadline.
    *
    * @param loan is the Loan which is to be extended by one month.
-   * @throws IllegalStateException if the Loan has already been extended 2 times, if the Material of the Loan has a reservation or the current date is more than 7 days before deadline.
+   * @throws IllegalStateException if the Loan has already been extended 2 times i.e. the Loan is in ExtendedLoan2state, if the Material of the Loan has a reservation or the current date is more than 7 days before deadline.
+   * @return The Loan where deadline has been extended by 1 month and the Loan state of the Loan has been updated.
    */
-  void extendLoan(Loan loan) throws IllegalStateException;
+  Loan extendLoan(Loan loan) throws IllegalStateException;
 }

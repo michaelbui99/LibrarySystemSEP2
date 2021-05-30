@@ -53,7 +53,13 @@ public class LoanServerImpl implements LoanServer
 
   @Override public void extendLoan(Loan loan)
   {
-    loanModel.extendLoan(loan);
+    try
+    {
+      loanModel.extendLoan(loan);
+    }
+    catch (IllegalStateException e)
+    {
+    }
   }
 
   @Override public void endLoan(Loan loan)
