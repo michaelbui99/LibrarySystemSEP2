@@ -7,13 +7,11 @@ import database.reservation.ReservationDAOImpl;
 import shared.loan.Loan;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
-import database.loan.LoanDAOImpl;
 import shared.reservation.Reservation;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -80,11 +78,10 @@ public class LoanModelManagerServer implements LoanModelServer
                 .getNextWaitingBorrowerCPRForMaterial(material.getMaterialID())
                 .equals(borrower.getCpr())
             &&
-            reservationDAO.reservationIsReady(reservationDAO
+            !reservationDAO.reservationIsReady(reservationDAO
                 .getReservationIDByBorrowerMaterial(borrower.getCpr(),
                     material.getMaterialID()))
-            &&
-           materialDAO.checkIfCopyAvailable(material.getMaterialID())
+
     )
     {
       throw new IllegalStateException("Materialet er ikke klar endnu");
@@ -95,7 +92,7 @@ public class LoanModelManagerServer implements LoanModelServer
           .checkIfCopyAvailable(material.getMaterialID()))
       {
         Loan loan = loanDAO
-            .create(material, borrower, null, LocalDate.now().toString());
+            .create(material, borrower);
         System.out.println("Creating loan..."); //debugging
         //Event is fired and caught in Server. Sever redirects the event to the client using the Client Callback.
         support.firePropertyChange(EventTypes.LOANREGISTERED, null, loan);

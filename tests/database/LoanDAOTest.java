@@ -9,10 +9,7 @@ import org.junit.jupiter.api.Test;
 import shared.materials.reading.Book;
 import shared.person.borrower.Borrower;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -39,8 +36,7 @@ class LoanDAOTest
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     assertDoesNotThrow(() -> {
-      loanDAO.create(book, borrower, LocalDate.now().plusMonths(1).toString(),
-          LocalDate.now().toString());
+      loanDAO.create(book, borrower);
     });
     assertEquals(1, loanDAO.getAllLoansByCPR(borrower.getCpr()).size());
 
@@ -51,8 +47,7 @@ class LoanDAOTest
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     assertEquals(1, MaterialDAOImpl.getInstance()
         .getNumberOfAvailableCopies(book.getMaterialID()));
-    loanDAO.create(book, borrower, LocalDate.now().plusMonths(1).toString(),
-        LocalDate.now().toString());
+    loanDAO.create(book, borrower);
     assertEquals(0, MaterialDAOImpl.getInstance()
         .getNumberOfAvailableCopies(book.getMaterialID()));
   }
@@ -100,8 +95,7 @@ class LoanDAOTest
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     Loan loan = loanDAO
-        .create(book, borrower, LocalDate.now().plusMonths(1).toString(),
-            LocalDate.now().toString());
+        .create(book, borrower);
 
     assertEquals(0, MaterialDAOImpl.getInstance()
         .getNumberOfAvailableCopies(book.getMaterialID()));

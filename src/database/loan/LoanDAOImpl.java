@@ -1,12 +1,9 @@
 package database.loan;
 
-import database.reservation.ReservationDAO;
-import database.reservation.ReservationDAOImpl;
 import shared.loan.ExtendedLoan1State;
 import shared.loan.ExtendedLoan2State;
 import shared.loan.NewLoanState;
 import database.material.MaterialCopyDAOImpl;
-import database.material.MaterialDAOImpl;
 import shared.person.Address;
 import shared.loan.Loan;
 import shared.materials.DVD;
@@ -54,7 +51,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
   }
 
   @Override public synchronized Loan create(Material material,
-      Borrower borrower, String deadline, String loanDate)
+      Borrower borrower)
   {
     try
     {
@@ -86,7 +83,7 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
 
 
             connection.commit();
-          return new Loan(material, borrower, loanDeadline.toString(), loanDate,
+          return new Loan(material, borrower, loanDeadline.toString(), today.toString(),
               null, generatedKey);
         }
     }
