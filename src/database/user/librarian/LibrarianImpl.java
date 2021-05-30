@@ -33,17 +33,38 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
     return instance;
   }
 
+  private boolean containsOnlyDigits(String str)
+  {
+    for (int i = 0; i < str.length(); i++)
+    {
+      try
+      {
+        Integer.parseInt(str);
+        return true;
+      }
+      catch (NumberFormatException e)
+      {
+        return false;
+      }
+    }
+    return false;
+  }
+
   @Override public Librarian create(int employee_no, String firstName,
       String lastName, String cpr, String tlfNumber, String email,
       Address address, String password) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      if ((employee_no <= 0) || (cpr == null || cpr.getBytes().length != 11 || !cpr.matches(".*\\d.*")
-          || !cpr.contains("-")) || (firstName == null) || (lastName == null)
-          || (email == null || !email.contains("@")) || tlfNumber == null
-          || tlfNumber.getBytes().length != 0 && !tlfNumber.contains("+45") || (
-          address == null) || (password == null))
+      String[] arr = cpr.split("-");
+      if ((employee_no <= 0) || (cpr.getBytes().length != 11 || (
+          !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1])) || !cpr
+          .contains("-")) || (firstName == null || !firstName
+          .matches("[a-zA-Z]+")) || (lastName == null || !lastName
+          .matches("[a-zA-Z]+")) || (email == null || !email.contains("@")) || (
+          tlfNumber == null || !tlfNumber.contains("+45") || !tlfNumber
+              .matches("^(\\+\\d{10}( )?)$")) || (address == null) || (password
+          == null))
       {
         throw new IllegalArgumentException();
       }
@@ -109,19 +130,26 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "SELECT employee_no, password " + "From librarian "
-              + "Where employee_no = ? AND password = ?");
-      stm.setInt(1, employee_no);
-      stm.setString(2, password);
-      ResultSet result = stm.executeQuery();
-
-      if (result.next())
+      if (employee_no <= 0 || password == null)
       {
-        return true;
+        throw new IllegalArgumentException();
       }
+      else
+      {
+        PreparedStatement stm = connection.prepareStatement(
+            "SELECT employee_no, password " + "From librarian "
+                + "Where employee_no = ? AND password = ?");
+        stm.setInt(1, employee_no);
+        stm.setString(2, password);
+        ResultSet result = stm.executeQuery();
+
+        if (result.next())
+        {
+          return true;
+        }
+      }
+      return false;
     }
-    return false;
   }
 
   @Override public boolean employeeNumberAlreadyExists(int employeeNo)
@@ -129,11 +157,18 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM librarian WHERE employee_no = ?");
-      stm.setInt(1, employeeNo);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      if (employeeNo <= 0)
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("SELECT * FROM librarian WHERE employee_no = ?");
+        stm.setInt(1, employeeNo);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 
@@ -142,11 +177,21 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM librarian WHERE cpr_no = ?");
-      stm.setString(1, cpr);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      String[] arr = cpr.split("-");
+      if (cpr.getBytes().length != 11
+          || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1]) || !cpr
+          .contains("-"))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("SELECT * FROM librarian WHERE cpr_no = ?");
+        stm.setString(1, cpr);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 
@@ -155,11 +200,18 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM librarian WHERE email = ?");
-      stm.setString(1, email);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      if (email == null || !email.contains("@"))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("SELECT * FROM librarian WHERE email = ?");
+        stm.setString(1, email);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 
@@ -168,11 +220,19 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection
-          .prepareStatement("SELECT * FROM librarian WHERE tel_no = ?");
-      stm.setString(1, phone);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      if (phone == null || !phone.contains("+45") || !phone
+          .matches("^(\\+\\d{10}( )?)$"))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection
+            .prepareStatement("SELECT * FROM librarian WHERE tel_no = ?");
+        stm.setString(1, phone);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 
@@ -181,14 +241,26 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement(
-          "SELECT * FROM librarian WHERE employee_no = ? AND cpr_no = ? AND email = ? AND tel_no = ?");
-      stm.setInt(1, employeeNo);
-      stm.setString(2, cpr);
-      stm.setString(3, email);
-      stm.setString(4, phone);
-      ResultSet result = stm.executeQuery();
-      return result.next();
+      String[] arr = cpr.split("-");
+      if ((employeeNo <= 0) || (cpr.getBytes().length != 11
+          || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1]) || !cpr
+          .contains("-")) || (email == null || !email.contains("@")) || (
+          phone == null || !phone.contains("+45") || !phone
+              .matches("^(\\+\\d{10}( )?)$")))
+      {
+        throw new IllegalArgumentException();
+      }
+      else
+      {
+        PreparedStatement stm = connection.prepareStatement(
+            "SELECT * FROM librarian WHERE employee_no = ? AND cpr_no = ? AND email = ? AND tel_no = ?");
+        stm.setInt(1, employeeNo);
+        stm.setString(2, cpr);
+        stm.setString(3, email);
+        stm.setString(4, phone);
+        ResultSet result = stm.executeQuery();
+        return result.next();
+      }
     }
   }
 }
