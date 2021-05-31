@@ -7,6 +7,7 @@ import shared.network.PropertyChangeSubject;
 
 import java.util.List;
 
+//Lilian
 public interface ReservationModelClient extends PropertyChangeSubject
 {
   /**

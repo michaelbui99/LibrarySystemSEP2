@@ -1,5 +1,6 @@
 package shared.util;
 
+//Kasper-Kutaiba-Michael-Lilian
 public class EventTypes
 {
   public static final String MATERIALREGISTERED = "MaterialRegistered";

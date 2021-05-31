@@ -23,6 +23,7 @@ public class AddUserVM
   private UserModelClient userModelClient;
   private StringProperty errorProperty;
 
+  //Kutaiba
   public AddUserVM(UserModelClient userModelClient)
   {
     this.userModelClient = userModelClient;

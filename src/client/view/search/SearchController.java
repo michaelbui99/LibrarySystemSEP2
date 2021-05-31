@@ -1,7 +1,5 @@
 package client.view.search;
 
-import client.core.ViewModelFactory;
-import shared.materials.Material;
 import client.view.ViewHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,9 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import shared.materials.Material;
 
 import java.io.IOException;
 
+//Lilian
 public class SearchController
 {
 

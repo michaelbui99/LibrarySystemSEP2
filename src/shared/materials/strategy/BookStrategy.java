@@ -5,6 +5,7 @@ import shared.materials.Material;
 
 import java.util.List;
 
+//Lilian
 //Concrete strategy
 public class BookStrategy implements SearchStrategy
 {

@@ -12,11 +12,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 
+//Michael
 public class MyLoansController
 {
   @FXML private Label warningLabel;
-  @FXML private Label selectedLoanLabel;
-
   @FXML private TableView<Loan> loanTableView;
   @FXML private TableColumn<String, Material> materialColumn;
   @FXML private TableColumn<String, Material> typeColumn;

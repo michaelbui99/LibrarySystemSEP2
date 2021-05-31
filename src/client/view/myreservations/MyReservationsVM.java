@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import shared.reservation.Reservation;
 import shared.util.EventTypes;
 
+//Lilian
 public class MyReservationsVM
 {
   private ObservableList<Reservation> activeReservations;

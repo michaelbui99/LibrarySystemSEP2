@@ -2,6 +2,7 @@ package shared.materials;
 
 import java.io.Serializable;
 
+//Lilian-Michael
 public abstract class Material implements MaterialInterface, Serializable
 {
   private int materialID, copyNumber;

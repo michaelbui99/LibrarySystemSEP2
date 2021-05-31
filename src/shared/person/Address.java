@@ -2,6 +2,7 @@ package shared.person;
 
 import java.io.Serializable;
 
+//Kasper
 public class Address implements Serializable
 {
   private int addressId ,zipCode;

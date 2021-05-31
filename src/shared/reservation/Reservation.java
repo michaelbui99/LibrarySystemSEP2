@@ -6,6 +6,7 @@ import shared.person.borrower.Borrower;
 import java.io.Serializable;
 import java.time.*;
 
+//Michael
 public class Reservation implements Serializable
 {
   private Material material;

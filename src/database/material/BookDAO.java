@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Lilian-Michael-Kasper-Kutaiba
 public interface BookDAO
 {
   /**

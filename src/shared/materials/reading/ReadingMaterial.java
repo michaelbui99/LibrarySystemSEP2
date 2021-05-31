@@ -4,6 +4,7 @@ import shared.materials.Material;
 
 import java.io.Serializable;
 
+//Lilian
 public abstract class ReadingMaterial extends Material implements Serializable
 {
   private int pageCount;
@@ -12,7 +13,6 @@ public abstract class ReadingMaterial extends Material implements Serializable
       String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, int pageCount)
   {
-    //TODO: INSERT URL IN CONSTRUCTOR
     super(materialID,copyNumber, title, targetAudience, description,tags, publisher, releaseDate, language, null, null);
 
     this.pageCount = pageCount;

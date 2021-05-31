@@ -13,6 +13,7 @@ import client.view.registermaterial.RegisterMaterialVM;
 import client.view.search.SearchVM;
 import client.view.stafflogin.StaffLogInVM;
 
+//Lilian
 public class ViewModelFactory
 {
   private static ViewModelFactory viewModelFactory;

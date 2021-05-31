@@ -10,12 +10,12 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 
+//Kutaiba
 public class MaterialModelManagerClient implements MaterialModelClient
 {
 
   private Client client;
   private PropertyChangeSupport support;
-  private Material selectMaterial;
 
   public MaterialModelManagerClient(Client client)
   {

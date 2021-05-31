@@ -6,6 +6,7 @@ import database.BaseDAO;
 
 import java.util.List;
 
+//Lilian
 //Concrete strategy
 public class DVDStrategy extends BaseDAO implements SearchStrategy
 {

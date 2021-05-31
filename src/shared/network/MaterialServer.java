@@ -9,6 +9,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+//Kutaiba-Lilian
 public interface MaterialServer extends Remote
 {
   int createMaterial(String title, String publisher,

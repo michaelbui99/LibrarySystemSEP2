@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Michael
 public interface LoanServer extends Remote
 {
   /**

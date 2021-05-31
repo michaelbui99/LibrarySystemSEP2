@@ -5,6 +5,7 @@ import shared.materials.Material;
 
 import java.util.List;
 
+//Lilian
 public class EBookStrategy implements SearchStrategy
 {
   private String materialType = "e_book";

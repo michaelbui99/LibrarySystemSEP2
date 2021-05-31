@@ -6,6 +6,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+//Michael
 public interface Server extends Remote
 {
   void start() throws RemoteException, AlreadyBoundException;

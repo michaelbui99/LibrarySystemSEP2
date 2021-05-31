@@ -8,6 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.NoSuchElementException;
 
+//Kutaiba-Kasper
 public interface UserServer extends Remote
 {
   /**

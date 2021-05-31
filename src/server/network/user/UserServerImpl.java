@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.NoSuchElementException;
 
+//Kutaiba
 public class UserServerImpl implements UserServer
 {
   private UserModelServer userModel;

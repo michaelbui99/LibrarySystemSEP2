@@ -8,6 +8,7 @@ import shared.person.borrower.Borrower;
 
 import java.util.NoSuchElementException;
 
+//Michael
 public class BorrowerContactInfoVM
 {
   private UserModelClient userModel;

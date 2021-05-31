@@ -63,6 +63,7 @@ public class RegisterMaterialController
 
   private RegisterMaterialVM registerMaterialVM;
 
+  //Kutaiba
   public void init(RegisterMaterialVM registerMaterialVM)
   {
     this.registerMaterialVM = registerMaterialVM;

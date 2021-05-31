@@ -27,6 +27,7 @@ public class CopiesVM
   private StringProperty languageProperty;
   private MaterialModelClient materialModel;
 
+  //Kutaiba
   public CopiesVM(MaterialModelClient materialModel)
   {
     this.materialModel = materialModel;

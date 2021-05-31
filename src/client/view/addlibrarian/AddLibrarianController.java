@@ -1,6 +1,5 @@
 package client.view.addlibrarian;
 
-import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +13,7 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
+//Kutaiba
 public class AddLibrarianController
 {
   @FXML private TextField lastName;

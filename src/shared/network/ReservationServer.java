@@ -8,6 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+//Michael-Lilian
 public interface ReservationServer extends Remote
 {
   /**
@@ -28,6 +29,6 @@ public interface ReservationServer extends Remote
    * @param client the Client to be registered as listener/ClientCallback
    * @see LoanServer
    */
-  public void registerClientCallBack(ClientCallback client) throws RemoteException;
+  void registerClientCallBack(ClientCallback client) throws RemoteException;
   List<Reservation> getAllReservationsByCPR(String cpr) throws RemoteException;
 }

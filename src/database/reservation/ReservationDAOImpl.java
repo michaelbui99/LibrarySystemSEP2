@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Lilian-Michael
 public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
 {
   private static ReservationDAO instance;

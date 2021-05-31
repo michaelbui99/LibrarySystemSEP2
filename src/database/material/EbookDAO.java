@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Lilian-Michael-Kasper-Kutaiba
 public interface EbookDAO
 {
   int create(int material_id, int page_no, MaterialCreator author,

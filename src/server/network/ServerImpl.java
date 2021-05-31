@@ -20,6 +20,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+//Michael-Kutaiba-Lilian-Kasper
 public class ServerImpl implements Server
 {
   private LoanModelServer loanModel;

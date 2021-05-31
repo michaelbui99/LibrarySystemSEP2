@@ -10,6 +10,7 @@ import shared.util.EventTypes;
 
 import java.util.NoSuchElementException;
 
+//Kasper-Michael-Lilian
 public class LoanReserveVM
 {
   private StringProperty materialInfoProp;

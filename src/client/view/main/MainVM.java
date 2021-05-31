@@ -4,6 +4,7 @@ import client.model.user.UserModelClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+//Kutaiba
 public class MainVM
 {
 

@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Michael
 class ClientTest
 {
   private Client client;

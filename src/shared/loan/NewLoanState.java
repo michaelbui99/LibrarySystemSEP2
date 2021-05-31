@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+//Michael
 public class NewLoanState implements LoanState, Serializable
 {
 

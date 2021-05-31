@@ -4,6 +4,7 @@ import shared.materials.Material;
 
 import java.io.Serializable;
 
+//Lilian
 public abstract class AudioMaterial extends Material implements Serializable
 {
   private int playDuration;
@@ -11,7 +12,6 @@ public abstract class AudioMaterial extends Material implements Serializable
       String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, int playDuration, String url)
   {
-    //TODO: Add
     super(materialID,copyNumber, title, targetAudience, description,tags, publisher, releaseDate, language, url, null);
     this.playDuration = playDuration;
   }

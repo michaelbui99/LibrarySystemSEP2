@@ -6,6 +6,7 @@ import database.BaseDAO;
 
 import java.util.List;
 
+//Lilian
 public class CDStrategy extends BaseDAO implements SearchStrategy
 {
   private String materialType = "cd";

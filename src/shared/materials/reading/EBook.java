@@ -4,6 +4,7 @@ import shared.person.MaterialCreator;
 
 import java.io.Serializable;
 
+//Lilian
 public class EBook extends ReadingMaterial implements Serializable
 {
   private String licenseNr;

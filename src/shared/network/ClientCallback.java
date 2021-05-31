@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+//Michael
 public interface ClientCallback extends Remote
 {
   /**

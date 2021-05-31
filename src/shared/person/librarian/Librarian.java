@@ -4,6 +4,7 @@ import shared.person.Address;
 
 import java.io.Serializable;
 
+//Kasper
 public class Librarian implements Serializable
 {
 

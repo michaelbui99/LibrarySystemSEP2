@@ -14,6 +14,7 @@ import shared.util.EventTypes;
 
 import java.util.NoSuchElementException;
 
+//Michael
 public class MyLoansVM
 {
   private ObservableList<Loan> activeLoans;

@@ -5,6 +5,7 @@ import shared.materials.Material;
 import java.io.Serializable;
 import java.util.List;
 
+//Lilian
 public interface SearchStrategy extends Serializable
 {
   //Strategy

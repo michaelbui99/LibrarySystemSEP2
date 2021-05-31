@@ -4,6 +4,7 @@ import shared.person.Address;
 
 import java.io.Serializable;
 
+//Kasper
 public class Borrower implements Serializable
 {
   private String firstName, lastName, cpr, tlfNumber, email, password;

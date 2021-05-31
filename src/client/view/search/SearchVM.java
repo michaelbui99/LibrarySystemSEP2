@@ -26,6 +26,7 @@ public class SearchVM
   private MaterialModelClient materialModelClient;
   private StringProperty errorLabel;
 
+  //Lilian
   public SearchVM(MaterialModelClient materialModelClient)
   {
     this.materialModelClient = materialModelClient;

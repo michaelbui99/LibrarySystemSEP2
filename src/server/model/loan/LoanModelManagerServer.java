@@ -1,5 +1,4 @@
 package server.model.loan;
-//Michael
 import database.loan.LoanDAO;
 import database.material.MaterialDAO;
 import database.reservation.ReservationDAO;
@@ -15,6 +14,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Michael
 public class LoanModelManagerServer implements LoanModelServer
 {
   private PropertyChangeSupport support;

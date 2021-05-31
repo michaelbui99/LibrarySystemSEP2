@@ -1,6 +1,5 @@
 package client.view.stafflogin;
 
-import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
+//Kutaiba
 public class StaffLogInController
 {
   @FXML private Label errorMessage;

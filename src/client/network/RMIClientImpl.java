@@ -1,24 +1,23 @@
 package client.network;
 
-import shared.materials.strategy.SearchStrategy;
-import shared.network.ServerConnectionException;
-import shared.reservation.Reservation;
-import shared.person.Address;
+import shared.Server;
 import shared.loan.Loan;
 import shared.materials.Material;
 import shared.materials.Place;
+import shared.materials.strategy.SearchStrategy;
+import shared.network.ClientCallback;
+import shared.network.PropertyChangeSubject;
+import shared.network.ServerConnectionException;
+import shared.person.Address;
 import shared.person.MaterialCreator;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
-import shared.network.ClientCallback;
-import shared.Server;
-import shared.network.PropertyChangeSubject;
+import shared.reservation.Reservation;
 import shared.util.Constants;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -27,6 +26,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Kutaiba-Kasper-Michael-Lilian
 public class RMIClientImpl
     implements RMIClient, ClientCallback, Client, PropertyChangeSubject
 {

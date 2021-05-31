@@ -10,6 +10,7 @@ import client.model.user.UserModelClient;
 import client.model.user.UserModelManagerClient;
 import client.network.Client;
 
+//Lilian
 public class ModelFactoryClient
 {
   private static ModelFactoryClient modelFactory;

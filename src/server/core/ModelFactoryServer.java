@@ -14,6 +14,7 @@ import server.model.reservation.ReservationModelServer;
 import server.model.user.UserModelManagerServer;
 import server.model.user.UserModelServer;
 
+//Lilian
 public class ModelFactoryServer
 {
   private static ModelFactoryServer instance;

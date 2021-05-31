@@ -3,6 +3,7 @@ package shared.person;
 import java.io.Serializable;
 import java.sql.Date;
 
+//Kasper
 public class MaterialCreator implements Serializable
 {
   private String fName, lName, country, dob;

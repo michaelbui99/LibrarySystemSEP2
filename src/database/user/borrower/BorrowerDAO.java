@@ -6,6 +6,7 @@ import shared.person.borrower.Borrower;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
+//Kasper-Kutaiba
 public interface BorrowerDAO
 {
   /**

@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Kasper-Kutaiba
 public class BorrowerImpl extends BaseDAO implements BorrowerDAO
 {
 
