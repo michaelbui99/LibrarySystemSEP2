@@ -1,11 +1,10 @@
 package database;
 
-import database.BaseDAO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+//Michael-Kutaiba-Lilian-kasper
 public class DatabaseBuilder extends BaseDAO
 {
 

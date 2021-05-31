@@ -1,10 +1,12 @@
 package client.view.adduser;
 
-import client.core.ModelFactoryClient;
 import client.model.user.UserModelClient;
+import client.view.ViewHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.person.Address;
+
+import java.io.IOException;
 
 public class AddUserVM
 {
@@ -21,6 +23,7 @@ public class AddUserVM
   private UserModelClient userModelClient;
   private StringProperty errorProperty;
 
+  //Kutaiba
   public AddUserVM(UserModelClient userModelClient)
   {
     this.userModelClient = userModelClient;
@@ -92,66 +95,70 @@ public class AddUserVM
     return errorProperty;
   }
 
-  public void addUser()
+  public void addUser() throws IOException
   {
 
-    if (cprAlreadyExists())
-    {
-      errorProperty
-          .setValue("Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
-    }
-    else if (emailAlreadyExists())
-    {
-      errorProperty
-          .setValue("Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
-    }
-    else if (phoneNumberAlreadyExists())
-    {
-      errorProperty
-          .setValue("Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
-    }
-    else if (userFieldsAreEmpty())
+    if (userFieldsAreEmpty())
     {
       errorProperty.setValue("nødvendige felter er tomme");
     }
     else
     {
-      addNewUser();
+      if (!cprAlreadyExists())
+      {
+        System.out.println("here");
+        errorProperty.setValue(
+            "Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
+      }
+      else if (emailAlreadyExists())
+      {
+        errorProperty.setValue(
+            "Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
+      }
+      else if (phoneNumberAlreadyExists())
+      {
+        errorProperty.setValue(
+            "Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
+      }
+      else
+      {
+        errorProperty.setValue("");
+        addNewUser();
+        ViewHandler.getInstance().openView("Main");
+
+      }
     }
   }
 
   private void addNewUser()
   {
     errorProperty.setValue("");
-    ModelFactoryClient.getInstance().getUserModelClient()
-        .registerBorrower(cprProperty.get(), firstNameProperty.get(),
-            lastNameProperty.get(), emailProperty.get(), phoneNoProperty.get(),
-            new Address(cityProperty.get(), streetNameProperty.get(),
-                Integer.parseInt(zipCodeProperty.get()),
-                streetNoProperty.get()), passwordProperty.get());
+    userModelClient.registerBorrower(cprProperty.get(), firstNameProperty.get(),
+        lastNameProperty.get(), emailProperty.get(), phoneNoProperty.get(),
+        new Address(cityProperty.get(), streetNameProperty.get(),
+            Integer.parseInt(zipCodeProperty.get()), streetNoProperty.get()),
+        passwordProperty.get());
   }
 
   public boolean cprAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
-        .borrowerCprNumberAlreadyExists(cprProperty.get());
+    return userModelClient.borrowerCprNumberAlreadyExists(cprProperty.get());
   }
 
   public boolean emailAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
-        .borrowerEmailAlreadyExists(emailProperty.get());
+    return userModelClient.borrowerEmailAlreadyExists(emailProperty.get());
   }
 
   public boolean phoneNumberAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
+    return userModelClient
         .borrowerPhoneNumberAlreadyExists(phoneNoProperty.get());
   }
 
   public boolean borrowerAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
+    return userModelClient
         .borrowerAlreadyExists(cprProperty.get(), emailProperty.get(),
             phoneNoProperty.get());
   }

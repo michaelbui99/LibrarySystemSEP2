@@ -2,20 +2,17 @@ package client.view.borrower;
 
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 import java.io.IOException;
 
+//Kutaiba
 public class BorrowerWindowController
 {
-  @FXML
-  private Label cprLabel;
+  private BorrowerWindowVM borrowerWindowVM;
 
-  public void init()
+  public void init(BorrowerWindowVM borrowerWindowVM)
   {
-    /*cprLabel.textProperty().bind(ViewModelFactory.getInstance().getUserVM()
-        .cprPropertyProperty());*/
+    this.borrowerWindowVM = borrowerWindowVM;
   }
 
   public void onButtonLoanReserve(ActionEvent actionEvent) throws IOException
@@ -25,7 +22,7 @@ public class BorrowerWindowController
 
   public void OnButtonMyMaterial(ActionEvent actionEvent) throws IOException
   {
-//    ViewModelFactory.getInstance().getUserVM().setBorrowerCPR();
+    //    ViewModelFactory.getInstance().getUserVM().setBorrowerCPR();
     ViewHandler.getInstance().openView("MyLoans");
   }
 
@@ -34,7 +31,8 @@ public class BorrowerWindowController
     ViewHandler.getInstance().openView("Chat");
   }
 
-  public void onButtonViewReservations(ActionEvent actionEvent) throws IOException
+  public void onButtonViewReservations(ActionEvent actionEvent)
+      throws IOException
   {
     ViewHandler.getInstance().openView("MyReservations");
   }

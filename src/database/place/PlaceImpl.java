@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Kutaiba
 public class PlaceImpl extends BaseDAO implements PlaceDAO
 {
   private static PlaceImpl place;

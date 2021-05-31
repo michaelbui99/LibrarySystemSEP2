@@ -1,11 +1,11 @@
 package client.core;
 
-import client.model.user.UserModelManagerClient;
 import client.view.addlibrarian.AddLibrarianVM;
 import client.view.adduser.AddUserVM;
+import client.view.borrower.BorrowerWindowVM;
 import client.view.borrowercontactinfo.BorrowerContactInfoVM;
-import client.view.loanReserve.LoanReserveVM;
 import client.view.copies.CopiesVM;
+import client.view.loanReserve.LoanReserveVM;
 import client.view.main.MainVM;
 import client.view.myLoans.MyLoansVM;
 import client.view.myreservations.MyReservationsVM;
@@ -13,6 +13,7 @@ import client.view.registermaterial.RegisterMaterialVM;
 import client.view.search.SearchVM;
 import client.view.stafflogin.StaffLogInVM;
 
+//Lilian
 public class ViewModelFactory
 {
   private static ViewModelFactory viewModelFactory;
@@ -37,13 +38,14 @@ public class ViewModelFactory
   private StaffLogInVM staffLogInVM;
   private MyReservationsVM myReservationsVM;
   private BorrowerContactInfoVM borrowerContactInfoVM;
+  private BorrowerWindowVM borrowerWindowVM;
 
   public AddUserVM getAddUserVM()
   {
     if (addUserVM == null)
     {
-      addUserVM = new AddUserVM(ModelFactoryClient.getInstance()
-          .getUserModelClient());
+      addUserVM = new AddUserVM(
+          ModelFactoryClient.getInstance().getUserModelClient());
     }
     return addUserVM;
   }
@@ -52,17 +54,20 @@ public class ViewModelFactory
   {
     if (addLibrarianVM == null)
     {
-      addLibrarianVM = new AddLibrarianVM(ModelFactoryClient.getInstance()
-          .getUserModelClient());
+      addLibrarianVM = new AddLibrarianVM(
+          ModelFactoryClient.getInstance().getUserModelClient());
     }
     return addLibrarianVM;
   }
 
-  public LoanReserveVM getBorrowReserveVM()
+  public LoanReserveVM getLoanReserveVM()
   {
     if (loanReserveVM == null)
     {
-      loanReserveVM = new LoanReserveVM(ModelFactoryClient.getInstance().getReservationModelClient());
+      loanReserveVM = new LoanReserveVM(
+          ModelFactoryClient.getInstance().getReservationModelClient(),
+          ModelFactoryClient.getInstance().getLoanModelClient(),
+          ModelFactoryClient.getInstance().getMaterialModelClient());
     }
     return loanReserveVM;
   }
@@ -71,8 +76,8 @@ public class ViewModelFactory
   {
     if (copiesVM == null)
     {
-      copiesVM = new CopiesVM(ModelFactoryClient.getInstance()
-          .getMaterialModelClient());
+      copiesVM = new CopiesVM(
+          ModelFactoryClient.getInstance().getMaterialModelClient());
     }
     return copiesVM;
   }
@@ -81,7 +86,8 @@ public class ViewModelFactory
   {
     if (mainVM == null)
     {
-      mainVM = new MainVM(ModelFactoryClient.getInstance().getUserModelClient());
+      mainVM = new MainVM(
+          ModelFactoryClient.getInstance().getUserModelClient());
     }
     return mainVM;
   }
@@ -90,7 +96,9 @@ public class ViewModelFactory
   {
     if (myLoansVM == null)
     {
-      myLoansVM = new MyLoansVM(ModelFactoryClient.getInstance().getLoanModelClient(), ModelFactoryClient.getInstance().getUserModelClient());
+      myLoansVM = new MyLoansVM(
+          ModelFactoryClient.getInstance().getLoanModelClient(),
+          ModelFactoryClient.getInstance().getUserModelClient());
     }
     return myLoansVM;
   }
@@ -99,7 +107,8 @@ public class ViewModelFactory
   {
     if (registerMaterialVM == null)
     {
-      registerMaterialVM = new RegisterMaterialVM(ModelFactoryClient.getInstance().getReservationModelClient());
+      registerMaterialVM = new RegisterMaterialVM(
+          ModelFactoryClient.getInstance().getMaterialModelClient());
     }
     return registerMaterialVM;
   }
@@ -108,7 +117,8 @@ public class ViewModelFactory
   {
     if (searchVM == null)
     {
-      searchVM = new SearchVM(ModelFactoryClient.getInstance().getMaterialModelClient());
+      searchVM = new SearchVM(
+          ModelFactoryClient.getInstance().getMaterialModelClient());
     }
     return searchVM;
   }
@@ -117,7 +127,8 @@ public class ViewModelFactory
   {
     if (staffLogInVM == null)
     {
-      staffLogInVM = new StaffLogInVM(ModelFactoryClient.getInstance().getUserModelClient());
+      staffLogInVM = new StaffLogInVM(
+          ModelFactoryClient.getInstance().getUserModelClient());
     }
     return staffLogInVM;
   }
@@ -126,8 +137,9 @@ public class ViewModelFactory
   {
     if (myReservationsVM == null)
     {
-      myReservationsVM = new MyReservationsVM(ModelFactoryClient.getInstance().getReservationModelClient(), ModelFactoryClient.getInstance()
-          .getUserModelClient());
+      myReservationsVM = new MyReservationsVM(
+          ModelFactoryClient.getInstance().getReservationModelClient(),
+          ModelFactoryClient.getInstance().getUserModelClient());
     }
     return myReservationsVM;
   }
@@ -136,9 +148,19 @@ public class ViewModelFactory
   {
     if (borrowerContactInfoVM == null)
     {
-      borrowerContactInfoVM = new BorrowerContactInfoVM(ModelFactoryClient.getInstance()
-          .getUserModelClient());
+      borrowerContactInfoVM = new BorrowerContactInfoVM(
+          ModelFactoryClient.getInstance().getUserModelClient());
     }
     return borrowerContactInfoVM;
+  }
+
+  public BorrowerWindowVM getBorrowerWindowVM()
+  {
+    if (borrowerWindowVM == null)
+    {
+      borrowerWindowVM = new BorrowerWindowVM(
+          ModelFactoryClient.getInstance().getUserModelClient());
+    }
+    return borrowerWindowVM;
   }
 }

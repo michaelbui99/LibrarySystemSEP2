@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
+//Kutaiba
 public class AdministrationController
 {
   public void init()
@@ -49,8 +50,7 @@ public class AdministrationController
     ViewHandler.getInstance().openView("RegisterMaterial");
   }
 
-  @FXML
-  void onBorrowerContactButton(ActionEvent event) throws IOException
+  @FXML void onBorrowerContactButton(ActionEvent event) throws IOException
   {
     ViewHandler.getInstance().openView("BorrowerContactInfo");
   }

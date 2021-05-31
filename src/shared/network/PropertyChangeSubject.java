@@ -2,6 +2,7 @@ package shared.network;
 
 import java.beans.PropertyChangeListener;
 
+//Lilian
 public interface PropertyChangeSubject
 {
   void addPropertyChangeListener(String name, PropertyChangeListener listener);

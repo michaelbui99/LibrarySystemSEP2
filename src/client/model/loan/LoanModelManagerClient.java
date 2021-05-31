@@ -12,6 +12,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Michael
 public class LoanModelManagerClient implements LoanModelClient
 {
 

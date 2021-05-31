@@ -4,7 +4,7 @@ import shared.materials.Material;
 import shared.materials.MaterialList;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import database.material.*;
 
 import java.beans.PropertyChangeListener;
@@ -12,15 +12,34 @@ import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.List;
 
+//Kutaiba-Lilian
 public class MaterialModelManagerServer implements MaterialModelServer
 {
   private PropertyChangeSupport support;
   private MaterialList materialList;
   private SearchStrategy searchStrategy;
   private Material selectedMaterial;
+  
+  private AudioBookDAO audioBookDAO;
+  private BookDAO bookDAO;
+  private EbookDAO ebookDAO;
+  private CDDAO cddao;
+  private DVDDAO dvddao;
+  private MaterialDAO materialDAO;
+  private MaterialCopyDAO materialCopyDAO;
 
-  public MaterialModelManagerServer()
+  public MaterialModelManagerServer(AudioBookDAO audioBookDAO, BookDAO bookDAO,
+      EbookDAO ebookDAO, CDDAO cddao, DVDDAO dvddao, MaterialDAO materialDAO,
+      MaterialCopyDAO materialCopyDAO)
   {
+    this.audioBookDAO = audioBookDAO;
+    this.bookDAO = bookDAO;
+    this.ebookDAO = ebookDAO;
+    this.cddao = cddao;
+    this.dvddao = dvddao;
+    this.materialDAO = materialDAO;
+    this.materialCopyDAO = materialCopyDAO;
+
     selectedMaterial = null;
     support = new PropertyChangeSupport(this);
     materialList = new MaterialList();
@@ -33,7 +52,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     int id = 0;
     try
     {
-      id = MaterialDAOImpl.getInstance()
+      id = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, keywords);
     }
@@ -52,10 +71,10 @@ public class MaterialModelManagerServer implements MaterialModelServer
     int materialID = 0;
     try
     {
-      materialID = MaterialDAOImpl.getInstance()
+      materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      BookDAOImpl.getInstance()
+      bookDAO
           .create(materialID, isbn, pageCount, author, place);
     }
     catch (SQLException throwables)
@@ -69,8 +88,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      BookDAOImpl.getInstance().createBookCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      bookDAO.createBookCopy(materialID,
+          materialDAO.getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -82,7 +101,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      BookDAOImpl.getInstance()
+      bookDAO
           .deleteBookCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
@@ -99,7 +118,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     boolean bookIn = false;
     try
     {
-      bookIn = BookDAOImpl.getInstance()
+      bookIn = bookDAO
           .bookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, isbn, pageCount, author, genre);
     }
@@ -118,10 +137,10 @@ public class MaterialModelManagerServer implements MaterialModelServer
     int materialID = 0;
     try
     {
-      materialID = MaterialDAOImpl.getInstance()
+      materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      DVDDAOImpl.getInstance()
+      dvddao
           .create(materialID, subtitlesLanguage, playDuration, place);
     }
     catch (SQLException throwables)
@@ -135,8 +154,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      DVDDAOImpl.getInstance().createDVDCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      dvddao.createDVDCopy(materialID,
+          materialDAO.getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -148,7 +167,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      DVDDAOImpl.getInstance()
+      dvddao
           .deleteDVDCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
@@ -164,7 +183,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     boolean dvdIn = false;
     try
     {
-      dvdIn = DVDDAOImpl.getInstance()
+      dvdIn = dvddao
           .dvdAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, genre);
     }
@@ -183,10 +202,10 @@ public class MaterialModelManagerServer implements MaterialModelServer
     int materialID = 0;
     try
     {
-      materialID = MaterialDAOImpl.getInstance()
+      materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      CDDAOImpl.getInstance().create(materialID, playDuration, place);
+      cddao.create(materialID, playDuration, place);
     }
     catch (SQLException throwables)
     {
@@ -199,8 +218,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      CDDAOImpl.getInstance().createCDCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      cddao.createCDCopy(materialID,
+          materialDAO.getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -212,7 +231,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      CDDAOImpl.getInstance()
+      cddao
           .deleteCDCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
@@ -228,7 +247,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     boolean cdIn = false;
     try
     {
-      cdIn = CDDAOImpl.getInstance()
+      cdIn = cddao
           .cdAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, genre);
     }
@@ -247,10 +266,10 @@ public class MaterialModelManagerServer implements MaterialModelServer
     int materialID = 0;
     try
     {
-      materialID = MaterialDAOImpl.getInstance()
+      materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      EbookDAOImpl.getInstance()
+      ebookDAO
           .create(materialID, pageCount, author, licenseNr);
     }
     catch (SQLException throwables)
@@ -264,8 +283,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      EbookDAOImpl.getInstance().createEBookCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      ebookDAO.createEBookCopy(materialID,
+          materialDAO.getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -277,7 +296,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      EbookDAOImpl.getInstance()
+      ebookDAO
           .deleteEBookCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
@@ -294,7 +313,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     boolean eBookIn = false;
     try
     {
-      eBookIn = EbookDAOImpl.getInstance()
+      eBookIn = ebookDAO
           .eBookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, pageCount, licenseNr, genre, author);
     }
@@ -313,10 +332,10 @@ public class MaterialModelManagerServer implements MaterialModelServer
     int materialID = 0;
     try
     {
-      materialID = MaterialDAOImpl.getInstance()
+      materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      AudioBookDAOImpl.getInstance().create(materialID, playDuration, author);
+      audioBookDAO.create(materialID, playDuration, author);
     }
     catch (SQLException throwables)
     {
@@ -329,8 +348,8 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      AudioBookDAOImpl.getInstance().createAudioBookCopy(materialID,
-          MaterialDAOImpl.getInstance().getLatestCopyNo(materialID) + 1);
+      audioBookDAO.createAudioBookCopy(materialID,
+          materialDAO.getLatestCopyNo(materialID) + 1);
     }
     catch (SQLException throwables)
     {
@@ -342,7 +361,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      AudioBookDAOImpl.getInstance()
+      audioBookDAO
           .deleteAudioBookCopy(materialID, copyNo);
     }
     catch (SQLException throwables)
@@ -359,7 +378,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
     boolean audioBookIn = false;
     try
     {
-      audioBookIn = AudioBookDAOImpl.getInstance()
+      audioBookIn = audioBookDAO
           .audioBookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, author, genre);
     }
@@ -382,7 +401,7 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public int numberOfAvailableCopies()
   {
-    return MaterialDAOImpl.getInstance()
+    return materialDAO
         .getNumberOfAvailableCopies(selectedMaterial.getMaterialID());
   }
 
@@ -398,12 +417,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
   @Override public int totalNumberOfCopies(int materialID)
   {
-    return MaterialDAOImpl.getInstance().totalNumberOfCopies(materialID);
+    return materialDAO.totalNumberOfCopies(materialID);
   }
 
   @Override public void deleteMaterial(int materialID)
   {
-    MaterialDAOImpl.getInstance().deleteMaterial(materialID);
+    materialDAO.deleteMaterial(materialID);
   }
 
   @Override public void addPropertyChangeListener(String name,

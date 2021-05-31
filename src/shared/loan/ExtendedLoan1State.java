@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+//Michael
 public class ExtendedLoan1State implements LoanState, Serializable
 {
   @Override public void extendLoan(Loan loan)

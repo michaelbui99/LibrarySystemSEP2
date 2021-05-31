@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Lilian-Michael-Kasper-Kutaiba
 public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 {
 

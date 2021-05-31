@@ -1,9 +1,9 @@
 package client.core;
 
-import client.network.Client;
 import client.network.RMIClient;
 import client.network.RMIClientImpl;
 
+//Lilian
 public class ClientFactory
 {
   private static ClientFactory clientFactory;

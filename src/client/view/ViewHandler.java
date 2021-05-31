@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+//Lilian
 import java.io.IOException;
 
 public class ViewHandler extends Application
@@ -55,7 +56,7 @@ public class ViewHandler extends Application
             .setLocation(getClass().getResource("adduser/" + id + "View.fxml"));
         root = loader.load();
         AddUserController addUserController = loader.getController();
-        addUserController.init();
+        addUserController.init(ViewModelFactory.getInstance().getAddUserVM());
         stage.setTitle("Opret ny låner");
         break;
       case "AddLibrarian":
@@ -63,16 +64,17 @@ public class ViewHandler extends Application
             getClass().getResource("addlibrarian/" + id + "View.fxml"));
         root = loader.load();
         AddLibrarianController addLibrarianController = loader.getController();
-        addLibrarianController.init();
+        addLibrarianController
+            .init(ViewModelFactory.getInstance().getAddLibrarianVM());
         stage.setTitle("Opret bibliotekar");
         break;
       case "LoanReserve":
         loader.setLocation(
             getClass().getResource("loanreserve/" + id + "View.fxml"));
         root = loader.load();
-        LoanReserveController loanReserveController = loader
-            .getController();
-        loanReserveController.init();
+        LoanReserveController loanReserveController = loader.getController();
+        loanReserveController
+            .init(ViewModelFactory.getInstance().getLoanReserveVM());
         stage.setTitle("Lån/reserver");
         break;
       case "Copies":
@@ -80,30 +82,33 @@ public class ViewHandler extends Application
             .setLocation(getClass().getResource("copies/" + id + "View.fxml"));
         root = loader.load();
         CopiesController copiesController = loader.getController();
-        copiesController.init();
+        copiesController.init(ViewModelFactory.getInstance().getCopiesVM());
         stage.setTitle("Tilføj/Fjern kopi");
         break;
       case "Main":
         loader.setLocation(getClass().getResource("main/" + id + "View.fxml"));
         root = loader.load();
         MainController mainController = loader.getController();
-        mainController.init();
+        mainController.init(ViewModelFactory.getInstance().getMainVM());
         stage.setTitle("Login");
         break;
       case "MyLoans":
-        loader.setLocation(
-            getClass().getResource("myloans/" + id + "View.fxml"));
+        loader
+            .setLocation(getClass().getResource("myloans/" + id + "View.fxml"));
         root = loader.load();
         MyLoansController myLoansController = loader.getController();
-        myLoansController.init(ViewModelFactory.getInstance().getMyMaterialVM());
+        myLoansController
+            .init(ViewModelFactory.getInstance().getMyMaterialVM());
         stage.setTitle("Mine aktive lån");
         break;
       case "MyReservations":
         loader.setLocation(
             getClass().getResource("myreservations/" + id + "View.fxml"));
         root = loader.load();
-        MyReservationsController myReservationsController = loader.getController();
-        myReservationsController.init();
+        MyReservationsController myReservationsController = loader
+            .getController();
+        myReservationsController
+            .init(ViewModelFactory.getInstance().getMyReservationsVM());
         stage.setTitle("Mine aktive reservationer");
         break;
       case "RegisterMaterial":
@@ -112,7 +117,8 @@ public class ViewHandler extends Application
         root = loader.load();
         RegisterMaterialController registerMaterialController = loader
             .getController();
-        registerMaterialController.init();
+        registerMaterialController
+            .init(ViewModelFactory.getInstance().getRegisterMaterialVM());
         stage.setTitle("Register Materiale");
         break;
       case "Search":
@@ -120,7 +126,7 @@ public class ViewHandler extends Application
             .setLocation(getClass().getResource("search/" + id + "View.fxml"));
         root = loader.load();
         SearchController searchController = loader.getController();
-        searchController.init();
+        searchController.init(ViewModelFactory.getInstance().getSearchVM());
         stage.setTitle("Søg efter materiale");
         break;
       case "StaffLogin":
@@ -128,14 +134,18 @@ public class ViewHandler extends Application
             getClass().getResource("stafflogin/" + id + "View.fxml"));
         root = loader.load();
         StaffLogInController staffLogInController = loader.getController();
-        staffLogInController.init();
+        staffLogInController
+            .init(ViewModelFactory.getInstance().getStaffLogInVM());
         stage.setTitle("Login for medarbejdere");
         break;
       case "BorrowerWindow":
-        loader.setLocation(getClass().getResource("borrower/" + id + "View.fxml"));
+        loader.setLocation(
+            getClass().getResource("borrower/" + id + "View.fxml"));
         root = loader.load();
-        BorrowerWindowController borrowerWindowController = loader.getController();
-        borrowerWindowController.init();
+        BorrowerWindowController borrowerWindowController = loader
+            .getController();
+        borrowerWindowController
+            .init(ViewModelFactory.getInstance().getBorrowerWindowVM());
         stage.setTitle("Lånerside");
         break;
       case "Administration":
@@ -151,8 +161,10 @@ public class ViewHandler extends Application
         loader.setLocation(
             getClass().getResource("borrowercontactinfo/" + id + "View.fxml"));
         root = loader.load();
-        BorrowerContactInfoController borrowerContactInfoController = loader.getController();
-        borrowerContactInfoController.init(ViewModelFactory.getInstance().getBorrowerContactInfoVM());
+        BorrowerContactInfoController borrowerContactInfoController = loader
+            .getController();
+        borrowerContactInfoController
+            .init(ViewModelFactory.getInstance().getBorrowerContactInfoVM());
         stage.setTitle("Vis Lånerkontaktoplysninger");
         break;
     }

@@ -1,11 +1,11 @@
-package client.model.material.strategy;
+package shared.materials.strategy;
 
 import shared.materials.Material;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 
+//Lilian
 public interface SearchStrategy extends Serializable
 {
   //Strategy

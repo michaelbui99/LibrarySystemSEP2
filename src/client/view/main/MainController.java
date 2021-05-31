@@ -1,6 +1,5 @@
 package client.view.main;
 
-import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
+//Kutaiba
 public class MainController
 {
   @FXML private Label errorMessage;
@@ -19,12 +19,16 @@ public class MainController
   @FXML private Label cprError;
   @FXML private Label passwordError;
 
-  public void init()
+  private MainVM mainVM;
+
+  public void init(MainVM mainVM)
   {
+    this.mainVM = mainVM;
+
     password.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getMainVM().passwordProperty());
+        mainVM.passwordProperty());
     cprNo.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getMainVM().cprProperty());
+        mainVM.cprProperty());
   }
 
   @FXML public void onButtonStaffLogin(ActionEvent actionEvent)
@@ -40,7 +44,7 @@ public class MainController
 
   @FXML public void OnButtonLogin(ActionEvent actionEvent) throws IOException
   {
-    if (ViewModelFactory.getInstance().getMainVM().login())
+    if (mainVM.login())
     {
       ViewHandler.getInstance().openView("BorrowerWindow");
     }
@@ -57,8 +61,9 @@ public class MainController
 
   @FXML public void onTypedCprCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getMainVM().cprProperty().get();
-    if (arg.isEmpty() || !arg.matches(".*\\d.*") || !arg.contains("-") || arg.length() != 11)
+    String arg = mainVM.cprProperty().get();
+    if (arg.isEmpty() || !arg.matches(".*\\d.*") || !arg.contains("-")
+        || arg.length() != 11)
     {
       cprError.setVisible(true);
     }
@@ -72,7 +77,8 @@ public class MainController
   {
     try
     {
-      String arg = ViewModelFactory.getInstance().getMainVM().passwordProperty().get();
+      String arg = mainVM.passwordProperty()
+          .get();
       if (arg.isEmpty())
       {
         passwordError.setVisible(true);
@@ -82,7 +88,9 @@ public class MainController
         passwordError.setVisible(false);
       }
 
-    }catch (Exception e){
+    }
+    catch (Exception e)
+    {
 
     }
 

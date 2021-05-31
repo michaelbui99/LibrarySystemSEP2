@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Lilian-Michael-Kasper-Kutaiba
 public class CDDAOImpl extends BaseDAO implements CDDAO
 {
   private static CDDAO instance;

@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+//Lilian
 public class ReservationServerImpl implements ReservationServer
 {
   private ReservationModelServer reservationModel;
@@ -46,7 +47,6 @@ public class ReservationServerImpl implements ReservationServer
           e.printStackTrace();
           reservationModel.removePropertyChangeListener(this);
         }
-        //TODO: Implement reservationRegistered callback method on Client and call it here. Catch remoteexception and unsubscribe as listener
       }
     };
     reservationModel.addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);

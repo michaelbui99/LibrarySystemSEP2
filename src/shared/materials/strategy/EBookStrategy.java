@@ -1,12 +1,11 @@
-package client.model.material.strategy;
+package shared.materials.strategy;
 
 import database.material.EbookDAOImpl;
 import shared.materials.Material;
-import database.material.MaterialDAOImpl;
 
-import java.sql.SQLException;
 import java.util.List;
 
+//Lilian
 public class EBookStrategy implements SearchStrategy
 {
   private String materialType = "e_book";

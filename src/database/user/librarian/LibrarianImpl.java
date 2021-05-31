@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Kasper-Kutaiba
 public class LibrarianImpl extends BaseDAO implements LibrarianDAO
 {
 

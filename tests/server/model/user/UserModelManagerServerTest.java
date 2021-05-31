@@ -3,6 +3,7 @@ package server.model.user;
 import database.DatabaseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import server.core.ModelFactoryServer;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.librarian.Librarian;
@@ -20,7 +21,7 @@ class UserModelManagerServerTest
 
   @BeforeEach void setup()
   {
-    userModelServer = new UserModelManagerServer();
+    userModelServer = ModelFactoryServer.getInstance().getUserModel();
     databaseBuilder = new DatabaseBuilder();
     address = new Address("CityTest", "StreetNameTest", 1111, "S1");
   }
@@ -446,6 +447,7 @@ class UserModelManagerServerTest
   @Test void getBorrowerByCPRThrowsNoSuchElementException() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    assertThrows(NoSuchElementException.class, ()->userModelServer.getBorrowerByCPR("111111-1122"));
+    assertThrows(NoSuchElementException.class,
+        () -> userModelServer.getBorrowerByCPR("111111-1122"));
   }
 }

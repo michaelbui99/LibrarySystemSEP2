@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Kutaiba
 public class AddressImpl extends BaseDAO implements AddressDAO
 {
   private static AddressImpl address;

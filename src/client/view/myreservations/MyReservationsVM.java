@@ -1,7 +1,5 @@
 package client.view.myreservations;
 
-import client.core.ModelFactoryClient;
-import client.model.loan.LoanModelClient;
 import client.model.reservation.ReservationModelClient;
 import client.model.user.UserModelClient;
 import javafx.beans.property.ObjectProperty;
@@ -13,6 +11,7 @@ import javafx.collections.ObservableList;
 import shared.reservation.Reservation;
 import shared.util.EventTypes;
 
+//Lilian
 public class MyReservationsVM
 {
   private ObservableList<Reservation> activeReservations;
@@ -26,14 +25,14 @@ public class MyReservationsVM
     this.reservationModel = reservationModel;
     this.userModel = userModel;
     activeReservations = FXCollections.observableArrayList();
-    cprProperty = new SimpleStringProperty(ModelFactoryClient.getInstance().getUserModelClient().getLoginUser().getCpr());
-    if (ModelFactoryClient.getInstance().getReservationModelClient()
+    cprProperty = new SimpleStringProperty(userModel.getLoginUser().getCpr());
+    if (reservationModel
         .getAllReservationsByCPR(cprProperty.get()) != null)
     {
-      activeReservations.addAll(ModelFactoryClient.getInstance().getReservationModelClient()
+      activeReservations.addAll(reservationModel
           .getAllReservationsByCPR(cprProperty.get()));
     }
-    ModelFactoryClient.getInstance().getReservationModelClient()
+    reservationModel
         /*Listens to for the RESERVATIONREGISTER and RESERVATION event that is specific to the borrowers cpr
         * To ensure that other users Loan events won't affect the specific users window. */
         .addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED,
@@ -58,7 +57,7 @@ public ObjectProperty<Reservation> reservationProperty()
 }
   public void endReservation(Reservation reservation)
   {
-    ModelFactoryClient.getInstance().getReservationModelClient().endReservation(reservation);
+    reservationModel.endReservation(reservation);
   };
 
 }

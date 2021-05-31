@@ -1,17 +1,19 @@
 package client.view.stafflogin;
 
-import client.core.ModelFactoryClient;
 import client.model.user.UserModelClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+//Kutaiba
 public class StaffLogInVM
 {
   private StringProperty employeeNoProperty;
   private StringProperty passwordProperty;
+  private UserModelClient userModel;
 
-  public StaffLogInVM(UserModelClient userModelClient)
+  public StaffLogInVM(UserModelClient userModel)
   {
+    this.userModel = userModel;
     employeeNoProperty = new SimpleStringProperty();
     passwordProperty = new SimpleStringProperty();
   }
@@ -28,8 +30,7 @@ public class StaffLogInVM
 
   public boolean login()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
-        .librarianLogin(Integer.parseInt(employeeNoProperty.get()), passwordProperty
-            .get());
+    return userModel.librarianLogin(Integer.parseInt(employeeNoProperty.get()),
+        passwordProperty.get());
   }
 }

@@ -2,13 +2,14 @@ package shared.network;
 
 import shared.materials.Material;
 import shared.materials.Place;
+import shared.materials.strategy.SearchStrategy;
 import shared.person.MaterialCreator;
-import client.model.material.strategy.SearchStrategy;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+//Kutaiba-Lilian
 public interface MaterialServer extends Remote
 {
   int createMaterial(String title, String publisher,

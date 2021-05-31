@@ -1,5 +1,6 @@
 package shared.util;
 
+//Kasper-Kutaiba-Michael-Lilian
 public class PostgresUserPasswords
 {
   public static final String MICHAEL = "MichaelDatabasePassword";

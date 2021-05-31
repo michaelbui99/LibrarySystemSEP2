@@ -1,17 +1,18 @@
 package shared.materials;
 
+//Lilian
 public interface MaterialInterface
 {
-  public void setMaterialStatus(MaterialStatus materialStatus);
-  public int getMaterialID();
-  public int getCopyNumber();
-  public String getTitle();
-  public String getTargetAudience();
-  public String getDescription();
-  public String getKeywords();
-  public String getPublisher();
-  public String getReleaseDate();
-  public String getLanguage();
-  public MaterialStatus getMaterialStatus();
-  public String getMaterialType();
+  void setMaterialStatus(MaterialStatus materialStatus);
+  int getMaterialID();
+  int getCopyNumber();
+  String getTitle();
+  String getTargetAudience();
+  String getDescription();
+  String getKeywords();
+  String getPublisher();
+  String getReleaseDate();
+  String getLanguage();
+  MaterialStatus getMaterialStatus();
+  String getMaterialType();
 }

@@ -1,6 +1,6 @@
 package client.network;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import shared.reservation.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
@@ -13,6 +13,7 @@ import shared.person.librarian.Librarian;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Kutaiba-Kasper-Michael-Lilian
 public interface Client
 {
   void startClient();

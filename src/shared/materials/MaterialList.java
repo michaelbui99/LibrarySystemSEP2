@@ -1,10 +1,11 @@
 package shared.materials;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//Lilian
 public class MaterialList
 {
   private List<Material> materials;
@@ -38,18 +39,7 @@ public class MaterialList
     return null;
   }
 
-//  public void getAllAvailableBooks(String title)
-//  {
-//
-//  }
-
   public int size(){
     return this.materials.size();
   }
-
-  //public void setMaterialFilterStrategy(
-    //  MaterialFilterStrategy materialFilterStrategy)
-  //{
-    //this.materialFilterStrategy = materialFilterStrategy;
-  //}
 }

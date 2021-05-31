@@ -1,6 +1,6 @@
 package client.network;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import shared.reservation.Reservation;
 import shared.person.Address;
 import shared.loan.Loan;
@@ -16,6 +16,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Kutaiba-Kasper-Michael-Lilian
 public interface RMIClient extends Remote
 {
   void startClient() throws RemoteException;

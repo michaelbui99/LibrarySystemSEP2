@@ -1,6 +1,5 @@
 package client.view.adduser;
 
-import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +13,7 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
+//Kutaiba
 public class AddUserController
 {
   @FXML private Label firstNameError;
@@ -42,13 +42,12 @@ public class AddUserController
   private ObservableList<TextField> fields = FXCollections
       .observableArrayList();
 
-  /**
-   * This pattern return true if String contains any thing other than 0-9 digit,
-   * which can be used to know if an String is number or not using regular expression.
-   * email.getText().matches(".*\\d.*)"
-   */
-  public void init()
+  private AddUserVM userVM;
+
+  public void init(AddUserVM userVM)
   {
+    this.userVM = userVM;
+
     errorLabel.setVisible(false);
     errorLabel.setTextFill(Paint.valueOf("red"));
 
@@ -56,28 +55,17 @@ public class AddUserController
         .addAll(email, firstName, lastName, cprNumber, streetName, streetNumber,
             zipCode, city, phoneNumber, password);
 
-    email.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().emailProperty());
-    password.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().passwordProperty());
-    firstName.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().firstNameProperty());
-    lastName.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().lastNameProperty());
-    cprNumber.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().cprProperty());
-    streetName.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().streetNameProperty());
-    streetNumber.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().streetNoProperty());
-    zipCode.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().zipCodeProperty());
-    city.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().cityProperty());
-    phoneNumber.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().phoneNoProperty());
-    errorLabel.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddUserVM().errorProperty());
+    email.textProperty().bindBidirectional(userVM.emailProperty());
+    password.textProperty().bindBidirectional(userVM.passwordProperty());
+    firstName.textProperty().bindBidirectional(userVM.firstNameProperty());
+    lastName.textProperty().bindBidirectional(userVM.lastNameProperty());
+    cprNumber.textProperty().bindBidirectional(userVM.cprProperty());
+    streetName.textProperty().bindBidirectional(userVM.streetNameProperty());
+    streetNumber.textProperty().bindBidirectional(userVM.streetNoProperty());
+    zipCode.textProperty().bindBidirectional(userVM.zipCodeProperty());
+    city.textProperty().bindBidirectional(userVM.cityProperty());
+    phoneNumber.textProperty().bindBidirectional(userVM.phoneNoProperty());
+    errorLabel.textProperty().bindBidirectional(userVM.errorProperty());
   }
 
   private boolean containsOnlyDigits(String str)
@@ -100,8 +88,7 @@ public class AddUserController
   @FXML public void onButtonSignup(ActionEvent actionEvent) throws IOException
   {
     errorLabel.setVisible(true);
-    ViewModelFactory.getInstance().getAddUserVM().addUser();
-    ViewHandler.getInstance().openView("BorrowerWindow");
+    userVM.addUser();
     clearFields();
   }
 
@@ -117,22 +104,19 @@ public class AddUserController
 
   @FXML public void onTypedLastNameCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM()
-        .lastNameProperty().get();
+    String arg = userVM.lastNameProperty().get();
     lastNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedFirstNameCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM()
-        .firstNameProperty().get();
+    String arg = userVM.firstNameProperty().get();
     firstNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedCprCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM().cprProperty()
-        .get();
+    String arg = userVM.cprProperty().get();
     String[] arr = arg.split("-");
     cprError.setVisible(arg.length() != 11 || !(containsOnlyDigits(arr[0])
         && containsOnlyDigits(arr[1])) || !arg.contains("-"));
@@ -141,37 +125,32 @@ public class AddUserController
 
   @FXML public void onTypedStreetNameCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM()
-        .streetNameProperty().get();
+    String arg = userVM.streetNameProperty().get();
     streetNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedCityCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM().cityProperty()
-        .get();
+    String arg = userVM.cityProperty().get();
     cityError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedZipCodeCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM().zipCodeProperty()
-        .get();
+    String arg = userVM.zipCodeProperty().get();
     zipCodeError.setVisible(
         arg.isEmpty() || !containsOnlyDigits(arg) || arg.length() != 4);
   }
 
   @FXML public void onTypedStreetNoCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM()
-        .streetNoProperty().get();
+    String arg = userVM.streetNoProperty().get();
     streetNoError.setVisible(arg.isEmpty());
   }
 
   @FXML public void onTypedPhoneNoCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM().phoneNoProperty()
-        .get();
+    String arg = userVM.phoneNoProperty().get();
     //"^(\+\d{10}( )?)$" to check if the streng contains "+" and an 11 digit  number
     phoneError.setVisible(
         arg.isEmpty() || !arg.matches("^(\\+\\d{10}( )?)$") || !arg
@@ -180,15 +159,13 @@ public class AddUserController
 
   @FXML public void onTypedEmailCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM().emailProperty()
-        .get();
+    String arg = userVM.emailProperty().get();
     emailError.setVisible(arg.isEmpty() || !arg.contains("@"));
   }
 
   @FXML public void onTypedPasswordCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddUserVM()
-        .passwordProperty().get();
+    String arg = userVM.passwordProperty().get();
     passwordError.setVisible(arg.isEmpty());
   }
 

@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Michael
 public class LoanDAOImpl extends BaseDAO implements LoanDAO
 {
   private static LoanDAO instance;

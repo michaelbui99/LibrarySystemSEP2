@@ -7,6 +7,7 @@ import shared.person.borrower.Borrower;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Michael
 public interface LoanDAO
 {
   /**

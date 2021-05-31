@@ -1,6 +1,5 @@
 package client.view.addlibrarian;
 
-import client.core.ViewModelFactory;
 import client.view.ViewHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +13,7 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
+//Kutaiba
 public class AddLibrarianController
 {
   @FXML private TextField lastName;
@@ -44,41 +44,33 @@ public class AddLibrarianController
   private ObservableList<TextField> fields = FXCollections
       .observableArrayList();
 
-  public void init()
+  private AddLibrarianVM librarianVM;
+
+  public void init(AddLibrarianVM librarianVM)
   {
+    this.librarianVM = librarianVM;
+
     errorLabel.setVisible(false);
     errorLabel.setTextFill(Paint.valueOf("red"));
 
     fields.addAll(lastName, firstName, cprNumber, streetName, city, zipCode,
         streetNumber, phoneNumber, employeeNo, password, email);
 
-    lastName.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().lastNameProperty());
-    firstName.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().firstNameProperty());
-    cprNumber.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().cprProperty());
-    streetName.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM()
-            .streetNameProperty());
-    city.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().cityProperty());
-    zipCode.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().zipCodeProperty());
-    streetNumber.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().streetNoProperty());
-    phoneNumber.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().phoneProperty());
-    email.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().emailProperty());
-    password.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM().passwordProperty());
-    employeeNo.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getAddLibrarianVM()
-            .employeeNoProperty());
-    errorLabel.textProperty().bind(
-        ViewModelFactory.getInstance().getAddLibrarianVM()
-            .errorLabelProperty());
+    lastName.textProperty().bindBidirectional(librarianVM.lastNameProperty());
+    firstName.textProperty().bindBidirectional(librarianVM.firstNameProperty());
+    cprNumber.textProperty().bindBidirectional(librarianVM.cprProperty());
+    streetName.textProperty()
+        .bindBidirectional(librarianVM.streetNameProperty());
+    city.textProperty().bindBidirectional(librarianVM.cityProperty());
+    zipCode.textProperty().bindBidirectional(librarianVM.zipCodeProperty());
+    streetNumber.textProperty()
+        .bindBidirectional(librarianVM.streetNoProperty());
+    phoneNumber.textProperty().bindBidirectional(librarianVM.phoneProperty());
+    email.textProperty().bindBidirectional(librarianVM.emailProperty());
+    password.textProperty().bindBidirectional(librarianVM.passwordProperty());
+    employeeNo.textProperty()
+        .bindBidirectional(librarianVM.employeeNoProperty());
+    errorLabel.textProperty().bind(librarianVM.errorLabelProperty());
   }
 
   private boolean containsOnlyDigits(String str)
@@ -101,7 +93,7 @@ public class AddLibrarianController
   @FXML public void onButtonSignUp(ActionEvent actionEvent) throws IOException
   {
     errorLabel.setVisible(true);
-    ViewModelFactory.getInstance().getAddLibrarianVM().addLibrarian();
+    librarianVM.addLibrarian();
     clearFields();
   }
 
@@ -117,29 +109,25 @@ public class AddLibrarianController
 
   @FXML public void onTypedEmailCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .emailProperty().get();
+    String arg = librarianVM.emailProperty().get();
     emailError.setVisible(arg.isEmpty() || !arg.contains("@"));
   }
 
   @FXML public void onTypedPasswordCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .passwordProperty().get();
+    String arg = librarianVM.passwordProperty().get();
     passwordError.setVisible(arg.isEmpty());
   }
 
   @FXML public void onTypedEmployeeNOCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .employeeNoProperty().get();
+    String arg = librarianVM.employeeNoProperty().get();
     employeeNoError.setVisible(arg.isEmpty() || !arg.matches("\\d+"));
   }
 
   @FXML public void onTypedPhoneNo(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .phoneProperty().get();
+    String arg = librarianVM.phoneProperty().get();
     //"^(\+\d{10}( )?)$" to check if the streng contains "+" and an 11 digit  number
     phoneError.setVisible(
         arg.isEmpty() || !arg.matches("^(\\+\\d{10}( )?)$") || !arg
@@ -148,37 +136,32 @@ public class AddLibrarianController
 
   @FXML public void onTypeStreetNoCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .streetNoProperty().get();
+    String arg = librarianVM.streetNoProperty().get();
     streetNoError.setVisible(arg.isEmpty());
   }
 
   @FXML public void onTypedZipCode(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .zipCodeProperty().get();
+    String arg = librarianVM.zipCodeProperty().get();
     zipCodeError
         .setVisible(arg.isEmpty() || !arg.matches("\\d+") || arg.length() != 4);
   }
 
   @FXML public void onTypedCity(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .cityProperty().get();
+    String arg = librarianVM.cityProperty().get();
     cityError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypeStreetNameCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .streetNameProperty().get();
+    String arg = librarianVM.streetNameProperty().get();
     streetNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypedCprCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .cprProperty().get();
+    String arg = librarianVM.cprProperty().get();
     String[] arr = arg.split("-");
     cprError.setVisible(arg.length() != 11 || !(containsOnlyDigits(arr[0])
         && containsOnlyDigits(arr[1])) || !arg.contains("-"));
@@ -186,15 +169,13 @@ public class AddLibrarianController
 
   @FXML public void onTypedFirstNameCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .firstNameProperty().get();
+    String arg = librarianVM.firstNameProperty().get();
     fNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypedLastNameCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getAddLibrarianVM()
-        .lastNameProperty().get();
+    String arg = librarianVM.lastNameProperty().get();
     lNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 

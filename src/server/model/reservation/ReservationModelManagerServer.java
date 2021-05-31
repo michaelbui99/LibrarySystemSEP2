@@ -1,10 +1,11 @@
 package server.model.reservation;
 
+import database.material.MaterialDAO;
+import database.reservation.ReservationDAO;
 import database.reservation.ReservationDAOImpl;
-import database.material.MaterialDAOImpl;
-import shared.reservation.Reservation;
 import shared.materials.Material;
 import shared.person.borrower.Borrower;
+import shared.reservation.Reservation;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
@@ -15,16 +16,23 @@ import java.util.NoSuchElementException;
 public class ReservationModelManagerServer implements ReservationModelServer
 {
   private PropertyChangeSupport support;
+  
+  private ReservationDAO reservationDAO;
+  private MaterialDAO materialDAO;
+  
 
-  public ReservationModelManagerServer()
+  public ReservationModelManagerServer(ReservationDAO reservationDAO, MaterialDAO materialDAO)
   {
+    this.reservationDAO = reservationDAO;
+    this.materialDAO = materialDAO;
+    
     support = new PropertyChangeSupport(this);
   }
 
   @Override public void registerReservation(Material material,
       Borrower borrower) throws IllegalStateException
   {
-    if (MaterialDAOImpl.getInstance().getNumberOfAvailableCopies(material.getMaterialID()) == 0)
+    if (materialDAO.getNumberOfAvailableCopies(material.getMaterialID()) == 0)
     {
       Reservation reservation = ReservationDAOImpl
           .getInstance().create(borrower, material);
@@ -50,7 +58,7 @@ public class ReservationModelManagerServer implements ReservationModelServer
   {
     try
     {
-      return ReservationDAOImpl.getInstance().getAllReservationsByCPR(cpr);
+      return reservationDAO.getAllReservationsByCPR(cpr);
     }
     catch (NoSuchElementException e)
     {

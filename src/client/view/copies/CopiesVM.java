@@ -1,8 +1,6 @@
 package client.view.copies;
 
-import client.core.ModelFactoryClient;
 import client.model.material.MaterialModelClient;
-import client.model.material.strategy.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import shared.materials.Material;
+import shared.materials.strategy.*;
 import shared.util.EventTypes;
 
 public class CopiesVM
@@ -26,11 +25,13 @@ public class CopiesVM
   private StringProperty typeProperty;
   private StringProperty targetAudienceProperty;
   private StringProperty languageProperty;
-  private MaterialModelClient materialModelClient;
+  private MaterialModelClient materialModel;
 
-  public CopiesVM(MaterialModelClient materialModelClient)
+  //Kutaiba
+  public CopiesVM(MaterialModelClient materialModel)
   {
-    this.materialModelClient = materialModelClient;
+    this.materialModel = materialModel;
+
     materialList = FXCollections.observableArrayList();
     materialTypeList = FXCollections.observableArrayList();
     targetAudienceList = FXCollections.observableArrayList();
@@ -131,17 +132,17 @@ public class CopiesVM
 
     materialList.clear();
 
-    if (ModelFactoryClient.getInstance().getMaterialModelClient()
+    if (materialModel
         .findMaterial(titleProperty.get(), languageProperty.get(),
             keywordsProperty.get(), genreProperty.get(),
             targetAudienceProperty.get(), searchStrategy) != null)
     {
       materialList.addAll(
-          ModelFactoryClient.getInstance().getMaterialModelClient()
+          materialModel
               .findMaterial(titleProperty.get(), languageProperty.get(),
                   keywordsProperty.get(), genreProperty.get(),
                   targetAudienceProperty.get(), searchStrategy));
-      ModelFactoryClient.getInstance().getMaterialModelClient()
+      materialModel
           .addPropertyChangeListener(EventTypes.MATERIALFOUND,
               evt -> materialList.add((Material) evt.getNewValue()));
     }
@@ -153,24 +154,24 @@ public class CopiesVM
     switch (typeProperty.getValue())
     {
       case "Bog":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .createBookCopy(selectedMaterialProperty.get().getMaterialID());
         break;
       case "Ebog":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .createEBookCopy(selectedMaterialProperty.get().getMaterialID());
         break;
       case "Lydbog":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .createAudioBookCopy(
                 selectedMaterialProperty.get().getMaterialID());
         break;
       case "CD":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .createCDCopy(selectedMaterialProperty.get().getMaterialID());
         break;
       case "DVD":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .createDVDCopy(selectedMaterialProperty.get().getMaterialID());
         break;
     }
@@ -181,27 +182,27 @@ public class CopiesVM
     switch (typeProperty.getValue())
     {
       case "Bog":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .deleteBookCopy(selectedMaterialProperty.get().getMaterialID(),
                 selectedMaterialProperty.get().getCopyNumber());
         break;
       case "Ebog":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .deleteEBookCopy(selectedMaterialProperty.get().getMaterialID(),
                 selectedMaterialProperty.get().getCopyNumber());
         break;
       case "Lydbog":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .deleteAudioBookCopy(selectedMaterialProperty.get().getMaterialID(),
                 selectedMaterialProperty.get().getCopyNumber());
         break;
       case "CD":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .deleteCDCopy(selectedMaterialProperty.get().getMaterialID(),
                 selectedMaterialProperty.get().getCopyNumber());
         break;
       case "DVD":
-        ModelFactoryClient.getInstance().getMaterialModelClient()
+        materialModel
             .deleteDVDCopy(selectedMaterialProperty.get().getMaterialID(),
                 selectedMaterialProperty.get().getCopyNumber());
         break;
@@ -210,13 +211,13 @@ public class CopiesVM
 
   public void deleteMaterial()
   {
-    ModelFactoryClient.getInstance().getMaterialModelClient()
+    materialModel
         .deleteMaterial(selectedMaterialProperty.get().getMaterialID());
   }
 
   public int totalCopyNumber()
   {
-    return ModelFactoryClient.getInstance().getMaterialModelClient()
+    return materialModel
         .totalNumberOfCopies(selectedMaterialProperty.get().getMaterialID());
   }
 }

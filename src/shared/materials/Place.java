@@ -2,6 +2,7 @@ package shared.materials;
 
 import java.io.Serializable;
 
+//Kutaiba
 public class Place implements Serializable
 {
   private String creatorLName, genre;

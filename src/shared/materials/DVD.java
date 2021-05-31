@@ -2,6 +2,7 @@ package shared.materials;
 
 import java.io.Serializable;
 
+//Lilian
 public class DVD extends Material implements Serializable
 {
   private Place place;

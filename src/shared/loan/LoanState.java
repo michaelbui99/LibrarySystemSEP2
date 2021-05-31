@@ -1,11 +1,10 @@
 package shared.loan;
 
-import shared.loan.Loan;
-
 import java.io.Serializable;
 
+//Michael
 public interface LoanState extends Serializable
 {
 
-  public void extendLoan(Loan loan);
+  void extendLoan(Loan loan);
 }

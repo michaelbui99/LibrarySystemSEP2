@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+//Lilian-Michael-Kasper-Kutaiba
 public class MaterialCopyDAOImpl extends BaseDAO implements MaterialCopyDAO
 {
   private static MaterialCopyDAO instance;

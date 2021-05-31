@@ -1,17 +1,20 @@
 package client.view.myLoans;
 
-import client.core.ModelFactoryClient;
 import client.model.loan.LoanModelClient;
 import client.model.user.UserModelClient;
 import javafx.application.Platform;
-import shared.loan.Loan;
-import javafx.beans.property.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import shared.loan.Loan;
 import shared.util.EventTypes;
 
 import java.util.NoSuchElementException;
 
+//Michael
 public class MyLoansVM
 {
   private ObservableList<Loan> activeLoans;

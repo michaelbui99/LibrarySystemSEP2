@@ -8,6 +8,7 @@ import shared.network.PropertyChangeSubject;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//Michael
 public interface LoanModelClient extends PropertyChangeSubject
 {
   /**

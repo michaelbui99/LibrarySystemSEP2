@@ -1,6 +1,6 @@
 package client.model.material;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.person.MaterialCreator;
 import shared.materials.Place;
@@ -8,6 +8,7 @@ import shared.network.PropertyChangeSubject;
 
 import java.util.List;
 
+//Kutaiba
 public interface MaterialModelClient extends PropertyChangeSubject
 {
 
@@ -24,6 +25,12 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * @param materialID is used to define the book which a copy will be added to
    * */
   void createBookCopy(int materialID);
+
+  /**
+   * Delete a book copy based on the given parameter
+   * @param materialID material id
+   * @param copyNo copy number
+   * */
 
   void deleteBookCopy(int materialID, int copyNo);
 
@@ -60,6 +67,12 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createDVDCopy(int materialID);
 
+  /**
+   * Delete a DVD copy based on the given parameter
+   *@param materialID material id
+   *@param copyNo copy number
+   * */
+
   void deleteDVDCopy(int materialID, int copyNo);
 
   /**
@@ -91,6 +104,12 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * @param materialID is used to define the CD which a copy will be added to
    * */
   void createCDCopy(int materialID);
+
+  /**
+   *Delete a CD copy based on the given parameter
+   *@param materialID material id
+   *@param copyNo copy number
+   * */
 
   void deleteCDCopy(int materialID, int copyNo);
 
@@ -125,6 +144,11 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createEBookCopy(int materialID);
 
+  /**
+   * Delete a Ebook copy based on the given parameter
+   *@param materialID material id
+   *@param copyNo copy number
+   * */
   void deleteEBookCopy(int materialID, int copyNo);
 
   /**
@@ -159,6 +183,12 @@ public interface MaterialModelClient extends PropertyChangeSubject
    * */
   void createAudioBookCopy(int materialID);
 
+  /**
+   * Delete a Audiobook copy based on the given parameter
+   *@param materialID material id
+   *@param copyNo copy number
+   * */
+
   void deleteAudioBookCopy(int materialID, int copyNo);
 
   /**
@@ -192,13 +222,18 @@ public interface MaterialModelClient extends PropertyChangeSubject
   List<Material> findMaterial(String title, String language, String keywords,
       String genre, String targetAudience, SearchStrategy searchStrategy);
 
-  public Material getSelectMaterial();
+  /**
+   * @return Material for a selected material
+   * */
 
-  public int numberOfAvailableCopies();
+  Material getSelectMaterial();
 
-  public int totalNumberOfCopies(int materialID);
 
-  public void setSelectMaterial(Material material);
+  int numberOfAvailableCopies();
+
+  int totalNumberOfCopies(int materialID);
+
+  void setSelectMaterial(Material material);
 
   void deleteMaterial(int materialID);
 

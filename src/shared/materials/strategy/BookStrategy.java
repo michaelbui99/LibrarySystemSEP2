@@ -1,12 +1,11 @@
-package client.model.material.strategy;
+package shared.materials.strategy;
 
 import database.material.BookDAOImpl;
 import shared.materials.Material;
-import database.material.MaterialDAOImpl;
 
-import java.sql.SQLException;
 import java.util.List;
 
+//Lilian
 //Concrete strategy
 public class BookStrategy implements SearchStrategy
 {

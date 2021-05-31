@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+//Michael
 public class Loan implements Serializable
 {
-
 //  private int loanID, materialID, copyNumber, numberOfExtensions;
   private LoanState loanState;
   private Material material;
