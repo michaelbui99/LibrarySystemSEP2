@@ -1,6 +1,5 @@
 package client.view.addlibrarian;
 
-import client.core.ModelFactoryClient;
 import client.model.user.UserModelClient;
 import client.view.ViewHandler;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,7 +21,7 @@ public class AddLibrarianVM
   private StringProperty employeeNoProperty;
   private StringProperty passwordProperty;
   private StringProperty emailProperty;
-  private StringProperty errorLableProperty;
+  private StringProperty errorLabelProperty;
   private UserModelClient userModelClient;
 
   public AddLibrarianVM(UserModelClient userModelClient)
@@ -39,7 +38,7 @@ public class AddLibrarianVM
     employeeNoProperty = new SimpleStringProperty();
     passwordProperty = new SimpleStringProperty();
     emailProperty = new SimpleStringProperty();
-    errorLableProperty = new SimpleStringProperty();
+    errorLabelProperty = new SimpleStringProperty();
   }
 
   public StringProperty lastNameProperty()
@@ -99,40 +98,40 @@ public class AddLibrarianVM
 
   public StringProperty errorLabelProperty()
   {
-    return errorLableProperty;
+    return errorLabelProperty;
   }
 
   public void addLibrarian() throws IOException
   {
     if (userFieldsAreEmpty())
     {
-      errorLableProperty.setValue("nødvendige felter er tomme");
+      errorLabelProperty.setValue("nødvendige felter er tomme");
     }
     else
     {
       if (employeeNoAlreadyExists())
       {
-        errorLableProperty.setValue(
+        errorLabelProperty.setValue(
             "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
       }
       else if (cprAlreadyExists())
       {
-        errorLableProperty.setValue(
+        errorLabelProperty.setValue(
             "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
       }
       else if (emailAlreadyExists())
       {
-        errorLableProperty.setValue(
+        errorLabelProperty.setValue(
             "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
       }
       else if (phoneNoAlreadyExists())
       {
-        errorLableProperty.setValue(
+        errorLabelProperty.setValue(
             "medarbejdernummer, Cpr-nummer, e-mail eller telefonnummer er allerede brugt");
       }
       else
       {
-        errorLableProperty.setValue("");
+        errorLabelProperty.setValue("");
         addNewUser();
         ViewHandler.getInstance().openView("Administration");
       }
@@ -141,7 +140,7 @@ public class AddLibrarianVM
 
   public void addNewUser()
   {
-    ModelFactoryClient.getInstance().getUserModelClient()
+    userModelClient
         .registerLibrarian(Integer.parseInt(employeeNoProperty.get()),
             firstNameProperty.get(), lastNameProperty.get(), cprProperty.get(),
             phoneProperty.get(), emailProperty.get(),
@@ -152,32 +151,29 @@ public class AddLibrarianVM
 
   public boolean employeeNoAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
-        .employeeNumberAlreadyExists(
-            Integer.parseInt(employeeNoProperty.get()));
+    return userModelClient.employeeNumberAlreadyExists(
+        Integer.parseInt(employeeNoProperty.get()));
   }
 
   public boolean cprAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
-        .librarianCprNumberAlreadyExists(cprProperty.get());
+    return userModelClient.librarianCprNumberAlreadyExists(cprProperty.get());
   }
 
   public boolean emailAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
-        .librarianEmailAlreadyExists(emailProperty.get());
+    return userModelClient.librarianEmailAlreadyExists(emailProperty.get());
   }
 
   public boolean phoneNoAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
+    return userModelClient
         .librarianPhoneNumberAlreadyExists(phoneProperty.get());
   }
 
   public boolean librarianAlreadyExists()
   {
-    return ModelFactoryClient.getInstance().getUserModelClient()
+    return userModelClient
         .librarianAlreadyExists(Integer.parseInt(employeeNoProperty.get()),
             cprProperty.get(), emailProperty.get(), phoneProperty.get());
   }

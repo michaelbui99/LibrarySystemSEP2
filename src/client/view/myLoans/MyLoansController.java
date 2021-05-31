@@ -29,7 +29,7 @@ public class MyLoansController
   public void init(MyLoansVM viewModel)
   {
     this.viewModel = viewModel;
-    //TODO: implement toString for Material such that material can be displayed correctly in tableview.
+
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
     loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
     deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));

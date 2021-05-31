@@ -30,8 +30,12 @@ public class CopiesController
   @FXML private TableColumn<String, Material> releaseDateColumn;
   @FXML private TableColumn<Integer, Material> copyNo;
 
-  public void init()
+  private CopiesVM copiesVM;
+
+  public void init(CopiesVM copiesVM)
   {
+    this.copiesVM = copiesVM;
+
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     publisherColumn
         .setCellValueFactory(new PropertyValueFactory<>("publisher"));
@@ -39,30 +43,23 @@ public class CopiesController
         .setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
     copyNo.setCellValueFactory(new PropertyValueFactory<>("copyNumber"));
 
-    typeComboBox.setItems(
-        ViewModelFactory.getInstance().getCopiesVM().getMaterialTypeList());
-    targetAudienceComboBox.setItems(
-        ViewModelFactory.getInstance().getCopiesVM().getTargetAudienceList());
-    languageComboBox.setItems(
-        ViewModelFactory.getInstance().getCopiesVM().getLanguageList());
+    typeComboBox.setItems(copiesVM.getMaterialTypeList());
+    targetAudienceComboBox.setItems(copiesVM.getTargetAudienceList());
+    languageComboBox.setItems(copiesVM.getLanguageList());
 
-    title.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getCopiesVM().titleProperty());
-    genre.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getCopiesVM().genreProperty());
-    keywords.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getCopiesVM().keywordsProperty());
-    typeComboBox.valueProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getCopiesVM().typeProperty());
-    targetAudienceComboBox.valueProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getCopiesVM().targetAudienceProperty());
-    languageComboBox.valueProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getCopiesVM().languageProperty());
+    title.textProperty().bindBidirectional(copiesVM.titleProperty());
+    genre.textProperty().bindBidirectional(copiesVM.genreProperty());
+    keywords.textProperty().bindBidirectional(copiesVM.keywordsProperty());
+    typeComboBox.valueProperty().bindBidirectional(copiesVM.typeProperty());
+    targetAudienceComboBox.valueProperty()
+        .bindBidirectional(copiesVM.targetAudienceProperty());
+    languageComboBox.valueProperty()
+        .bindBidirectional(copiesVM.languageProperty());
   }
 
   @FXML public void onButtonRemoveCopy(ActionEvent actionEvent)
   {
-    ViewModelFactory.getInstance().getCopiesVM().selectedMaterialProperty()
+    copiesVM.selectedMaterialProperty()
         .set(searchTableView.getSelectionModel().getSelectedItem());
 
     if (searchTableView.getSelectionModel().getSelectedItem() == null)
@@ -80,7 +77,7 @@ public class CopiesController
     }
     else
     {
-      ViewModelFactory.getInstance().getCopiesVM().deleteCopy();
+      copiesVM.deleteCopy();
       onButtonSearch(actionEvent);
       errorLabel.setVisible(false);
     }
@@ -88,7 +85,7 @@ public class CopiesController
 
   @FXML public void onButtonAddCopy(ActionEvent actionEvent)
   {
-    ViewModelFactory.getInstance().getCopiesVM().selectedMaterialProperty()
+    copiesVM.selectedMaterialProperty()
         .set(searchTableView.getSelectionModel().getSelectedItem());
     if (searchTableView.getSelectionModel().getSelectedItem() == null)
     {
@@ -98,7 +95,7 @@ public class CopiesController
     }
     else
     {
-      ViewModelFactory.getInstance().getCopiesVM().addCopy();
+      copiesVM.addCopy();
       onButtonSearch(actionEvent);
       errorLabel.setVisible(false);
     }
@@ -106,7 +103,7 @@ public class CopiesController
 
   @FXML public void onButtonRemoveMaterial(ActionEvent actionEvent)
   {
-    ViewModelFactory.getInstance().getCopiesVM().selectedMaterialProperty()
+    copiesVM.selectedMaterialProperty()
         .set(searchTableView.getSelectionModel().getSelectedItem());
     if (searchTableView.getSelectionModel().getSelectedItem() == null)
     {
@@ -116,7 +113,7 @@ public class CopiesController
     }
     else
     {
-      ViewModelFactory.getInstance().getCopiesVM().deleteMaterial();
+      copiesVM.deleteMaterial();
       onButtonSearch(actionEvent);
     }
   }

@@ -190,21 +190,26 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
-      String[] arr = cpr.split("-");
-      if (cpr.getBytes().length != 11
-          || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1]) || !cpr
-          .contains("-"))
+      if (cpr != null)
       {
-        throw new IllegalArgumentException();
+        String[] arr = cpr.split("-");
+        if (cpr.getBytes().length != 11
+            || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1])
+            || !cpr.contains("-"))
+        {
+          throw new IllegalArgumentException();
+        }
+        else
+        {
+          PreparedStatement stm = connection
+              .prepareStatement("SELECT * FROM borrower WHERE cpr_no = ?");
+          stm.setString(1, cpr);
+          ResultSet result = stm.executeQuery();
+          return result.next();
+        }
       }
       else
-      {
-        PreparedStatement stm = connection
-            .prepareStatement("SELECT * FROM borrower WHERE cpr_no = ?");
-        stm.setString(1, cpr);
-        ResultSet result = stm.executeQuery();
-        return result.next();
-      }
+        return false;
     }
   }
 

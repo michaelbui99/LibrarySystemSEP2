@@ -1,6 +1,5 @@
 package client.view.main;
 
-import client.core.ModelFactoryClient;
 import client.model.user.UserModelClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,13 +9,13 @@ public class MainVM
 
   private StringProperty passwordProperty;
   private StringProperty cprProperty;
-  private UserModelClient userModelClient;
+  private UserModelClient userModel;
 
-  public MainVM(UserModelClient userModelClient)
+  public MainVM(UserModelClient userModel)
   {
     passwordProperty = new SimpleStringProperty();
     cprProperty = new SimpleStringProperty();
-    this.userModelClient = userModelClient;
+    this.userModel = userModel;
   }
 
   public StringProperty passwordProperty()
@@ -31,7 +30,7 @@ public class MainVM
 
   public boolean login()
   {
-   return ModelFactoryClient.getInstance().getUserModelClient()
+    return userModel
         .borrowerLogin(cprProperty.get(), passwordProperty.get());
   }
 }

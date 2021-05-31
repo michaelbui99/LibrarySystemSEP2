@@ -28,35 +28,36 @@ public class SearchController
   @FXML private TableColumn<String, Material> releaseDateColumn;
   @FXML private TableColumn<String, Material> statusColumn;
 
-  private ViewHandler viewHandler;
-  private SearchVM viewModel;
+  private SearchVM searchVM;
   private ObservableList<String> materialTy = FXCollections.observableArrayList();
   private ObservableList<String> materialLanguage = FXCollections.observableArrayList();
   private ObservableList<String>   materialAudience = FXCollections.observableArrayList();
 
 
-  public void init()
+  public void init(SearchVM searchVM)
   {
+    this.searchVM = searchVM;
+    
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
     releaseDateColumn.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
     statusColumn.setCellValueFactory(new PropertyValueFactory<>("materialStatus"));
-    title.textProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+    title.textProperty().bindBidirectional(searchVM
         .titleProperty());
-    genre.textProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+    genre.textProperty().bindBidirectional(searchVM
         .genreProperty());
-    keywords.textProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+    keywords.textProperty().bindBidirectional(searchVM
         .keywordProperty());
-    chooseType.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM().chooseTypeProperty());
-    chooseLanguage.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+    chooseType.valueProperty().bindBidirectional(searchVM.chooseTypeProperty());
+    chooseLanguage.valueProperty().bindBidirectional(searchVM
         .languageProperty());
-    targetAudience.valueProperty().bindBidirectional(ViewModelFactory.getInstance().getSearchVM()
+    targetAudience.valueProperty().bindBidirectional(searchVM
         .targetAudienceProperty());
 
-    chooseType.setItems(ViewModelFactory.getInstance().getSearchVM().getMaterialType());
-    chooseLanguage.setItems(ViewModelFactory.getInstance().getSearchVM()
+    chooseType.setItems(searchVM.getMaterialType());
+    chooseLanguage.setItems(searchVM
         .getMaterialLanguage());
-   targetAudience.setItems(ViewModelFactory.getInstance().getSearchVM()
+   targetAudience.setItems(searchVM
        .getMaterialAudience());
 
   }
@@ -67,7 +68,7 @@ public class SearchController
     ObservableList<Material> materials = null;
 
     {
-      materials = ViewModelFactory.getInstance().getSearchVM().searchMaterial();
+      materials = searchVM.searchMaterial();
       searchTableView.setItems(materials);
       if (materials.size() > 0 ){
         errorLabel.setVisible(false);
@@ -91,7 +92,7 @@ public class SearchController
   {
     if (searchTableView.getSelectionModel().getSelectedItem() != null)
     {
-      ViewModelFactory.getInstance().getSearchVM().setSelectMaterial(searchTableView.getSelectionModel().getSelectedItem());
+      searchVM.setSelectMaterial(searchTableView.getSelectionModel().getSelectedItem());
       ViewHandler.getInstance().openView("LoanReserve");
       errorLabel.setVisible(false);
     }

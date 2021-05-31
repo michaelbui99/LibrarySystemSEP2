@@ -1,10 +1,10 @@
 package server.core;
 
 import database.loan.LoanDAOImpl;
-import database.material.MaterialDAOImpl;
+import database.material.*;
 import database.reservation.ReservationDAOImpl;
-import server.model.chat.ChatModelManagerServer;
-import server.model.chat.ChatModelServer;
+import database.user.borrower.BorrowerImpl;
+import database.user.librarian.LibrarianImpl;
 import server.model.loan.LoanModelManagerServer;
 import server.model.loan.LoanModelServer;
 import server.model.material.MaterialModelManagerServer;
@@ -17,7 +17,6 @@ import server.model.user.UserModelServer;
 public class ModelFactoryServer
 {
   private static ModelFactoryServer instance;
-  private ChatModelServer chatModelServer;
   private LoanModelServer loanModelServer;
   private MaterialModelServer materialModelServer;
   private UserModelServer userModelServer;
@@ -36,33 +35,35 @@ public class ModelFactoryServer
     return instance;
   }
 
-
-
-  public ChatModelServer getChatModel(){
-    if (chatModelServer == null){
-      chatModelServer = new ChatModelManagerServer();
-    }
-    return chatModelServer;
-  }
-
-  public LoanModelServer getLoanModel(){
-    if (loanModelServer == null){
+  public LoanModelServer getLoanModel()
+  {
+    if (loanModelServer == null)
+    {
       loanModelServer = new LoanModelManagerServer(LoanDAOImpl.getInstance(),
           ReservationDAOImpl.getInstance(), MaterialDAOImpl.getInstance());
     }
     return loanModelServer;
   }
 
-  public MaterialModelServer getMaterialModel(){
-    if (materialModelServer == null){
-      materialModelServer =  new MaterialModelManagerServer();
+  public MaterialModelServer getMaterialModel()
+  {
+    if (materialModelServer == null)
+    {
+      materialModelServer = new MaterialModelManagerServer(
+          AudioBookDAOImpl.getInstance(), BookDAOImpl.getInstance(),
+          EbookDAOImpl.getInstance(), CDDAOImpl.getInstance(),
+          DVDDAOImpl.getInstance(), MaterialDAOImpl.getInstance(),
+          MaterialCopyDAOImpl.getInstance());
     }
     return materialModelServer;
   }
 
-  public UserModelServer getUserModel(){
-    if (userModelServer==null){
-      userModelServer = new UserModelManagerServer();
+  public UserModelServer getUserModel()
+  {
+    if (userModelServer == null)
+    {
+      userModelServer = new UserModelManagerServer(BorrowerImpl.getInstance(),
+          LibrarianImpl.getInstance());
     }
     return userModelServer;
   }
@@ -71,7 +72,8 @@ public class ModelFactoryServer
   {
     if (reservationModelServer == null)
     {
-      reservationModelServer= new ReservationModelManagerServer();
+      reservationModelServer = new ReservationModelManagerServer(
+          ReservationDAOImpl.getInstance(), MaterialDAOImpl.getInstance());
     }
     return reservationModelServer;
   }

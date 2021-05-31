@@ -2,7 +2,6 @@ package client.view.myreservations;
 
 import client.core.ViewModelFactory;
 import client.view.ViewHandler;
-import client.view.myLoans.MyLoansVM;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,23 +17,22 @@ import java.io.IOException;
 public class MyReservationsController
 {
 
-  @FXML private Label selectedReservationLabel;
   @FXML private Label noReservationsLabel;
   @FXML private TableView<Reservation> reservationTableView;
   @FXML private TableColumn<String, Material> materialColumn;
   @FXML private TableColumn<String, Reservation> reservationDateColumn;
   @FXML private TableColumn<String, Reservation> readyForPickupColumn;
 
-  private ViewHandler viewHandler;
-  private MyLoansVM viewModel;
+  private MyReservationsVM myReservationsVM;
 
-  public void init()
+  public void init(MyReservationsVM myLoansVM)
   {
-    //TODO: implement toString for Material such that material can be displayed correctly in tableview.
+   this.myReservationsVM = myLoansVM;
+    
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
     reservationDateColumn.setCellValueFactory(new PropertyValueFactory<>("reservationDate"));
     readyForPickupColumn.setCellValueFactory(new PropertyValueFactory<>("readyForPickup"));
-    ObservableList<Reservation> activeReservations = ViewModelFactory.getInstance().getMyReservationsVM().getReservationList();
+    ObservableList<Reservation> activeReservations =myReservationsVM.getReservationList();
     reservationTableView.setItems(activeReservations);
     if (activeReservations.size() == 0){
       noReservationsLabel.setVisible(true);
@@ -47,7 +45,7 @@ public class MyReservationsController
   @FXML void onReturnButton(ActionEvent event)
   {
 
-    ViewModelFactory.getInstance().getMyReservationsVM().reservationProperty()
+   myReservationsVM.reservationProperty()
         .set(reservationTableView.getSelectionModel().getSelectedItem());
     reservationTableView.refresh();
   }
@@ -56,7 +54,7 @@ public class MyReservationsController
   {
     Reservation selectedReservation = this.reservationTableView.getSelectionModel().getSelectedItem();
     if(selectedReservation != null){
-      ViewModelFactory.getInstance().getMyReservationsVM().endReservation(selectedReservation);
+     myReservationsVM.endReservation(selectedReservation);
       ObservableList<Reservation> reservations = reservationTableView.getItems();
       for (int i = 0; i < reservations.size(); i++)
       {

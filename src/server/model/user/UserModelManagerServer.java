@@ -1,13 +1,12 @@
 package server.model.user;
 
 import database.user.borrower.BorrowerDAO;
+import database.user.librarian.LibrarianDAO;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
 import shared.person.borrower.BorrowerList;
 import shared.person.librarian.Librarian;
 import shared.person.librarian.LibrarianList;
-import database.user.borrower.BorrowerImpl;
-import database.user.librarian.LibrarianImpl;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
@@ -21,13 +20,19 @@ public class UserModelManagerServer implements UserModelServer
   private BorrowerList borrowerList;
   private LibrarianList librarianList;
   private String borrowerCpr;
-  private int librarianEMPNr;
 
-  public UserModelManagerServer()
+  private BorrowerDAO borrowerDAO;
+  private LibrarianDAO librarianDAO;
+
+  public UserModelManagerServer(BorrowerDAO borrowerDAO,
+      LibrarianDAO librarianDAO)
   {
     support = new PropertyChangeSupport(this);
     borrowerList = new BorrowerList();
     librarianList = new LibrarianList();
+    
+    this.borrowerDAO = borrowerDAO;
+    this.librarianDAO = librarianDAO;
   }
 
   @Override public Borrower create(String cpr, String firstName,
@@ -37,7 +42,7 @@ public class UserModelManagerServer implements UserModelServer
     Borrower borrower = null;
     try
     {
-      borrower = BorrowerImpl.getInstance()
+      borrower = borrowerDAO
           .create(cpr, firstName, lastName, email, tlfNumber, address,
               password);
     }
@@ -55,7 +60,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean login = false;
     try
     {
-      login = BorrowerImpl.getInstance().loginBorrower(cprNo, password);
+      login = borrowerDAO.loginBorrower(cprNo, password);
 
       if (login)
       {
@@ -76,7 +81,7 @@ public class UserModelManagerServer implements UserModelServer
     Borrower borrower = null;
     try
     {
-      borrower = BorrowerImpl.getInstance().getBorrower(borrowerCpr);
+      borrower = borrowerDAO.getBorrower(borrowerCpr);
     }
     catch (SQLException throwables)
     {
@@ -92,7 +97,7 @@ public class UserModelManagerServer implements UserModelServer
     Librarian librarian = null;
     try
     {
-      librarian = LibrarianImpl.getInstance()
+      librarian = librarianDAO
           .create(employee_no, firstName, lastName, cpr, tlfNumber, email,
               address, password);
     }
@@ -110,7 +115,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean login = false;
     try
     {
-      login = LibrarianImpl.getInstance().librarianLogin(employee_no, password);
+      login = librarianDAO.librarianLogin(employee_no, password);
     }
     catch (SQLException throwables)
     {
@@ -130,7 +135,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean cprIn = false;
     try
     {
-      cprIn = BorrowerImpl.getInstance().borrowerCprNumberAlreadyExists(cpr);
+      cprIn = borrowerDAO.borrowerCprNumberAlreadyExists(cpr);
     }
     catch (SQLException throwables)
     {
@@ -144,7 +149,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean emailIn = false;
     try
     {
-      emailIn = BorrowerImpl.getInstance().borrowerEmailAlreadyExists(email);
+      emailIn = borrowerDAO.borrowerEmailAlreadyExists(email);
     }
     catch (SQLException throwables)
     {
@@ -158,7 +163,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean phoneIn = false;
     try
     {
-      phoneIn = BorrowerImpl.getInstance()
+      phoneIn = borrowerDAO
           .borrowerPhoneNumberAlreadyExists(phone);
     }
     catch (SQLException throwables)
@@ -174,7 +179,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean borrowerIn = false;
     try
     {
-      borrowerIn = BorrowerImpl.getInstance()
+      borrowerIn = borrowerDAO
           .borrowerAlreadyExists(cpr, email, phone);
     }
     catch (SQLException throwables)
@@ -189,7 +194,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean employeeNoIn = false;
     try
     {
-      employeeNoIn = LibrarianImpl.getInstance()
+      employeeNoIn = librarianDAO
           .employeeNumberAlreadyExists(employeeNo);
     }
     catch (SQLException throwables)
@@ -204,7 +209,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean cprIn = false;
     try
     {
-      cprIn = LibrarianImpl.getInstance().librarianCprNumberAlreadyExists(cpr);
+      cprIn = librarianDAO.librarianCprNumberAlreadyExists(cpr);
     }
     catch (SQLException throwables)
     {
@@ -218,7 +223,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean emailIn = false;
     try
     {
-      emailIn = LibrarianImpl.getInstance().librarianEmailAlreadyExists(email);
+      emailIn = librarianDAO.librarianEmailAlreadyExists(email);
     }
     catch (SQLException throwables)
     {
@@ -232,7 +237,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean phoneIn = false;
     try
     {
-      phoneIn = LibrarianImpl.getInstance()
+      phoneIn = librarianDAO
           .librarianPhoneNumberAlreadyExists(phone);
     }
     catch (SQLException throwables)
@@ -248,7 +253,7 @@ public class UserModelManagerServer implements UserModelServer
     boolean librarianIn = false;
     try
     {
-      librarianIn = LibrarianImpl.getInstance()
+      librarianIn = librarianDAO
           .librarianAlreadyExists(employeeNo, cpr, email, phone);
     }
     catch (SQLException throwables)
@@ -268,7 +273,7 @@ public class UserModelManagerServer implements UserModelServer
   {
     try
     {
-      return BorrowerImpl.getInstance().getBorrower(cpr);
+      return borrowerDAO.getBorrower(cpr);
     }
     catch (SQLException throwables)
     {

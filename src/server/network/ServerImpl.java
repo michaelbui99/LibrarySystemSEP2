@@ -1,15 +1,17 @@
 package server.network;
 
 import server.core.ModelFactoryServer;
-import server.model.chat.ChatModelServer;
 import server.model.loan.LoanModelServer;
 import server.model.user.UserModelServer;
 import server.network.loan.LoanServerImpl;
 import server.network.material.MaterialServerImpl;
 import server.network.reservation.ReservationServerImpl;
 import server.network.user.UserServerImpl;
-import shared.*;
-import shared.network.*;
+import shared.Server;
+import shared.network.LoanServer;
+import shared.network.MaterialServer;
+import shared.network.ReservationServer;
+import shared.network.UserServer;
 import shared.util.Constants;
 
 import java.rmi.AlreadyBoundException;
@@ -22,7 +24,6 @@ public class ServerImpl implements Server
 {
   private LoanModelServer loanModel;
   private UserModelServer userModelServer;
-  private ChatModelServer chatModelServer;
 
   public ServerImpl()
   {
@@ -58,11 +59,6 @@ public class ServerImpl implements Server
   @Override public LoanServer getLoanServer()
   {
     return new LoanServerImpl(ModelFactoryServer.getInstance().getLoanModel());
-  }
-
-  @Override public ChatServer getChatServer()
-  {
-    return null;
   }
 
   @Override public ReservationServer getReservationServer()

@@ -3,6 +3,7 @@ package server.model.material;
 import database.DatabaseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import server.core.ModelFactoryServer;
 import shared.materials.Material;
 import shared.materials.Place;
 import shared.materials.reading.Book;
@@ -23,7 +24,7 @@ class RegisterRemoveMaterialsTest
 
   @BeforeEach void setup()
   {
-    materialModelServer = new MaterialModelManagerServer();
+    materialModelServer = ModelFactoryServer.getInstance().getMaterialModel();
     databaseBuilder = new DatabaseBuilder();
     librarian = new Librarian(1234, "FirstName", "LastName", "111111-1111",
         "+4511111111", "email@test", null, "1234");

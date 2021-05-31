@@ -2,8 +2,8 @@ package shared.network;
 
 import shared.materials.Material;
 import shared.materials.Place;
+import shared.materials.strategy.SearchStrategy;
 import shared.person.MaterialCreator;
-import client.model.material.strategy.SearchStrategy;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

@@ -19,12 +19,16 @@ public class StaffLogInController
   @FXML private Label employeeNoError;
   @FXML private Label passwordError;
 
-  public void init()
+  private StaffLogInVM staffLogInVM;
+
+  public void init(StaffLogInVM staffLogInVM)
   {
+    this.staffLogInVM = staffLogInVM;
+
     employeeNo.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getStaffLogInVM().employeeNoProperty());
+        staffLogInVM.employeeNoProperty());
     password.textProperty().bindBidirectional(
-        ViewModelFactory.getInstance().getStaffLogInVM().passwordProperty());
+        staffLogInVM.passwordProperty());
     errorMessage.setVisible(false);
   }
 
@@ -40,7 +44,7 @@ public class StaffLogInController
 
   public void OnButtonLogin(ActionEvent actionEvent) throws IOException
   {
-    if (ViewModelFactory.getInstance().getStaffLogInVM().login())
+    if (staffLogInVM.login())
     {
       errorMessage.setVisible(false);
       ViewHandler.getInstance().openView("Administration");
@@ -53,7 +57,7 @@ public class StaffLogInController
 
   @FXML public void onKeyTypedEmployeeNoCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getStaffLogInVM()
+    String arg = staffLogInVM
         .employeeNoProperty().get();
     if (arg.isEmpty() || !arg.matches(".*\\d.*"))
     {
@@ -67,7 +71,7 @@ public class StaffLogInController
 
   @FXML public void onKeyTypedPasswordCheck(KeyEvent keyEvent)
   {
-    String arg = ViewModelFactory.getInstance().getStaffLogInVM()
+    String arg = staffLogInVM
         .passwordProperty().get();
     if (arg.isEmpty())
     {

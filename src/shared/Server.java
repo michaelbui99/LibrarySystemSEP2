@@ -12,6 +12,5 @@ public interface Server extends Remote
   UserServer getUserServer() throws RemoteException;
   MaterialServer getMaterialServer() throws RemoteException;
   LoanServer getLoanServer() throws RemoteException;
-  ChatServer getChatServer() throws RemoteException;
   ReservationServer getReservationServer() throws RemoteException;
 }

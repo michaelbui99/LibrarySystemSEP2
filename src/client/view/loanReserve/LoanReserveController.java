@@ -17,61 +17,69 @@ import java.io.IOException;
 public class LoanReserveController
 {
 
-    @FXML
-    private TextArea materialInfo;
+  @FXML private TextArea materialInfo;
 
-    @FXML
-    private ComboBox<String> borrowChoice;
+  @FXML private ComboBox<String> borrowChoice;
 
-    @FXML
-    private Image imageTest;
+  @FXML private Image imageTest;
 
-    @FXML
-    private TextArea availNumber;
+  @FXML private TextArea availNumber;
 
-    @FXML
-    ImageView materialImage;
+  @FXML ImageView materialImage;
 
-    @FXML
-    private Label warningLabel;
+  @FXML private Label warningLabel;
 
-    @FXML
-    private Label reservationError;
+  @FXML private Label reservationError;
+  
+  private LoanReserveVM loanReserveVM;
 
-
-    public void init() throws FileNotFoundException {
-        ViewModelFactory.getInstance().getBorrowReserveVM();
-        availNumber.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getAvailNumberProp().asString());
-        materialInfo.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialInfoProp());
-        warningLabel.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM().warningPropertyProperty());
-        reservationError.textProperty().bind(ViewModelFactory.getInstance().getBorrowReserveVM()
+  public void init(LoanReserveVM loanReserveVM) throws FileNotFoundException
+  {
+    this.loanReserveVM = loanReserveVM;
+    
+    availNumber.textProperty().bind(
+        loanReserveVM.getAvailNumberProp()
+            .asString());
+    materialInfo.textProperty().bind(
+        loanReserveVM
+            .getMaterialInfoProp());
+    warningLabel.textProperty().bind(
+        loanReserveVM
+            .warningPropertyProperty());
+    reservationError.textProperty().bind(
+        loanReserveVM
             .reservationErrorProperty());
-        try {
-            if (ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL() != null)
-            {
-                imageTest = new Image(new FileInputStream(ViewModelFactory.getInstance().getBorrowReserveVM().getMaterialImageURL()));
-                materialImage.setImage(imageTest);
-                System.out.println("Image set");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @FXML
-    void goBack(ActionEvent actionEvent) throws IOException {
-        ViewHandler.getInstance().openView("Search");
-    }
-
-    @FXML
-    void onLoanButton(ActionEvent event) {
-        ViewModelFactory.getInstance().getBorrowReserveVM().loanMaterial();
-    }
-
-    @FXML
-    void onReserveButton(ActionEvent event)
+    try
     {
-         ViewModelFactory.getInstance().getBorrowReserveVM().reserveMaterial();
+      if (loanReserveVM
+          .getMaterialImageURL() != null)
+      {
+        imageTest = new Image(new FileInputStream(
+            loanReserveVM
+                .getMaterialImageURL()));
+        materialImage.setImage(imageTest);
+        System.out.println("Image set");
+      }
     }
+    catch (FileNotFoundException e)
+    {
+      e.printStackTrace();
+    }
+
+  }
+
+  @FXML void goBack(ActionEvent actionEvent) throws IOException
+  {
+    ViewHandler.getInstance().openView("Search");
+  }
+
+  @FXML void onLoanButton(ActionEvent event)
+  {
+    loanReserveVM.loanMaterial();
+  }
+
+  @FXML void onReserveButton(ActionEvent event)
+  {
+    loanReserveVM.reserveMaterial();
+  }
 }
