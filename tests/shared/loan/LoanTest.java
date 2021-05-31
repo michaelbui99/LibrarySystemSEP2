@@ -147,6 +147,20 @@ class LoanTest
     assertDoesNotThrow(loan::extendLoan);
   }
 
+  @Test void LoanCannotBeExtended1DayPastDeadline()
+  {
+    Loan loan = new Loan(book, borrower, LocalDate.now().minusDays(1).toString(),
+        LocalDate.now().toString(), null, 1);
+    assertThrows(IllegalStateException.class, loan::extendLoan);
+  }
+
+  @Test void LoanCannotBeExtended1WeekPastDeadline()
+  {
+    Loan loan = new Loan(book, borrower, LocalDate.now().minusDays(7).toString(),
+        LocalDate.now().toString(), null, 1);
+    assertThrows(IllegalStateException.class, loan::extendLoan);
+  }
+
 
 
 }

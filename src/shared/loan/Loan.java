@@ -72,17 +72,7 @@ public class Loan implements Serializable
   * */
   public void extendLoan() throws IllegalStateException
   {
-    System.out.println(deadline);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate today = LocalDate.now();
-    LocalDate deadlineDate = LocalDate.parse(deadline, formatter);
-    //Loans can at earliest be extended when the current day is 7 days before deadline.
-    if (today.isBefore(deadlineDate) && today.isAfter(deadlineDate.minusDays(8)))
-    {
     loanState.extendLoan(this);
-    }
-    else
-      throw new IllegalStateException("Lånet kan tidligst blive forlænget 7 dage inden afleveringsfristen");
   }
 
   public Material getMaterial()
