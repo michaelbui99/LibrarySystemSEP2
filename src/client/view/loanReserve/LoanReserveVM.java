@@ -77,12 +77,12 @@ public class LoanReserveVM
             ModelFactoryClient.getInstance().getReservationModelClient().registerReservation(
                 ModelFactoryClient.getInstance().getMaterialModelClient().getSelectMaterial(),
                 ModelFactoryClient.getInstance().getUserModelClient().getLoginUser());
-            reservationError.set("");
+            warningProperty.set("");
 
         }
         catch (IllegalStateException | NoSuchElementException e)
         {
-            reservationError.set(e.getMessage());
+            warningProperty.set(e.getMessage());
         }
     }
 

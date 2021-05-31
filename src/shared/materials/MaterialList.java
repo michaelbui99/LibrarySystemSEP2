@@ -1,6 +1,6 @@
 package shared.materials;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

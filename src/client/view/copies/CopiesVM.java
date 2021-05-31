@@ -2,7 +2,7 @@ package client.view.copies;
 
 import client.core.ModelFactoryClient;
 import client.model.material.MaterialModelClient;
-import client.model.material.strategy.*;
+import shared.materials.strategy.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

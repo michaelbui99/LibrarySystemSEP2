@@ -1,6 +1,6 @@
 package client.network;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import shared.network.ServerConnectionException;
 import shared.reservation.Reservation;
 import shared.person.Address;

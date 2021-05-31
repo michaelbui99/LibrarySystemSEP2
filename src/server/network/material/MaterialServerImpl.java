@@ -4,7 +4,7 @@ import server.model.material.MaterialModelServer;
 import shared.materials.Material;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import shared.network.MaterialServer;
 
 import java.rmi.RemoteException;

@@ -1,6 +1,6 @@
 package client.model.material;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.person.MaterialCreator;
 import shared.materials.Place;

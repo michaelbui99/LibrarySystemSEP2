@@ -1,7 +1,6 @@
 package client.view.search;
 
 import client.core.ViewModelFactory;
-import client.model.material.strategy.*;
 import shared.materials.Material;
 import client.view.ViewHandler;
 import javafx.collections.FXCollections;
@@ -12,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class SearchController
 {
@@ -60,19 +58,26 @@ public class SearchController
         .getMaterialLanguage());
    targetAudience.setItems(ViewModelFactory.getInstance().getSearchVM()
        .getMaterialAudience());
+
   }
 
   @FXML public void onButtonSearch(ActionEvent actionEvent)
   {
 
-    ObservableList<Material> materials = ViewModelFactory.getInstance().getSearchVM().searchMaterial();
-    searchTableView.setItems(materials);
-    if (materials.size() > 0 ){
-      errorLabel.setVisible(false);
+    ObservableList<Material> materials = null;
+
+    {
+      materials = ViewModelFactory.getInstance().getSearchVM().searchMaterial();
+      searchTableView.setItems(materials);
+      if (materials.size() > 0 ){
+        errorLabel.setVisible(false);
+      }
+      else {
+        errorLabel.setText("Der er ingen materialer, der matcher din søgning!!!");
+        errorLabel.setVisible(true);
+      }
     }
-    else {
-      errorLabel.setVisible(true);
-    }
+
     searchTableView.refresh();
 
   }
@@ -84,8 +89,18 @@ public class SearchController
 
   @FXML public void onButtonContinue(ActionEvent actionEvent) throws IOException
   {
-    ViewModelFactory.getInstance().getSearchVM().setSelectMaterial(searchTableView.getSelectionModel().getSelectedItem());
-    ViewHandler.getInstance().openView("LoanReserve");
+    if (searchTableView.getSelectionModel().getSelectedItem() != null)
+    {
+      ViewModelFactory.getInstance().getSearchVM().setSelectMaterial(searchTableView.getSelectionModel().getSelectedItem());
+      ViewHandler.getInstance().openView("LoanReserve");
+      errorLabel.setVisible(false);
+    }
+    else
+    {
+      errorLabel.setText("Vælg et material!!");
+      errorLabel.setVisible(true);
+    }
+
   }
 
 

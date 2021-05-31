@@ -4,7 +4,7 @@ import shared.materials.Material;
 import shared.materials.MaterialList;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import database.material.*;
 
 import java.beans.PropertyChangeListener;

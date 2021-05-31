@@ -1,11 +1,9 @@
-package client.model.material.strategy;
+package shared.materials.strategy;
 
 import database.material.CDDAOImpl;
 import shared.materials.Material;
 import database.BaseDAO;
-import database.material.MaterialDAOImpl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class CDStrategy extends BaseDAO implements SearchStrategy
@@ -15,9 +13,7 @@ public class CDStrategy extends BaseDAO implements SearchStrategy
 
   public CDStrategy()
   {
-
   }
-
 
   @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience)

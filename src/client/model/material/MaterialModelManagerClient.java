@@ -1,6 +1,6 @@
 package client.model.material;
 
-import client.model.material.strategy.SearchStrategy;
+import shared.materials.strategy.SearchStrategy;
 import shared.materials.Material;
 import shared.person.MaterialCreator;
 import client.network.Client;
@@ -31,8 +31,8 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   public void setSelectMaterial(Material selectMaterial)
   {
-    client.setSelectMaterial(selectMaterial);
-    support.firePropertyChange("materialSelected", null ,selectMaterial);
+      client.setSelectMaterial(selectMaterial);
+      support.firePropertyChange("materialSelected", null ,selectMaterial);
   }
 
   @Override public void deleteMaterial(int materialID)

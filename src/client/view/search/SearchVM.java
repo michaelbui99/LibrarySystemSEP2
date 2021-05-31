@@ -1,7 +1,7 @@
 package client.view.search;
 
 import client.core.ModelFactoryClient;
-import client.model.material.strategy.*;
+import shared.materials.strategy.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.materials.Material;
@@ -26,7 +26,7 @@ public class SearchVM
   private StringProperty targetAudienceProperty;
   private StringProperty chooseTypeProperty;
   private MaterialModelClient materialModelClient;
-
+  private StringProperty errorLabel;
 
 
   public SearchVM(MaterialModelClient materialModelClient)
@@ -113,6 +113,11 @@ public class SearchVM
   }
 
 
+  public StringProperty errorLabelProperty()
+  {
+    return errorLabel;
+  }
+
   public StringProperty targetAudienceProperty()
   {
     return targetAudienceProperty;
@@ -161,9 +166,7 @@ public class SearchVM
 
   public void setSelectMaterial(Material selectMaterial)
   {
-    ModelFactoryClient.getInstance().getMaterialModelClient().setSelectMaterial(selectMaterial);
+      ModelFactoryClient.getInstance().getMaterialModelClient().setSelectMaterial(selectMaterial);
 
   }
-
-
 }
