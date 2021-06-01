@@ -12,7 +12,12 @@ import shared.materials.Material;
 
 import java.io.IOException;
 
-//Kutaiba
+/**
+ * Controller for adding and removing copies, and removing materials
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class CopiesController
 {
   @FXML private TextField title;

@@ -14,13 +14,19 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Michael
+/**
+ * Borrower contact information test
+ *
+ * @author Michael
+ * @version 1.0
+ */
 class BorrowerContactInfoVMTest
 {
   private BorrowerContactInfoVM viewModel;
   private DatabaseBuilder databaseBuilder;
 
-  @BeforeAll static void serverSetup() throws AlreadyBoundException, RemoteException
+  @BeforeAll static void serverSetup()
+      throws AlreadyBoundException, RemoteException
   {
     Server server = new ServerImpl();
     server.start();
@@ -28,9 +34,9 @@ class BorrowerContactInfoVMTest
 
   @BeforeEach void setup() throws SQLException
   {
-     viewModel = new BorrowerContactInfoVM(
+    viewModel = new BorrowerContactInfoVM(
         ModelFactoryClient.getInstance().getUserModelClient());
-     databaseBuilder = new DatabaseBuilder();
+    databaseBuilder = new DatabaseBuilder();
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
   }
 
@@ -99,11 +105,11 @@ class BorrowerContactInfoVMTest
     viewModel.phoneNumberProperty().set("TEST ");
 
     viewModel.getBorrowerInfo();
-    assertEquals("",    viewModel.firstNameProperty().get());
-    assertEquals("",    viewModel.lastNameProperty().get());
-    assertEquals("",    viewModel.addressProperty().get());
-    assertEquals("",    viewModel.emailProperty().get());
-    assertEquals("",    viewModel.phoneNumberProperty().get());
+    assertEquals("", viewModel.firstNameProperty().get());
+    assertEquals("", viewModel.lastNameProperty().get());
+    assertEquals("", viewModel.addressProperty().get());
+    assertEquals("", viewModel.emailProperty().get());
+    assertEquals("", viewModel.phoneNumberProperty().get());
     assertEquals("", viewModel.cprProperty().get());
   }
 }

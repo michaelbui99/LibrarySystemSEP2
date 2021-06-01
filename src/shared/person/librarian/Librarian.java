@@ -4,7 +4,12 @@ import shared.person.Address;
 
 import java.io.Serializable;
 
-//Kasper
+/**
+ * Librarian object class
+ *
+ * @author Kasper
+ * @version 1.0
+ */
 public class Librarian implements Serializable
 {
 
@@ -12,9 +17,9 @@ public class Librarian implements Serializable
   private Address address;
   private int employee_no;
 
-
-  public Librarian(int employee_no, String firstName, String lastName, String cpr,
-      String tlfNumber, String email, Address address, String password)
+  public Librarian(int employee_no, String firstName, String lastName,
+      String cpr, String tlfNumber, String email, Address address,
+      String password)
   {
     this.firstName = firstName;
     this.lastName = lastName;

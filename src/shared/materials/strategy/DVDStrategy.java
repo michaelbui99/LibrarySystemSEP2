@@ -6,8 +6,12 @@ import database.BaseDAO;
 
 import java.util.List;
 
-//Lilian
-//Concrete strategy
+/**
+ * Concrete DVD search strategy
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class DVDStrategy extends BaseDAO implements SearchStrategy
 {
   private String materialType = "dvd";

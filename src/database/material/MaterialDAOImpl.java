@@ -18,7 +18,15 @@ import java.util.Locale;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Lilian-Michael-Kasper-Kutaiba
+/**
+ * Material data access object implementation
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author Kasper
+ * @author Lilian
+ * @version 1.0
+ */
 public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 {
 
@@ -52,6 +60,10 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   {
     try (Connection connection = getConnection())
     {
+      /* "[a-zA-Z]+" to check if a string consists only of letters
+       * .*\d.* to check if a string consists only of Integers
+       * */
+
       if ((title == null) || (publisher == null) || (releaseDate == null) || (
           description == null) || (keywords == null || !keywords
           .matches("[a-zA-Z]+")) || (language == null
@@ -145,14 +157,14 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
   }
 
   //calculate how many copies for each material
-  public int getCopyNumberForMaterial(int materialid)
+  public int getCopyNumberForMaterial(int materialId)
   {
     int copyno = 0;
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
           "SELECT count (*) as copy_no  FROM material_copy where material_id = "
-              + materialid);
+              + materialId);
       ResultSet resultSet = stm.executeQuery();
       if (resultSet.next())
       {
@@ -166,51 +178,51 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
     return copyno;
   }
 
-  @Override public int getNumberOfAvailableCopies(int materialid)
+  @Override public int getNumberOfAvailableCopies(int materialId)
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
           "SELECT count(*) from material_copy where available = true and material_id = ?");
-      stm.setInt(1, materialid);
+      stm.setInt(1, materialId);
       ResultSet result = stm.executeQuery();
       result.next();
       return result.getInt(1);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return 0;
   }
 
-  @Override public synchronized boolean checkIfCopyAvailable(int materialid)
+  @Override public synchronized boolean checkIfCopyAvailable(int materialId)
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
           "SELECT *  FROM material_copy where material_id = ? AND available = true");
-      stm.setInt(1, materialid);
+      stm.setInt(1, materialId);
       ResultSet resultSet = stm.executeQuery();
       if (resultSet.next())
       {
         return true;
       }
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return false;
   }
 
-  @Override public List<String> getKeywordsForMaterial(int materialid)
+  @Override public List<String> getKeywordsForMaterial(int materialId)
   {
     List<String> result = new ArrayList<>();
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT *  FROM material_keywords where material_id = " + materialid);
+          "SELECT *  FROM material_keywords where material_id = " + materialId);
       ResultSet resultSet = stm.executeQuery();
       while (resultSet.next())
       {
@@ -235,9 +247,9 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       result.next();
       return result.getInt(1);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return 0;
   }
@@ -262,9 +274,9 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
         keys.next();
       }
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -279,9 +291,9 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
       connection.commit();
       return res > 0;
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return false;
   }
@@ -498,11 +510,5 @@ public class MaterialDAOImpl extends BaseDAO implements MaterialDAO
 
     System.out.println("result size: " + ml.size());
     return ml;
-  }
-
-  @Override public boolean returnMaterial(int materialID, String cpr,
-      int copy_no)
-  {
-    return false;
   }
 }

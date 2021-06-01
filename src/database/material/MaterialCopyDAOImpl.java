@@ -9,7 +9,15 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Lilian-Michael-Kasper-Kutaiba
+/**
+ * Material copy data access object implementation
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author Kasper
+ * @author Lilian
+ * @version 1.0
+ */
 public class MaterialCopyDAOImpl extends BaseDAO implements MaterialCopyDAO
 {
   private static MaterialCopyDAO instance;
@@ -69,9 +77,9 @@ public class MaterialCopyDAOImpl extends BaseDAO implements MaterialCopyDAO
       return result.getInt(1);
 
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return 0;
   }

@@ -7,7 +7,12 @@ import java.sql.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Kutaiba
+/**
+ * Material creator data access object implementation
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class MaterialCreatorImpl extends BaseDAO implements MaterialCreatorDAO
 {
   private static MaterialCreatorImpl materialCreator;

@@ -5,7 +5,12 @@ import shared.person.MaterialCreator;
 
 import java.io.Serializable;
 
-//Lilian
+/**
+ * Book object class
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class Book extends ReadingMaterial implements Serializable
 {
   private String isbn;
@@ -42,24 +47,27 @@ public class Book extends ReadingMaterial implements Serializable
   @Override public String getMaterialDetails()
   {
     String a;
-      if (author.getfName() != null && author.getlName() != null)
-      {
-       a = author.getfName() + " " + author.getlName();
-      }
-      else
-        a = "";
+    if (author.getfName() != null && author.getlName() != null)
+    {
+      a = author.getfName() + " " + author.getlName();
+    }
+    else
+      a = "";
 
     String placeString = " ";
     if (place != null)
     {
-      placeString = "Placering: " + place.getHallNo() + ">" +place.getDepartment()  + ">" + place.getGenre() + ">" + place.getCreatorLName();
+      placeString =
+          "Placering: " + place.getHallNo() + ">" + place.getDepartment() + ">"
+              + place.getGenre() + ">" + place.getCreatorLName();
     }
 
-
-    return "Titlel: " + getTitle() + "\n" + "Forfatter: " + a + " \n" + "Forlag: " + getPublisher() + "\n"
-        + "Udgivelsesdato: " + getReleaseDate() + "\n" + "ISBN: " + isbn + "\n"
-        + "Sprog: " + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience()
-        + "\n" + "Sidetal: " + getPageCount() + "\n" + "Beskrivelse: "
-        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n" + placeString;
+    return "Titlel: " + getTitle() + "\n" + "Forfatter: " + a + " \n"
+        + "Forlag: " + getPublisher() + "\n" + "Udgivelsesdato: "
+        + getReleaseDate() + "\n" + "ISBN: " + isbn + "\n" + "Sprog: "
+        + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience() + "\n"
+        + "Sidetal: " + getPageCount() + "\n" + "Beskrivelse: "
+        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n"
+        + placeString;
   }
 }

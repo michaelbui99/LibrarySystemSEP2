@@ -2,13 +2,19 @@ package shared.person;
 
 import java.io.Serializable;
 
-//Kasper
+/**
+ * Address object class
+ *
+ * @author Kasper
+ * @version 1.0
+ */
 public class Address implements Serializable
 {
-  private int addressId ,zipCode;
+  private int addressId, zipCode;
   private String city, streetName, streetNr;
 
-  public Address(int addressId, String streetName, String streetNr, int zipCode, String city)
+  public Address(int addressId, String streetName, String streetNr, int zipCode,
+      String city)
   {
     this.addressId = addressId;
     this.streetName = streetName;

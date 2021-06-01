@@ -9,7 +9,12 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * Material copy test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class MaterialCopyDAOImplTest
 {
   private MaterialCopyDAO materialCopyDAO;

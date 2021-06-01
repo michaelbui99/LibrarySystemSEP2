@@ -11,7 +11,12 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * E-book test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class EbookDAOImplTest
 {
   private EbookDAO ebookDAO;

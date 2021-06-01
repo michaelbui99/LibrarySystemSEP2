@@ -2,15 +2,23 @@ package shared.materials;
 
 import java.io.Serializable;
 
-//Lilian-Michael
+/**
+ * Material object abstract class
+ *
+ * @author Lilian
+ * @author Michael
+ * @version 1.0
+ */
 public abstract class Material implements MaterialInterface, Serializable
 {
   private int materialID, copyNumber;
   private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL, materialDetails;
   private MaterialStatus materialStatus;
   private final static long serialVersionUID = -8460811401673477634L;
-  public Material(int materialID, String title, String publisher, String releaseDate, String description,
-      String targetAudience, String language, String imageURL)
+
+  public Material(int materialID, String title, String publisher,
+      String releaseDate, String description, String targetAudience,
+      String language, String imageURL)
   {
     this.materialID = materialID;
     this.title = title;
@@ -45,7 +53,6 @@ public abstract class Material implements MaterialInterface, Serializable
   {
     this.materialStatus = materialStatus;
   }
-
 
   public abstract String getMaterialType();
   public abstract String getMaterialDetails();
@@ -100,8 +107,8 @@ public abstract class Material implements MaterialInterface, Serializable
     return materialStatus;
   }
 
-
-  public String getImageURL() {
+  public String getImageURL()
+  {
     return imageURL;
   }
 
@@ -112,6 +119,8 @@ public abstract class Material implements MaterialInterface, Serializable
 
   @Override public String toString()
   {
-    return "Titel: " + title + "\n" + "Type: " + getMaterialType() + "\n" + "Beskrivelse: " + description + "\n" + "Udgivelsesdato: " + releaseDate;
+    return "Titel: " + title + "\n" + "Type: " + getMaterialType() + "\n"
+        + "Beskrivelse: " + description + "\n" + "Udgivelsesdato: "
+        + releaseDate;
   }
 }

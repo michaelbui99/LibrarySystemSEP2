@@ -12,7 +12,12 @@ import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//Michael
+/**
+ * Implementation of the client loan model
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class LoanModelManagerClient implements LoanModelClient
 {
 
@@ -24,10 +29,18 @@ public class LoanModelManagerClient implements LoanModelClient
     this.client = client;
     support = new PropertyChangeSupport(this);
 
-      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANREGISTERED, evt -> support.firePropertyChange(evt));
-      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANENDED, evt -> support.firePropertyChange(evt));
-      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANEXTENDED, evt -> support.firePropertyChange(evt));
-      ((PropertyChangeSubject) client).addPropertyChangeListener(EventTypes.LOANEXTENDERROR, evt -> support.firePropertyChange(evt));
+    ((PropertyChangeSubject) client)
+        .addPropertyChangeListener(EventTypes.LOANREGISTERED,
+            evt -> support.firePropertyChange(evt));
+    ((PropertyChangeSubject) client)
+        .addPropertyChangeListener(EventTypes.LOANENDED,
+            evt -> support.firePropertyChange(evt));
+    ((PropertyChangeSubject) client)
+        .addPropertyChangeListener(EventTypes.LOANEXTENDED,
+            evt -> support.firePropertyChange(evt));
+    ((PropertyChangeSubject) client)
+        .addPropertyChangeListener(EventTypes.LOANEXTENDERROR,
+            evt -> support.firePropertyChange(evt));
 
   }
 
@@ -43,7 +56,6 @@ public class LoanModelManagerClient implements LoanModelClient
       throw new IllegalStateException(e.getMessage());
     }
   }
-
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {

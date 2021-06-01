@@ -13,6 +13,12 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * User model for server test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class UserModelManagerServerTest
 {
   private UserModelServer userModelServer;

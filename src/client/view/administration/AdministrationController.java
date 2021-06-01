@@ -6,7 +6,12 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
-//Kutaiba
+/**
+ * Controller for the administration window for the librarian
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class AdministrationController
 {
   public void init()
@@ -23,20 +28,6 @@ public class AdministrationController
     System.exit(0);
   }
 
-  @FXML public void onButtonChatRoom(ActionEvent actionEvent)
-  {
-    //ViewHandler.getInstance().openView("ChatRoom");
-  }
-
-  @FXML public void onButtonLibraryLog(ActionEvent actionEvent)
-  {
-    //ViewHandler.getInstance().openView("Log");
-  }
-
-  @FXML public void onButtonRemoveMaterial(ActionEvent actionEvent)
-  {
-    //ViewHandler.getInstance().openView("RemoveMaterial");
-  }
 
   @FXML public void onButtonAddRemoveCopy(ActionEvent actionEvent)
       throws IOException

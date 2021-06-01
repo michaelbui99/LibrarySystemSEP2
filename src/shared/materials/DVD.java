@@ -2,20 +2,25 @@ package shared.materials;
 
 import java.io.Serializable;
 
-//Lilian
+/**
+ * DVD object class
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class DVD extends Material implements Serializable
 {
   private Place place;
   private String subtitlesLanguage;
   private String playDuration;
 
-
-
   public DVD(int materialID, int copyNumber, String title, String publisher,
       String releaseDate, String description, String tags,
-      String targetAudience, String language, String subtitlesLanguage, String playDuration, Place place, String imageURL)
+      String targetAudience, String language, String subtitlesLanguage,
+      String playDuration, Place place, String imageURL)
   {
-    super(materialID, title, publisher, releaseDate, description, targetAudience, language, imageURL );
+    super(materialID, title, publisher, releaseDate, description,
+        targetAudience, language, imageURL);
     this.subtitlesLanguage = subtitlesLanguage;
     this.playDuration = playDuration;
 
@@ -27,7 +32,7 @@ public class DVD extends Material implements Serializable
     return subtitlesLanguage;
   }
 
-  public String  getPlayDuration()
+  public String getPlayDuration()
   {
     return playDuration;
   }
@@ -42,13 +47,16 @@ public class DVD extends Material implements Serializable
     String placeString = " ";
     if (place != null)
     {
-      placeString = "Placering: " + place.getHallNo() + ">" +place.getDepartment()  + ">" + place.getGenre() + ">" + place.getCreatorLName();
+      placeString =
+          "Placering: " + place.getHallNo() + ">" + place.getDepartment() + ">"
+              + place.getGenre() + ">" + place.getCreatorLName();
     }
-    return "Titlel: " + getTitle() + "\n" + "Undertekstsprog: " + getSubtitlesLanguage()
-        + " \n" + "Forlag: " + getPublisher() + "\n"
-        + "Udgivelsesdato: " + getReleaseDate() + "\n"
-        + "Sprog: " + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience()
-        + "\n" + "Spillelængde (minutter): " + playDuration + "\n" + "Beskrivelse: "
-        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n" + placeString;
+    return "Titlel: " + getTitle() + "\n" + "Undertekstsprog: "
+        + getSubtitlesLanguage() + " \n" + "Forlag: " + getPublisher() + "\n"
+        + "Udgivelsesdato: " + getReleaseDate() + "\n" + "Sprog: "
+        + getLanguage() + "\n" + "Målgruppe: " + getTargetAudience() + "\n"
+        + "Spillelængde (minutter): " + playDuration + "\n" + "Beskrivelse: "
+        + getDescription() + "\n" + "Emneord: " + getKeywords() + "\n"
+        + placeString;
   }
 }

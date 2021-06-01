@@ -3,13 +3,19 @@ package shared.person;
 import java.io.Serializable;
 import java.sql.Date;
 
-//Kasper
+/**
+ * Material creator object class
+ *
+ * @author Kaper
+ * @version 1.0
+ */
 public class MaterialCreator implements Serializable
 {
   private String fName, lName, country, dob;
   private int personId;
 
-  public MaterialCreator(int personId, String fName, String lName, String dob, String country)
+  public MaterialCreator(int personId, String fName, String lName, String dob,
+      String country)
   {
     this.personId = personId;
     this.fName = fName;

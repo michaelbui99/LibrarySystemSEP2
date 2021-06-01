@@ -10,10 +10,16 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.NoSuchElementException;
 
-//Kutaiba
+/**
+ * User server implementation
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class UserServerImpl implements UserServer
 {
   private UserModelServer userModel;
+
   public UserServerImpl(UserModelServer userModel)
   {
 
@@ -38,8 +44,7 @@ public class UserServerImpl implements UserServer
 
   @Override public boolean Login(String cprNo, String password)
   {
-    return userModel
-        .logInBorrower(cprNo, password);
+    return userModel.logInBorrower(cprNo, password);
   }
 
   @Override public Borrower getLoginBorrower()
@@ -58,8 +63,7 @@ public class UserServerImpl implements UserServer
 
   @Override public boolean librarianLogin(int employee_no, String password)
   {
-    return userModel
-        .librarianLogin(employee_no, password);
+    return userModel.librarianLogin(employee_no, password);
   }
 
   @Override public Librarian getLoginLibrarian()
@@ -74,58 +78,49 @@ public class UserServerImpl implements UserServer
 
   @Override public boolean borrowerCprNumberAlreadyExists(String cpr)
   {
-    return userModel
-        .borrowerCprNumberAlreadyExists(cpr);
+    return userModel.borrowerCprNumberAlreadyExists(cpr);
   }
 
   @Override public boolean borrowerEmailAlreadyExists(String email)
   {
-    return userModel
-        .borrowerEmailAlreadyExists(email);
+    return userModel.borrowerEmailAlreadyExists(email);
   }
 
   @Override public boolean borrowerPhoneNumberAlreadyExists(String phone)
   {
-    return userModel
-        .borrowerPhoneNumberAlreadyExists(phone);
+    return userModel.borrowerPhoneNumberAlreadyExists(phone);
   }
 
   @Override public boolean borrowerAlreadyExists(String cpr, String email,
       String phone)
   {
-    return userModel
-        .borrowerAlreadyExists(cpr, email, phone);
+    return userModel.borrowerAlreadyExists(cpr, email, phone);
   }
 
   @Override public boolean employeeNumberAlreadyExists(int employeeNo)
   {
-    return userModel
-        .employeeNumberAlreadyExists(employeeNo);
+    return userModel.employeeNumberAlreadyExists(employeeNo);
   }
 
   @Override public boolean librarianCprNumberAlreadyExists(String cpr)
   {
-    return userModel
-        .librarianCprNumberAlreadyExists(cpr);
+    return userModel.librarianCprNumberAlreadyExists(cpr);
   }
 
   @Override public boolean librarianEmailAlreadyExists(String email)
   {
-    return userModel
-        .librarianEmailAlreadyExists(email);
+    return userModel.librarianEmailAlreadyExists(email);
   }
 
   @Override public boolean librarianPhoneNumberAlreadyExists(String phone)
   {
-    return userModel
-        .librarianPhoneNumberAlreadyExists(phone);
+    return userModel.librarianPhoneNumberAlreadyExists(phone);
   }
 
   @Override public boolean librarianAlreadyExists(int employeeNo, String cpr,
       String email, String phone)
   {
-    return userModel
-        .librarianAlreadyExists(employeeNo, cpr, email, phone);
+    return userModel.librarianAlreadyExists(employeeNo, cpr, email, phone);
   }
 
   @Override public Borrower getBorrowerByCPR(String cpr)

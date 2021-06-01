@@ -11,10 +11,16 @@ import java.rmi.RemoteException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Michael
+/**
+ * Client test
+ *
+ * @author Michael
+ * @version 1.0
+ */
 class ClientTest
 {
   private Client client;
+
   @BeforeEach void setup()
   {
     client = new RMIClientImpl();
@@ -22,7 +28,7 @@ class ClientTest
 
   @Test void startClientServerNotStartedThrowsServerConnectionException()
   {
-    assertThrows(ServerConnectionException.class, ()->client.startClient());
+    assertThrows(ServerConnectionException.class, () -> client.startClient());
   }
 
   @Test void startClientServerStartedDoesNotThrow()
@@ -30,8 +36,7 @@ class ClientTest
   {
     Server server = new ServerImpl();
     server.start();
-    assertDoesNotThrow(()->client.startClient());
+    assertDoesNotThrow(() -> client.startClient());
   }
-
 
 }

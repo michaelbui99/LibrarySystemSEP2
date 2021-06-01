@@ -10,7 +10,12 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Kutaiba
+/**
+ * Address data access object implementation
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class AddressImpl extends BaseDAO implements AddressDAO
 {
   private static AddressImpl address;
@@ -21,7 +26,7 @@ public class AddressImpl extends BaseDAO implements AddressDAO
 
   }
 
-  public static AddressImpl getInstence()
+  public static AddressImpl getInstance()
   {
     if (address == null)
     {
@@ -36,8 +41,8 @@ public class AddressImpl extends BaseDAO implements AddressDAO
     return address;
   }
 
-  @Override public synchronized Address create(String city, String streetName, int zipCode,
-      String streetNr) throws SQLException
+  @Override public synchronized Address create(String city, String streetName,
+      int zipCode, String streetNr) throws SQLException
   {
     try (Connection connection = getConnection())
     {

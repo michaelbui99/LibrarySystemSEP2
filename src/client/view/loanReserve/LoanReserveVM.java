@@ -10,7 +10,14 @@ import shared.util.EventTypes;
 
 import java.util.NoSuchElementException;
 
-//Kasper-Michael-Lilian
+/**
+ * View model for loans and reservations
+ *
+ * @author Kasper
+ * @author Michael
+ * @author Lilian
+ * @version 1.0
+ */
 public class LoanReserveVM
 {
   private StringProperty materialInfoProp;
@@ -18,6 +25,7 @@ public class LoanReserveVM
   private ObjectProperty<Material> materialProperty;
   private StringProperty warningProperty;
   private StringProperty reservationError;
+
   private ReservationModelClient reservationModel;
   private LoanModelClient loanModel;
   private MaterialModelClient materialModel;

@@ -9,7 +9,12 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * Librarian test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class LibrarianImplTest
 {
   private Address address;

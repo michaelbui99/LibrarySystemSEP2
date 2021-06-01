@@ -5,7 +5,12 @@ import shared.materials.strategy.SearchStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-//Lilian
+/**
+ * Material list object class
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class MaterialList
 {
   private List<Material> materials;
@@ -13,14 +18,13 @@ public class MaterialList
 
   public MaterialList()
   {
-   materials = new ArrayList<>();
+    materials = new ArrayList<>();
   }
 
   public void addMaterial(Material material)
   {
     materials.add(material);
   }
-  
 
   public List getAllMaterial()
   {
@@ -39,7 +43,8 @@ public class MaterialList
     return null;
   }
 
-  public int size(){
+  public int size()
+  {
     return this.materials.size();
   }
 }

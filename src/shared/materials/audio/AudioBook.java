@@ -4,7 +4,12 @@ import shared.person.MaterialCreator;
 
 import java.io.Serializable;
 
-//Lilian
+/**
+ * Audiobook object class
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class AudioBook extends AudioMaterial implements Serializable
 {
   private MaterialCreator author;

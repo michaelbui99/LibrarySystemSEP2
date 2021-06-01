@@ -3,7 +3,10 @@ package client.core;
 import client.network.RMIClient;
 import client.network.RMIClientImpl;
 
-//Lilian
+/** Client factory
+ * @author Lilian
+ * @version 1.0
+ * */
 public class ClientFactory
 {
   private static ClientFactory clientFactory;

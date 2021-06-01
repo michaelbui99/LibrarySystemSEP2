@@ -4,7 +4,12 @@ import client.model.user.UserModelClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-//Kutaiba
+/**
+ * View model for librarian log in
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class StaffLogInVM
 {
   private StringProperty employeeNoProperty;

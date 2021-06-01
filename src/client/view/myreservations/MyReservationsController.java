@@ -13,7 +13,12 @@ import shared.reservation.Reservation;
 
 import java.io.IOException;
 
-//Lilian
+/**
+ * Controller for the borrower reservation
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class MyReservationsController
 {
 
@@ -27,38 +32,41 @@ public class MyReservationsController
 
   public void init(MyReservationsVM myLoansVM)
   {
-   this.myReservationsVM = myLoansVM;
-    
+    this.myReservationsVM = myLoansVM;
+
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
-    reservationDateColumn.setCellValueFactory(new PropertyValueFactory<>("reservationDate"));
-    readyForPickupColumn.setCellValueFactory(new PropertyValueFactory<>("readyForPickup"));
-    ObservableList<Reservation> activeReservations =myReservationsVM.getReservationList();
+    reservationDateColumn
+        .setCellValueFactory(new PropertyValueFactory<>("reservationDate"));
+    readyForPickupColumn
+        .setCellValueFactory(new PropertyValueFactory<>("readyForPickup"));
+    ObservableList<Reservation> activeReservations = myReservationsVM
+        .getReservationList();
     reservationTableView.setItems(activeReservations);
-    if (activeReservations.size() == 0){
-      noReservationsLabel.setVisible(true);
-    }else{
-      noReservationsLabel.setVisible(false);
-    }
+    noReservationsLabel.setVisible(activeReservations.size() == 0);
 
   }
 
   @FXML void onReturnButton(ActionEvent event)
   {
 
-   myReservationsVM.reservationProperty()
+    myReservationsVM.reservationProperty()
         .set(reservationTableView.getSelectionModel().getSelectedItem());
     reservationTableView.refresh();
   }
 
   @FXML void onEndReservationButton(ActionEvent event)
   {
-    Reservation selectedReservation = this.reservationTableView.getSelectionModel().getSelectedItem();
-    if(selectedReservation != null){
-     myReservationsVM.endReservation(selectedReservation);
-      ObservableList<Reservation> reservations = reservationTableView.getItems();
+    Reservation selectedReservation = this.reservationTableView
+        .getSelectionModel().getSelectedItem();
+    if (selectedReservation != null)
+    {
+      myReservationsVM.endReservation(selectedReservation);
+      ObservableList<Reservation> reservations = reservationTableView
+          .getItems();
       for (int i = 0; i < reservations.size(); i++)
       {
-        if(reservations.get(i).equals(selectedReservation)){
+        if (reservations.get(i).equals(selectedReservation))
+        {
           reservations.remove(i);
         }
       }
@@ -66,8 +74,8 @@ public class MyReservationsController
     }
   }
 
-  @FXML
-  void onBackButton(ActionEvent event) {
+  @FXML void onBackButton(ActionEvent event)
+  {
     try
     {
       ViewHandler.getInstance().openView("BorrowerWindow");

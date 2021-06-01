@@ -5,7 +5,12 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 
-//Kutaiba
+/**
+ * Controller for the borrower navigation window
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class BorrowerWindowController
 {
   private BorrowerWindowVM borrowerWindowVM;
@@ -22,7 +27,6 @@ public class BorrowerWindowController
 
   public void OnButtonMyMaterial(ActionEvent actionEvent) throws IOException
   {
-    //    ViewModelFactory.getInstance().getUserVM().setBorrowerCPR();
     ViewHandler.getInstance().openView("MyLoans");
   }
 

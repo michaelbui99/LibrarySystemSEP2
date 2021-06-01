@@ -11,54 +11,63 @@ import shared.materials.Material;
 
 import java.io.IOException;
 
-//Lilian
+/**
+ * Controller for search window
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class SearchController
 {
 
   @FXML private TextField title;
-  @FXML private  TextField genre;
-  @FXML private  TextField keywords;
+  @FXML private TextField genre;
+  @FXML private TextField keywords;
+
   @FXML private ComboBox<String> chooseType;
-  @FXML private  ComboBox<String> chooseLanguage;
-  @FXML private  ComboBox<String> targetAudience;
+  @FXML private ComboBox<String> chooseLanguage;
+  @FXML private ComboBox<String> targetAudience;
+
   @FXML private Label errorLabel;
-  @FXML private TableView< Material> searchTableView;
+
+  @FXML private TableView<Material> searchTableView;
   @FXML private TableColumn<String, Material> titleColumn;
   @FXML private TableColumn<String, Material> publisherColumn;
   @FXML private TableColumn<String, Material> releaseDateColumn;
   @FXML private TableColumn<String, Material> statusColumn;
 
   private SearchVM searchVM;
-  private ObservableList<String> materialTy = FXCollections.observableArrayList();
-  private ObservableList<String> materialLanguage = FXCollections.observableArrayList();
-  private ObservableList<String>   materialAudience = FXCollections.observableArrayList();
 
+  private ObservableList<String> materialTy = FXCollections
+      .observableArrayList();
+  private ObservableList<String> materialLanguage = FXCollections
+      .observableArrayList();
+  private ObservableList<String> materialAudience = FXCollections
+      .observableArrayList();
 
   public void init(SearchVM searchVM)
   {
     this.searchVM = searchVM;
-    
+
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-    publisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
-    releaseDateColumn.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
-    statusColumn.setCellValueFactory(new PropertyValueFactory<>("materialStatus"));
-    title.textProperty().bindBidirectional(searchVM
-        .titleProperty());
-    genre.textProperty().bindBidirectional(searchVM
-        .genreProperty());
-    keywords.textProperty().bindBidirectional(searchVM
-        .keywordProperty());
+    publisherColumn
+        .setCellValueFactory(new PropertyValueFactory<>("publisher"));
+    releaseDateColumn
+        .setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
+    statusColumn
+        .setCellValueFactory(new PropertyValueFactory<>("materialStatus"));
+    title.textProperty().bindBidirectional(searchVM.titleProperty());
+    genre.textProperty().bindBidirectional(searchVM.genreProperty());
+    keywords.textProperty().bindBidirectional(searchVM.keywordProperty());
     chooseType.valueProperty().bindBidirectional(searchVM.chooseTypeProperty());
-    chooseLanguage.valueProperty().bindBidirectional(searchVM
-        .languageProperty());
-    targetAudience.valueProperty().bindBidirectional(searchVM
-        .targetAudienceProperty());
+    chooseLanguage.valueProperty()
+        .bindBidirectional(searchVM.languageProperty());
+    targetAudience.valueProperty()
+        .bindBidirectional(searchVM.targetAudienceProperty());
 
     chooseType.setItems(searchVM.getMaterialType());
-    chooseLanguage.setItems(searchVM
-        .getMaterialLanguage());
-   targetAudience.setItems(searchVM
-       .getMaterialAudience());
+    chooseLanguage.setItems(searchVM.getMaterialLanguage());
+    targetAudience.setItems(searchVM.getMaterialAudience());
 
   }
 
@@ -70,11 +79,14 @@ public class SearchController
     {
       materials = searchVM.searchMaterial();
       searchTableView.setItems(materials);
-      if (materials.size() > 0 ){
+      if (materials.size() > 0)
+      {
         errorLabel.setVisible(false);
       }
-      else {
-        errorLabel.setText("Der er ingen materialer, der matcher din søgning!!!");
+      else
+      {
+        errorLabel
+            .setText("Der er ingen materialer, der matcher din søgning!!!");
         errorLabel.setVisible(true);
       }
     }
@@ -92,7 +104,8 @@ public class SearchController
   {
     if (searchTableView.getSelectionModel().getSelectedItem() != null)
     {
-      searchVM.setSelectMaterial(searchTableView.getSelectionModel().getSelectedItem());
+      searchVM.setSelectMaterial(
+          searchTableView.getSelectionModel().getSelectedItem());
       ViewHandler.getInstance().openView("LoanReserve");
       errorLabel.setVisible(false);
     }
@@ -103,6 +116,5 @@ public class SearchController
     }
 
   }
-
 
 }

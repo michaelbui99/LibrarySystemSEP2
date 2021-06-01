@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-//Michael
+/**
+ * Extend loan first state
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class ExtendedLoan1State implements LoanState, Serializable
 {
   @Override public void extendLoan(Loan loan)
@@ -13,7 +18,8 @@ public class ExtendedLoan1State implements LoanState, Serializable
     LocalDate today = LocalDate.now();
     LocalDate deadlineDate = LocalDate.parse(loan.getDeadline(), formatter);
     //Loans can at earliest be extended when the current day is 7 days before deadline.
-    if (today.isBefore(deadlineDate) && today.isAfter(deadlineDate.minusDays(8)))
+    if (today.isBefore(deadlineDate) && today
+        .isAfter(deadlineDate.minusDays(8)))
     {
       if (loan.materialHasReservation())
       {
@@ -25,6 +31,8 @@ public class ExtendedLoan1State implements LoanState, Serializable
         loan.setDeadline(deadlineDate.plusMonths(1).toString());
       }
     }
-    else  throw new IllegalStateException("Lånet kan tidligst blive forlænget 7 dage inden afleveringsfristen");
+    else
+      throw new IllegalStateException(
+          "Lånet kan tidligst blive forlænget 7 dage inden afleveringsfristen");
   }
 }

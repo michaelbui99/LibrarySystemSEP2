@@ -8,7 +8,12 @@ import shared.person.borrower.Borrower;
 
 import java.util.NoSuchElementException;
 
-//Michael
+/**
+ * View model for borrower contact info
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class BorrowerContactInfoVM
 {
   private UserModelClient userModel;
@@ -28,7 +33,9 @@ public class BorrowerContactInfoVM
 
   public void getBorrowerInfo()
   {
-    if (cprProperty != null && (!cprProperty.get().contains("-") || cprProperty.get().length() != 11 || !cprContainsNoChars()) && cprProperty.get().length() > 0)
+    if (cprProperty != null && (!cprProperty.get().contains("-")
+        || cprProperty.get().length() != 11 || !cprContainsNoChars())
+        && cprProperty.get().length() > 0)
     {
       warningProperty.set("Ugyldigt CPR");
       clearAllProperties();
@@ -45,7 +52,8 @@ public class BorrowerContactInfoVM
         Borrower borrower = userModel.getBorrowerByCPR(cprProperty.get());
         Address address = borrower.getAddress();
         String addressString =
-            address.getStreetName() + " " + address.getStreetNr() + " " + address.getZipCode() + " " + address.getCity();
+            address.getStreetName() + " " + address.getStreetNr() + " "
+                + address.getZipCode() + " " + address.getCity();
         firstNameProperty.set(borrower.getFirstName());
         lastNameProperty.set(borrower.getLastName());
         emailProperty.set(borrower.getEmail());
@@ -107,6 +115,7 @@ public class BorrowerContactInfoVM
   {
     return warningProperty;
   }
+
   private boolean cprContainsNoChars()
   {
     String[] cprSplit = cprProperty.get().split("-");
@@ -116,7 +125,7 @@ public class BorrowerContactInfoVM
       Integer.parseInt(cprSplit[1]);
       return true;
     }
-    catch(NumberFormatException e)
+    catch (NumberFormatException e)
     {
       return false;
     }

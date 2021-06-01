@@ -20,17 +20,25 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-//Michael-Kutaiba-Lilian-Kasper
+/**
+ * RMI server implementation
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author kasper
+ * @author Lilian
+ * @version 1.0
+ */
 public class ServerImpl implements Server
 {
-  private LoanModelServer loanModel;
-  private UserModelServer userModelServer;
-
+  /**
+   * Starts the server
+   */
   public ServerImpl()
   {
     try
     {
-      UnicastRemoteObject.exportObject(this, 0 );
+      UnicastRemoteObject.exportObject(this, 0);
     }
     catch (RemoteException e)
     {
@@ -38,8 +46,7 @@ public class ServerImpl implements Server
     }
   }
 
-  @Override public void start()
-      throws RemoteException, AlreadyBoundException
+  @Override public void start() throws RemoteException, AlreadyBoundException
   {
     Registry registry = LocateRegistry.createRegistry(1099);
     registry.bind(Constants.RMISERVER, this);
@@ -53,8 +60,8 @@ public class ServerImpl implements Server
 
   @Override public MaterialServer getMaterialServer()
   {
-    return new MaterialServerImpl(ModelFactoryServer.getInstance()
-        .getMaterialModel());
+    return new MaterialServerImpl(
+        ModelFactoryServer.getInstance().getMaterialModel());
   }
 
   @Override public LoanServer getLoanServer()
@@ -64,6 +71,7 @@ public class ServerImpl implements Server
 
   @Override public ReservationServer getReservationServer()
   {
-    return new ReservationServerImpl(ModelFactoryServer.getInstance().getReservationModelServer());
+    return new ReservationServerImpl(
+        ModelFactoryServer.getInstance().getReservationModelServer());
   }
 }

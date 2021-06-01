@@ -11,6 +11,12 @@ import shared.materials.Material;
 import shared.materials.strategy.*;
 import shared.util.EventTypes;
 
+/**
+ * View model for adding and removing copies and removing materials
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class CopiesVM
 {
   private ObservableList<Material> materialList;
@@ -27,7 +33,6 @@ public class CopiesVM
   private StringProperty languageProperty;
   private MaterialModelClient materialModel;
 
-  //Kutaiba
   public CopiesVM(MaterialModelClient materialModel)
   {
     this.materialModel = materialModel;
@@ -132,19 +137,16 @@ public class CopiesVM
 
     materialList.clear();
 
-    if (materialModel
-        .findMaterial(titleProperty.get(), languageProperty.get(),
-            keywordsProperty.get(), genreProperty.get(),
-            targetAudienceProperty.get(), searchStrategy) != null)
+    if (materialModel.findMaterial(titleProperty.get(), languageProperty.get(),
+        keywordsProperty.get(), genreProperty.get(),
+        targetAudienceProperty.get(), searchStrategy) != null)
     {
-      materialList.addAll(
-          materialModel
-              .findMaterial(titleProperty.get(), languageProperty.get(),
-                  keywordsProperty.get(), genreProperty.get(),
-                  targetAudienceProperty.get(), searchStrategy));
-      materialModel
-          .addPropertyChangeListener(EventTypes.MATERIALFOUND,
-              evt -> materialList.add((Material) evt.getNewValue()));
+      materialList.addAll(materialModel
+          .findMaterial(titleProperty.get(), languageProperty.get(),
+              keywordsProperty.get(), genreProperty.get(),
+              targetAudienceProperty.get(), searchStrategy));
+      materialModel.addPropertyChangeListener(EventTypes.MATERIALFOUND,
+          evt -> materialList.add((Material) evt.getNewValue()));
     }
     return materialList;
   }
@@ -162,9 +164,8 @@ public class CopiesVM
             .createEBookCopy(selectedMaterialProperty.get().getMaterialID());
         break;
       case "Lydbog":
-        materialModel
-            .createAudioBookCopy(
-                selectedMaterialProperty.get().getMaterialID());
+        materialModel.createAudioBookCopy(
+            selectedMaterialProperty.get().getMaterialID());
         break;
       case "CD":
         materialModel

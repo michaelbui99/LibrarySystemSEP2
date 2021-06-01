@@ -26,7 +26,12 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Michael
+/**
+ * Loan data access object implemntation
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class LoanDAOImpl extends BaseDAO implements LoanDAO
 {
   private static LoanDAO instance;
@@ -58,35 +63,34 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     {
       try (Connection connection = getConnection())
       {
-          LocalDate today = LocalDate.now();
-          //Sets deadline to be one month after loan date.
-          LocalDate loanDeadline = today.plusMonths(1);
-          int copyNo = MaterialCopyDAOImpl.getInstance()
-              .getFirstAvailableCopyNo(material.getMaterialID());
-          PreparedStatement stm = connection.prepareStatement(
-              "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no) values (CURRENT_DATE,?,?,?,?,?)",
-              Statement.RETURN_GENERATED_KEYS);
-          stm.setDate(1, Date.valueOf(loanDeadline));
-          stm.setDate(2, null);
-          stm.setString(3, borrower.getCpr());
-          stm.setInt(4, material.getMaterialID());
-          stm.setInt(5, copyNo);
-          stm.executeUpdate();
-          ResultSet generatedKeys = stm.getGeneratedKeys();
-          generatedKeys.next();
-          int generatedKey = generatedKeys.getInt(1);
+        LocalDate today = LocalDate.now();
+        //Sets deadline to be one month after loan date.
+        LocalDate loanDeadline = today.plusMonths(1);
+        int copyNo = MaterialCopyDAOImpl.getInstance()
+            .getFirstAvailableCopyNo(material.getMaterialID());
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO loan (loan_date, deadline, return_date, cpr_no, material_id, copy_no) values (CURRENT_DATE,?,?,?,?,?)",
+            Statement.RETURN_GENERATED_KEYS);
+        stm.setDate(1, Date.valueOf(loanDeadline));
+        stm.setDate(2, null);
+        stm.setString(3, borrower.getCpr());
+        stm.setInt(4, material.getMaterialID());
+        stm.setInt(5, copyNo);
+        stm.executeUpdate();
+        ResultSet generatedKeys = stm.getGeneratedKeys();
+        generatedKeys.next();
+        int generatedKey = generatedKeys.getInt(1);
 
-          PreparedStatement stm2 = connection.prepareStatement(
-              "update material_copy set available = false where material_id = ? and copy_no = ?");
-          stm2.setInt(1, material.getMaterialID());
-          stm2.setInt(2, copyNo);
-          stm2.executeUpdate();
+        PreparedStatement stm2 = connection.prepareStatement(
+            "update material_copy set available = false where material_id = ? and copy_no = ?");
+        stm2.setInt(1, material.getMaterialID());
+        stm2.setInt(2, copyNo);
+        stm2.executeUpdate();
 
-
-            connection.commit();
-          return new Loan(material, borrower, loanDeadline.toString(), today.toString(),
-              null, generatedKey);
-        }
+        connection.commit();
+        return new Loan(material, borrower, loanDeadline.toString(),
+            today.toString(), null, generatedKey);
+      }
     }
     catch (SQLException throwables)
     {
@@ -97,8 +101,6 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
 
   @Override public List<Loan> getAllLoansByCPR(String cpr)
   {
-    //TODO: Tilføj en metode der giver alle keywords til et materiale i materialdao og ret herefter tags.
-    //TODO: Hvis DAO Metoder for getBorrowerByCPR, getAddressByCPR og getBookByMaterialID,get... getDVDByMaterialID findes, så brug de metoder i denne metode.
     try
     {
       try (Connection connection = getConnection())
@@ -353,7 +355,6 @@ public class LoanDAOImpl extends BaseDAO implements LoanDAO
     {
       try (Connection connection = getConnection())
       {
-        //TODO: ADD SQL Statement to find the material copy which is in loan and update the status of the copy.
         PreparedStatement stm = connection.prepareStatement(
             "UPDATE loan set return_date = CURRENT_DATE where loan_no = ?");
         stm.setInt(1, loan.getLoanID());

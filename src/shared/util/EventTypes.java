@@ -1,6 +1,14 @@
 package shared.util;
 
-//Kasper-Kutaiba-Michael-Lilian
+/**
+ * Event names
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author kasper
+ * @author Lilian
+ * @version 1.0
+ */
 public class EventTypes
 {
   public static final String MATERIALREGISTERED = "MaterialRegistered";

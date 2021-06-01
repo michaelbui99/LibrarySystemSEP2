@@ -12,7 +12,12 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * Book test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class BookDAOImplTest
 {
   private BookDAO bookDAO;
@@ -248,6 +253,6 @@ class BookDAOImplTest
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
     bookDAO.create(materialID, "234", 11, materialCreator, place);
     bookDAO.createBookCopy(materialID, 2);
-    assertDoesNotThrow(()-> bookDAO.deleteBookCopy(materialID, 2));
+    assertDoesNotThrow(() -> bookDAO.deleteBookCopy(materialID, 2));
   }
 }

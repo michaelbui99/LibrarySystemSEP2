@@ -12,24 +12,30 @@ import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.List;
 
-//Kutaiba-Lilian
+/**
+ * Material model implementation for server
+ *
+ * @author Kutaiba
+ * @author Lilian
+ * @version 1.0
+ */
 public class MaterialModelManagerServer implements MaterialModelServer
 {
   private PropertyChangeSupport support;
   private MaterialList materialList;
   private SearchStrategy searchStrategy;
   private Material selectedMaterial;
-  
+
   private AudioBookDAO audioBookDAO;
   private BookDAO bookDAO;
   private EbookDAO ebookDAO;
-  private CDDAO cddao;
-  private DVDDAO dvddao;
+  private CdDAO cddao;
+  private DvdDAO dvddao;
   private MaterialDAO materialDAO;
   private MaterialCopyDAO materialCopyDAO;
 
   public MaterialModelManagerServer(AudioBookDAO audioBookDAO, BookDAO bookDAO,
-      EbookDAO ebookDAO, CDDAO cddao, DVDDAO dvddao, MaterialDAO materialDAO,
+      EbookDAO ebookDAO, CdDAO cddao, DvdDAO dvddao, MaterialDAO materialDAO,
       MaterialCopyDAO materialCopyDAO)
   {
     this.audioBookDAO = audioBookDAO;
@@ -56,9 +62,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, keywords);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return id;
   }
@@ -74,12 +80,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
       materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      bookDAO
-          .create(materialID, isbn, pageCount, author, place);
+      bookDAO.create(materialID, isbn, pageCount, author, place);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return materialID;
   }
@@ -91,9 +96,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
       bookDAO.createBookCopy(materialID,
           materialDAO.getLatestCopyNo(materialID) + 1);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -101,12 +106,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      bookDAO
-          .deleteBookCopy(materialID, copyNo);
+      bookDAO.deleteBookCopy(materialID, copyNo);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -122,9 +126,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
           .bookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, isbn, pageCount, author, genre);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return bookIn;
   }
@@ -140,12 +144,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
       materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      dvddao
-          .create(materialID, subtitlesLanguage, playDuration, place);
+      dvddao.create(materialID, subtitlesLanguage, playDuration, place);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return materialID;
   }
@@ -157,9 +160,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
       dvddao.createDVDCopy(materialID,
           materialDAO.getLatestCopyNo(materialID) + 1);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -167,12 +170,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      dvddao
-          .deleteDVDCopy(materialID, copyNo);
+      dvddao.deleteDVDCopy(materialID, copyNo);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -187,9 +189,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
           .dvdAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, genre);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return dvdIn;
   }
@@ -207,9 +209,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
               language, genre, url, tags);
       cddao.create(materialID, playDuration, place);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return materialID;
   }
@@ -221,9 +223,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
       cddao.createCDCopy(materialID,
           materialDAO.getLatestCopyNo(materialID) + 1);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -231,12 +233,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      cddao
-          .deleteCDCopy(materialID, copyNo);
+      cddao.deleteCDCopy(materialID, copyNo);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -247,13 +248,12 @@ public class MaterialModelManagerServer implements MaterialModelServer
     boolean cdIn = false;
     try
     {
-      cdIn = cddao
-          .cdAlreadyExists(title, publisher, releaseDate, description,
-              targetAudience, language, playDuration, genre);
+      cdIn = cddao.cdAlreadyExists(title, publisher, releaseDate, description,
+          targetAudience, language, playDuration, genre);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return cdIn;
   }
@@ -269,12 +269,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
       materialID = materialDAO
           .create(title, publisher, releaseDate, description, targetAudience,
               language, genre, url, tags);
-      ebookDAO
-          .create(materialID, pageCount, author, licenseNr);
+      ebookDAO.create(materialID, pageCount, author, licenseNr);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return materialID;
   }
@@ -286,9 +285,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
       ebookDAO.createEBookCopy(materialID,
           materialDAO.getLatestCopyNo(materialID) + 1);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -296,12 +295,11 @@ public class MaterialModelManagerServer implements MaterialModelServer
   {
     try
     {
-      ebookDAO
-          .deleteEBookCopy(materialID, copyNo);
+      ebookDAO.deleteEBookCopy(materialID, copyNo);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -317,9 +315,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
           .eBookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, pageCount, licenseNr, genre, author);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return eBookIn;
   }
@@ -337,9 +335,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
               language, genre, url, tags);
       audioBookDAO.create(materialID, playDuration, author);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return materialID;
   }
@@ -351,22 +349,21 @@ public class MaterialModelManagerServer implements MaterialModelServer
       audioBookDAO.createAudioBookCopy(materialID,
           materialDAO.getLatestCopyNo(materialID) + 1);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
-  @Override public void deleteAudiotBookCopy(int materialID, int copyNo)
+  @Override public void deleteAudioBookCopy(int materialID, int copyNo)
   {
     try
     {
-      audioBookDAO
-          .deleteAudioBookCopy(materialID, copyNo);
+      audioBookDAO.deleteAudioBookCopy(materialID, copyNo);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -382,9 +379,9 @@ public class MaterialModelManagerServer implements MaterialModelServer
           .audioBookAlreadyExists(title, publisher, releaseDate, description,
               targetAudience, language, playDuration, author, genre);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return audioBookIn;
   }

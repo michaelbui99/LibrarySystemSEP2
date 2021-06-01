@@ -17,7 +17,15 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Lilian-Michael-Kasper-Kutaiba
+/**
+ * Book data access object implementation
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author Kasper
+ * @author Lilian
+ * @version 1.0
+ */
 public class BookDAOImpl extends BaseDAO implements BookDAO
 {
 

@@ -14,7 +14,12 @@ import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
-//Kutaiba
+/**
+ * User model implementation for server
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class UserModelManagerServer implements UserModelServer
 {
   private PropertyChangeSupport support;
@@ -31,7 +36,7 @@ public class UserModelManagerServer implements UserModelServer
     support = new PropertyChangeSupport(this);
     borrowerList = new BorrowerList();
     librarianList = new LibrarianList();
-    
+
     this.borrowerDAO = borrowerDAO;
     this.librarianDAO = librarianDAO;
   }
@@ -47,9 +52,9 @@ public class UserModelManagerServer implements UserModelServer
           .create(cpr, firstName, lastName, email, tlfNumber, address,
               password);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     borrowerList.addBorrower(borrower);
     support.firePropertyChange(EventTypes.BORROWERREGISTERED, null, borrower);
@@ -69,9 +74,9 @@ public class UserModelManagerServer implements UserModelServer
       }
 
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     support.firePropertyChange(EventTypes.LOGINREQUESTED, null, login);
     return login;
@@ -84,9 +89,9 @@ public class UserModelManagerServer implements UserModelServer
     {
       borrower = borrowerDAO.getBorrower(borrowerCpr);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return borrower;
   }
@@ -102,9 +107,9 @@ public class UserModelManagerServer implements UserModelServer
           .create(employee_no, firstName, lastName, cpr, tlfNumber, email,
               address, password);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     librarianList.addLibrarian(librarian);
     support.firePropertyChange(EventTypes.LIBRARIANREGISTERD, null, librarian);
@@ -118,9 +123,9 @@ public class UserModelManagerServer implements UserModelServer
     {
       login = librarianDAO.librarianLogin(employee_no, password);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     support.firePropertyChange(EventTypes.LOGINREQUESTED, null, login);
     return login;
@@ -138,9 +143,9 @@ public class UserModelManagerServer implements UserModelServer
     {
       cprIn = borrowerDAO.borrowerCprNumberAlreadyExists(cpr);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return cprIn;
   }
@@ -152,9 +157,9 @@ public class UserModelManagerServer implements UserModelServer
     {
       emailIn = borrowerDAO.borrowerEmailAlreadyExists(email);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return emailIn;
   }
@@ -164,12 +169,11 @@ public class UserModelManagerServer implements UserModelServer
     boolean phoneIn = false;
     try
     {
-      phoneIn = borrowerDAO
-          .borrowerPhoneNumberAlreadyExists(phone);
+      phoneIn = borrowerDAO.borrowerPhoneNumberAlreadyExists(phone);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return phoneIn;
   }
@@ -180,12 +184,11 @@ public class UserModelManagerServer implements UserModelServer
     boolean borrowerIn = false;
     try
     {
-      borrowerIn = borrowerDAO
-          .borrowerAlreadyExists(cpr, email, phone);
+      borrowerIn = borrowerDAO.borrowerAlreadyExists(cpr, email, phone);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return borrowerIn;
   }
@@ -195,12 +198,11 @@ public class UserModelManagerServer implements UserModelServer
     boolean employeeNoIn = false;
     try
     {
-      employeeNoIn = librarianDAO
-          .employeeNumberAlreadyExists(employeeNo);
+      employeeNoIn = librarianDAO.employeeNumberAlreadyExists(employeeNo);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return employeeNoIn;
   }
@@ -212,9 +214,9 @@ public class UserModelManagerServer implements UserModelServer
     {
       cprIn = librarianDAO.librarianCprNumberAlreadyExists(cpr);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return cprIn;
   }
@@ -226,9 +228,9 @@ public class UserModelManagerServer implements UserModelServer
     {
       emailIn = librarianDAO.librarianEmailAlreadyExists(email);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return emailIn;
   }
@@ -238,12 +240,11 @@ public class UserModelManagerServer implements UserModelServer
     boolean phoneIn = false;
     try
     {
-      phoneIn = librarianDAO
-          .librarianPhoneNumberAlreadyExists(phone);
+      phoneIn = librarianDAO.librarianPhoneNumberAlreadyExists(phone);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return phoneIn;
   }
@@ -257,9 +258,9 @@ public class UserModelManagerServer implements UserModelServer
       librarianIn = librarianDAO
           .librarianAlreadyExists(employeeNo, cpr, email, phone);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return librarianIn;
   }
@@ -276,9 +277,9 @@ public class UserModelManagerServer implements UserModelServer
     {
       return borrowerDAO.getBorrower(cpr);
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     catch (NoSuchElementException e)
     {

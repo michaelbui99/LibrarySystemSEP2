@@ -13,7 +13,12 @@ import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//Lilian
+/**
+ * Implementation of the client's reservation model
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class ReservationModelManagerClient implements ReservationModelClient
 {
   private PropertyChangeSupport support;
@@ -23,7 +28,9 @@ public class ReservationModelManagerClient implements ReservationModelClient
   {
     this.client = client;
     support = new PropertyChangeSupport(this);
-    ((PropertyChangeSubject)client).addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, this::onUpdate);
+    ((PropertyChangeSubject) client)
+        .addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED,
+            this::onUpdate);
   }
 
   @Override public void registerReservation(Material material,
@@ -47,7 +54,7 @@ public class ReservationModelManagerClient implements ReservationModelClient
 
   @Override public void endReservation(Reservation reservation)
   {
-//    client.endReservation(reservation);
+    //    client.endReservation(reservation);
     client.endReservation(reservation);
   }
 

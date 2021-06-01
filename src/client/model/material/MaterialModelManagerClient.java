@@ -10,7 +10,12 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 
-//Kutaiba
+/**
+ * Implementation of the client's material model
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class MaterialModelManagerClient implements MaterialModelClient
 {
 
@@ -31,8 +36,8 @@ public class MaterialModelManagerClient implements MaterialModelClient
 
   public void setSelectMaterial(Material selectMaterial)
   {
-      client.setSelectMaterial(selectMaterial);
-      support.firePropertyChange("materialSelected", null ,selectMaterial);
+    client.setSelectMaterial(selectMaterial);
+    support.firePropertyChange("materialSelected", null, selectMaterial);
   }
 
   @Override public void deleteMaterial(int materialID)
@@ -57,7 +62,8 @@ public class MaterialModelManagerClient implements MaterialModelClient
       String keywords)
   {
     client.registerBook(title, publisher, releaseDate, description, tags,
-        targetAudience, language, isbn, pageCount, place, author, genre, url, keywords);
+        targetAudience, language, isbn, pageCount, place, author, genre, url,
+        keywords);
   }
 
   @Override public void createBookCopy(int materialID)

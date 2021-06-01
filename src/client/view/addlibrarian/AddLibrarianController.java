@@ -13,7 +13,12 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
-//Kutaiba
+/**
+ * Controller for registering librarian
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class AddLibrarianController
 {
   @FXML private TextField lastName;
@@ -121,6 +126,8 @@ public class AddLibrarianController
 
   @FXML public void onTypedEmployeeNOCheck(KeyEvent keyEvent)
   {
+    // \\d+ check if the string consists of only numbers
+
     String arg = librarianVM.employeeNoProperty().get();
     employeeNoError.setVisible(arg.isEmpty() || !arg.matches("\\d+"));
   }
@@ -128,7 +135,7 @@ public class AddLibrarianController
   @FXML public void onTypedPhoneNo(KeyEvent keyEvent)
   {
     String arg = librarianVM.phoneProperty().get();
-    //"^(\+\d{10}( )?)$" to check if the streng contains "+" and an 11 digit  number
+    //"^(\+\d{10}( )?)$" to check if the string contains "+" and an 11 digit  number
     phoneError.setVisible(
         arg.isEmpty() || !arg.matches("^(\\+\\d{10}( )?)$") || !arg
             .contains("+45"));
@@ -142,6 +149,8 @@ public class AddLibrarianController
 
   @FXML public void onTypedZipCode(KeyEvent keyEvent)
   {
+    // \\d+ check if the string consists of only numbers
+
     String arg = librarianVM.zipCodeProperty().get();
     zipCodeError
         .setVisible(arg.isEmpty() || !arg.matches("\\d+") || arg.length() != 4);
@@ -149,12 +158,16 @@ public class AddLibrarianController
 
   @FXML public void onTypedCity(KeyEvent keyEvent)
   {
+    // [a-zA-Z]+ check if the string consists of only numbers
+
     String arg = librarianVM.cityProperty().get();
     cityError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypeStreetNameCheck(KeyEvent keyEvent)
   {
+    // [a-zA-Z]+ check if the string consists of only numbers
+
     String arg = librarianVM.streetNameProperty().get();
     streetNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
@@ -169,12 +182,16 @@ public class AddLibrarianController
 
   @FXML public void onTypedFirstNameCheck(KeyEvent keyEvent)
   {
+    // [a-zA-Z]+ check if the string consists of only numbers
+
     String arg = librarianVM.firstNameProperty().get();
     fNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }
 
   @FXML public void onTypedLastNameCheck(KeyEvent keyEvent)
   {
+    // [a-zA-Z]+ check if the string consists of only numbers
+
     String arg = librarianVM.lastNameProperty().get();
     lNameError.setVisible(arg.isEmpty() || !arg.matches("[a-zA-Z]+"));
   }

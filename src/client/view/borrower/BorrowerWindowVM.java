@@ -4,7 +4,12 @@ import client.model.user.UserModelClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-//Kutaiba
+/**
+ * View mode for the borrower navigation window
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class BorrowerWindowVM
 {
 
@@ -13,7 +18,7 @@ public class BorrowerWindowVM
 
   public BorrowerWindowVM(UserModelClient userModel)
   {
-    //The StringProperty stores the users cpr such that we can differenatiate in the model which user is logged in from that specific client window.
+    //The StringProperty stores the users cpr such that we can differentiate in the model which user is logged in from that specific client window.
     this.userModel = userModel;
     cprProperty = new SimpleStringProperty(userModel.getLoginUser().getCpr());
   }

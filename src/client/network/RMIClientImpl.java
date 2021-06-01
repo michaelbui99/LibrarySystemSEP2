@@ -26,7 +26,15 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//Kutaiba-Kasper-Michael-Lilian
+/**
+ * RMI-client Implementation
+ *
+ * @author Kutaiba
+ * @author Lilian
+ * @author Michael
+ * @author Kasper
+ * @version 1.0
+ */
 public class RMIClientImpl
     implements RMIClient, ClientCallback, Client, PropertyChangeSubject
 {
@@ -150,7 +158,6 @@ public class RMIClientImpl
     {
       throw new NoSuchElementException(e.getMessage());
     }
-
 
   }
 
@@ -854,7 +861,6 @@ public class RMIClientImpl
       throw new ServerConnectionException("Server Connection failed.");
     }
   }
-
 
   @Override public void loanUpdate(PropertyChangeEvent evt)
       throws RemoteException

@@ -8,7 +8,12 @@ import shared.network.PropertyChangeSubject;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//Michael
+/**
+ * Loan model for server
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public interface LoanModelServer extends PropertyChangeSubject
 {
   /**

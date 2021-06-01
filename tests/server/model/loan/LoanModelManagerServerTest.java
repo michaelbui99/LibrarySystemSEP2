@@ -28,7 +28,12 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Michael
+/**
+ * Loan model for server test
+ *
+ * @author Michael
+ * @version 1.0
+ */
 class LoanModelManagerServerTest extends DatabaseBuilder
 {
   private LoanModelServer loanModel;
@@ -36,16 +41,18 @@ class LoanModelManagerServerTest extends DatabaseBuilder
   private Borrower borrower, borrower2;
   private Book book;
   public static Loan extendedLoan;
+
   @BeforeEach void setup()
   {
-  loanModel = new LoanModelManagerServer(LoanDAOImpl.getInstance(),
-      ReservationDAOImpl.getInstance(), MaterialDAOImpl.getInstance());
+    loanModel = new LoanModelManagerServer(LoanDAOImpl.getInstance(),
+        ReservationDAOImpl.getInstance(), MaterialDAOImpl.getInstance());
     databaseBuilder = new DatabaseBuilder();
     borrower = new Borrower("111111-1111", "Michael", "Bui",
         "michael@gmail.com", "+4512345678", null, "password");
-    borrower2 = new Borrower("111111-2222", "Mik", "Biu", "mik@gmail.com", "+4587654321", null, "password");
-    book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
-        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+    borrower2 = new Borrower("111111-2222", "Mik", "Biu", "mik@gmail.com",
+        "+4587654321", null, "password");
+    book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12", "HELLO DESC",
+        null, "Voksen", "Dansk", "321432432", 200, null, null);
     extendedLoan = null;
   }
 
@@ -56,7 +63,6 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     List<Loan> loans = loanModel.getAllLoansByCPR("111111-1111");
     assertEquals(1, loans.size());
   }
-
 
   @Test void getAllLoansByCPRReturnsCorrectLoan() throws SQLException
   {
@@ -73,7 +79,9 @@ class LoanModelManagerServerTest extends DatabaseBuilder
   @Test void registerLoanTest() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    assertDoesNotThrow(()->{loanModel.registerLoan(book,borrower);});
+    assertDoesNotThrow(() -> {
+      loanModel.registerLoan(book, borrower);
+    });
     assertEquals(1, loanModel.getAllLoansByCPR(borrower.getCpr()).size());
   }
 
@@ -81,8 +89,9 @@ class LoanModelManagerServerTest extends DatabaseBuilder
       throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    loanModel.registerLoan(book,borrower);
-    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book, borrower2));
+    loanModel.registerLoan(book, borrower);
+    assertThrows(IllegalStateException.class,
+        () -> loanModel.registerLoan(book, borrower2));
   }
 
   @Test void registerLoanMaterialIsReservedThrowsIllegalStateException()
@@ -91,7 +100,8 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     //Test where material is reserved by other users and the borrower does not have a reservation on the material.
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     databaseBuilder.insertDummyReservation("111111-2222", false, 1);
-    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book,borrower));
+    assertThrows(IllegalStateException.class,
+        () -> loanModel.registerLoan(book, borrower));
   }
 
   @Test void registerLoanMaterialIsReservedBorrowerHasReservationThrowsIllegalStateException()
@@ -102,17 +112,19 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     databaseBuilder.insertDummyReservation("111111-2222", false, 1);
     databaseBuilder.insertDummyReservation("111111-1111", false, 1);
-    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book,borrower));
+    assertThrows(IllegalStateException.class,
+        () -> loanModel.registerLoan(book, borrower));
   }
 
   @Test void registerLoanMaterialIsReservedBorrowerHasReservationAndIsNextThrowsIllegalStateException()
       throws SQLException
   {
     /*Test where material is reserved by other users and the borrower does have a reservation and is
-    * the next in waiting list, but reservation is marked as not ready*/
+     * the next in waiting list, but reservation is marked as not ready*/
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     databaseBuilder.insertDummyReservation("111111-1111", false, 1);
-    assertThrows(IllegalStateException.class, ()->loanModel.registerLoan(book,borrower));
+    assertThrows(IllegalStateException.class,
+        () -> loanModel.registerLoan(book, borrower));
   }
 
   @Test void registerLoanMaterialIsReservedBorrowerHasReservationAndIsNextDoesNotThrow()
@@ -123,7 +135,7 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     databaseBuilder.insertDummyReservation("111111-1111", true, 1);
     databaseBuilder.insertDummyReservation("111111-2222", false, 1);
-    assertDoesNotThrow(()->loanModel.registerLoan(book,borrower));
+    assertDoesNotThrow(() -> loanModel.registerLoan(book, borrower));
   }
 
   @Test void registerLoanMaterialIsReservedBorrowerHasReservationAndIsNextCreatesANewLoan()
@@ -132,20 +144,23 @@ class LoanModelManagerServerTest extends DatabaseBuilder
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
     databaseBuilder.insertDummyReservation("111111-1111", true, 1);
     databaseBuilder.insertDummyReservation("111111-2222", false, 1);
-    assertDoesNotThrow(()->loanModel.registerLoan(book,borrower));
+    assertDoesNotThrow(() -> loanModel.registerLoan(book, borrower));
     assertEquals(1, loanModel.getAllLoansByCPR("111111-1111").size());
-    assertEquals("Title1", loanModel.getAllLoansByCPR("111111-1111").get(0).getMaterial().getTitle());
-    assertEquals("111111-1111", loanModel.getAllLoansByCPR("111111-1111").get(0).getBorrower().getCpr());
+    assertEquals("Title1",
+        loanModel.getAllLoansByCPR("111111-1111").get(0).getMaterial()
+            .getTitle());
+    assertEquals("111111-1111",
+        loanModel.getAllLoansByCPR("111111-1111").get(0).getBorrower()
+            .getCpr());
   }
-
 
   @Test void endLoanTest() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
     Book book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
-        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null, null);
 
-    Loan loan = new Loan(book, borrower,"2021-12-12", "2021-05-21", null, 1 );
+    Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
     assertDoesNotThrow(() -> loanModel.endLoan(loan));
   }
 
@@ -153,60 +168,67 @@ class LoanModelManagerServerTest extends DatabaseBuilder
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
     Book book = new Book(1, 1, "Title1", "Publisher1", "2020-12-12",
-        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null ,null);
+        "HELLO DESC", null, "Voksen", "Dansk", "321432432", 200, null, null);
 
-    Loan loan = new Loan(book, borrower,"2021-12-12", "2021-05-21", null, 1 );
+    Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
     //1 Loan is registered to the CPR in the Database
     assertEquals(1, loanModel.getAllLoansByCPR(borrower.getCpr()).size());
     loanModel.endLoan(loan);
     //No loans left after ending
-    assertThrows(NoSuchElementException.class, ()->loanModel.getAllLoansByCPR(
-        borrower.getCpr()));
+    assertThrows(NoSuchElementException.class,
+        () -> loanModel.getAllLoansByCPR(borrower.getCpr()));
   }
 
   @Test void extendLoanExtendsDeadlineBy1Month() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(), LocalDate.now().toString(), null, 1, new NewLoanState());
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(),
+        LocalDate.now().toString(), null, 1, new NewLoanState());
     Loan extendedLoan = loanModel.extendLoan(loan);
-    assertEquals(LocalDate.now().plusDays(1).plusMonths(1).toString(), extendedLoan.getDeadline());
+    assertEquals(LocalDate.now().plusDays(1).plusMonths(1).toString(),
+        extendedLoan.getDeadline());
   }
 
   @Test void extendLoanOnExtendedLoan2StateThrowsIllegalStateException()
       throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan2State());
-    assertThrows(IllegalStateException.class, ()->loanModel.extendLoan(loan));
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(),
+        LocalDate.now().toString(), null, 1, new ExtendedLoan2State());
+    assertThrows(IllegalStateException.class, () -> loanModel.extendLoan(loan));
   }
 
   @Test void extendLoanOnExtendedLoan1StateDoesNotThrow() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
-    assertDoesNotThrow(()->loanModel.extendLoan(loan));
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(),
+        LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertDoesNotThrow(() -> loanModel.extendLoan(loan));
   }
 
   @Test void ExtendLoan7DaysFromDeadlineDoesNotThrow() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(7).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
-    assertDoesNotThrow(()->loanModel.extendLoan(loan));
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(7).toString(),
+        LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertDoesNotThrow(() -> loanModel.extendLoan(loan));
   }
 
   @Test void ExtendLoan8DaysFromDeadlineThrowsIllegalStateException()
       throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(8).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
-    assertThrows(IllegalStateException.class, ()->loanModel.extendLoan(loan));
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(8).toString(),
+        LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertThrows(IllegalStateException.class, () -> loanModel.extendLoan(loan));
   }
 
   @Test void ExtendLoan6DaysFromDeadlineDoesNotThrow() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
-    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(6).toString(), LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
-    assertDoesNotThrow(()->loanModel.extendLoan(loan));
+    Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(6).toString(),
+        LocalDate.now().toString(), null, 1, new ExtendedLoan1State());
+    assertDoesNotThrow(() -> loanModel.extendLoan(loan));
   }
 
 }

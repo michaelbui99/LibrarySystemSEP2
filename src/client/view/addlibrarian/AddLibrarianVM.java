@@ -8,7 +8,10 @@ import shared.person.Address;
 
 import java.io.IOException;
 
-//Kutaiba
+/**View model for registering librarian
+ * @author Kutaiba
+ * @version 1.0
+ * */
 public class AddLibrarianVM
 {
   private StringProperty lastNameProperty;

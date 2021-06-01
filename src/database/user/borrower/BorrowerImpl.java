@@ -10,7 +10,13 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Kasper-Kutaiba
+/**
+ * Borrower data access object
+ *
+ * @author Kutaiba
+ * @author Kasper
+ * @version 1.0
+ */
 public class BorrowerImpl extends BaseDAO implements BorrowerDAO
 {
 
@@ -59,6 +65,10 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
+      /* [a-zA-Z]+ check if a string consists of only letters
+       * ^(\+\d{10}( )?)$ check if a string starts with + and followed by only 11 Integers
+       * */
+
       String[] arr = cpr.split("-");
       if ((cpr == null || cpr.getBytes().length != 11 || (
           !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1])) || !cpr
@@ -73,11 +83,11 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
       }
       else
       {
-        if (AddressImpl.getInstence()
+        if (AddressImpl.getInstance()
             .getAddressId(address.getCity(), address.getStreetName(),
                 address.getZipCode(), address.getStreetNr()) == -1)
         {
-          Address ad = AddressImpl.getInstence()
+          Address ad = AddressImpl.getInstance()
               .create(address.getCity(), address.getStreetName(),
                   address.getZipCode(), address.getStreetNr());
           PreparedStatement stm = connection.prepareStatement(
@@ -100,7 +110,7 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
         }
         else
         {
-          int adId = AddressImpl.getInstence()
+          int adId = AddressImpl.getInstance()
               .getAddressId(address.getCity(), address.getStreetName(),
                   address.getZipCode(), address.getStreetNr());
           PreparedStatement stm = connection.prepareStatement(
@@ -239,6 +249,8 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
+      // ^(\+\d{10}( )?)$ check if a string starts with + and followed by only 11 Integers
+
       if (phone == null || !phone.contains("+45") || !phone
           .matches("^(\\+\\d{10}( )?)$"))
       {
@@ -260,6 +272,8 @@ public class BorrowerImpl extends BaseDAO implements BorrowerDAO
   {
     try (Connection connection = getConnection())
     {
+      // ^(\+\d{10}( )?)$ check if a string starts with + and followed by only 11 Integers
+
       String[] arr = cpr.split("-");
       if ((cpr.getBytes().length != 11
           || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1]) || !cpr

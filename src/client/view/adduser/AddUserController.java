@@ -13,7 +13,12 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
-//Kutaiba
+/**
+ * Controller for registering borrower
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class AddUserController
 {
   @FXML private Label firstNameError;
@@ -104,12 +109,16 @@ public class AddUserController
 
   @FXML public void onTypedLastNameCheck(KeyEvent keyEvent)
   {
+    // .*\d.* is to check if a String consist of only Integers
+
     String arg = userVM.lastNameProperty().get();
     lastNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedFirstNameCheck(KeyEvent keyEvent)
   {
+    // .*\d.* is to check if a String consist of only Integers
+
     String arg = userVM.firstNameProperty().get();
     firstNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
@@ -125,12 +134,16 @@ public class AddUserController
 
   @FXML public void onTypedStreetNameCheck(KeyEvent keyEvent)
   {
+    // .*\d.* is to check if a String consist of only Integers
+
     String arg = userVM.streetNameProperty().get();
     streetNameError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
 
   @FXML public void onTypedCityCheck(KeyEvent keyEvent)
   {
+    // .*\d.* is to check if a String consist of only Integers
+
     String arg = userVM.cityProperty().get();
     cityError.setVisible(arg.isEmpty() || arg.matches(".*\\d.*"));
   }
@@ -151,7 +164,8 @@ public class AddUserController
   @FXML public void onTypedPhoneNoCheck(KeyEvent keyEvent)
   {
     String arg = userVM.phoneNoProperty().get();
-    //"^(\+\d{10}( )?)$" to check if the streng contains "+" and an 11 digit  number
+    //"^(\+\d{10}( )?)$" to check if the string contains "+" and an 11 digit  number
+
     phoneError.setVisible(
         arg.isEmpty() || !arg.matches("^(\\+\\d{10}( )?)$") || !arg
             .contains("+45"));

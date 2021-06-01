@@ -6,7 +6,12 @@ import shared.person.borrower.Borrower;
 import java.io.Serializable;
 import java.time.*;
 
-//Michael
+/**
+ * Reservation object class
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class Reservation implements Serializable
 {
   private Material material;
@@ -15,7 +20,8 @@ public class Reservation implements Serializable
   private int reservationID;
   private boolean readyForPickup;
 
-  public Reservation(Material material, Borrower borrower, LocalDate reservationDate)
+  public Reservation(Material material, Borrower borrower,
+      LocalDate reservationDate)
   {
     this.material = material;
     this.borrower = borrower;
@@ -52,7 +58,8 @@ public class Reservation implements Serializable
     return reservationID;
   }
 
-  public boolean getReadyForPickup(){
+  public boolean getReadyForPickup()
+  {
     return this.readyForPickup;
   }
 }

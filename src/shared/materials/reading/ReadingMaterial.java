@@ -4,7 +4,12 @@ import shared.materials.Material;
 
 import java.io.Serializable;
 
-//Lilian
+/**
+ * Reading material Object abstract class
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public abstract class ReadingMaterial extends Material implements Serializable
 {
   private int pageCount;
@@ -13,7 +18,8 @@ public abstract class ReadingMaterial extends Material implements Serializable
       String publisher, String releaseDate, String description, String tags,
       String targetAudience, String language, int pageCount)
   {
-    super(materialID,copyNumber, title, targetAudience, description,tags, publisher, releaseDate, language, null, null);
+    super(materialID, copyNumber, title, targetAudience, description, tags,
+        publisher, releaseDate, language, null, null);
 
     this.pageCount = pageCount;
   }

@@ -12,7 +12,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 
-//Michael
+/**
+ * Controller for the borrower loan
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class MyLoansController
 {
   @FXML private Label warningLabel;
@@ -21,7 +26,6 @@ public class MyLoansController
   @FXML private TableColumn<String, Material> typeColumn;
   @FXML private TableColumn<String, Loan> loanDateColumn;
   @FXML private TableColumn<String, Loan> deadlineColumn;
-
 
   private MyLoansVM viewModel;
 
@@ -32,8 +36,7 @@ public class MyLoansController
     materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
     loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
     deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-    loanTableView.setItems(
-       viewModel.getLoanList());
+    loanTableView.setItems(viewModel.getLoanList());
     warningLabel.textProperty().bind(viewModel.warningProperty());
   }
 
@@ -43,13 +46,11 @@ public class MyLoansController
         .set(loanTableView.getSelectionModel().getSelectedItem());
     viewModel.endLoan();
 
-
     loanTableView.refresh();
   }
 
-
-  @FXML
-  void onBackButton(ActionEvent event) {
+  @FXML void onBackButton(ActionEvent event)
+  {
     try
     {
       ViewHandler.getInstance().openView("BorrowerWindow");
@@ -60,12 +61,12 @@ public class MyLoansController
     }
   }
 
-  @FXML
-  void onExtendButton(ActionEvent event) {
-    viewModel.loanProperty().set(loanTableView.getSelectionModel().getSelectedItem());
+  @FXML void onExtendButton(ActionEvent event)
+  {
+    viewModel.loanProperty()
+        .set(loanTableView.getSelectionModel().getSelectedItem());
     viewModel.extendLoan();
     loanTableView.refresh();
   }
-
 
 }

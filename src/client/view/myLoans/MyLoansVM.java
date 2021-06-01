@@ -14,7 +14,12 @@ import shared.util.EventTypes;
 
 import java.util.NoSuchElementException;
 
-//Michael
+/**
+ * View model for the borrower loan
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class MyLoansVM
 {
   private ObservableList<Loan> activeLoans;
@@ -33,14 +38,14 @@ public class MyLoansVM
     loanProperty = new SimpleObjectProperty<>();
     cprProperty = new SimpleStringProperty(userModel.getLoginUser().getCpr());
 
-      //Initialises with all active loans for the user.
+    //Initialises with all active loans for the user.
     try
     {
       activeLoans.addAll(loanModel.getAllLoansByCPR(cprProperty.get()));
     }
     catch (NoSuchElementException e)
     {
-      Platform.runLater(()->warningProperty.set(e.getMessage()));
+      Platform.runLater(() -> warningProperty.set(e.getMessage()));
     }
 
     /*Listens to for the LOANREGISTERED and LOANENDED event that is specific to the borrowers cpr
@@ -66,43 +71,45 @@ public class MyLoansVM
         activeLoans.removeIf(
             activeLoan -> activeLoan.getLoanID() == ((Loan) evt.getNewValue())
                 .getLoanID());
-      if (activeLoans.size() == 0)
-      {
-        //Update warning label if no loans.
-        Platform.runLater(()->warningProperty.set("Ingen aktive lån"));
-      }
+        if (activeLoans.size() == 0)
+        {
+          //Update warning label if no loans.
+          Platform.runLater(() -> warningProperty.set("Ingen aktive lån"));
+        }
       }
     });
 
-    loanModel.addPropertyChangeListener(EventTypes.LOANEXTENDED, evt->{
+    loanModel.addPropertyChangeListener(EventTypes.LOANEXTENDED, evt -> {
       //Checks if the Loan is relevant for the specific user.
-      if (((Loan)evt.getNewValue()).getBorrower().getCpr().equals(cprProperty.get()))
+      if (((Loan) evt.getNewValue()).getBorrower().getCpr()
+          .equals(cprProperty.get()))
       {
         int index = 0;
         for (Loan activeLoan : activeLoans)
         {
-          //Looks thorugh the list of Loans and updates the Loan to match the extended loan.
+          //Looks thorough the list of Loans and updates the Loan to match the extended loan.
           if (activeLoan.getLoanID() == ((Loan) evt.getNewValue()).getLoanID())
           {
             index = activeLoans.indexOf(activeLoan);
             break;
           }
         }
-        activeLoans.set(index, ((Loan)evt.getNewValue()));
+        activeLoans.set(index, ((Loan) evt.getNewValue()));
         //Resets warning label
-        Platform.runLater(()->warningProperty.set(""));
+        Platform.runLater(() -> warningProperty.set(""));
 
       }
     });
 
     loanModel.addPropertyChangeListener(EventTypes.LOANEXTENDERROR, evt -> {
       //Evt caught has the Loan as oldvalue and error message as new value.
-      if (((Loan)evt.getOldValue()).getBorrower().getCpr().equals(cprProperty.get()))
+      if (((Loan) evt.getOldValue()).getBorrower().getCpr()
+          .equals(cprProperty.get()))
       {
-        Platform.runLater(()->warningProperty.set((String)evt.getNewValue()));
+        Platform
+            .runLater(() -> warningProperty.set((String) evt.getNewValue()));
       }
     });
-
 
   }
 
@@ -114,12 +121,10 @@ public class MyLoansVM
     System.out.println(loanProperty.get().getMaterial().getCopyNumber());
   }
 
-
   public void extendLoan()
   {
     loanModel.extendLoan(loanProperty.get());
   }
-
 
   public ObservableList<Loan> getLoanList()
   {

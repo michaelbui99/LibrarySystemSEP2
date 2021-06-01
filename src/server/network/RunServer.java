@@ -5,7 +5,12 @@ import shared.Server;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
-//Michael
+/**
+ * Main to run the server
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class RunServer
 {
   public static void main(String[] args)

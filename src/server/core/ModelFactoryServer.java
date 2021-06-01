@@ -14,7 +14,12 @@ import server.model.reservation.ReservationModelServer;
 import server.model.user.UserModelManagerServer;
 import server.model.user.UserModelServer;
 
-//Lilian
+/**
+ * Model factory for server models
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class ModelFactoryServer
 {
   private static ModelFactoryServer instance;

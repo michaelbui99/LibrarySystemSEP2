@@ -4,7 +4,13 @@ import client.model.user.UserModelClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-//Kutaiba
+/**
+ * View model for the main window
+ * borrower login
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class MainVM
 {
 
@@ -31,7 +37,6 @@ public class MainVM
 
   public boolean login()
   {
-    return userModel
-        .borrowerLogin(cprProperty.get(), passwordProperty.get());
+    return userModel.borrowerLogin(cprProperty.get(), passwordProperty.get());
   }
 }

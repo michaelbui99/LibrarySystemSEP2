@@ -1,18 +1,24 @@
 package client.view.registermaterial;
 
-import client.core.ViewModelFactory;
+import client.view.ViewHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.input.*;
-import javafx.scene.paint.Paint;
-import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Controller for registering materials
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class RegisterMaterialController
 {
   @FXML private ComboBox<String> materialTypeCompo;
@@ -63,7 +69,6 @@ public class RegisterMaterialController
 
   private RegisterMaterialVM registerMaterialVM;
 
-  //Kutaiba
   public void init(RegisterMaterialVM registerMaterialVM)
   {
     this.registerMaterialVM = registerMaterialVM;
@@ -273,6 +278,7 @@ public class RegisterMaterialController
     keywords.clear();
   }
 
+  //selected fields methods are to choose which fields to be active depends on the chosen material
   private void bookSelectedFields()
   {
     numberOfPages.setDisable(false);
@@ -364,6 +370,7 @@ public class RegisterMaterialController
     keywords.setDisable(true);
   }
 
+  //Active the wanted fields depending on the chosen material type
   private void relevantFields()
   {
     String type = materialTypeCompo.getValue();
@@ -410,30 +417,40 @@ public class RegisterMaterialController
 
   @FXML public void onTypedKeywords(KeyEvent keyEvent)
   {
+    // [0-9]+ check if a string is consistent of only Integers
+
     String arg = registerMaterialVM.keywordsProperty().get();
-    keywordsWarning.setVisible(arg.isEmpty() || arg.matches("[0-9]"));
+    keywordsWarning.setVisible(arg.isEmpty() || arg.matches("[0-9]+"));
   }
 
   @FXML public void onTypedIsbn(KeyEvent keyEvent)
   {
+    // [0-9]+ check if a string is consistent of only Integers
+
     String arg = registerMaterialVM.isbnProperty().get();
     isbnWarning.setVisible(arg.isEmpty() || !arg.matches("[0-9]+"));
   }
 
   @FXML public void onTypedPageNumber(KeyEvent keyEvent)
   {
+    // [0-9]+ check if a string is consistent of only Integers
+
     String arg = registerMaterialVM.numberOfPagesProperty().get();
     pageNoWarning.setVisible(arg.isEmpty() || !arg.matches("[0-9]+"));
   }
 
   @FXML public void onTypeLicensNumber(KeyEvent keyEvent)
   {
+    // [0-9]+ check if a string is consistent of only Integers
+
     String arg = registerMaterialVM.licenseNumberProperty().get();
     licenseNoWarning.setVisible(arg.isEmpty() || !arg.matches("[0-9]+"));
   }
 
   @FXML public void onTypedHallNumber(KeyEvent keyEvent)
   {
+    // [0-9]+ check if a string is consistent of only Integers
+
     String arg = registerMaterialVM.hallNumberProperty().get();
     hallNoWarning.setVisible(arg.isEmpty() || !arg.matches("[0-9]+"));
   }
@@ -465,6 +482,8 @@ public class RegisterMaterialController
 
   @FXML public void onTypedLength(KeyEvent keyEvent)
   {
+    // [0-9]+ check if a string is consistent of only Integers
+
     String arg = registerMaterialVM.lengthProperty().get();
     lengthWarning.setVisible(arg.isEmpty() || !arg.matches("[0-9]+"));
   }

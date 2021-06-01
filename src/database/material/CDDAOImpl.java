@@ -15,17 +15,25 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Lilian-Michael-Kasper-Kutaiba
-public class CDDAOImpl extends BaseDAO implements CDDAO
+/**
+ * CD data access object implementation
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author Kasper
+ * @author Lilian
+ * @version 1.0
+ */
+public class CDDAOImpl extends BaseDAO implements CdDAO
 {
-  private static CDDAO instance;
+  private static CdDAO instance;
   private static final Lock lock = new ReentrantLock();
 
   private CDDAOImpl()
   {
   }
 
-  public static CDDAO getInstance()
+  public static CdDAO getInstance()
   {
     //Double lock check for Thread safety
     if (instance == null)
@@ -41,8 +49,8 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     return instance;
   }
 
-  @Override public synchronized int create(int material_id, int length_, Place place)
-      throws SQLException
+  @Override public synchronized int create(int material_id, int length_,
+      Place place) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -105,36 +113,37 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
       }
       else
       {
-      //Creates material_copy
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
-      stm.setInt(1, materialID);
-      stm.setInt(2, copyNo);
-      stm.executeUpdate();
-      connection.commit();
+        //Creates material_copy
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+        stm.setInt(1, materialID);
+        stm.setInt(2, copyNo);
+        stm.executeUpdate();
+        connection.commit();
 
-      //Finds the necessary details to create the CD object from DB.
-      ResultSet cdDetails = getCDDetailsByID(materialID);
-      if (cdDetails.next())
-      {
-        //Creates and returns a CD object if a CD with given materialID exists.
-        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
-            .getKeywordsForMaterial(cdDetails.getInt("material_id"));
-        String materialKeywords = String.join(", ", materialKeywordList);
+        //Finds the necessary details to create the CD object from DB.
+        ResultSet cdDetails = getCDDetailsByID(materialID);
+        if (cdDetails.next())
+        {
+          //Creates and returns a CD object if a CD with given materialID exists.
+          List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+              .getKeywordsForMaterial(cdDetails.getInt("material_id"));
+          String materialKeywords = String.join(", ", materialKeywordList);
 
-        return new CD(cdDetails.getInt("material_id"),
-            cdDetails.getInt("copy_no"), cdDetails.getString("title"),
-            cdDetails.getString("publisher"),
-            String.valueOf(cdDetails.getDate("release_date")),
-            cdDetails.getString("description_of_the_content"), materialKeywords,
-            cdDetails.getString("audience"), cdDetails.getString("language_"),
-            cdDetails.getInt("length_"), new Place(cdDetails.getInt("hall_no"),
-            cdDetails.getString("department"),
-            cdDetails.getString("creator_l_name"),
-            cdDetails.getString("genre")), cdDetails.getString("url"));
-        // i added the place_id
-      }
-      return null;
+          return new CD(cdDetails.getInt("material_id"),
+              cdDetails.getInt("copy_no"), cdDetails.getString("title"),
+              cdDetails.getString("publisher"),
+              String.valueOf(cdDetails.getDate("release_date")),
+              cdDetails.getString("description_of_the_content"),
+              materialKeywords, cdDetails.getString("audience"),
+              cdDetails.getString("language_"), cdDetails.getInt("length_"),
+              new Place(cdDetails.getInt("hall_no"),
+                  cdDetails.getString("department"),
+                  cdDetails.getString("creator_l_name"),
+                  cdDetails.getString("genre")), cdDetails.getString("url"));
+          // i added the place_id
+        }
+        return null;
       }
     }
   }
@@ -246,8 +255,8 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
         {
 
           CD cd = new CD(resultSet.getInt("material_id"),
-              resultSet.getInt("copy_no"),
-              resultSet.getString("title"), resultSet.getString("publisher"),
+              resultSet.getInt("copy_no"), resultSet.getString("title"),
+              resultSet.getString("publisher"),
               String.valueOf(resultSet.getDate("release_date")),
               resultSet.getString("description_of_the_content"), "",
               resultSet.getString("audience"), resultSet.getString("language_"),
@@ -274,8 +283,8 @@ public class CDDAOImpl extends BaseDAO implements CDDAO
     return ml;
   }
 
-  @Override public synchronized void deleteCDCopy(int materialID, int copyNumber)
-      throws SQLException
+  @Override public synchronized void deleteCDCopy(int materialID,
+      int copyNumber) throws SQLException
   {
     try (Connection connection = getConnection())
     {

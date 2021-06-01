@@ -20,7 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//Lilian-Michael
+/**
+ * Reservation data access object implementation
+ *
+ * @author Lilian
+ * @author Michael
+ * @version 1.0
+ */
 public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
 {
   private static ReservationDAO instance;
@@ -48,12 +54,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
       stm.setInt(1, material.getMaterialID());
       stm.setString(2, borrower.getCpr());
       ResultSet resultSet = stm.executeQuery();
-      if (!resultSet.next())
-      {
-        return true;
-      }
-      else
-        return false;
+      return !resultSet.next();
     }
     catch (SQLException throwables)
     {
@@ -68,8 +69,6 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
   {
     try (Connection connection = getConnection())
     {
-      //todo: lige nu reserverer man en specific kopy. Evt. tilføje materiale + materiale kopi som java object, så man skelner mellem dem?
-      //todo: lav et check på om der allerede findes en reservation borrower CPR og MaterialID
       if (!MaterialDAOImpl.getInstance()
           .checkIfCopyAvailable(material.getMaterialID()) && canReserve(
           borrower, material))
@@ -133,22 +132,21 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
           selectBorrowerAddressResult.getString("password"));
 
       List<Reservation> reservations = new ArrayList<>();
-      for (int i = 0; i < materialTypes.length; i++)
+      for (String materialType : materialTypes)
       {
         String query = "SELECT * FROM reservation "
             + "JOIN material_copy ON reservation.material_id = material_copy.material_id "
-            + "JOIN " + materialTypes[i] + " ON reservation.material_id = "
-            + materialTypes[i] + ".material_id "
+            + "JOIN " + materialType + " ON reservation.material_id = "
+            + materialType + ".material_id "
             + "JOIN material ON reservation.material_id = material.material_id ";
-        if (!materialTypes[i].equals("audiobook") && !materialTypes[i]
-            .equals("e_book"))
+        if (!materialType.equals("audiobook") && !materialType.equals("e_book"))
         {
-          query += " JOIN place ON " + materialTypes[i]
-              + ".place_id = place.place_id ";
+          query +=
+              " JOIN place ON " + materialType + ".place_id = place.place_id ";
         }
-        if (!materialTypes[i].equals("cd") && !materialTypes[i].equals("dvd"))
+        if (!materialType.equals("cd") && !materialType.equals("dvd"))
         {
-          query += " JOIN material_creator ON " + materialTypes[i]
+          query += " JOIN material_creator ON " + materialType
               + ".author = material_creator.person_id ";
         }
         query += " WHERE reservation.cpr_no = '" + cpr + "'";
@@ -159,7 +157,7 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         while (selectReservationsResult.next())
         {
           Material material = null;
-          switch (materialTypes[i])
+          switch (materialType)
           {
             case "book":
               material = new Book(
@@ -283,9 +281,9 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
       else
         throw new NoSuchElementException("Ingen aktive reservationer");
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return null;
   }
@@ -302,9 +300,9 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
       connection.commit();
       ResultSet keys = stm.getGeneratedKeys();
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
   }
 
@@ -319,9 +317,9 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
 
       return result.next();
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return false;
   }
@@ -330,7 +328,8 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("SELECT reservation_id, cpr_no from reservation where material_id = ? ORDER BY reservation_id ASC LIMIT 1;");
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT reservation_id, cpr_no from reservation where material_id = ? ORDER BY reservation_id ASC LIMIT 1;");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
       if (result.next())
@@ -338,11 +337,12 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         return result.getString("cpr_no");
       }
       else
-        throw new NoSuchElementException("Ingen lånere har reserveret dette materiale");
+        throw new NoSuchElementException(
+            "Ingen lånere har reserveret dette materiale");
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return null;
   }
@@ -351,7 +351,8 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("SELECT ready from reservation WHERE reservation_id = ?");
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT ready from reservation WHERE reservation_id = ?");
       stm.setInt(1, reservationID);
       ResultSet result = stm.executeQuery();
       if (result.next())
@@ -361,9 +362,9 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
       else
         throw new NoSuchElementException();
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return false;
   }
@@ -373,7 +374,8 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("SELECT reservation_id from reservation where material_id = ? and cpr_no = ? ORDER by reservation_id ASC  LIMIT 1");
+      PreparedStatement stm = connection.prepareStatement(
+          "SELECT reservation_id from reservation where material_id = ? and cpr_no = ? ORDER by reservation_id ASC  LIMIT 1");
       stm.setInt(1, materialID);
       stm.setString(2, cpr);
       ResultSet result = stm.executeQuery();
@@ -382,11 +384,12 @@ public class ReservationDAOImpl extends BaseDAO implements ReservationDAO
         return result.getInt("reservation_id");
       }
       else
-        throw new NoSuchElementException("Låneren har ingen reservationer på materialet");
+        throw new NoSuchElementException(
+            "Låneren har ingen reservationer på materialet");
     }
-    catch (SQLException throwables)
+    catch (SQLException throwable)
     {
-      throwables.printStackTrace();
+      throwable.printStackTrace();
     }
     return -1;
   }

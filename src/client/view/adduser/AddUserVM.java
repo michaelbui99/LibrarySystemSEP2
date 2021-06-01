@@ -8,6 +8,12 @@ import shared.person.Address;
 
 import java.io.IOException;
 
+/**
+ * View model for registering borrower
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class AddUserVM
 {
   private StringProperty emailProperty;
@@ -23,7 +29,6 @@ public class AddUserVM
   private UserModelClient userModelClient;
   private StringProperty errorProperty;
 
-  //Kutaiba
   public AddUserVM(UserModelClient userModelClient)
   {
     this.userModelClient = userModelClient;

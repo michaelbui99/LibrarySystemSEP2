@@ -11,10 +11,15 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * CD test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class CDDAOImplTest
 {
-  private CDDAO cddao;
+  private CdDAO cddao;
   private DatabaseBuilder databaseBuilder;
   private Place place;
 
@@ -185,6 +190,6 @@ class CDDAOImplTest
             "Voksen", "Dansk", "genreTest", null, "keywordsTest");
     cddao.create(materialID, 55, place);
     cddao.createCDCopy(materialID, 2);
-    assertDoesNotThrow(()-> cddao.deleteCDCopy(materialID, 2));
+    assertDoesNotThrow(() -> cddao.deleteCDCopy(materialID, 2));
   }
 }

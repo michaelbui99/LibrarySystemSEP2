@@ -10,7 +10,12 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
-//Kutaiba
+/**
+ * Controller for librarian log in
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class StaffLogInController
 {
   @FXML private Label errorMessage;
@@ -25,10 +30,9 @@ public class StaffLogInController
   {
     this.staffLogInVM = staffLogInVM;
 
-    employeeNo.textProperty().bindBidirectional(
-        staffLogInVM.employeeNoProperty());
-    password.textProperty().bindBidirectional(
-        staffLogInVM.passwordProperty());
+    employeeNo.textProperty()
+        .bindBidirectional(staffLogInVM.employeeNoProperty());
+    password.textProperty().bindBidirectional(staffLogInVM.passwordProperty());
     errorMessage.setVisible(false);
   }
 
@@ -57,8 +61,9 @@ public class StaffLogInController
 
   @FXML public void onKeyTypedEmployeeNoCheck(KeyEvent keyEvent)
   {
-    String arg = staffLogInVM
-        .employeeNoProperty().get();
+    // .*\d.* to check if a string consists of only Integers
+
+    String arg = staffLogInVM.employeeNoProperty().get();
     if (arg.isEmpty() || !arg.matches(".*\\d.*"))
     {
       employeeNoError.setVisible(true);
@@ -71,8 +76,7 @@ public class StaffLogInController
 
   @FXML public void onKeyTypedPasswordCheck(KeyEvent keyEvent)
   {
-    String arg = staffLogInVM
-        .passwordProperty().get();
+    String arg = staffLogInVM.passwordProperty().get();
     if (arg.isEmpty())
     {
       passwordError.setVisible(true);

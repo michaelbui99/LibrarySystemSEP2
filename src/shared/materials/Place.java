@@ -2,7 +2,12 @@ package shared.materials;
 
 import java.io.Serializable;
 
-//Kutaiba
+/**
+ * Place object class
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class Place implements Serializable
 {
   private String creatorLName, genre;
@@ -10,7 +15,8 @@ public class Place implements Serializable
   private String department;
 
   public Place(int placeId, int hallNo, String department, String creatorLName,
-      String genre){
+      String genre)
+  {
     this.creatorLName = creatorLName;
     this.genre = genre;
     this.placeId = placeId;
@@ -18,10 +24,9 @@ public class Place implements Serializable
     this.department = department;
   }
 
-
-  public Place(int hallNo, String department, String creatorLName,
-      String genre)
-  { this.creatorLName = creatorLName;
+  public Place(int hallNo, String department, String creatorLName, String genre)
+  {
+    this.creatorLName = creatorLName;
     this.genre = genre;
     this.hallNo = hallNo;
     this.department = department;

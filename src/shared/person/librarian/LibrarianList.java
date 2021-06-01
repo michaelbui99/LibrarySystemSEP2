@@ -3,7 +3,12 @@ package shared.person.librarian;
 import java.util.ArrayList;
 import java.util.List;
 
-//Kasper
+/**
+ * Librarian object class
+ *
+ * @author kasper
+ * @version 1.0
+ */
 public class LibrarianList
 {
   private List<Librarian> librarians;

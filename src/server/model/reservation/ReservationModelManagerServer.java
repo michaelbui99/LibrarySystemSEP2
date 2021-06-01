@@ -13,19 +13,26 @@ import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Reservation model for server
+ *
+ * @author Michael
+ * @author Lilian
+ * @version 1.0
+ */
 public class ReservationModelManagerServer implements ReservationModelServer
 {
   private PropertyChangeSupport support;
-  
+
   private ReservationDAO reservationDAO;
   private MaterialDAO materialDAO;
-  
 
-  public ReservationModelManagerServer(ReservationDAO reservationDAO, MaterialDAO materialDAO)
+  public ReservationModelManagerServer(ReservationDAO reservationDAO,
+      MaterialDAO materialDAO)
   {
     this.reservationDAO = reservationDAO;
     this.materialDAO = materialDAO;
-    
+
     support = new PropertyChangeSupport(this);
   }
 
@@ -34,24 +41,25 @@ public class ReservationModelManagerServer implements ReservationModelServer
   {
     if (materialDAO.getNumberOfAvailableCopies(material.getMaterialID()) == 0)
     {
-      Reservation reservation = ReservationDAOImpl
-          .getInstance().create(borrower, material);
+      Reservation reservation = ReservationDAOImpl.getInstance()
+          .create(borrower, material);
       //Event is fired and caught in ReservationServer. ReservationSever redirects the event to the client using the Client Callback.
-      support.firePropertyChange(EventTypes.RESERVATIONREGISTERED, null, reservation);
+      support.firePropertyChange(EventTypes.RESERVATIONREGISTERED, null,
+          reservation);
     }
-    else{
-       throw new IllegalStateException("Flere tilgængelige kopier, materialet kan lån i stedet");
+    else
+    {
+      throw new IllegalStateException(
+          "Flere tilgængelige kopier, materialet kan lån i stedet");
     }
   }
 
   @Override public void endReservation(Reservation reservation)
   {
-    ReservationDAOImpl
-        .getInstance().endReservation(reservation);
+    ReservationDAOImpl.getInstance().endReservation(reservation);
 
-    support.firePropertyChange(EventTypes.RESERVATIONCANCELLED, null, reservation);
-
-    //      throw new IllegalStateException("Material has more than 1 available copies");
+    support
+        .firePropertyChange(EventTypes.RESERVATIONCANCELLED, null, reservation);
   }
 
   @Override public List<Reservation> getAllReservationsByCPR(String cpr)

@@ -14,10 +14,16 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-//Lilian
+/**
+ * Reservation server implementation
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class ReservationServerImpl implements ReservationServer
 {
   private ReservationModelServer reservationModel;
+
   public ReservationServerImpl(ReservationModelServer reservationModel)
   {
     try
@@ -49,16 +55,16 @@ public class ReservationServerImpl implements ReservationServer
         }
       }
     };
-    reservationModel.addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED, listenerReservationRegistered);
-    reservationModel.addPropertyChangeListener(EventTypes.RESERVATIONCANCELLED, listenerReservationRegistered);
+    reservationModel.addPropertyChangeListener(EventTypes.RESERVATIONREGISTERED,
+        listenerReservationRegistered);
+    reservationModel.addPropertyChangeListener(EventTypes.RESERVATIONCANCELLED,
+        listenerReservationRegistered);
   }
 
   @Override public List<Reservation> getAllReservationsByCPR(String cpr)
   {
     return reservationModel.getAllReservationsByCPR(cpr);
   }
-
-
 
   @Override public void endReservation(Reservation reservation)
       throws RemoteException
@@ -69,6 +75,6 @@ public class ReservationServerImpl implements ReservationServer
   @Override public void registerReservation(Material material,
       Borrower borrower) throws RemoteException
   {
-    reservationModel.registerReservation(material,borrower);
+    reservationModel.registerReservation(material, borrower);
   }
 }

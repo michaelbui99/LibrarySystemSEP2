@@ -5,25 +5,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
-//Michael
+/**
+ * Controller for borrower contact info
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class BorrowerContactInfoController
 {
 
   @FXML private TextField cprField;
-
   @FXML private TextField fNameField;
-
   @FXML private TextField lNameField;
-
   @FXML private TextField phoneField;
-
   @FXML private TextField emailField;
-
   @FXML private TextField addressField;
-
   @FXML private Label warningLabel;
 
   private BorrowerContactInfoVM viewModel;
@@ -43,6 +43,7 @@ public class BorrowerContactInfoController
 
   @FXML void onBackButton(ActionEvent event) throws IOException
   {
+    warningLabel.setTextFill(Paint.valueOf("red"));
     viewModel.clearAllProperties();
     viewModel.warningProperty().set("");
     ViewHandler.getInstance().openView("Administration");

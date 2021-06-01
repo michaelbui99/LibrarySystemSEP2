@@ -15,7 +15,15 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Lilian-Michael-Kasper-Kutaiba
+/**
+ * Ebook data access object implementation
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author Kasper
+ * @author Lilian
+ * @version 1.0
+ */
 public class EbookDAOImpl extends BaseDAO implements EbookDAO
 {
   private static EbookDAO instance;
@@ -96,8 +104,8 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
     }
   }
 
-  @Override public synchronized EBook createEBookCopy(int materialID, int copyNo)
-      throws SQLException
+  @Override public synchronized EBook createEBookCopy(int materialID,
+      int copyNo) throws SQLException
   {
     try (Connection connection = getConnection())
     {
@@ -107,41 +115,42 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
       }
       else
       {
-      //Creates material_copy
-      PreparedStatement stm = connection.prepareStatement(
-          "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
-      stm.setInt(1, materialID);
-      stm.setInt(2, copyNo);
-      stm.executeUpdate();
-      //ResultSet keys = stm.getGeneratedKeys();
-      connection.commit();
+        //Creates material_copy
+        PreparedStatement stm = connection.prepareStatement(
+            "INSERT INTO material_copy (material_id, copy_no) VALUES (?,?)");
+        stm.setInt(1, materialID);
+        stm.setInt(2, copyNo);
+        stm.executeUpdate();
+        //ResultSet keys = stm.getGeneratedKeys();
+        connection.commit();
 
-      //Finds the necessary details to create the EBook object from DB.
-      ResultSet eBookDetails = getEBookDetailsByID(materialID);
-      if (eBookDetails.next())
-      {
-        //Creates and returns a EBook object if a EBook with given materialID exists.
-        List<String> materialKeywordList = MaterialDAOImpl.getInstance()
-            .getKeywordsForMaterial(eBookDetails.getInt("material_id"));
-        String materialKeywords = String.join(", ", materialKeywordList);
+        //Finds the necessary details to create the EBook object from DB.
+        ResultSet eBookDetails = getEBookDetailsByID(materialID);
+        if (eBookDetails.next())
+        {
+          //Creates and returns a EBook object if a EBook with given materialID exists.
+          List<String> materialKeywordList = MaterialDAOImpl.getInstance()
+              .getKeywordsForMaterial(eBookDetails.getInt("material_id"));
+          String materialKeywords = String.join(", ", materialKeywordList);
 
-        return new EBook(eBookDetails.getInt("material_id"),
-            eBookDetails.getInt("copy_no"), eBookDetails.getString("title"),
-            eBookDetails.getString("publisher"),
-            String.valueOf(eBookDetails.getDate("release_date")),
-            eBookDetails.getString("description_of_the_content"),
-            materialKeywords, eBookDetails.getString("audience"),
-            eBookDetails.getString("language_"), eBookDetails.getInt("page_no"),
-            eBookDetails.getString("license_no"),
-            eBookDetails.getString("genre"),
-            //keys.getString("author"),
-            new MaterialCreator(eBookDetails.getString("f_name"),
-                eBookDetails.getString("l_name"),
-                String.valueOf(eBookDetails.getDate("dob")),
-                eBookDetails.getString("country")));
-        // added author and genre
-      }
-      return null;
+          return new EBook(eBookDetails.getInt("material_id"),
+              eBookDetails.getInt("copy_no"), eBookDetails.getString("title"),
+              eBookDetails.getString("publisher"),
+              String.valueOf(eBookDetails.getDate("release_date")),
+              eBookDetails.getString("description_of_the_content"),
+              materialKeywords, eBookDetails.getString("audience"),
+              eBookDetails.getString("language_"),
+              eBookDetails.getInt("page_no"),
+              eBookDetails.getString("license_no"),
+              eBookDetails.getString("genre"),
+              //keys.getString("author"),
+              new MaterialCreator(eBookDetails.getString("f_name"),
+                  eBookDetails.getString("l_name"),
+                  String.valueOf(eBookDetails.getDate("dob")),
+                  eBookDetails.getString("country")));
+          // added author and genre
+        }
+        return null;
       }
     }
   }
@@ -288,8 +297,8 @@ public class EbookDAOImpl extends BaseDAO implements EbookDAO
     return ml;
   }
 
-  @Override public synchronized void deleteEBookCopy(int materialID, int copyNumber)
-      throws SQLException
+  @Override public synchronized void deleteEBookCopy(int materialID,
+      int copyNumber) throws SQLException
   {
     try (Connection connection = getConnection())
     {

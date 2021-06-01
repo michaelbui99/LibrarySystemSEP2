@@ -11,10 +11,15 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * DVD test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class DVDDAOImplTest
 {
-  private DVDDAO dvddao;
+  private DvdDAO dvddao;
   private DatabaseBuilder databaseBuilder;
   private Place place;
 

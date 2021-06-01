@@ -10,7 +10,13 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
-//Kutaiba
+/**
+ * Controller for the main window
+ * borrower login
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class MainController
 {
   @FXML private Label errorMessage;
@@ -25,10 +31,8 @@ public class MainController
   {
     this.mainVM = mainVM;
 
-    password.textProperty().bindBidirectional(
-        mainVM.passwordProperty());
-    cprNo.textProperty().bindBidirectional(
-        mainVM.cprProperty());
+    password.textProperty().bindBidirectional(mainVM.passwordProperty());
+    cprNo.textProperty().bindBidirectional(mainVM.cprProperty());
   }
 
   @FXML public void onButtonStaffLogin(ActionEvent actionEvent)
@@ -61,6 +65,8 @@ public class MainController
 
   @FXML public void onTypedCprCheck(KeyEvent keyEvent)
   {
+    // .*\\d.* to check if the string consists of only number
+
     String arg = mainVM.cprProperty().get();
     if (arg.isEmpty() || !arg.matches(".*\\d.*") || !arg.contains("-")
         || arg.length() != 11)
@@ -77,8 +83,7 @@ public class MainController
   {
     try
     {
-      String arg = mainVM.passwordProperty()
-          .get();
+      String arg = mainVM.passwordProperty().get();
       if (arg.isEmpty())
       {
         passwordError.setVisible(true);

@@ -15,7 +15,12 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Michael
+/**
+ * Loan test
+ *
+ * @author Michael
+ * @version 1.0
+ */
 class LoanDAOTest
 {
   LoanDAO loanDAO;
@@ -81,8 +86,6 @@ class LoanDAOTest
         () -> loanDAO.getAllLoansByCPR("111111-1111"));
   }
 
-
-
   @Test void endLoanTest() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
@@ -90,13 +93,10 @@ class LoanDAOTest
     assertDoesNotThrow(() -> loanDAO.endLoan(loan));
   }
 
-
-
   @Test void endLoanUpdatesAvailableNumberOfCopies() throws SQLException
   {
     databaseBuilder.createDummyDatabaseDataWithoutLoan();
-    Loan loan = loanDAO
-        .create(book, borrower);
+    Loan loan = loanDAO.create(book, borrower);
 
     assertEquals(0, MaterialDAOImpl.getInstance()
         .getNumberOfAvailableCopies(book.getMaterialID()));
@@ -109,7 +109,8 @@ class LoanDAOTest
   {
     databaseBuilder.createDummyDatabaseDataWithLoan();
     Loan loan = new Loan(book, borrower, "2021-12-12", "2021-05-21", null, 1);
-    assertEquals("2022-01-12", LoanDAOImpl.getInstance().extendLoan(loan).getDeadline());
+    assertEquals("2022-01-12",
+        LoanDAOImpl.getInstance().extendLoan(loan).getDeadline());
   }
 
   @Test void extendLoan2TimesDoesNotThrowException() throws SQLException
@@ -137,6 +138,5 @@ class LoanDAOTest
     });
 
   }
-
 
 }

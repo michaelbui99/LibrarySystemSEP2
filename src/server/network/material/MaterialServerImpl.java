@@ -11,10 +11,17 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-//Kutaiba-Lilian
+/**
+ * material server implementation
+ *
+ * @author Kutaiba
+ * @author Lilian
+ * @version 1.0
+ */
 public class MaterialServerImpl implements MaterialServer
 {
   private MaterialModelServer materialModel;
+
   public MaterialServerImpl(MaterialModelServer materialModel)
   {
     try
@@ -39,38 +46,32 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void setSelectedMaterial(Material material)
   {
-    materialModel
-        .setSelectedMaterial(material);
+    materialModel.setSelectedMaterial(material);
   }
 
   @Override public Material getSelectedMaterial()
   {
-    return materialModel
-        .getSelectMaterial();
+    return materialModel.getSelectMaterial();
   }
 
   @Override public void registerBook(String title, String publisher,
       String releaseDate, String description, String tags,
       String targetAudience, String language, String isbn, int pageCount,
       Place place, MaterialCreator author, String genre, String url,
-      String keywards)
+      String keywords)
   {
-    materialModel
-        .registerBook(title, publisher, releaseDate, description, tags,
-            targetAudience, language, isbn, pageCount, place, author, genre,
-            url);
+    materialModel.registerBook(title, publisher, releaseDate, description, tags,
+        targetAudience, language, isbn, pageCount, place, author, genre, url);
   }
 
   @Override public void createBookCopy(int materialID)
   {
-    materialModel
-        .createBookCopy(materialID);
+    materialModel.createBookCopy(materialID);
   }
 
   @Override public void deleteBookCopy(int materialID, int copyNo)
   {
-    materialModel
-        .deleteBookCopy(materialID, copyNo);
+    materialModel.deleteBookCopy(materialID, copyNo);
   }
 
   @Override public boolean bookAlreadyExists(String title, String publisher,
@@ -88,22 +89,19 @@ public class MaterialServerImpl implements MaterialServer
       String targetAudience, String language, String subtitlesLanguage,
       int playDuration, Place placeID, String genre, String url)
   {
-    materialModel
-        .registerDVD(title, publisher, releaseDate, description, tags,
-            targetAudience, language, subtitlesLanguage, playDuration, placeID,
-            genre, url);
+    materialModel.registerDVD(title, publisher, releaseDate, description, tags,
+        targetAudience, language, subtitlesLanguage, playDuration, placeID,
+        genre, url);
   }
 
   @Override public void createDVDCopy(int materialID)
   {
-    materialModel
-        .createDVDCopy(materialID);
+    materialModel.createDVDCopy(materialID);
   }
 
   @Override public void deleteDVDCopy(int materialID, int copyNo)
   {
-    materialModel
-        .deleteDVDCopy(materialID, copyNo);
+    materialModel.deleteDVDCopy(materialID, copyNo);
   }
 
   @Override public boolean dvdAlreadyExists(String title, String publisher,
@@ -120,21 +118,18 @@ public class MaterialServerImpl implements MaterialServer
       String targetAudience, String language, int playDuration, Place place,
       String genre, String url)
   {
-    materialModel
-        .registerCD(title, publisher, releaseDate, description, tags,
-            targetAudience, language, playDuration, place, genre, url);
+    materialModel.registerCD(title, publisher, releaseDate, description, tags,
+        targetAudience, language, playDuration, place, genre, url);
   }
 
   @Override public void createCDCopy(int materialID)
   {
-    materialModel
-        .createCDCopy(materialID);
+    materialModel.createCDCopy(materialID);
   }
 
   @Override public void deleteCDCopy(int materialID, int copyNo)
   {
-    materialModel
-        .deleteCDCopy(materialID, copyNo);
+    materialModel.deleteCDCopy(materialID, copyNo);
   }
 
   @Override public boolean cdAlreadyExists(String title, String publisher,
@@ -158,14 +153,12 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createEBookCopy(int materialID)
   {
-    materialModel
-        .createEBookCopy(materialID);
+    materialModel.createEBookCopy(materialID);
   }
 
   @Override public void deleteEBookCopy(int materialID, int copyNo)
   {
-    materialModel
-        .deleteEBookCopy(materialID, copyNo);
+    materialModel.deleteEBookCopy(materialID, copyNo);
   }
 
   @Override public boolean eBookAlreadyExists(String title, String publisher,
@@ -190,14 +183,12 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public void createAudioBookCopy(int materialID)
   {
-    materialModel
-        .createAudioBookCopy(materialID);
+    materialModel.createAudioBookCopy(materialID);
   }
 
   @Override public void deleteAudioBookCopy(int materialID, int copyNo)
   {
-    materialModel
-        .deleteAudiotBookCopy(materialID, copyNo);
+    materialModel.deleteAudioBookCopy(materialID, copyNo);
   }
 
   @Override public boolean audioBookAlreadyExists(String title,
@@ -221,20 +212,16 @@ public class MaterialServerImpl implements MaterialServer
 
   @Override public int numberOfAvailableCopies()
   {
-    return materialModel
-        .numberOfAvailableCopies();
+    return materialModel.numberOfAvailableCopies();
   }
 
   @Override public int totalNumberOfCopies(int materialID)
   {
-    return materialModel
-        .totalNumberOfCopies(materialID);
+    return materialModel.totalNumberOfCopies(materialID);
   }
 
   @Override public void deleteMaterial(int materialID)
   {
-    materialModel
-        .deleteMaterial(materialID);
+    materialModel.deleteMaterial(materialID);
   }
-
 }

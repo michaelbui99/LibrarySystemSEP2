@@ -12,7 +12,12 @@ import shared.person.MaterialCreator;
 
 import java.time.LocalDate;
 
-//Kutaiba
+/**
+ * View model for registering materials
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class RegisterMaterialVM
 {
   private ObservableList<String> materialType;

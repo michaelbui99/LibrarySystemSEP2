@@ -14,7 +14,12 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * Material model for server test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 class RegisterRemoveMaterialsTest
 {
   private MaterialModelServer materialModelServer;
@@ -107,8 +112,7 @@ class RegisterRemoveMaterialsTest
             materialCreator, "genreTest", null));
   }
 
-  @Test void registerBookWithTargetAudienceAsAnIntegerTest()
-      throws SQLException
+  @Test void registerBookWithTargetAudienceAsAnIntegerTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
@@ -764,9 +768,8 @@ class RegisterRemoveMaterialsTest
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
-        .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", null,
-            "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
-            null));
+        .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", null, "dvdTages",
+            "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre", null));
   }
 
   @Test void registeDVDWithEmptyKeywordsTest() throws SQLException
@@ -774,8 +777,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            null, "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
-            null));
+            null, "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre", null));
   }
 
   @Test void registerDVDWithKeywordsAsAnIntegerTest() throws SQLException
@@ -783,8 +785,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "11", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre",
-            null));
+            "11", "Voksen", "Dansk", "Dansk", 111, place, "dvdGenre", null));
   }
 
   @Test void registerDVDWithEmptyTargetAudienceTest() throws SQLException
@@ -792,8 +793,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", null, "Dansk", "Dansk", 111, place, "dvdGenre",
-            null));
+            "dvdTages", null, "Dansk", "Dansk", 111, place, "dvdGenre", null));
   }
 
   @Test void registerDVDWithTargetAudienceAsAnIntegerTest() throws SQLException
@@ -801,8 +801,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", "11", "Dansk", "Dansk", 111, place, "dvdGenre",
-            null));
+            "dvdTages", "11", "Dansk", "Dansk", 111, place, "dvdGenre", null));
   }
 
   @Test void registerDVDWithTargetAudienceOutOfCheckTest() throws SQLException
@@ -836,8 +835,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", "Voksen", null, "Dansk", 111, place, "dvdGenre",
-            null));
+            "dvdTages", "Voksen", null, "Dansk", 111, place, "dvdGenre", null));
   }
 
   @Test void registerDVDWithLanguageAsAnIntegerTest() throws SQLException
@@ -845,8 +843,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", "Voksen", "11", "Dansk", 111, place, "dvdGenre",
-            null));
+            "dvdTages", "Voksen", "11", "Dansk", 111, place, "dvdGenre", null));
   }
 
   @Test void registerDVDWithLanguageOutOfCheckTest() throws SQLException
@@ -863,17 +860,16 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", "Voksen", "Dansk", null, 111, place, "dvdGenre",
-            null));
+            "dvdTages", "Voksen", "Dansk", null, 111, place, "dvdGenre", null));
   }
 
-  @Test void registerDVDWithSubtitleLanguageAsAnIntegerTest() throws SQLException
+  @Test void registerDVDWithSubtitleLanguageAsAnIntegerTest()
+      throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", "Voksen", "Dansk", "11", 111, place, "dvdGenre",
-            null));
+            "dvdTages", "Voksen", "Dansk", "11", 111, place, "dvdGenre", null));
   }
 
   @Test void registerDVDWithEmptyPlaceTest() throws SQLException
@@ -890,8 +886,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, null,
-            null));
+            "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, null, null));
   }
 
   @Test void registerDVDWithGenreAsAnIntegerTest() throws SQLException
@@ -899,8 +894,7 @@ class RegisterRemoveMaterialsTest
     databaseBuilder.createDummyDataWithoutInfo();
     assertThrows(IllegalArgumentException.class, () -> materialModelServer
         .registerDVD("dvdTitle", "dvdpublisher", "2000-01-01", "dvdDescription",
-            "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "11",
-            null));
+            "dvdTages", "Voksen", "Dansk", "Dansk", 111, place, "11", null));
   }
   // Register a material of type DVD section ends
 
@@ -908,15 +902,18 @@ class RegisterRemoveMaterialsTest
   @Test void removeMaterialFromSystemTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
-    int materialID = materialModelServer.registerMaterial("titleTestR", "publisherTestR", "2000-03-04",
-        "descriptionTestR", "Voksen", "Dansk", "genreTestR", null, "tagesTestR");
-    assertDoesNotThrow(()-> materialModelServer.deleteMaterial(materialID));
+    int materialID = materialModelServer
+        .registerMaterial("titleTestR", "publisherTestR", "2000-03-04",
+            "descriptionTestR", "Voksen", "Dansk", "genreTestR", null,
+            "tagesTestR");
+    assertDoesNotThrow(() -> materialModelServer.deleteMaterial(materialID));
   }
 
   @Test void removeAnUnexistingMaterialFromSystemTest() throws SQLException
   {
     databaseBuilder.createDummyDataWithoutInfo();
-    assertThrows(IllegalArgumentException.class, ()-> materialModelServer.deleteMaterial(9000000));
+    assertThrows(IllegalArgumentException.class,
+        () -> materialModelServer.deleteMaterial(9000000));
   }
   // Remove material section ends
 }

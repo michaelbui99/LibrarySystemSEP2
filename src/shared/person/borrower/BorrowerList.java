@@ -3,7 +3,12 @@ package shared.person.borrower;
 import java.util.ArrayList;
 import java.util.List;
 
-//Kasper
+/**
+ * Borrower list object
+ *
+ * @author kasper
+ * @version 1.0
+ */
 public class BorrowerList
 {
   private List<Borrower> borrowers;

@@ -9,6 +9,12 @@ import shared.materials.Material;
 import shared.materials.strategy.*;
 import shared.util.EventTypes;
 
+/**
+ * View model for search window
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class SearchVM
 {
   private ObservableList<Material> foundMaterials;
@@ -24,9 +30,7 @@ public class SearchVM
   private StringProperty targetAudienceProperty;
   private StringProperty chooseTypeProperty;
   private MaterialModelClient materialModelClient;
-  private StringProperty errorLabel;
 
-  //Lilian
   public SearchVM(MaterialModelClient materialModelClient)
   {
     this.materialModelClient = materialModelClient;
@@ -91,11 +95,6 @@ public class SearchVM
   public StringProperty languageProperty()
   {
     return languageProperty;
-  }
-
-  public StringProperty errorLabelProperty()
-  {
-    return errorLabel;
   }
 
   public StringProperty targetAudienceProperty()

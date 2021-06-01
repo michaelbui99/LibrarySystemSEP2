@@ -9,7 +9,12 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Michael
+/**
+ * Loan test
+ *
+ * @author Michael
+ * @version 1.0
+ */
 class LoanTest
 {
   private Borrower borrower;
@@ -44,31 +49,34 @@ class LoanTest
         () -> new Loan(book, null, LocalDate.now().plusMonths(1).toString(),
             LocalDate.now().toString(), null, 1));
   }
+
   @Test void LoanWithNoDeadlineThrowsIllegalArgumentException()
   {
     assertThrows(IllegalArgumentException.class,
-        () -> new Loan(book, borrower, null,
-            LocalDate.now().toString(), null, 1));
+        () -> new Loan(book, borrower, null, LocalDate.now().toString(), null,
+            1));
   }
+
   @Test void LoanWithNoLoanDateThrowsIllegalArgumentException()
   {
     assertThrows(IllegalArgumentException.class,
         () -> new Loan(book, borrower, LocalDate.now().plusMonths(1).toString(),
             null, null, 1));
   }
+
   @Test void LoanWithLoanIDL0ThrowsIllegalArgumentException()
   {
     assertThrows(IllegalArgumentException.class,
         () -> new Loan(book, borrower, LocalDate.now().plusMonths(1).toString(),
             LocalDate.now().toString(), null, 0));
   }
+
   @Test void LoanWithLoanIDLMinus1ThrowsIllegalArgumentException()
   {
     assertThrows(IllegalArgumentException.class,
         () -> new Loan(book, borrower, LocalDate.now().plusMonths(1).toString(),
             LocalDate.now().toString(), null, -1));
   }
-
 
   //extendLoan tests
   @Test void LoanWithNewLoanStateCannotBeExtendedWithReservation()
@@ -88,8 +96,10 @@ class LoanTest
     loan.setLoanState(new NewLoanState());
     loan.extendLoan();
     System.out.println(LocalDate.now().plusDays(4).plusMonths(1).toString());
-    assertEquals(LocalDate.now().plusDays(4).plusMonths(1).toString(), loan.getDeadline());
+    assertEquals(LocalDate.now().plusDays(4).plusMonths(1).toString(),
+        loan.getDeadline());
   }
+
   @Test void LoanWithExtendedLoan1StateCannotBeExtendedWithReservation()
   {
     Loan loan = new Loan(book, borrower, LocalDate.now().plusDays(1).toString(),
@@ -106,7 +116,8 @@ class LoanTest
     loan.setMaterialHasReservation(false);
     loan.setLoanState(new ExtendedLoan1State());
     loan.extendLoan();
-    assertEquals(LocalDate.now().plusDays(1).plusMonths(1).toString(), loan.getDeadline());
+    assertEquals(LocalDate.now().plusDays(1).plusMonths(1).toString(),
+        loan.getDeadline());
   }
 
   @Test void LoanWithExtendedLoan2StateCannotBeExtended()
@@ -149,18 +160,18 @@ class LoanTest
 
   @Test void LoanCannotBeExtended1DayPastDeadline()
   {
-    Loan loan = new Loan(book, borrower, LocalDate.now().minusDays(1).toString(),
-        LocalDate.now().toString(), null, 1);
+    Loan loan = new Loan(book, borrower,
+        LocalDate.now().minusDays(1).toString(), LocalDate.now().toString(),
+        null, 1);
     assertThrows(IllegalStateException.class, loan::extendLoan);
   }
 
   @Test void LoanCannotBeExtended1WeekPastDeadline()
   {
-    Loan loan = new Loan(book, borrower, LocalDate.now().minusDays(7).toString(),
-        LocalDate.now().toString(), null, 1);
+    Loan loan = new Loan(book, borrower,
+        LocalDate.now().minusDays(7).toString(), LocalDate.now().toString(),
+        null, 1);
     assertThrows(IllegalStateException.class, loan::extendLoan);
   }
-
-
 
 }

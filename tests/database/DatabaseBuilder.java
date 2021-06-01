@@ -4,7 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-//Michael-Kutaiba-Lilian-kasper
+/**
+ * Database builder object class
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author Lilian
+ * @author kasper
+ * @version 1.0
+ */
 public class DatabaseBuilder extends BaseDAO
 {
 
@@ -161,28 +169,29 @@ public class DatabaseBuilder extends BaseDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement ddl = connection.prepareStatement(
-       " insert into material\n"
-           + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
-           + " values ('one','Voksen','cat live', 'catman','Dansk', '2000-10-10','Fantasy', 'null');\n"
-           + "\n" + "insert into place values (2, 1, 'p' ,'John','Fantasy');\n"
-           + "\n"
-           + "insert into material_creator values (2, 'John', 'Johnsen', '2000-10-10' , 'Denmark');\n"
-           + "insert into book values (1,200,2,'5444',2);\n"
-           + "insert into material_copy values (1,4,false);\n"
-           + "insert into address values (1,'horsens',8700,'doc',4);\n"
-           + "insert into borrower values ('111111-1122','Lilian', 'Bittar', 'bittarlily@gmail.com', '+4526700792', 1, 'password');\n"
-           + "insert into reservation values ('2000-10-10',1, '111111-1122',1,'true'); \n"
-           + "insert into material\n"
-           + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
-           + " values ('to','Voksen','cat ', 'cats','Dansk', '2000-11-10','Fantasy', 'null');\n"
-           + "\n" + "insert into place values (3, 2, 'p' ,'John','Fantasy');\n"
-           + "insert into material_creator values (5, 'Joh', 'John', '2000-10-10' , 'Denmark');\n"
-           + "insert into book values (2,200,5,'5444',3);\n"
-           + "insert into material_copy values (2,4,false);\n"
-           + "insert into reservation values ('2000-10-10',2, '111111-1122',2,'true'); \n"
-      );
-          ddl.executeUpdate();
-          connection.commit();
+          " insert into material\n"
+              + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
+              + " values ('one','Voksen','cat live', 'catman','Dansk', '2000-10-10','Fantasy', 'null');\n"
+              + "\n"
+              + "insert into place values (2, 1, 'p' ,'John','Fantasy');\n"
+              + "\n"
+              + "insert into material_creator values (2, 'John', 'Johnsen', '2000-10-10' , 'Denmark');\n"
+              + "insert into book values (1,200,2,'5444',2);\n"
+              + "insert into material_copy values (1,4,false);\n"
+              + "insert into address values (1,'horsens',8700,'doc',4);\n"
+              + "insert into borrower values ('111111-1122','Lilian', 'Bittar', 'bittarlily@gmail.com', '+4526700792', 1, 'password');\n"
+              + "insert into reservation values ('2000-10-10',1, '111111-1122',1,'true'); \n"
+              + "insert into material\n"
+              + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
+              + " values ('to','Voksen','cat ', 'cats','Dansk', '2000-11-10','Fantasy', 'null');\n"
+              + "\n"
+              + "insert into place values (3, 2, 'p' ,'John','Fantasy');\n"
+              + "insert into material_creator values (5, 'Joh', 'John', '2000-10-10' , 'Denmark');\n"
+              + "insert into book values (2,200,5,'5444',3);\n"
+              + "insert into material_copy values (2,4,false);\n"
+              + "insert into reservation values ('2000-10-10',2, '111111-1122',2,'true'); \n");
+      ddl.executeUpdate();
+      connection.commit();
     }
   }
 
@@ -195,19 +204,18 @@ public class DatabaseBuilder extends BaseDAO
           " insert into material\n"
               + "    (title, audience, description_of_the_content, publisher, language_, release_date, genre, url)\n"
               + " values ('one','Voksen','cat live', 'catman','Dansk', '2000-10-10','Fantasy', 'null');\n"
-              + "\n" + "insert into place values (2, 1, 'p' ,'John','Fantasy');\n"
+              + "\n"
+              + "insert into place values (2, 1, 'p' ,'John','Fantasy');\n"
               + "\n"
               + "insert into material_creator values (2, 'John', 'Johnsen', '2000-10-10' , 'Denmark');\n"
               + "insert into book values (1,200,2,'5444',2);\n"
               + "insert into material_copy values (1,4,false);\n"
               + "insert into address values (1,'horsens',8700,'doc',4);\n"
-              + "insert into borrower values ('111111-1122','Lilian', 'Bittar', 'bittarlily@gmail.com', '+4526700792', 1, 'password');\n"
-      );
+              + "insert into borrower values ('111111-1122','Lilian', 'Bittar', 'bittarlily@gmail.com', '+4526700792', 1, 'password');\n");
       ddl.executeUpdate();
       connection.commit();
     }
   }
-
 
   public void createDummyDatabaseDataWithLoan() throws SQLException
   { //LoanQueries.sql
@@ -598,7 +606,8 @@ public class DatabaseBuilder extends BaseDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement stm = connection.prepareStatement("INSERT INTO reservation (reservation_date, cpr_no, material_id, ready) VALUES (CURRENT_DATE, ?, ?, ?);\n");
+      PreparedStatement stm = connection.prepareStatement(
+          "INSERT INTO reservation (reservation_date, cpr_no, material_id, ready) VALUES (CURRENT_DATE, ?, ?, ?);\n");
       stm.setString(1, cpr);
       stm.setInt(2, materialID);
       stm.setBoolean(3, ready);

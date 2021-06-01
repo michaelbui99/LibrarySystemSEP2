@@ -14,7 +14,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-//Michael
+/**
+ * Loan server implementation
+ *
+ * @author Michael
+ * @version 1.0
+ */
 public class LoanServerImpl implements LoanServer
 {
   private LoanModelServer loanModel;
@@ -33,7 +38,8 @@ public class LoanServerImpl implements LoanServer
 
   }
 
-  @Override public void registerLoan(Material material, Borrower borrower) throws IllegalStateException
+  @Override public void registerLoan(Material material, Borrower borrower)
+      throws IllegalStateException
   {
     try
     {
@@ -63,7 +69,7 @@ public class LoanServerImpl implements LoanServer
 
   @Override public void endLoan(Loan loan)
   {
-   loanModel.endLoan(loan);
+    loanModel.endLoan(loan);
   }
 
   public void registerClientCallBack(ClientCallback client)
@@ -90,5 +96,4 @@ public class LoanServerImpl implements LoanServer
     loanModel.addPropertyChangeListener(EventTypes.LOANEXTENDERROR, listener);
 
   }
-
 }

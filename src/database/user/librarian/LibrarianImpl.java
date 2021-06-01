@@ -12,7 +12,13 @@ import java.sql.SQLException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Kasper-Kutaiba
+/**
+ * Librarian data access object implementation
+ *
+ * @author Kutaiba
+ * @author Kasper
+ * @version 1.0
+ */
 public class LibrarianImpl extends BaseDAO implements LibrarianDAO
 {
 
@@ -61,6 +67,10 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
+      /* [a-zA-Z]+ check if a string consists of only letters
+       * ^(\+\d{10}( )?)$ check if a string starts with + and followed by only 11 Integers
+       * */
+
       String[] arr = cpr.split("-");
       if ((employee_no <= 0) || (cpr.getBytes().length != 11 || (
           !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1])) || !cpr
@@ -75,11 +85,11 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
       }
       else
       {
-        if (AddressImpl.getInstence()
+        if (AddressImpl.getInstance()
             .getAddressId(address.getCity(), address.getStreetName(),
                 address.getZipCode(), address.getStreetNr()) == -1)
         {
-          Address ad = AddressImpl.getInstence()
+          Address ad = AddressImpl.getInstance()
               .create(address.getCity(), address.getStreetName(),
                   address.getZipCode(), address.getStreetNr());
 
@@ -104,7 +114,7 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
         }
         else
         {
-          int adId = AddressImpl.getInstence()
+          int adId = AddressImpl.getInstance()
               .getAddressId(address.getCity(), address.getStreetName(),
                   address.getZipCode(), address.getStreetNr());
           PreparedStatement stm = connection.prepareStatement(
@@ -225,6 +235,8 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
+      //^(\+\d{10}( )?)$ check if a string starts with + and followed by only 11 Integers
+
       if (phone == null || !phone.contains("+45") || !phone
           .matches("^(\\+\\d{10}( )?)$"))
       {
@@ -246,6 +258,8 @@ public class LibrarianImpl extends BaseDAO implements LibrarianDAO
   {
     try (Connection connection = getConnection())
     {
+      //^(\+\d{10}( )?)$ check if a string starts with + and followed by only 11 Integers
+
       String[] arr = cpr.split("-");
       if ((employeeNo <= 0) || (cpr.getBytes().length != 11
           || !containsOnlyDigits(arr[0]) && !containsOnlyDigits(arr[1]) || !cpr

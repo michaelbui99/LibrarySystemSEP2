@@ -4,7 +4,12 @@ import shared.materials.Place;
 
 import java.io.Serializable;
 
-//Lilian
+/**
+ * CD object class
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class CD extends AudioMaterial implements Serializable
 {
   private Place place;
@@ -29,7 +34,9 @@ public class CD extends AudioMaterial implements Serializable
     String placeString = " ";
     if (place != null)
     {
-      placeString = "Placering: " + place.getHallNo() + ">" +place.getDepartment()  + ">" + place.getGenre() + ">" + place.getCreatorLName();
+      placeString =
+          "Placering: " + place.getHallNo() + ">" + place.getDepartment() + ">"
+              + place.getGenre() + ">" + place.getCreatorLName();
     }
     return "Titlel: " + getTitle() + " \n" + "Forlag: " + getPublisher() + "\n"
         + "Udgivelsesdato: " + getReleaseDate() + "\n" + "Sprog: "

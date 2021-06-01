@@ -10,7 +10,10 @@ import client.model.user.UserModelClient;
 import client.model.user.UserModelManagerClient;
 import client.network.Client;
 
-//Lilian
+/**Model factory for client models
+ * @author Lilian
+ * @version 1.0
+ * */
 public class ModelFactoryClient
 {
   private static ModelFactoryClient modelFactory;

@@ -5,7 +5,12 @@ import shared.materials.Material;
 
 import java.util.List;
 
-//Lilian
+/**
+ * Concrete e-book search strategy
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class EBookStrategy implements SearchStrategy
 {
   private String materialType = "e_book";
@@ -15,10 +20,12 @@ public class EBookStrategy implements SearchStrategy
   {
 
   }
+
   @Override public List<Material> findMaterial(String title, String language,
       String keywords, String genre, String targetAudience)
   {
-    return EbookDAOImpl.getInstance().findMaterial(title, language, keywords, genre, targetAudience);
+    return EbookDAOImpl.getInstance()
+        .findMaterial(title, language, keywords, genre, targetAudience);
   }
 
 }

@@ -9,7 +9,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.NoSuchElementException;
 
-//Kutaiba
+/**Implementation of the client's user model
+ * @author Kutaiba
+ * @version 1.0
+ * */
 public class UserModelManagerClient implements UserModelClient
 {
   private Client client;
@@ -26,11 +29,9 @@ public class UserModelManagerClient implements UserModelClient
       String l_name, String email, String tel_no, Address address,
       String password)
   {
-    Borrower borrower = client
+    return client
         .registerBorrower(cpr_no, f_name, l_name, email, tel_no, address,
             password);
-    //support.firePropertyChange(EventTypes.BORROWERREGISTERED, null, borrower);
-    return borrower;
   }
 
   @Override public boolean borrowerLogin(String cprNo, String password)
@@ -47,10 +48,9 @@ public class UserModelManagerClient implements UserModelClient
       String firstName, String lastName, String cpr, String tlfNumber,
       String email, Address address, String password)
   {
-    Librarian librarian = client
+    return client
         .registerLibrarian(employee_no, firstName, lastName, cpr, tlfNumber,
             email, address, password);
-    return librarian;
   }
 
   @Override public boolean librarianLogin(int employee_no, String password)

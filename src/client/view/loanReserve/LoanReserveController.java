@@ -3,7 +3,6 @@ package client.view.loanReserve;
 import client.view.ViewHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -13,50 +12,42 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-//Kasper-Micheal-Lilian
+/**
+ * Controller for loans and reservations
+ *
+ * @author Kasper
+ * @author Michael
+ * @author Lilian
+ * @version 1.0
+ */
 public class LoanReserveController
 {
 
   @FXML private TextArea materialInfo;
-
-  @FXML private ComboBox<String> borrowChoice;
-
   @FXML private Image imageTest;
-
   @FXML private TextArea availNumber;
-
   @FXML ImageView materialImage;
-
   @FXML private Label warningLabel;
-
   @FXML private Label reservationError;
-  
+
   private LoanReserveVM loanReserveVM;
 
   public void init(LoanReserveVM loanReserveVM) throws FileNotFoundException
   {
     this.loanReserveVM = loanReserveVM;
-    
-    availNumber.textProperty().bind(
-        loanReserveVM.getAvailNumberProp()
-            .asString());
-    materialInfo.textProperty().bind(
-        loanReserveVM
-            .getMaterialInfoProp());
-    warningLabel.textProperty().bind(
-        loanReserveVM
-            .warningPropertyProperty());
-    reservationError.textProperty().bind(
-        loanReserveVM
-            .reservationErrorProperty());
+
+    availNumber.textProperty()
+        .bind(loanReserveVM.getAvailNumberProp().asString());
+    materialInfo.textProperty().bind(loanReserveVM.getMaterialInfoProp());
+    warningLabel.textProperty().bind(loanReserveVM.warningPropertyProperty());
+    reservationError.textProperty()
+        .bind(loanReserveVM.reservationErrorProperty());
     try
     {
-      if (loanReserveVM
-          .getMaterialImageURL() != null)
+      if (loanReserveVM.getMaterialImageURL() != null)
       {
-        imageTest = new Image(new FileInputStream(
-            loanReserveVM
-                .getMaterialImageURL()));
+        imageTest = new Image(
+            new FileInputStream(loanReserveVM.getMaterialImageURL()));
         materialImage.setImage(imageTest);
         System.out.println("Image set");
       }

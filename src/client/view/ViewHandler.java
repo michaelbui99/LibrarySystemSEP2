@@ -20,16 +20,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-//Lilian
 import java.io.IOException;
 
+/**
+ * View handler
+ * Singleton
+ *
+ * @author Lilian
+ * @version 1.0
+ */
 public class ViewHandler extends Application
 {
   private Stage stage = new Stage();
   private Stage stage2 = new Stage();
   private static ViewHandler viewHandler;
 
-  //singelton
   private ViewHandler()
   {
 
@@ -44,6 +49,13 @@ public class ViewHandler extends Application
     return viewHandler;
   }
 
+  /**
+   * Opens a new GUI window (FXML) based on a a given string
+   *
+   * @param id The name of the window to be opened
+   * @throws IOException if the given string does not mach an existing FXML file
+   *                     or if the path of Chosen FXML file is incorrect
+   */
   public void openView(String id) throws IOException
   {
     Scene scene;
@@ -173,6 +185,11 @@ public class ViewHandler extends Application
     stage.show();
   }
 
+  /**
+   * Starts the view, open the main window by default
+   *
+   * @param stage The View stage
+   */
   @Override public void start(Stage stage) throws Exception
   {
     openView("Main");

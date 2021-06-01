@@ -12,7 +12,12 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Kutaiba
+/**
+ * Copies test
+ *
+ * @author Kutaiba
+ * @version 1.0
+ */
 public class AddRemoveCopies
 {
   private MaterialModelServer materialModelServer;
@@ -122,7 +127,7 @@ public class AddRemoveCopies
             materialCreator, null);
     materialModelServer.createAudioBookCopy(audioBookID);
     assertDoesNotThrow(
-        () -> materialModelServer.deleteAudiotBookCopy(audioBookID, 2));
+        () -> materialModelServer.deleteAudioBookCopy(audioBookID, 2));
     assertEquals(1, materialModelServer.totalNumberOfCopies(audioBookID));
   }
 

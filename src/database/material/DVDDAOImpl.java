@@ -15,17 +15,25 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//Lilian-Michael-Kasper-Kutaiba
-public class DVDDAOImpl extends BaseDAO implements DVDDAO
+/**
+ * DVD data access object implementation
+ *
+ * @author Michael
+ * @author Kutaiba
+ * @author Kasper
+ * @author Lilian
+ * @version 1.0
+ */
+public class DVDDAOImpl extends BaseDAO implements DvdDAO
 {
-  private static DVDDAO instance;
+  private static DvdDAO instance;
   private static final Lock lock = new ReentrantLock();
 
   private DVDDAOImpl()
   {
   }
 
-  public static DVDDAO getInstance()
+  public static DvdDAO getInstance()
   {
     //Double lock check for Thread safety
     if (instance == null)
@@ -46,6 +54,7 @@ public class DVDDAOImpl extends BaseDAO implements DVDDAO
   {
     try (Connection connection = getConnection())
     {
+      // [a-zA-Z]+ to chick if a string consists of only letters
       if ((subtitle_lang == null || !subtitle_lang.matches("[a-zA-Z]+")) || (
           length_ <= 0) || (place == null))
       {
