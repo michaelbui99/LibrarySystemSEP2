@@ -71,11 +71,6 @@ public class LoanModelManagerClient implements LoanModelClient
 
   }
 
-  @Override public void returnMaterial(int loanID)
-  {
-
-  }
-
   @Override public void endLoan(Loan loan)
   {
     client.endLoan(loan);

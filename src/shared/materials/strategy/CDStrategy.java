@@ -12,7 +12,7 @@ import java.util.List;
  * @author Lilian
  * @version 1.0
  */
-public class CDStrategy extends BaseDAO implements SearchStrategy
+public class CDStrategy implements SearchStrategy
 {
   private String materialType = "cd";
   private static final long serialVersionUID = -8799770373490598593L;

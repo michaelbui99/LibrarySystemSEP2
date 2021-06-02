@@ -13,19 +13,31 @@ import client.view.registermaterial.RegisterMaterialVM;
 import client.view.search.SearchVM;
 import client.view.stafflogin.StaffLogInVM;
 
-/**View model factory
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * View model factory
+ *
  * @author Lilian
  * @version 1.0
- * */
+ */
 public class ViewModelFactory
 {
   private static ViewModelFactory viewModelFactory;
+  private static Lock lock = new ReentrantLock();
 
   public static ViewModelFactory getInstance()
   {
     if (viewModelFactory == null)
     {
-      viewModelFactory = new ViewModelFactory();
+      synchronized (lock)
+      {
+        if (viewModelFactory == null)
+        {
+          viewModelFactory = new ViewModelFactory();
+        }
+      }
     }
     return viewModelFactory;
   }

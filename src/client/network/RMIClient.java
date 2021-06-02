@@ -55,14 +55,6 @@ public interface RMIClient extends Remote
       throws RemoteException, NoSuchElementException;
 
   /**
-   * Change a material copy status from not available to available by using a loan id
-   *
-   * @param loanID The loan id to identify the loan and the material copy
-   * @throws RemoteException if the method is called with no connection between the RMI-server and the RMI-client
-   */
-  void deliverMaterial(int loanID) throws RemoteException;
-
-  /**
    * Extend the deadline of a loaned material copy
    *
    * @param loan The loan which to be extended

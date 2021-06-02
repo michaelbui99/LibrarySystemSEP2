@@ -14,6 +14,9 @@ import server.model.reservation.ReservationModelServer;
 import server.model.user.UserModelManagerServer;
 import server.model.user.UserModelServer;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Model factory for server models
  *
@@ -28,6 +31,8 @@ public class ModelFactoryServer
   private UserModelServer userModelServer;
   private ReservationModelServer reservationModelServer;
 
+  private static Lock lock = new ReentrantLock();
+
   private ModelFactoryServer()
   {
   }
@@ -36,7 +41,13 @@ public class ModelFactoryServer
   {
     if (instance == null)
     {
-      instance = new ModelFactoryServer();
+      synchronized (lock)
+      {
+        if (instance == null)
+        {
+          instance = new ModelFactoryServer();
+        }
+      }
     }
     return instance;
   }

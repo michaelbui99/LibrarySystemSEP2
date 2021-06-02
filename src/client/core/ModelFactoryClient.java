@@ -10,20 +10,31 @@ import client.model.user.UserModelClient;
 import client.model.user.UserModelManagerClient;
 import client.network.Client;
 
-/**Model factory for client models
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * Model factory for client models
+ *
  * @author Lilian
  * @version 1.0
- * */
+ */
 public class ModelFactoryClient
 {
   private static ModelFactoryClient modelFactory;
+  private static Lock lock = new ReentrantLock();
 
   public static ModelFactoryClient getInstance()
   {
     if (modelFactory == null)
     {
-
-      modelFactory = new ModelFactoryClient();
+      synchronized (lock)
+      {
+        if (modelFactory == null)
+        {
+          modelFactory = new ModelFactoryClient();
+        }
+      }
     }
     return modelFactory;
   }

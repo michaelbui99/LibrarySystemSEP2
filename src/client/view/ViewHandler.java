@@ -32,7 +32,6 @@ import java.io.IOException;
 public class ViewHandler extends Application
 {
   private Stage stage = new Stage();
-  private Stage stage2 = new Stage();
   private static ViewHandler viewHandler;
 
   private ViewHandler()

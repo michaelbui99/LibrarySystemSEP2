@@ -1,7 +1,6 @@
 package server.model.material;
 
 import shared.materials.Material;
-import shared.materials.MaterialList;
 import shared.materials.Place;
 import shared.person.MaterialCreator;
 import shared.materials.strategy.SearchStrategy;
@@ -22,7 +21,6 @@ import java.util.List;
 public class MaterialModelManagerServer implements MaterialModelServer
 {
   private PropertyChangeSupport support;
-  private MaterialList materialList;
   private SearchStrategy searchStrategy;
   private Material selectedMaterial;
 
@@ -48,7 +46,6 @@ public class MaterialModelManagerServer implements MaterialModelServer
 
     selectedMaterial = null;
     support = new PropertyChangeSupport(this);
-    materialList = new MaterialList();
   }
 
   @Override public int registerMaterial(String title, String publisher,

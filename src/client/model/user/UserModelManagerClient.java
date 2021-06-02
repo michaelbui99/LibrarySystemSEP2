@@ -9,10 +9,12 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.NoSuchElementException;
 
-/**Implementation of the client's user model
+/**
+ * Implementation of the client's user model
+ *
  * @author Kutaiba
  * @version 1.0
- * */
+ */
 public class UserModelManagerClient implements UserModelClient
 {
   private Client client;
@@ -65,7 +67,7 @@ public class UserModelManagerClient implements UserModelClient
 
   @Override public void setBorrowerCpr(String borrowerCpr)
   {
-    //client.setBorrowerCpr(borrowerCpr);
+    client.setBorrowerCpr(borrowerCpr);
   }
 
   @Override public boolean borrowerCprNumberAlreadyExists(String cpr)

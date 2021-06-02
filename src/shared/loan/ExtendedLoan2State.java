@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Michael
  * @version 1.0
  */
-public class ExtendedLoan2State implements LoanState, Serializable
+public class ExtendedLoan2State implements LoanState
 {
 
   @Override public void extendLoan(Loan loan)

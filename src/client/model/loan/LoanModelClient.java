@@ -40,13 +40,6 @@ public interface LoanModelClient extends PropertyChangeSubject
   List<Loan> getAllLoansByCPR(String cpr) throws NoSuchElementException;
 
   /**
-   * Return material ends the Loan with the specific loanID by updating the Loan with the current date as returnDate.
-   *
-   * @param loanID loanID of the Loan that the material was registered to.
-   */
-  void returnMaterial(int loanID);
-
-  /**
    * Ends the Loan by setting the returnDate of the Loan to the current date in "yyyy-MM-dd" format.
    *
    * @param loan is the Loan which is to be ended.

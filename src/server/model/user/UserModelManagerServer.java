@@ -4,9 +4,7 @@ import database.user.borrower.BorrowerDAO;
 import database.user.librarian.LibrarianDAO;
 import shared.person.Address;
 import shared.person.borrower.Borrower;
-import shared.person.borrower.BorrowerList;
 import shared.person.librarian.Librarian;
-import shared.person.librarian.LibrarianList;
 import shared.util.EventTypes;
 
 import java.beans.PropertyChangeListener;
@@ -23,8 +21,6 @@ import java.util.NoSuchElementException;
 public class UserModelManagerServer implements UserModelServer
 {
   private PropertyChangeSupport support;
-  private BorrowerList borrowerList;
-  private LibrarianList librarianList;
   private String borrowerCpr;
 
   private BorrowerDAO borrowerDAO;
@@ -34,8 +30,6 @@ public class UserModelManagerServer implements UserModelServer
       LibrarianDAO librarianDAO)
   {
     support = new PropertyChangeSupport(this);
-    borrowerList = new BorrowerList();
-    librarianList = new LibrarianList();
 
     this.borrowerDAO = borrowerDAO;
     this.librarianDAO = librarianDAO;
@@ -56,8 +50,6 @@ public class UserModelManagerServer implements UserModelServer
     {
       throwable.printStackTrace();
     }
-    borrowerList.addBorrower(borrower);
-    support.firePropertyChange(EventTypes.BORROWERREGISTERED, null, borrower);
     return borrower;
   }
 
@@ -111,8 +103,6 @@ public class UserModelManagerServer implements UserModelServer
     {
       throwable.printStackTrace();
     }
-    librarianList.addLibrarian(librarian);
-    support.firePropertyChange(EventTypes.LIBRARIANREGISTERD, null, librarian);
     return librarian;
   }
 

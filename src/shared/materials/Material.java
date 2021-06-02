@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Michael
  * @version 1.0
  */
-public abstract class Material implements MaterialInterface, Serializable
+public abstract class Material implements Serializable
 {
   private int materialID, copyNumber;
   private String title, targetAudience, description, keywords, publisher, releaseDate, language, imageURL, materialDetails;

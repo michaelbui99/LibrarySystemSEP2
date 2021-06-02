@@ -18,7 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class AddressImpl extends BaseDAO implements AddressDAO
 {
-  private static AddressImpl address;
+  private static AddressDAO instance;
   private static final Lock lock = new ReentrantLock();
 
   private AddressImpl()
@@ -26,19 +26,19 @@ public class AddressImpl extends BaseDAO implements AddressDAO
 
   }
 
-  public static AddressImpl getInstance()
+  public static AddressDAO getInstance()
   {
-    if (address == null)
+    if (instance == null)
     {
       synchronized (lock)
       {
-        if (address == null)
+        if (instance == null)
         {
-          return address = new AddressImpl();
+          return instance = new AddressImpl();
         }
       }
     }
-    return address;
+    return instance;
   }
 
   @Override public synchronized Address create(String city, String streetName,

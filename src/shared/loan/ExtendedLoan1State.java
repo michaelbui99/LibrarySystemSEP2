@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * @author Michael
  * @version 1.0
  */
-public class ExtendedLoan1State implements LoanState, Serializable
+public class ExtendedLoan1State implements LoanState
 {
   @Override public void extendLoan(Loan loan)
   {

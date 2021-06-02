@@ -12,7 +12,7 @@ import java.util.List;
  * @author Lilian
  * @version 1.0
  */
-public class DVDStrategy extends BaseDAO implements SearchStrategy
+public class DVDStrategy implements SearchStrategy
 {
   private String materialType = "dvd";
   private static final long serialVersionUID = -8799770373490598593L;

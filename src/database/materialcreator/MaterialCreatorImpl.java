@@ -15,26 +15,26 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class MaterialCreatorImpl extends BaseDAO implements MaterialCreatorDAO
 {
-  private static MaterialCreatorImpl materialCreator;
+  private static MaterialCreatorDAO instance;
   private static final Lock lock = new ReentrantLock();
 
   private MaterialCreatorImpl()
   {
   }
 
-  public static MaterialCreatorImpl getInstance()
+  public static MaterialCreatorDAO getInstance()
   {
-    if (materialCreator == null)
+    if (instance == null)
     {
       synchronized (lock)
       {
-        if (materialCreator == null)
+        if (instance == null)
         {
-          materialCreator = new MaterialCreatorImpl();
+          instance = new MaterialCreatorImpl();
         }
       }
     }
-    return materialCreator;
+    return instance;
   }
 
   @Override public synchronized MaterialCreator create(String fName, String lName,

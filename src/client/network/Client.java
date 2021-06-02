@@ -73,13 +73,6 @@ public interface Client
       throws NoSuchElementException;
 
   /**
-   * Change a material copy status from not available to available by using a loan id
-   *
-   * @param loanID The loan id to identify the loan and the material copy
-   */
-  void deliverMaterial(int loanID);
-
-  /**
    * Extend the deadline of a loaned material copy
    *
    * @param loan The loan which to be extended

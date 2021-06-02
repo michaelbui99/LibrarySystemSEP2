@@ -18,26 +18,26 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class PlaceImpl extends BaseDAO implements PlaceDAO
 {
-  private static PlaceImpl place;
+  private static PlaceDAO instance;
   private static final Lock lock = new ReentrantLock();
 
   private PlaceImpl()
   {
   }
 
-  public static PlaceImpl getInstance()
+  public static PlaceDAO getInstance()
   {
-    if (place == null)
+    if (instance == null)
     {
       synchronized (lock)
       {
-        if (place == null)
+        if (instance == null)
         {
-          place = new PlaceImpl();
+          instance = new PlaceImpl();
         }
       }
     }
-    return place;
+    return instance;
   }
 
   @Override public synchronized Place create(int hallNo, String department,

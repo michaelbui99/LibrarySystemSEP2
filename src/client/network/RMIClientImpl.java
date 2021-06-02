@@ -41,7 +41,6 @@ public class RMIClientImpl
 
   private PropertyChangeSupport support;
   private Server server;
-  private SearchStrategy searchStrategy;
 
   public RMIClientImpl()
   {
@@ -159,11 +158,6 @@ public class RMIClientImpl
       throw new NoSuchElementException(e.getMessage());
     }
 
-  }
-
-  @Override public void deliverMaterial(int loanID)
-  {
-    //    server.getLoanServer().
   }
 
   @Override public void extendLoan(Loan loan)

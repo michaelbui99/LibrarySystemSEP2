@@ -24,11 +24,12 @@ public class LoanReserveController
 {
 
   @FXML private TextArea materialInfo;
-  @FXML private Image imageTest;
   @FXML private TextArea availNumber;
   @FXML ImageView materialImage;
   @FXML private Label warningLabel;
   @FXML private Label reservationError;
+
+  private Image imageTest;
 
   private LoanReserveVM loanReserveVM;
 
