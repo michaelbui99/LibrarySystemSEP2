@@ -109,7 +109,7 @@ public class AddUserVM
     }
     else
     {
-      if (!cprAlreadyExists())
+      if (cprAlreadyExists())
       {
         System.out.println("here");
         errorProperty.setValue(
