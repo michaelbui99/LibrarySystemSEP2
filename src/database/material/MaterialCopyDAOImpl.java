@@ -70,7 +70,7 @@ public class MaterialCopyDAOImpl extends BaseDAO implements MaterialCopyDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement stm = connection.prepareStatement(
-          "SELECT copy_no from material_copy where material_id = ? order by copy_no ASC limit 1;");
+          "SELECT copy_no from material_copy where material_id = ? AND available = true order by copy_no ASC limit 1;");
       stm.setInt(1, materialID);
       ResultSet result = stm.executeQuery();
       result.next();
